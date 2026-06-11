@@ -8,6 +8,7 @@ import { creerRoute } from './route.js';
 import { creerBateau } from './boat.js';
 import { creerEtoiles } from './stars.js';
 import { creerTimeline } from './timeline.js';
+import { creerPlongee } from './plongee.js';
 import { construireVoyage } from './geo.js';
 import { directionSoleil } from './sun.js';
 
@@ -38,9 +39,13 @@ scene.add(creerEtoiles());
 const globe = creerGlobe();
 scene.add(globe.groupe);
 
-const reponse = await fetch('./data/route.json');
-const routeData = await reponse.json();
+const [routeData, mouillagesData] = await Promise.all([
+  fetch('./data/route.json').then(r => r.json()),
+  fetch('./data/mouillages.json').then(r => r.json()),
+]);
 const voyage = construireVoyage(routeData);
+const mouillagesParCle = new Map(
+  mouillagesData.map(m => [`${m.nom}|${m.date_arrivee}`, m]));
 
 const route = creerRoute(voyage, routeData);
 scene.add(route.groupe);
@@ -84,6 +89,8 @@ function applique(t) {
 timeline.surChangement(applique);
 applique(timeline.t);
 
+const plongee = creerPlongee({ camera, controls, timeline, regleSuivi, mouillagesParCle });
+
 // — infobulle des mouillages —
 const infobulle = document.getElementById('infobulle');
 const raycaster = new THREE.Raycaster();
@@ -97,10 +104,7 @@ canvas.addEventListener('pointermove', (e) => {
 });
 
 canvas.addEventListener('click', () => {
-  if (escaleSurvolee?.date_arrivee) {
-    timeline.vaA(new Date(escaleSurvolee.date_arrivee + 'T12:00:00Z').getTime(), true);
-    regleSuivi(true);
-  }
+  if (escaleSurvolee?.date_arrivee) plongee.vers(escaleSurvolee);
 });
 
 const formatCourt = new Intl.DateTimeFormat('fr-FR', {
@@ -137,7 +141,7 @@ addEventListener('resize', redimensionne);
 redimensionne();
 
 // poignée de débogage (capture.mjs, console)
-window.__sillage = { camera, controls, timeline, voyage, bateau };
+window.__sillage = { camera, controls, timeline, voyage, bateau, plongee, route };
 
 const horloge = new THREE.Clock();
 let accumulateurSurvol = 0;
@@ -146,13 +150,14 @@ renderer.setAnimationLoop(() => {
   const dt = horloge.getDelta();
 
   timeline.metAJour(dt * 1000);
-  if (suivre) suitLeBateau(Math.min(1, dt * 3.5));
+  plongee.metAJour(dt);
+  if (suivre && !plongee.enVol && !plongee.ouverte) suitLeBateau(Math.min(1, dt * 3.5));
 
   globe.anime(dt);
   bateau.anime(horloge.elapsedTime, camera.position.length());
 
   accumulateurSurvol += dt;
-  if (accumulateurSurvol > 0.08) { // le raycast n'a pas besoin du 60 fps
+  if (accumulateurSurvol > 0.08 && !plongee.enVol) { // raycast décimé
     accumulateurSurvol = 0;
     chercheSurvol();
   }

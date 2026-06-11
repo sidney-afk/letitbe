@@ -120,6 +120,7 @@ def main() -> None:
                 "date": a["date"],
                 "titre": a["titre"],
                 "extrait": extrait(a["texte"]),
+                "texte": a["texte"],
                 "images": a["images"],
                 **({"en_mer": True} if a.get("en_mer") else {}),
             } for a in arts],

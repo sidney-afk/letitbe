@@ -104,6 +104,14 @@ pas convaincu (sauf peut-être plus tard).
 ## Étapes de build
 
 1. ✅ Crawl + extraction + data model — **fait** (voir « État du pipeline » ci-dessous).
+> ⚠️ **Direction artistique (demande de Sidney, juin 2026)** : les rendus
+> photoréalistes de la Terre sont jugés trop austères — Sidney imagine une
+> esthétique **plus enfantine, plus joviale**. À discuter avec lui avant le
+> polish : proposer des pistes (globe illustré façon carnet de voyage /
+> aquarelle, couleurs saturées et chaleureuses, soleil descriptif…). La piste
+> aquarelle pourrait devenir un mode du « basculement de carte » (fonctionnalité
+> 1). L'architecture ne change pas : seuls les textures/shaders/UI s'habillent.
+
 2. ✅ Globe photoréaliste + route + timeline scrubber + bateau — **fait** (`site/`,
    Vite + Three.js ; `cd site && npm install && npm run dev`). Terminateur réel
    (déclinaison saisonnière, longitude subsolaire ancrée au bateau pour éviter
@@ -112,7 +120,13 @@ pas convaincu (sauf peut-être plus tard).
    `node capture.mjs <url> <png> <ms> "date=… zoom=…"` (npm i playwright-core).
    Workflow Pages prêt : `.github/workflows/deploy.yml` (déploie depuis `main` ;
    activer Settings → Pages → GitHub Actions).
-3. Plongées vers les mouillages + galeries photos + extraits du blog.
+3. ✅ Plongées vers les mouillages + galeries photos + extraits du blog —
+   **fait** : clic sur une perle → vol de caméra (2,6 s) vers l'ancre →
+   « carnet de bord » qui glisse à droite : articles complets datés + photos
+   légendées qui émergent en cascade, lightbox plein écran, « Reprendre la
+   route » / Échap pour remonter. Photos servies en WebP
+   (`site/public/media/`, 1 178 fichiers, 33 Mo, généré par
+   `pipeline/sync_site_media.py` depuis `content/media/`).
 4. Chapitres scrollytelling.
 5. Mode Traversée.
 6. Fonctionnalités 1–7 (basculement carte ancienne, vents, ciel, météo…).

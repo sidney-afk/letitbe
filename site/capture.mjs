@@ -23,6 +23,15 @@ if (zoom) {
     camera.position.setLength(d);
   }, Number(zoom[1]));
 }
+const plonge = action.match(/plonge=([^|]+)/);
+if (plonge) {
+  await page.evaluate((nom) => {
+    const { plongee, route } = window.__sillage;
+    const escale = route.escales.find(e => e.nom === nom);
+    if (!escale) throw new Error(`escale introuvable : ${nom}`);
+    plongee.vers(escale);
+  }, plonge[1].trim());
+}
 const date = action.match(/date=([\d-]+)/);
 if (date) {
   await page.evaluate((j) => {
@@ -37,6 +46,13 @@ if (action.includes('mi-parcours')) {
   });
 }
 
+const defile = action.match(/defile=(\d+)/);
+if (defile) {
+  await page.waitForTimeout(3500);
+  await page.evaluate((y) => {
+    document.getElementById('plongee-flux').scrollTo({ top: y });
+  }, Number(defile[1]));
+}
 await page.waitForTimeout(Number(attente));
 await page.screenshot({ path: sortie });
 await navigateur.close();
