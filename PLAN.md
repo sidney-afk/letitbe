@@ -104,7 +104,14 @@ pas convaincu (sauf peut-être plus tard).
 ## Étapes de build
 
 1. ✅ Crawl + extraction + data model — **fait** (voir « État du pipeline » ci-dessous).
-2. Globe photoréaliste + route + timeline scrubber + bateau.
+2. ✅ Globe photoréaliste + route + timeline scrubber + bateau — **fait** (`site/`,
+   Vite + Three.js ; `cd site && npm install && npm run dev`). Terminateur réel
+   (déclinaison saisonnière, longitude subsolaire ancrée au bateau pour éviter
+   le stroboscope en lecture), nuages, halo, étoiles d'ambiance, mouillages
+   survolables/cliquables, lecture ~3 min. Vérif visuelle headless :
+   `node capture.mjs <url> <png> <ms> "date=… zoom=…"` (npm i playwright-core).
+   Workflow Pages prêt : `.github/workflows/deploy.yml` (déploie depuis `main` ;
+   activer Settings → Pages → GitHub Actions).
 3. Plongées vers les mouillages + galeries photos + extraits du blog.
 4. Chapitres scrollytelling.
 5. Mode Traversée.
