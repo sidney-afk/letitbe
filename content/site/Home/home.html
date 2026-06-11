@@ -1,0 +1,216 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html> 
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <link rel="stylesheet" type="text/css" href="../Tech/Style/MyStyle.css" />
+  <link rel="stylesheet" type="text/css" href="../Tech/Style/jquery-ui-1.8.16.custom.css" />
+
+  <script src="../Tech/JQuery/jquery.js" type="text/javascript"></script>
+  <script src="../Tech/JQuery/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+  
+  <style type="text/css">
+  #pict {position:absolute;z-index:4;display:none;left:2px;top:2px;
+	border-color: white;
+        border-width: 2px;
+        border-style: solid;
+	}
+  #bookpic {position:absolute;z-index:4;display:none;left:20px;top:50px;
+	border-color: white;
+        border-width: 2px;
+        border-style: solid;
+	}
+  #pict2 {position:absolute;z-index:4;display:none;left:2px;top:2px;
+	border-color: white;
+        border-width: 2px;
+        border-style: solid;
+	}
+  #bookpic2 {position:absolute;z-index:4;display:none;left:20px;top:50px;
+	border-color: white;
+        border-width: 2px;
+        border-style: solid;
+	}
+  </style>
+
+</head>
+
+<body>
+  <script>
+    $(document).ready(function(){
+
+      $('#BoutonPhoto').click(function(){
+	$('#BoutonPhoto').attr({ value: 'Fermer'});
+	$('#pict').toggle('slow');
+      });
+
+      $('#pict').click(function(){
+	$('#pict').toggle('slow');
+      });
+
+      $('#pict2').click(function(){
+	$('#pict2').toggle('slow');
+      });
+
+      $('#photo').click(function(){
+	$('#pict').toggle('slow');
+      });
+
+      $('#photo2').click(function(){
+	$('#pict2').toggle('slow');
+      });
+      $('#bookpic').click(function(){
+	$('#bookpic').toggle('slow');
+      });
+      $('#bookpic2').click(function(){
+	$('#bookpic2').toggle('slow');
+      });
+      $('#booktb').click(function(){
+	$('#bookpic').toggle('slow');
+      });
+      $('#booktb2').click(function(){
+	$('#bookpic2').toggle('slow');
+      });
+
+    });
+  </script>
+
+	<script>
+	$(function() {
+		$( "#accordion" ).accordion({ collapsible: true });
+		$( "#accordion" ).accordion({ active: false });
+	});
+	</script>
+
+
+  <table class="w90">
+    <tr>
+      <td style="width:50%;">
+        <table>
+		<tr>
+            <td class="home" style="color:white;background-color:lightslategrey;padding:5; ">
+                <p class="titrecenter" style="color:white;background-color:brown; ">!! Let It Be !! </p>
+				<p class="blck">Les meilleures choses ont une fin. Pour nous, le voyage en bateau se termine. Rassurez-vous, ce n'est pas la fin de nos aventures, simplement la fin d'un chapitre. On ne va même pas visiter la mer de Cortes avant de mettre en oeuvre notre prochain grand et beau projet !!</p> 
+                <p class="titrecenter" style="color:black; "><img id="photo" style="cursor:pointer; border-style: solid; border-width: 1px; border-color: black;" title="Cliquer pour agrandir/cacher" width="400" align="center" src="../Tech/Image/hp/LIB.JPG"></img><br>Il est beau Let It Be !!</p>
+				<div id="pict"><img style="cursor:pointer" title="Cliquer pour fermer" src="../Tech/Image/hp/LIB.JPG"></div>
+            </td>
+        </tr>
+        <tr>
+            <td class="home">
+                <p class="titrecenter" style="color:white;background-color:black; ">Dernièrement...</p>
+				<p class="blck">Les photos des parcs nationaux US sont visibles dans l'onglet Photo.<br><br></p>
+            </td>
+        </tr>
+        <tr>
+            <td class="home">
+				<p class="titrecenter" style="color:white;background-color:black; "> Bye Bye British Columbia </p>
+				<p class="blck">On a adoré la Colombie Britannique, ses paysages, ses habitants, son climat, tout. A part les prix. Mais la visite vaut vraiment la peine ! <br></p>
+            </td>
+        </tr>
+		  
+        </table>
+      </td>
+      <td style="width:50%; padding: 0 5 0 5;">
+        <table>
+		<tr>
+            <td class="home">
+                <p class="titrecenter" style="color:white;background-color:black; "><img align="left" src="../Tech/Image/livre-gif-015.gif"></img>Les livres, version 3.0 !!!</p>
+				<p class="blck">Enfin une version électronique du fameux "Les p'tites bites' avec photos et en intégrale</p>
+            </td>
+            <td>
+				<img id="booktb" style="cursor:pointer" title="Cliquer pour agrandir/cacher" align="right" width="80" src="../Tech/Image/Cover.jpg"></img>
+				<div id="bookpic"><img style="cursor:pointer" title="Cliquer pour fermer" src="../Tech/Image/Cover.jpg"				></div>
+            </td>
+        </tr>
+		<tr>
+            <td class="home" colspan="2">
+			<div id="accordion">
+				<h3><a style="background-color:lightgrey" href="#">Morceaux choisis</a></h3>
+				<div>
+					<p class="petitb">
+						Aux <b>Marquises</b>:<br><i>"Le hima, aussi appelé four marquisien, est aux Marquisiens ce que la raclette est aux Savoyards ou la choucroute aux Alsaciens: une recette séculaire que l'on se transmet de mère en fille au cours d'orgies où la gent masculine beugle et finit invariablement dans le vomi."</i>
+						<br><br>Durant la '<b>grande traversée</b>':<br><i>"A l'heure où j'écris ces lignes, le bateau dort. Seul dans le carré silencieux, j'entends à peine le bruit du vent dans le génois et le bruissement de l'eau contre les coques." </i>
+						<br><br>Aux <b>Galapagos</b>, s'agissant de notre 'agent':<br><i>"Je n'aime pas la vulgarité, mais plutôt crever que de faire appel aux services de ce vautour."</i>
+						<br><br>En arrivant à <b>Papeete</b>:<br><i>"Hélas, le capitaine Cécile et son fidèle Chewbéric doivent réparer le Faucon Millénium, euh...non, le Let It Be qui a subi des avaries en traversant un champs de patates de corail pour semer les sbires de Dark Taxor. Arrivés incognitos à Papeete, lieu de perdition aux allures de paradis, ils doivent maintenant se procurer 100 billes de Torlon, produit de contrebande s'il en est."</i>
+						<br><br>Aux <b>Fidji</b>, un soir de brouillard:<br><i>"J'ai tancé ce grossier personnage et j'ai décidé d'en faire un exemple: j'ai coulé son bateau qui gît maintenant sur le récif. Faut pas m'énerver." </i>
+						<br><br>En essayant de lever l'ancre aux <b>Tuamotu</b>:<br><i>"Autant dire qu'à plus de 10m de profondeur, la position de la chaîne devient un mystère insondable, comme la psychologie féminine ou l'antimatière." </i>
+					</p>
+				</div>
+				<h3><a style="background-color:lightgrey" href="#">La presse</a></h3>
+					<div>
+						<img title="Voiles & Voiliers" width="280" src="../Tech/Image/BookVV.jpg"></img>
+						<img title="Voile Magazine" width="280" src="../Tech/Image/BookVMag.jpg"></img>
+
+						<p class="petitb">
+						...l’'ouvrage est le journal de bord de LET IT BE ou plutôt les carnets de mer, comme l'’indique Éric Laruel, jamais à court d'’idées. Chaque grande étape est étoffée d’une rubrique joliment intitulée « Ce qu’on en disait avant » et « Ce qu’on en dit après ». 
+						Les pages sont tantôt émaillées d'’un dessin, tantôt de signes style sms qui indiquent l'’appréciation de l'’auteur. De petites étiquettes aussi ponctuent la narration pour mettre en évidence l’un ou l’autre fait saillant. Bref, le récit s’organise à merveille pour accaparer votre attention et exciter votre imagination. Le tout assorti d’un style de narration direct, accessible à tous et, ce qui ne gâche rien, agrémenté de quelques jolis néologismes. Si l’on se prend au jeu, les pages tournent comme dans un manège. D’autant que plus de 140 photos couleurs illustrent l’ouvrage en réussissant à nous faire vivre le quotidien de cet équipage sympathique en diable et surtout doué d’une modestie certaine. Car chez les Laruel, pas d’épate ! On ne se prend pas pour des super-circumnavigateurs à la recherche de la gloire. Si un problème surgit, on bricole comme Mac Gyver et on trouve une solution sans se prendre pour Kersauson ! 
+						Quand on sait que les Laruel effectuent la traversée Galapagos-Polynésie en 20 jours parcourant près de 6000 km sans anicroche réelle et à près de 7 nœuds de moyenne, chapeau ! Un voyage narré sans effet de manche, comme si traverser le Pacifique représentait à peine plus que d’'acheter une baguette à la boulangerie du coin. Dans le milieu nautique, où l’esbroufe n’est jamais loin, c’est trop rare que pour être passé sous silence.<br> 
+						<br><i>Alexandre Homez</i> dans <b>Yachting Sud</b>
+						</p>
+						<a href="http://www.fleuves-et-canaux.net/index.php?option=com_content&view=article&id=1071:biblio-escales-buissoniere-dans-le-pacifique-sud&catid=3:bibliographie&Itemid=18" class="bck"><b>Voir l'article de Fleuves et Canaux</b></a></p>	
+					</div>
+			</div>
+            </td>
+		</tr>
+        <tr>
+            <td class="home">
+					<p class="titrecenter" style="color:white;background-color:olive; "> Nos livres en format électronique </p>
+					<p class="blck">Le livre 'collector' est maintenant disponible en format électronique. C'est rapide et pas cher:
+                  	<a class=std" href="https://www.amazon.fr/dp/B01MQV9PIF" target="_blank">Les p'tites bites</a><br><br></p>
+					<p class="blck">Et surtout, le tome 2 de nos aventures est enfin sorti:
+                  	<a class=std" href="https://www.amazon.fr/dp/B01MRX3HH0" target="_blank">95° de latitude Nord</a><br><br></p>
+	        </td>
+            <td>
+				<img id="booktb2" style="cursor:pointer" title="Cliquer pour agrandir/cacher" align="right" width="80" src="../Tech/Image/Cover95.jpg"></img>
+				<div id="bookpic2"><img style="cursor:pointer" title="Cliquer pour fermer" src="../Tech/Image/Cover95.jpg"></div>
+            </td>
+        </tr>
+		  <tr>
+            <td class="home" colspan="2">
+				<p class="titrecenter" style="color:white;background-color:black;">Où est-on ?</p>
+				<a href="../Navigation/location.html"><img align="left" width="60" src="../Tech/Image/boussole.ico"></img></a><p class="blck">Allez dans la rubrique NAVIGATION puis LOCALISATION. Il suffit de sélectionner une date et de cliquer sur GO! </p>
+            </td>
+		  </tr>
+        <tr>
+            <td class="home" colspan="2">
+				<p class="titrecenter" style="color:white;background-color:black;">Nous sommes au Costa Rica</p>
+				<p class="blck">La visite des parcs est terminée. On a bien rigolé mais maintenant il faut qu'on s'amuse. Direction San Diego, ses acheteurs de Bahia et surtout sa chaleur hivernale. Parce qu'il faut être honnête, même si le soleil brille tous les jours, il commence à faire un peu frisquet à San Francisco</p>
+           </td>
+	    </tr>
+		<tr>
+            <td class="home" colspan="2">
+                <p class="titrecenter" style="color:white;background-color:black; ">Dans les kiosques</p>
+				<p class="blck">C'est avec beaucoup d'émotion que je vous annonce la publication d'articles émanant de ma plume dans la revue <a class="std" href="http://www.yachtingsud.com/fr/" target="_blank">Yachting Sud.</a><br></p> 
+				<table><tr>
+                          <td style="width:130">
+                                <a class="contact" href="../Tech/Image/PDF/YS201011.pdf" target="_blank">1/ L'école à bord</a>
+                            <br><a class="contact" href="../Tech/Image/PDF/YS201101.pdf" target="_blank">2/ Les Fidji</a>
+                            <br><a class="contact" href="../Tech/Image/PDF/YS201103.pdf" target="_blank">3/ Osez le cata !</a>
+                          </td>
+                          <td>
+                                <a class="contact" href="../Tech/Image/PDF/YS201104.pdf" target="_blank">4/ Les Marquises</a>
+                            <br><a class="contact" href="../Tech/Image/PDF/YS201105.pdf" target="_blank">5/ La pêche !</a>
+                            <br><a class="contact" href="../Tech/Image/PDF/YS201201.pdf" target="_blank">7/ La perle du Pacifique</a>
+                          </td>
+                          <td>
+                                <a class="contact" href="../Tech/Image/PDF/YS201202.pdf" target="_blank">8/ Traversée NZ-Gambier</a>
+                          </td>
+				</tr></table> 
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8029555-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body> 
+</html> 

@@ -1,0 +1,62 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" type="text/css" href="../Tech/Style/MyStyle.css" />
+  <script language="JavaScript" type="text/javascript">
+    function ChangeSrc(source)
+    {
+          document.getElementById("NavCorps").src = source;
+    }
+    function ShowImg(MenId,source)
+    {
+          document.getElementById(MenId).src = source;
+    }
+    function HidePicture()
+    {
+          document.getElementById("pict").style.display = "none";
+    }
+  </script>
+  </head>
+  <body>
+    <table class="Main">
+      <tr>
+        <td id="left" class="Left" style="background-color: silver; ">
+        <table width=150px>
+          <tr>
+            <td class="menupointeur" 
+			onclick="return event.returnValue = ChangeSrc('./equipage.html');" 
+		>
+              Equipage
+            </td>
+          </tr>
+          <tr>
+            <td class="menupointeur" 
+			onclick="return event.returnValue = ChangeSrc('./balvis.html');" 
+		>
+              Visiteurs
+            </td>
+          </tr>
+          <tr>
+            <td class="menupointeur" 
+			onclick="return event.returnValue = ChangeSrc('./balises.html');" 
+		>
+              Balises
+            </td>
+          </tr>
+          <tr>
+            <td class="menupointeur2" 
+			onclick="return event.returnValue = ChangeSrc('./questions.html');" 
+		>
+              FAQ
+            </td>
+          </tr>
+        </table>
+        </td>
+        <td class="corps">
+          <iframe id="NavCorps" src="./equipage.html" width=100% height=150% frameborder=0></iframe>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

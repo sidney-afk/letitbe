@@ -1,0 +1,1074 @@
+[
+ {
+  "lieu": "Martinique",
+  "log_nm": 0,
+  "date_brute": "27/5",
+  "source": "trajetcar.html",
+  "date_arrivee": "2009-05-27",
+  "date_depart": null
+ },
+ {
+  "lieu": "Ste Lucie",
+  "log_nm": 40,
+  "date_brute": "29/5",
+  "source": "trajetcar.html",
+  "date_arrivee": "2009-05-29",
+  "date_depart": null
+ },
+ {
+  "lieu": "Los Roques",
+  "log_nm": 390,
+  "date_brute": "3/6",
+  "source": "trajetcar.html",
+  "date_arrivee": "2009-06-03",
+  "date_depart": null
+ },
+ {
+  "lieu": "Los Aves",
+  "log_nm": 450,
+  "date_brute": "4/6",
+  "source": "trajetcar.html",
+  "date_arrivee": "2009-06-04",
+  "date_depart": null
+ },
+ {
+  "lieu": "Aruba",
+  "log_nm": 600,
+  "date_brute": "7/6",
+  "source": "trajetcar.html",
+  "date_arrivee": "2009-06-07",
+  "date_depart": null
+ },
+ {
+  "lieu": "San Blas",
+  "log_nm": 1150,
+  "date_brute": "13/6",
+  "source": "trajetcar.html",
+  "date_arrivee": "2009-06-13",
+  "date_depart": null
+ },
+ {
+  "lieu": "Panama",
+  "log_nm": 1250,
+  "date_brute": "18/6",
+  "source": "trajetcar.html",
+  "date_arrivee": "2009-06-18",
+  "date_depart": null
+ },
+ {
+  "lieu": "Canal de Panama",
+  "log_nm": 1250,
+  "date_brute": "25/6",
+  "source": "trajetgal.html",
+  "date_arrivee": "2009-06-25",
+  "date_depart": null
+ },
+ {
+  "lieu": "Balboa (l'oeil du tigre)",
+  "log_nm": 1300,
+  "date_brute": "27/6",
+  "source": "trajetgal.html",
+  "date_arrivee": "2009-06-27",
+  "date_depart": null
+ },
+ {
+  "lieu": "Las Perlas",
+  "log_nm": 1350,
+  "date_brute": "28/6 au 1/7",
+  "source": "trajetgal.html",
+  "date_arrivee": "2009-06-28",
+  "date_depart": "2009-07-01"
+ },
+ {
+  "lieu": "Galapagos",
+  "log_nm": 2350,
+  "date_brute": "8/7 au 23/7",
+  "source": "trajetgal.html",
+  "date_arrivee": "2009-07-08",
+  "date_depart": "2009-07-23"
+ },
+ {
+  "lieu": "Transpacifique",
+  "log_nm": 5305,
+  "date_brute": "24/7/09 au 12/8/09",
+  "source": "trajetpac.html",
+  "date_arrivee": "2009-07-24",
+  "date_depart": "2009-08-12"
+ },
+ {
+  "lieu": "Gambier",
+  "log_nm": 5305,
+  "date_brute": "12/8 au 10/12",
+  "source": "trajetpol.html",
+  "date_arrivee": "2009-08-12",
+  "date_depart": "2009-12-10"
+ },
+ {
+  "lieu": "Marquises - Fatu Hiva",
+  "log_nm": 6145,
+  "date_brute": "16/12 au 20/12",
+  "source": "trajetpol.html",
+  "date_arrivee": "2009-12-16",
+  "date_depart": "2009-12-20"
+ },
+ {
+  "lieu": "Marquises - Tahuata",
+  "log_nm": 6195,
+  "date_brute": "21/12 au 23/12",
+  "source": "trajetpol.html",
+  "date_arrivee": "2009-12-21",
+  "date_depart": "2009-12-23"
+ },
+ {
+  "lieu": "Marquises - Hiva Oa",
+  "log_nm": 6205,
+  "date_brute": "23/12 au 26/12",
+  "source": "trajetpol.html",
+  "date_arrivee": "2009-12-23",
+  "date_depart": "2009-12-26"
+ },
+ {
+  "lieu": "Marquises - Nuku Hiva",
+  "log_nm": 6355,
+  "date_brute": "27/12 au 3/2",
+  "source": "trajetpol.html",
+  "date_arrivee": "2009-12-27",
+  "date_depart": "2010-02-03"
+ },
+ {
+  "lieu": "Marquises - Ua Pou",
+  "log_nm": 6475,
+  "date_brute": "4/2 au 24/2",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-02-04",
+  "date_depart": "2010-02-24"
+ },
+ {
+  "lieu": "Marquises - Fatu Hiva",
+  "log_nm": 6665,
+  "date_brute": "1/3 au 7/3",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-03-01",
+  "date_depart": "2010-03-07"
+ },
+ {
+  "lieu": "Marquises - Tahuata",
+  "log_nm": 6710,
+  "date_brute": "7/3 au 12/3",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-03-07",
+  "date_depart": "2010-03-12"
+ },
+ {
+  "lieu": "Marquises - Hiva Oa",
+  "log_nm": 6720,
+  "date_brute": "12/3 au 19/3",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-03-12",
+  "date_depart": "2010-03-19"
+ },
+ {
+  "lieu": "Marquises - Ua HUka",
+  "log_nm": 6790,
+  "date_brute": "20/3 au 23/3",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-03-20",
+  "date_depart": "2010-03-23"
+ },
+ {
+  "lieu": "Marquises - Nuku Hiva",
+  "log_nm": 6820,
+  "date_brute": "24/3 au 27/3",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-03-24",
+  "date_depart": "2010-03-27"
+ },
+ {
+  "lieu": "Tuamotu - Kauehi",
+  "log_nm": 7340,
+  "date_brute": "31/3 au 6/4",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-03-31",
+  "date_depart": "2010-04-06"
+ },
+ {
+  "lieu": "Tuamotu - Fakarava",
+  "log_nm": 7400,
+  "date_brute": "6/4 au 20/4",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-04-06",
+  "date_depart": "2010-04-20"
+ },
+ {
+  "lieu": "Tuamotu - Faaite",
+  "log_nm": 7480,
+  "date_brute": "16/4 au 17/4",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-04-16",
+  "date_depart": "2010-04-17"
+ },
+ {
+  "lieu": "Tuamotu - Toau",
+  "log_nm": 7520,
+  "date_brute": "21/4",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-04-21",
+  "date_depart": null
+ },
+ {
+  "lieu": "Tuamotu - Rangiroa",
+  "log_nm": 7620,
+  "date_brute": "22/4 au 11/5",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-04-22",
+  "date_depart": "2010-05-11"
+ },
+ {
+  "lieu": "Tuamotu - Tikehau",
+  "log_nm": 7670,
+  "date_brute": "11/5 au 20/5",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-05-11",
+  "date_depart": "2010-05-20"
+ },
+ {
+  "lieu": "Tahiti",
+  "log_nm": 7850,
+  "date_brute": "21/5 au 22/6",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-05-21",
+  "date_depart": "2010-06-22"
+ },
+ {
+  "lieu": "Moorea",
+  "log_nm": 7870,
+  "date_brute": "22/6 au 29/6",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-06-22",
+  "date_depart": "2010-06-29"
+ },
+ {
+  "lieu": "Huahine",
+  "log_nm": 7950,
+  "date_brute": "30/6 au 2/7",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-06-30",
+  "date_depart": "2010-07-02"
+ },
+ {
+  "lieu": "Raiatea et Tahaa",
+  "log_nm": 7975,
+  "date_brute": "2/7 au 7/7",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-07-02",
+  "date_depart": "2010-07-07"
+ },
+ {
+  "lieu": "Bora Bora",
+  "log_nm": 8000,
+  "date_brute": "7/7 au 14/7",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-07-07",
+  "date_depart": "2010-07-14"
+ },
+ {
+  "lieu": "Maupihaa",
+  "log_nm": 8130,
+  "date_brute": "15/7 au 16/7",
+  "source": "trajetpol.html",
+  "date_arrivee": "2010-07-15",
+  "date_depart": "2010-07-16"
+ },
+ {
+  "lieu": "Cook du sud - Aitutaki",
+  "log_nm": 8500,
+  "date_brute": "19/7 au 26/7",
+  "source": "trajetcook.html",
+  "date_arrivee": "2010-07-19",
+  "date_depart": "2010-07-26"
+ },
+ {
+  "lieu": "Cook du sud - Rarotonga",
+  "log_nm": 8650,
+  "date_brute": "27/7 au 9/8",
+  "source": "trajetcook.html",
+  "date_arrivee": "2010-07-27",
+  "date_depart": "2010-08-09"
+ },
+ {
+  "lieu": "Beveridge Reef",
+  "log_nm": 9110,
+  "date_brute": "13/8 au 18/8",
+  "source": "trajetcook.html",
+  "date_arrivee": "2010-08-13",
+  "date_depart": "2010-08-18"
+ },
+ {
+  "lieu": "Niue",
+  "log_nm": 9250,
+  "date_brute": "19/8 au 27/8",
+  "source": "trajetcook.html",
+  "date_arrivee": "2010-08-19",
+  "date_depart": "2010-08-27"
+ },
+ {
+  "lieu": "Tonga - Neiafu",
+  "log_nm": 9500,
+  "date_brute": "31/8 au 24/9",
+  "source": "trajettonga.html",
+  "date_arrivee": "2010-08-31",
+  "date_depart": "2010-09-24"
+ },
+ {
+  "lieu": "Fidji - Savusavu",
+  "log_nm": 9920,
+  "date_brute": "27/9 au 2/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-09-27",
+  "date_depart": "2010-10-02"
+ },
+ {
+  "lieu": "Fidji - Makogai",
+  "log_nm": 9970,
+  "date_brute": "3/10 au 5/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-10-03",
+  "date_depart": "2010-10-05"
+ },
+ {
+  "lieu": "Fidji - Naigani",
+  "log_nm": 9990,
+  "date_brute": "5/10 au 7/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-10-05",
+  "date_depart": "2010-10-07"
+ },
+ {
+  "lieu": "Fidji - Nananu",
+  "log_nm": 10020,
+  "date_brute": "7/10 au 9/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-10-07",
+  "date_depart": "2010-10-09"
+ },
+ {
+  "lieu": "Fidji - Natunuku",
+  "log_nm": 10050,
+  "date_brute": "10/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-10-10",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Nadi",
+  "log_nm": 10080,
+  "date_brute": "11/10 au 15/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-10-11",
+  "date_depart": "2010-10-15"
+ },
+ {
+  "lieu": "Fidji - Malakati",
+  "log_nm": 10130,
+  "date_brute": "17/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-10-17",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Sawa-I-Lau",
+  "log_nm": 10140,
+  "date_brute": "19/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-10-19",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Yasawairara",
+  "log_nm": 10150,
+  "date_brute": "22/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-10-22",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Blue Lagoon",
+  "log_nm": 10170,
+  "date_brute": "25/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-10-25",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Likuliku",
+  "log_nm": 10185,
+  "date_brute": "28/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-10-28",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Vanua Lailai",
+  "log_nm": 10195,
+  "date_brute": "30/10",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-10-30",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Mana",
+  "log_nm": 10205,
+  "date_brute": "2/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-02",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Cuvu",
+  "log_nm": 10260,
+  "date_brute": "4/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-04",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Naboutini",
+  "log_nm": 10285,
+  "date_brute": "5/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-05",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Namalata",
+  "log_nm": 10340,
+  "date_brute": "6/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-06",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Gasele",
+  "log_nm": 10360,
+  "date_brute": "9/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-09",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Kavala Bay",
+  "log_nm": 10375,
+  "date_brute": "10/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-10",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Vuro Island",
+  "log_nm": 10385,
+  "date_brute": "11/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-11",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Korolevu Bay",
+  "log_nm": 10400,
+  "date_brute": "13/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-13",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Matasawalevu",
+  "log_nm": 10410,
+  "date_brute": "15/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-15",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Naqara Bay",
+  "log_nm": 10420,
+  "date_brute": "18/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-18",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Dravuni",
+  "log_nm": 10430,
+  "date_brute": "20/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-20",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji - Suva",
+  "log_nm": 10470,
+  "date_brute": "24/11",
+  "source": "trajetfidji.html",
+  "date_arrivee": "2010-11-24",
+  "date_depart": null
+ },
+ {
+  "lieu": "Fidji vers Nlle Zélande",
+  "log_nm": 11670,
+  "date_brute": "29/11/2010 au 08/12/2010",
+  "source": "trajetNZ.html",
+  "date_arrivee": "2010-11-29",
+  "date_depart": "2010-12-08"
+ },
+ {
+  "lieu": "Nlle Zélande - Opua",
+  "log_nm": 11670,
+  "date_brute": "08/12/2010 au 16/12/2010",
+  "source": "trajetNZ.html",
+  "date_arrivee": "2010-12-08",
+  "date_depart": "2010-12-16"
+ },
+ {
+  "lieu": "Nlle Zélande - Whangarei",
+  "log_nm": 11750,
+  "date_brute": "16/12/2010 au 17/12/2010",
+  "source": "trajetNZ.html",
+  "date_arrivee": "2010-12-16",
+  "date_depart": "2010-12-17"
+ },
+ {
+  "lieu": "Transpacifique retour",
+  "log_nm": 15000,
+  "date_brute": "16/5/12 au 9/6/12",
+  "source": "trajetpac.html",
+  "date_arrivee": "2012-05-16",
+  "date_depart": "2012-06-09"
+ },
+ {
+  "lieu": "Gambier",
+  "log_nm": 15000,
+  "date_brute": "09/06/2012 au 11/07/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-06-09",
+  "date_depart": "2012-07-11"
+ },
+ {
+  "lieu": "Tahiti",
+  "log_nm": 15885,
+  "date_brute": "18/07/2012 au 22/07/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-07-18",
+  "date_depart": "2012-07-22"
+ },
+ {
+  "lieu": "Moorea",
+  "log_nm": 15905,
+  "date_brute": "22/07/2012 au 23/07/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-07-22",
+  "date_depart": "2012-07-23"
+ },
+ {
+  "lieu": "Huahine",
+  "log_nm": 16005,
+  "date_brute": "23/07/2012 au 26/07/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-07-23",
+  "date_depart": "2012-07-26"
+ },
+ {
+  "lieu": "Raiatea",
+  "log_nm": 16040,
+  "date_brute": "26/07/2012 au 27/07/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-07-26",
+  "date_depart": "2012-07-27"
+ },
+ {
+  "lieu": "Bora Bora",
+  "log_nm": 16070,
+  "date_brute": "27/07/2012 au 30/07/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-07-27",
+  "date_depart": "2012-07-30"
+ },
+ {
+  "lieu": "Moorea",
+  "log_nm": 16205,
+  "date_brute": "31/07/2012 au 06/08/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-07-31",
+  "date_depart": "2012-08-06"
+ },
+ {
+  "lieu": "Tahiti",
+  "log_nm": 16225,
+  "date_brute": "06/08/2012 au 19/08/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-08-06",
+  "date_depart": "2012-08-19"
+ },
+ {
+  "lieu": "Moorea",
+  "log_nm": 16240,
+  "date_brute": "19/08/2012 au 28/08/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-08-19",
+  "date_depart": "2012-08-28"
+ },
+ {
+  "lieu": "Tahiti",
+  "log_nm": 16250,
+  "date_brute": "28/08/2012 au 02/09/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-08-28",
+  "date_depart": "2012-09-02"
+ },
+ {
+  "lieu": "Fakarava",
+  "log_nm": 16590,
+  "date_brute": "04/09/2012 au 24/09/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-09-04",
+  "date_depart": "2012-09-24"
+ },
+ {
+  "lieu": "Tahanea",
+  "log_nm": 16640,
+  "date_brute": "24/09/2012 au 03/10/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-09-24",
+  "date_depart": "2012-10-03"
+ },
+ {
+  "lieu": "Makemo",
+  "log_nm": 16735,
+  "date_brute": "03/10/2012 au 26/10/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-10-03",
+  "date_depart": "2012-10-26"
+ },
+ {
+  "lieu": "Hiva Oa",
+  "log_nm": 17250,
+  "date_brute": "29/10/2012 au 13/11/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-10-29",
+  "date_depart": "2012-11-13"
+ },
+ {
+  "lieu": "Tahuata",
+  "log_nm": 17260,
+  "date_brute": "13/11/2012 au 19/11/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-11-13",
+  "date_depart": "2012-11-19"
+ },
+ {
+  "lieu": "Hiva Oa",
+  "log_nm": 17270,
+  "date_brute": "19/11/2012 au 27/11/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-11-19",
+  "date_depart": "2012-11-27"
+ },
+ {
+  "lieu": "Ua Pou",
+  "log_nm": 17340,
+  "date_brute": "27/11/2012 au 18/12/2012",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-11-27",
+  "date_depart": "2012-12-18"
+ },
+ {
+  "lieu": "Nuku Hiva",
+  "log_nm": 17370,
+  "date_brute": "18/12/2012 au 23/01/2013",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2012-12-18",
+  "date_depart": "2013-01-23"
+ },
+ {
+  "lieu": "Tahuata",
+  "log_nm": 17460,
+  "date_brute": "24/01/2013 au 31/01/2013",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2013-01-24",
+  "date_depart": "2013-01-31"
+ },
+ {
+  "lieu": "Hiva Oa",
+  "log_nm": 17470,
+  "date_brute": "01/02/2013 au 09/02/2013",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2013-02-01",
+  "date_depart": "2013-02-09"
+ },
+ {
+  "lieu": "Nuku Hiva",
+  "log_nm": 17560,
+  "date_brute": "09/02/2013 au 19/02/2013",
+  "source": "trajetpol2012.html",
+  "date_arrivee": "2013-02-09",
+  "date_depart": "2013-02-19"
+ },
+ {
+  "lieu": "Nuku Hiva - Hilo",
+  "log_nm": 19640,
+  "date_brute": "19/02/2013 au 04/03/2013",
+  "source": "trajethawaii.html",
+  "date_arrivee": "2013-02-19",
+  "date_depart": "2013-03-04"
+ },
+ {
+  "lieu": "Hilo - Big Island",
+  "log_nm": 19660,
+  "date_brute": "04/03/2013 au 28/04/2013",
+  "source": "trajethawaii.html",
+  "date_arrivee": "2013-03-04",
+  "date_depart": "2013-04-28"
+ },
+ {
+  "lieu": "Lahaina - Maui",
+  "log_nm": 19800,
+  "date_brute": "29/04/2013 au 05/05/2013",
+  "source": "trajethawaii.html",
+  "date_arrivee": "2013-04-29",
+  "date_depart": "2013-05-05"
+ },
+ {
+  "lieu": "Honokahua - Maui",
+  "log_nm": 19810,
+  "date_brute": "05/05/2013 au 07/05/2013",
+  "source": "trajethawaii.html",
+  "date_arrivee": "2013-05-05",
+  "date_depart": "2013-05-07"
+ },
+ {
+  "lieu": "Puko'o - Molokai",
+  "log_nm": 19850,
+  "date_brute": "07/05/2013 au 18/05/2013",
+  "source": "trajethawaii.html",
+  "date_arrivee": "2013-05-07",
+  "date_depart": "2013-05-18"
+ },
+ {
+  "lieu": "Ilio Point - Molokai",
+  "log_nm": 19885,
+  "date_brute": "18/05/2013 au 19/05/2013",
+  "source": "trajethawaii.html",
+  "date_arrivee": "2013-05-18",
+  "date_depart": "2013-05-19"
+ },
+ {
+  "lieu": "Honolulu - Oahu",
+  "log_nm": 19925,
+  "date_brute": "19/05/2013 au 11/06/2013",
+  "source": "trajethawaii.html",
+  "date_arrivee": "2013-05-19",
+  "date_depart": "2013-06-11"
+ },
+ {
+  "lieu": "Honolulu (Hawaii) - Prince Rupert (Canada)",
+  "log_nm": 22585,
+  "date_brute": "11/06/2013 au 30/06/2013",
+  "source": "trajethawbc.html",
+  "date_arrivee": "2013-06-11",
+  "date_depart": "2013-06-30"
+ },
+ {
+  "lieu": "Prince Rupert",
+  "log_nm": 22585,
+  "date_brute": "30/06/2013 au 09/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-06-30",
+  "date_depart": "2013-07-09"
+ },
+ {
+  "lieu": "Gunboat Harbour",
+  "log_nm": 22610,
+  "date_brute": "09/07/2013 au 11/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-09",
+  "date_depart": "2013-07-11"
+ },
+ {
+  "lieu": "Grenville Channel",
+  "log_nm": 22630,
+  "date_brute": "11/07/2013 au 12/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-11",
+  "date_depart": "2013-07-12"
+ },
+ {
+  "lieu": "Coghlan Anchorage",
+  "log_nm": 22660,
+  "date_brute": "12/07/2013 au 13/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-12",
+  "date_depart": "2013-07-13"
+ },
+ {
+  "lieu": "Green Spit",
+  "log_nm": 22695,
+  "date_brute": "13/07/2013 au 14/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-13",
+  "date_depart": "2013-07-14"
+ },
+ {
+  "lieu": "Work Bay",
+  "log_nm": 22720,
+  "date_brute": "14/07/2013 au 15/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-14",
+  "date_depart": "2013-07-15"
+ },
+ {
+  "lieu": "Unnamed Bay",
+  "log_nm": 22755,
+  "date_brute": "15/07/2013 au 16/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-15",
+  "date_depart": "2013-07-16"
+ },
+ {
+  "lieu": "Beales Bay",
+  "log_nm": 22790,
+  "date_brute": "16/07/2013 au 17/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-16",
+  "date_depart": "2013-07-17"
+ },
+ {
+  "lieu": "Fougner Bay",
+  "log_nm": 22815,
+  "date_brute": "17/07/2013 au 18/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-17",
+  "date_depart": "2013-07-18"
+ },
+ {
+  "lieu": "Millbrook Cove",
+  "log_nm": 22855,
+  "date_brute": "18/07/2013 au 19/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-18",
+  "date_depart": "2013-07-19"
+ },
+ {
+  "lieu": "Blunden Harbour",
+  "log_nm": 22895,
+  "date_brute": "19/07/2013 au 20/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-19",
+  "date_depart": "2013-07-20"
+ },
+ {
+  "lieu": "Port Mc Neil",
+  "log_nm": 22915,
+  "date_brute": "20/07/2013 au 23/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-20",
+  "date_depart": "2013-07-23"
+ },
+ {
+  "lieu": "Port Harvey",
+  "log_nm": 22950,
+  "date_brute": "23/07/2013 au 24/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-23",
+  "date_depart": "2013-07-24"
+ },
+ {
+  "lieu": "Crawford Anchorage",
+  "log_nm": 22985,
+  "date_brute": "24/07/2013 au 25/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-24",
+  "date_depart": "2013-07-25"
+ },
+ {
+  "lieu": "Squirel Cove",
+  "log_nm": 23020,
+  "date_brute": "25/07/2013 au 26/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-25",
+  "date_depart": "2013-07-26"
+ },
+ {
+  "lieu": "Cochrane Island",
+  "log_nm": 23045,
+  "date_brute": "26/07/2013 au 27/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-26",
+  "date_depart": "2013-07-27"
+ },
+ {
+  "lieu": "Nelson Island",
+  "log_nm": 23085,
+  "date_brute": "27/07/2013 au 28/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-27",
+  "date_depart": "2013-07-28"
+ },
+ {
+  "lieu": "Jedediah Island",
+  "log_nm": 23100,
+  "date_brute": "28/07/2013 au 28/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-28",
+  "date_depart": "2013-07-28"
+ },
+ {
+  "lieu": "Dolphin Beach",
+  "log_nm": 23115,
+  "date_brute": "28/07/2013 au 29/07/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-28",
+  "date_depart": "2013-07-29"
+ },
+ {
+  "lieu": "Vancouver",
+  "log_nm": 23155,
+  "date_brute": "29/07/2013 au 12/08/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-07-29",
+  "date_depart": "2013-08-12"
+ },
+ {
+  "lieu": "Kendrick Island",
+  "log_nm": 23180,
+  "date_brute": "12/08/2013 au 13/08/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-08-12",
+  "date_depart": "2013-08-13"
+ },
+ {
+  "lieu": "Thetis Island",
+  "log_nm": 23190,
+  "date_brute": "13/08/2013 au 14/08/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-08-13",
+  "date_depart": "2013-08-14"
+ },
+ {
+  "lieu": "Montague Harbour",
+  "log_nm": 23205,
+  "date_brute": "14/08/2013 au 15/08/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-08-14",
+  "date_depart": "2013-08-15"
+ },
+ {
+  "lieu": "Bedwell Harbour",
+  "log_nm": 23220,
+  "date_brute": "15/08/2013 au 20/08/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-08-15",
+  "date_depart": "2013-08-20"
+ },
+ {
+  "lieu": "Sidney",
+  "log_nm": 23230,
+  "date_brute": "20/08/2013 au 21/08/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-08-20",
+  "date_depart": "2013-08-21"
+ },
+ {
+  "lieu": "D'Arcy Island",
+  "log_nm": 23240,
+  "date_brute": "21/08/2013 au 22/08/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-08-21",
+  "date_depart": "2013-08-22"
+ },
+ {
+  "lieu": "Chatham Islands",
+  "log_nm": 23250,
+  "date_brute": "22/08/2013 au 24/08/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-08-22",
+  "date_depart": "2013-08-24"
+ },
+ {
+  "lieu": "Victoria",
+  "log_nm": 23250,
+  "date_brute": "24/08/2013 au 26/08/2013",
+  "source": "trajetcanada.html",
+  "date_arrivee": "2013-08-24",
+  "date_depart": "2013-08-26"
+ },
+ {
+  "lieu": "Port Angeles",
+  "log_nm": 23270,
+  "date_brute": "26/08/2013 au 04/09/2013",
+  "source": "trajetusa.html",
+  "date_arrivee": "2013-08-26",
+  "date_depart": "2013-09-04"
+ },
+ {
+  "lieu": "Neah Bay",
+  "log_nm": 23320,
+  "date_brute": "04/09/2013 au 05/09/2013",
+  "source": "trajetusa.html",
+  "date_arrivee": "2013-09-04",
+  "date_depart": "2013-09-05"
+ },
+ {
+  "lieu": "Neah Bay to San Francisco",
+  "log_nm": 24030,
+  "date_brute": "05/09/2013 au 10/09/2013",
+  "source": "trajetusa.html",
+  "date_arrivee": "2013-09-05",
+  "date_depart": "2013-09-10"
+ },
+ {
+  "lieu": "San Francisco",
+  "log_nm": 24040,
+  "date_brute": "10/09/2013 au 07/11/2013",
+  "source": "trajetusa.html",
+  "date_arrivee": "2013-09-10",
+  "date_depart": "2013-11-07"
+ },
+ {
+  "lieu": "San Miguel Island",
+  "log_nm": 24305,
+  "date_brute": "09/11/2013 au 11/11/2013",
+  "source": "trajetusa.html",
+  "date_arrivee": "2013-11-09",
+  "date_depart": "2013-11-11"
+ },
+ {
+  "lieu": "Santa Cruz Island",
+  "log_nm": 24325,
+  "date_brute": "11/11/2013 au 12/11/2013",
+  "source": "trajetusa.html",
+  "date_arrivee": "2013-11-11",
+  "date_depart": "2013-11-12"
+ },
+ {
+  "lieu": "Santa Barbara Island",
+  "log_nm": 24375,
+  "date_brute": "12/11/2013 au 13/11/2013",
+  "source": "trajetusa.html",
+  "date_arrivee": "2013-11-12",
+  "date_depart": "2013-11-13"
+ },
+ {
+  "lieu": "Catalina Island",
+  "log_nm": 24405,
+  "date_brute": "13/11/2013 au 14/11/2013",
+  "source": "trajetusa.html",
+  "date_arrivee": "2013-11-13",
+  "date_depart": "2013-11-14"
+ },
+ {
+  "lieu": "San Diego",
+  "log_nm": 24490,
+  "date_brute": "15/11/2013 au 13/01/2014",
+  "source": "trajetusa.html",
+  "date_arrivee": "2013-11-15",
+  "date_depart": "2014-01-13"
+ }
+]

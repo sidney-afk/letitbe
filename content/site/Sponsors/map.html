@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html> 
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="../CR/Tech/Style/MyStyle.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style>
+
+</style>
+    <script language="JavaScript" type="text/javascript">
+    function ShowPicture(name)
+      {
+          document.getElementById("WorldMap").style.display = "none";
+          document.getElementById(name).style.display = "block";
+      }
+    function HidePicture(name)
+      {
+          document.getElementById("WorldMap").style.display = "block";
+          document.getElementById(name).style.display = "none";
+      }
+  function goBack()
+    {
+    window.history.back()
+    }
+  function OnBack(name)
+    {
+          document.getElementById(name).src = "../Tech/Image/back2.ico";
+    }
+  function OffBack(name)
+    {
+          document.getElementById(name).src = "../Tech/Image/back1.ico";
+    }
+    </script>
+  </head>
+
+
+<body>
+<table width=600px align=center>
+  <tr>
+    <td>
+      <p class="std">Si vous souhaitez connaître notre opinion sur telle ou telle partie du voyage, rien de plus facile. 
+                     <b>cliquez sur la zone</b> qui vous intéresse... </p>
+        <img id="WorldMap" src="../Tech/Image/SponPacific.JPG" class="montre" border = "1" width="600" height="400" usemap ="#planetmap" />
+        <map id ="planetmap" name="planetmap">
+			<area shape ="rect" coords ="497,102,570,150" href ="../Sponsors/map_car.php" alt="Caraïbes" />
+			<area shape ="rect" coords ="475,143,495,157" href ="../Sponsors/map_pan.php" alt="Panama" />
+			<area shape ="poly" coords ="330,245,340,255,480,180,450,160" href ="../Sponsors/map_gal.php" alt="Galapagos" />
+			<area shape ="rect" coords ="232,227,321,282" href ="../Sponsors/map_pol.php" alt="Polynésie" />
+			<area shape ="rect" coords ="147,223,195,274" href ="../Sponsors/map_ton.php" alt="Tonga & Fidji" />
+			<area shape ="rect" coords ="95,313,160,384" href ="../Sponsors/DejavuNZ.html#NZ" alt="NZ" />
+			<area shape ="rect" coords ="186,85,261,132" href ="../Sponsors/DejavuHawaii.html" alt="Hawaii" />
+			<area shape ="rect" coords ="256,1,341,20" href ="../Sponsors/DejavuCanada.html" alt="Canada" />
+			
+		</map>
+    </td>
+  </tr>
+</table>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8029555-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html> 

@@ -1,0 +1,133 @@
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" type="text/css" href="../Tech/Style/MyStyle.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="css/layout.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="css/spacegallery.css" />
+    <link rel="stylesheet" media="screen" type="text/css" href="css/custom.css" />
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/eye.js"></script>
+    <script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="js/spacegallery.js"></script>
+    <script type="text/javascript" src="js/layout.js"></script>
+	<script language="JavaScript" type="text/javascript">
+	var index=11;
+    function ChangeTxt()
+    {
+          index--;
+		  if (index<1) index=11;
+		  var Image = "img" + index;
+		  var Com = document.getElementById(Image).alt;
+		  document.getElementById("Comment").innerHTML = Com;
+
+    }
+	</script>
+  </head>
+
+<body>
+    <div class="wrapper">
+        <ul class="navigationTabs">
+            <li><a href="#Photo" rel="Photo">Photos</a></li>
+            <li><a href="#Caract" rel="Carac">Caractéristiques</a></li>
+            <li><a href="#Plan" rel="Plan">Plan</a></li>
+        </ul>
+        <div class="tabsContent">
+            <div class="tab" >
+				Cliquez sur les photos.
+				<div id="myGallery" class="spacegallery" onload="return event.returnValue = ChangeTxt();">
+					<img src="images/bateau1.jpg" id="img1" alt="Let It Be sous voile" />
+					<img src="images/bateau2.jpg" id="img2" alt="Let It Be à Moorea" />
+					<img src="images/bateau3.jpg" id="img3" alt="Le capitaine aux comandes" />
+					<img src="images/bateau4.jpg" id="img4" alt="Let It Be aux Tonga" />
+					<img src="images/bateau5.jpg" id="img5" alt="Let It Be aux Gambier" />
+					<img src="images/bateau6.jpg" id="img6" alt="Lecture sur le bimini" />
+					<img src="images/bateau7.jpg" id="img7" alt="Le carré" />
+					<img src="images/bateau8.jpg" id="img8" alt="Le cockpit" />
+					<img src="images/bateau9.jpg" id="img9" alt="La clef de sol Maorie" />
+					<img src="images/bateau10.jpg" id="img10" alt="Rentrée de spi aux Fidji" />
+					<img src="images/bateau11.jpg" id="img11" alt="Le bateau dans l'atoll de Faaite aux Tuamotu" />
+				</div>
+            </div>
+            <div class="tab">
+  <table class="w90">
+    <tr>
+      <td width=50%  class="batbord2">
+        <p class="titre"><B>Caractéristiques</B></p>
+          <p class="std">Fabricant: <b>Fountaine-Pajot</b>
+          <br>Année de construction: <b>2004</b>
+          <br>Longueur: <b>14,05 m</b>
+          <br>BAU: <b>7,38 m</b>
+          <br>Tirant d'eau: <b>1,30 m</b>
+          <br>Surface voilure: <b>123 m&#0178</b>
+          <br>Poids: <b>9.500 Kg</b>
+          <br>Aménagement: <b>4 cabines doubles (+WC)</b>
+          <br>Réservoir eau: <b>760 L</b>
+          <br>Réservoir gasoil: <b>400 L</b>
+          <br>Couleur: <b>Blanc avec des lignes rouges et un tatoo</b>
+          <br>Moteurs: <b>Inboard diesel 2 x 54 CV</b>
+        <br>
+      </td>
+      <td width=50%  class="batbord2">
+        <p class="titre"><B>Equipement</B></p>
+        <p class="std">Dessalinisateur 60 l/h<br>
+	VHF avec récepteur AIS<br>
+	Balise EPIRB<br>
+        Plotter<br>
+        Panneaux solaires (4 X 100W + 190W)<br>
+        Chargeur de quai 220V<br>
+        Débitmètre eau<br>
+        Contrôleur de charge de batteries<br>
+        Circuit eau de mer haute pression<br>
+        Circuit 220V dans chaque cabine<br>
+        Ventilateurs<br>
+        Annexe 3.4m avec moteur HB 20CV<br>
+        Radar</p>
+        <br>
+      </td>
+    </tr>
+    <tr>
+      <td width=50%>
+        <p class="titre"><B>Trucs qu'on a ajouté</B></p>
+        <p class="std">
+          Portique en inox<br>
+          2 éoliennes Rutland 913<br>
+          8 batteries T105 de 6V, soit 900Ah au total<br>
+          Régulateurs d'alternateur STERLING<br>
+	  Barbecue au gaz<br>
+	  Antenne satellite BGAN<br>
+          Antenne WiFi omnidirectionnelle + ampli<br>
+          Onduleur 1800W sinusoïdal<br>
+          Lave linge<br>
+          Congélateur<br>
+          <a href="../Home/lexique.html#PB" class="vtabg">Bout dehors</a><br>
+          Spi asymétrique<br>
+          TV 12V + antenne<br>
+          Kayak 2 places<br>
+          Récupérateur d'eau de pluie + filtre<br>
+          Trampoline à mailles fines sans noeuds<br>
+	  Compresseur plongée portable<br>
+	  Bimini 'intégral'<br>
+        <br>
+      </td>
+      <td width=50%>
+        <p class="titre"><B>Trucs qu'on n'ajoutera pas</B></p>
+        <p class="std">Mat en carbone rotatif et qui fait de la musique<br>
+          Groupe électrogène<br>
+          Air conditionné<br>
+          Pile atomique</br>
+          Réservoir eaux noires<br>
+          </p>
+        <br>
+      </td>
+    </tr>
+  </table>
+            </div>
+            <div class="tab">
+                <h2>Plan</h2>
+				<img name="bateau" Align="Top" src="../Tech/Image/batplan.jpg" alt="" border="0" ></img>
+			</div>
+        </div>
+    </div>
+	<p id="Comment" class="titrecenter">Le bateau dans l'atoll de Faaite aux Tuamotu</p>
+</body>
+</html>

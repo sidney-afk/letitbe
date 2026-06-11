@@ -1,0 +1,740 @@
+﻿      body { 
+        background-color: #90AAB6;
+        padding: 0;
+        margin: 0;
+      }
+      table.main {
+		width: 100%;
+        height: 100%;
+        border: 0;
+        padding: 0;
+        border-spacing: 0;
+      }
+      table.index {
+		width: 100%;
+        height: 100%;
+        border: 0;
+        padding: 0;
+        border-spacing: 0;
+      }
+      table.log {
+		border-style: solid;
+		border-width: 1px;
+		border-color: black;
+		background-color: darkseagreen;
+		color: black;
+	}
+      table.w60 {
+		width: 60%;
+        padding: 2px;
+      }
+      table.w90 {
+	    width: 100%;
+      }
+      td.LD {
+        border-width: 0px 0px 1px 0px;
+        border-style: solid;
+        border-color: white;
+      }
+      td {
+	    color: black;
+	    font-family: arial;
+	    font-size: 12px;
+	    border-style: solid;
+	    border-width: 0px;
+        vertical-align: top;
+      }
+      td.header {
+        height: 60px;
+		width: 100%;
+        background-image: url("../Image/Banner.png");
+      }
+      td.separ {
+        background-color: DarkSlateGray;
+        height: 8px;
+        width: 100%;
+      }
+      td.body {
+        height: 100%;
+        width: 100%;
+      }
+      td.corps {
+        height: 1000px;
+		width: 100%;
+		padding: 0px;
+      }
+      td.footer {
+        height: 10%;
+      }
+      td.left {
+        height: 100%;
+        width: 150px;
+		background-color: silver;
+        text-align: center; 
+        vertical-align: top;
+		color: white;
+      }
+      td.right {
+	    background-color: white; 
+	    width: 100px; 
+	    vertical-align: top;
+      }
+      td.pict {
+        width: 40%;
+		vertical-align: middle;
+      }
+      td.albumlk {
+        border: outset white;
+		text-align: center;
+		background-color:DarkSlateGray;
+	}
+
+      td.bgreen {
+		text-align: center; 
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        padding: 2px 2px 2px 2px;
+        background-color: seagreen;
+        text-decoration: none;
+	  }	
+      td.bgreen:hover {
+        background-color: darkseagreen;      
+      }
+      td.bred {
+		text-align: center; 
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        padding: 2px 2px 2px 2px;
+        background-color: peru;
+        text-decoration: none;
+	  }	
+      td.bred:hover {
+        background-color: sandybrown;      
+      }
+      td.byellow {
+		text-align: center; 
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        padding: 2px 2px 2px 2px;
+        background-color: darkkhaki;
+        text-decoration: none;
+	  }	
+      td.byellow:hover {
+        background-color: khaki;      
+      }
+      td.bgrey {
+		text-align: center; 
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        padding: 2px 2px 2px 2px;
+        background-color: #8A8AE6;
+        text-decoration: none;
+	  }	
+      td.bgrey:hover {
+        background-color: #ADADFF;      
+      }
+      td.batbord {
+        width:128px;
+		color: #fff;
+		text-align: center; 
+        border-collapse: separate;
+        border-spacing: 2px 2px; 
+        border-width: 1px;
+        border-style: solid;
+        border-color: white;
+        padding: 5px 5px 5px 8px;
+        background-color: DarkSlateGray;
+        text-decoration: none;
+	  }	
+      td.batbord2 {
+        color: #fff;
+        border-collapse: separate;
+        border-spacing: 2px 2px; 
+        border-top: 1px solid white;
+        border-bottom: 1px solid white;
+        padding: 5px 5px 5px 8px;
+        text-decoration: none;
+	  }	
+      td.pointeur {
+		cursor: pointer;
+	  }	
+      td.menupointeur {
+		cursor: pointer;
+		height: 26px;
+        border-style: solid;
+        border-color: #90AAB6;
+        border-width: 2px;
+        background-image: url("../Image/Menu/bckoff.bmp");
+		background-repeat:no-repeat;
+		background-position:left;
+        padding: 0px 0px 0px 0px;
+		text-align: center; 
+	  }	
+      td.menupointeur:hover {
+		cursor: pointer;
+		color: white;
+        border-style: solid;
+        border-color: #90AAB6;
+        border-width: 2px;
+        background-image: url("../Image/Menu/bckon.bmp");
+		background-repeat:no-repeat;
+		background-position:left;
+        padding: 0px 0px 0px 0px;
+		text-align: center; 
+	  }	
+      td.menupointeur2 {
+		cursor: pointer;
+		height: 26px;
+        border-style: solid;
+        border-color: #90AAB6;
+        border-width: 2px;
+        background-image: url("../Image/Menu/bckoff2.bmp");
+		background-repeat:no-repeat;
+		background-position:left;
+        padding: 0px 0px 0px 0px;
+		text-align: center; 
+	  }	
+      td.menupointeur2:hover {
+		cursor: pointer;
+		color: white;
+        border-style: solid;
+        border-color: #90AAB6;
+        border-width: 2px;
+        background-image: url("../Image/Menu/bckon2.bmp");
+		background-repeat:no-repeat;
+		background-position:left;
+        padding: 0px 0px 0px 0px;
+		text-align: center; 
+	  }	
+      td.albpointeur {
+		cursor: pointer;
+		width: 25%;
+		height: 150px;
+        border-style: solid;
+        border-color: #90AAB6;
+        border-width: 2px;
+		background-repeat:no-repeat;
+		background-position:center;
+		text-align: center; 
+        padding-top: 0px;
+	  }	
+      td.albpointeur:hover {
+		cursor: pointer;
+		width: 25%;
+		text-align: center; 
+        border-style: solid;
+        border-width: 2px;
+        border-color: black;
+	  }	
+      tr.byellow {
+		color: black;
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        padding: 2px 2px 2px 2px;
+        background-color: peru;
+        text-decoration: none;
+		text-align: center; 
+	  }	
+      tr.bred {
+		color: black;
+		text-align: center; 
+        border-style: solid;
+        border-color: black;
+        border-width: 1px;
+        padding: 2px 2px 2px 2px;
+        background-color: moccasin;
+        text-decoration: none;
+	  }	
+      tr.home {
+		width:90%;
+		border-style:solid;
+		border-color: black; 
+		border-width:1px; 
+		color:black;
+		font-size: 12px; 
+		padding:15px;
+	} 
+      span.std {
+	    color: black;
+	    font-family: arial;
+	    font-size: 14px;
+	    text-align: center;
+      }
+      span.petit {
+	    color: yellow;
+	    font-family: Arial Narrow;
+	    font-size: 12px;
+	    text-align: center;
+      }
+      span.bordered {
+	    color: white;
+        font-family: arial;
+	    font-size: 12px;
+	    text-align: center;
+        border-width: 2px;
+        border-style: solid;
+        border-color: white;
+      }
+      span.spon {
+		position: absolute;
+		left: 270px;
+		width:120px;
+		top:5px;
+		color: green;
+		background-color: khaki;
+        font-family: lucinda;
+		font-size: 14px;
+		text-align: center;
+        border-width: 2px;
+        border-style: solid;
+        border-color: white;
+      }
+      span.titre {
+	    color: white;
+	    font-family: verdana;
+	    font-size: 12px;
+	    text-align: justify;
+      }
+      span.pop {       
+        color: white;
+        font-family: arial;
+		font-size: 12px;
+		text-align: center;
+      }
+      span.pub {
+		position: absolute;
+		left: 5px;
+		width:320px;
+		bottom:5px;
+		color: black;
+        font-family: arial;
+		font-size: 12px;
+		font-style: italic;
+		text-align: center;
+        border: groove white;
+        background-color: khaki;
+      }
+      span.pubfinish {
+		position: absolute;
+		left: 5px;
+		width:320px;
+		bottom:5px;
+		color: white;
+        font-family: arial;
+		font-size: 12px;
+		font-style: italic;
+		text-align: center;
+        border: groove white;
+        background-color: red;
+      }
+      p.std {
+	    color: black;
+	    font-family: verdana;
+	    font-size: 12px;
+	    text-align: justify;
+      }
+      p.wht {
+	    color: white;
+	    font-family: verdana;
+	    font-size: 12px;
+	    text-align: justify;
+      }
+      p.blck {
+	    color: black;
+	    font-family: verdana;
+	    font-size: 12px;
+	    text-align: justify;
+      }
+      p.blckg {
+	    color: black;
+	    font-family: verdana;
+	    font-size: 14px;
+	    text-align: justify;
+      }
+      p.list {
+	    color: white;
+	    font-family: arial;
+	    font-size: 12px;
+	    text-align: left;
+      }
+      p.petit {
+	    color: gold;
+	    font-family: verdana;
+	    font-size: 10px;
+	    text-align: left;
+      }
+      p.petitb {
+	    color: black;
+	    font-family: verdana;
+	    font-size: 10px;
+	    text-align: left;
+      }
+      p.petitr {
+	    color: white;
+	    font-family: verdana;
+	    font-size: 10px;
+	    text-align: left;
+      }
+      p.pop {
+	    color: white;
+	    font-family: arial;
+	    font-size: 12px;
+	    text-align: left;
+      }
+      p.err {
+	    color: red;
+  	    text-align: center;
+	    font-family: arial;
+	    font-size: 14px;
+		border: groove black;
+	    text-align: left;
+        background-color: white;
+      }
+      p.christel {
+	    color: black;
+  	    text-align: center;
+	    font-family: arial;
+	    font-size: 14px;
+	    text-align: center;
+        background-color: tan;
+      }
+       p.bordered {
+		color: white;
+        font-family: verdana;
+		font-size: 14px;
+		text-align: center;
+        border-width: 2px;
+        border-style: solid;
+        border-color: yellow;
+      }
+      p.depart {
+		color: pink;
+        font-family: showcard gothic;
+		font-size: 20px;
+		text-align: left;
+      }
+      p.react {
+	    color: grey;
+	    font-family: arial;
+	    font-size: 12px;
+	    text-align: left;
+      }
+      p.react:hover {
+	    font-size: 12px;
+	    color: black;
+        border-width: 2px;
+        border-style: solid;
+        border-color: lightgrey;
+      }
+      p.pagetitre {
+	    color: white;
+	    font-family: Arial;
+	    font-size: 48px;
+	    text-align: left;
+      }
+      p.titre {
+	    color: white;
+	    font-family: arial;
+	    font-size: 18px;
+	    text-align: left;
+      }
+      p.titreblack {
+	    color: black;
+	    font-family: arial;
+	    font-size: 18px;
+	    text-align: left;
+      }
+      p.notitre {
+	    color: steelblue;
+	    font-family: arial;
+	    font-size: 18px;
+	    text-align: center;
+        background-color: white;
+      }
+      p.titrecenter {
+	    color: white;
+	    font-family: arial;
+	    font-size: 18px;
+	    text-align: center;
+      }
+      a.contact {
+       text-decoration: none;
+	    color: darkslategray;
+	    font-family: arial;
+	    font-size: 12px;
+	    text-align: left;
+      }
+      a.contact:hover {
+	    color: white;
+	    font-family: arial;
+	    font-size: 12px;
+	    text-align: left;
+      }
+      #tabs {
+        display: block;
+        float: left;
+        width: 100%;
+      }
+      a.tab { 
+        border-collapse: collapse; 
+        border-style: solid solid none solid;  
+        border-color: black; 
+        border-width: 1px 1px 0px 1px; 
+        background-color: grey; 
+        padding: 2px 0.5em 0px 0.5em; 
+        margin-top: 4px;
+        margin-right: 2px;
+        font-family: arial; 
+	    font-size: 14px;
+		color: white;
+        text-decoration: none;
+        width: 12%;
+        text-align: center;
+        float: left;
+      }
+      a.tab:hover { 
+        border-color: black; 
+        background-color: darkgray;
+		color: black; 
+        letter-spacing: +1px;
+      }
+      a.lk { 
+        text-decoration: none;
+		font-weight:bold;
+		color: lightgrey;
+      }
+      a.choix { 
+        text-decoration: none;
+		color: orange;
+      }
+      a.choix:hover { 
+        text-decoration: none;
+		color: white;
+      }
+      a.vtabg { 
+        text-decoration: none;
+		color: gold;
+        float: left;
+		font-size: 12px;
+      }
+      a.vtabg:hover { 
+        color: white;
+      }
+      a.vtabb { 
+        text-decoration: none;
+		color: black;
+        float: left;
+		font-size: 12px;
+      }
+      a.vtabb:hover { 
+        color: white;
+      }
+      a.centlk { 
+        text-decoration: none;
+		color: orange;
+		font-size: 12px;
+      }
+      a.centlk:hover { 
+        color: white;
+      }
+      a.clkb { 
+        text-decoration: none;
+		color: black;
+		font-size: 12px;
+      }
+      a.clkb:hover { 
+        color: white;
+      }
+      a.std { 
+        text-decoration: none;
+		color: blue;
+		font-size: 12px;
+      }
+     a.std:hover { 
+        color: white;
+      }
+ 
+      .panel { 
+        border: solid 1px black; 
+        background-color: #90AAB6;
+        padding: 6px; 
+        height: 90%; 
+        overflow: auto; 
+        clear: left; 
+      }
+      img.petit {
+	    width: 60px;
+	    height: 80px;
+        border: 0;
+      }
+      img.cache {
+	    display: none;
+      }
+      img.montre {
+	    display: block;
+        border-color: white;
+      }
+      img.gyros {
+	    border-color: black;
+        border-width: 0px;
+        border-style: solid;
+        height: 100px;
+      }
+      img.photo {
+		border-color: black;
+        border-width: 2px;
+        border-style: solid;
+      }
+      img.TrafficLight {        
+	    width: 15px; 
+        height: 20px;
+      }
+      img.smile {
+		position: absolute;
+		right: 5px;
+		bottom:5px;
+      }
+      img.over {
+		position: absolute;
+		right: 5px;
+		bottom:5px;
+        height: 80px;
+        width: 80px;
+      }
+      img.Q {        
+		width: 270px; 
+        height: 200px;
+      }
+      img.Dejavu {        
+		width: 300px; 
+        border-style: solid;
+		border-width: 2px; 
+		border-color: black; 
+      }
+      img.album {        
+		width: 128px; 
+        position:absolute;
+        z-index:-1;
+      }
+      p.album {
+	    color: white;
+	    font-family: verdana;
+	    font-size: 12px;
+	    text-align: center;
+	    z-index:2;
+     }
+      p.albumpetit {
+	    color: yellow;
+    	padding-top:0px;
+	    font-family: verdana;
+	    font-size: 10px;
+	    text-align: center;
+     }
+      td.LineAlbum {
+		background-color: black;
+        border-style: solid;
+        border-color: #90AAB6;
+        border-width: 2px;
+		border-bottom: 16px solid #90AAB6;
+    }
+	li.std
+	{
+		background-image:url("../Image/boule.gif");
+		background-repeat:no-repeat;
+		background-position:0px 5px; 
+		padding-left:24px;
+	}
+	ul.std
+	{
+		list-style-type:none;
+		padding:0px;
+		margin:0px;
+	}
+      div.savoirplus { 
+        border-collapse: collapse; 
+        border-style: solid;  
+        border-color: black; 
+        border-width: 1px; 
+        background-color: grey; 
+        padding: 2px; 
+        margin-top: 4px;
+        margin-right: 2px;
+        font-family: arial; 
+		font-size: 14px;
+		color: white;
+        text-decoration: none;
+        text-align: center;
+        float: left;
+		position:absolute;
+		right:5px;
+		top:5px;
+      }
+     div.savoirplus:hover { 
+        border-color: black; 
+        background-color: darkgray;
+		color: black; 
+      }
+      h3.acc { 
+        border-style: solid;
+		border-color: sienna; 
+        border-width: 1px 1px 0px 1px; 
+        background-color: lightgrey; 
+        padding: 2px 0.5em 0px 0.5em; 
+        margin-top: 4px;
+        margin-right: 2px;
+        font-family: arial; 
+	    font-size: 14px;
+		color: white;
+        text-decoration: none;
+        text-align: left;
+        width: 97%;
+      }
+      h3.acc:hover { 
+        border-color: black; 
+        background-color: white;
+		color: black; 
+      }
+      a.acc { 
+        text-decoration: none;
+		color: sienna;
+        background-color: lightgrey; 
+        border-style: solid;
+		border-color: sienna; 
+        align: center;
+		font-family: verdana;
+		font-size: 24px;
+      }
+     a.acc:hover { 
+        color: sienna;
+      }
+      span.tab { 
+        border-collapse: collapse; 
+        border-style: solid solid none solid;  
+        border-color: black; 
+        border-width: 1px 1px 0px 1px; 
+        background-color: grey; 
+        padding: 2px 0.5em 0px 0.5em; 
+        margin-top: 4px;
+        margin-right: 2px;
+        font-family: arial; 
+	    font-size: 14px;
+		color: white;
+        text-decoration: none;
+        width: 12%;
+        text-align: center;
+        float: left;
+      }
+      span.tab:hover { 
+		cursor: pointer;
+        border-color: black; 
+        background-color: darkgray;
+		color: black; 
+        letter-spacing: +1px;
+      }
+ 
+

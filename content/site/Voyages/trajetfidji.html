@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html> 
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="../Tech/Style/MyStyle.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <script src="../Tech/JQuery/jquery.js" type="text/javascript"></script>
+  
+    <style style="text/css">
+    #pict {position:absolute;z-index:4;display:none;left:2px;top:2px;
+	border-color: white;
+        border-width: 2px;
+        border-style: solid;
+	}
+    </style>
+  </head>
+
+<body>
+  <script>
+    $(document).ready(function(){
+
+      $('#pict').click(function(){
+	$('#pict').toggle('slow');
+      });
+
+      $('#thumbtrajet').click(function(){
+	$('#imgpict').attr({ src: '../Tech/Image/mapfidji2.JPG'});
+	$('#pict').toggle('slow');
+      });
+
+      $('#thumbcruise').click(function(){
+	$('#imgpict').attr({ src: '../Tech/Image/mapfidji.jpg'});
+	$('#pict').toggle('slow');
+      });
+
+    });
+  </script>
+<table class="w90">
+  <div id="pict"><img id="imgpict" style="cursor:pointer" title="Cliquer pour fermer"></div>
+  <tr>
+    <td width="60%">
+      <table>
+	  <tr>
+	    <td>
+	       <p class="std"><i><b>Tonga</b>. Traversée de Tonga vers Fidji. 420 nm et passage de l'antiméridien.</i><br></p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	       <img id="thumbtrajet" style="cursor:pointer" title="Cliquer pour agrandir/cacher" width="200" src="../Tech/Image/mapfidji2.JPG" />
+	    </td>
+	  </tr>
+
+	  <tr>
+	    <td>
+	       <br>
+	       <p class="std"><i><b>Fidji</b>. Cruising dans les Fidji.</i><br></p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	       <img id="thumbcruise" style="cursor:pointer" title="Cliquer pour agrandir/cacher" width="200" src="../Tech/Image/mapfidji.jpg" />
+	    </td>
+	  </tr>
+      </table>
+    </td>
+    <td>
+      <table class="log">
+	<tr class="byellow"><td><b>Date</b></td><td><b>Lieu</b></td><td><b>Log (nm)</b></td></tr>
+	<tr><td>27/9 au 2/10</td><td>Fidji - Savusavu</td><td style="text-align: right;">9920</td></tr>
+	<tr><td>3/10 au 5/10</td><td>Fidji - Makogai</td><td style="text-align: right;">9970</td></tr>
+	<tr><td>5/10 au 7/10</td><td>Fidji - Naigani</td><td style="text-align: right;">9990</td></tr>
+	<tr><td>7/10 au 9/10</td><td>Fidji - Nananu</td><td style="text-align: right;">10020</td></tr>
+	<tr><td>10/10</td><td>Fidji - Natunuku</td><td style="text-align: right;">10050</td></tr>
+	<tr><td>11/10 au 15/10</td><td>Fidji - Nadi</td><td style="text-align: right;">10080</td></tr>
+	<tr><td>17/10</td><td>Fidji - Malakati</td><td style="text-align: right;">10130</td></tr>
+	<tr><td>19/10</td><td>Fidji - Sawa-I-Lau</td><td style="text-align: right;">10140</td></tr>
+	<tr><td>22/10</td><td>Fidji - Yasawairara</td><td style="text-align: right;">10150</td></tr>
+	<tr><td>25/10</td><td>Fidji - Blue Lagoon</td><td style="text-align: right;">10170</td></tr>
+	<tr><td>28/10</td><td>Fidji - Likuliku</td><td style="text-align: right;">10185</td></tr>
+	<tr><td>30/10</td><td>Fidji - Vanua Lailai</td><td style="text-align: right;">10195</td></tr>
+	<tr><td>2/11</td><td>Fidji - Mana</td><td style="text-align: right;">10205</td></tr>
+	<tr><td>4/11</td><td>Fidji - Cuvu</td><td style="text-align: right;">10260</td></tr>
+	<tr><td>5/11</td><td>Fidji - Naboutini</td><td style="text-align: right;">10285</td></tr>
+	<tr><td>6/11</td><td>Fidji - Namalata</td><td style="text-align: right;">10340</td></tr>
+	<tr><td>9/11</td><td>Fidji - Gasele</td><td style="text-align: right;">10360</td></tr>
+	<tr><td>10/11</td><td>Fidji - Kavala Bay</td><td style="text-align: right;">10375</td></tr>
+	<tr><td>11/11</td><td>Fidji - Vuro Island</td><td style="text-align: right;">10385</td></tr>
+	<tr><td>13/11</td><td>Fidji - Korolevu Bay</td><td style="text-align: right;">10400</td></tr>
+	<tr><td>15/11</td><td>Fidji - Matasawalevu</td><td style="text-align: right;">10410</td></tr>
+	<tr><td>18/11</td><td>Fidji - Naqara Bay</td><td style="text-align: right;">10420</td></tr>
+	<tr><td>20/11</td><td>Fidji - Dravuni</td><td style="text-align: right;">10430</td></tr>
+	<tr><td>24/11</td><td>Fidji - Suva</td><td style="text-align: right;">10470</td></tr>
+      </table>
+    </td>  
+  </tr>
+</table>
+
+
+</body>
+</html> 

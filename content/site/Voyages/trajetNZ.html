@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html> 
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="../Tech/Style/MyStyle.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <script src="../Tech/JQuery/jquery.js" type="text/javascript"></script>
+  
+  <style style="text/css">
+  #pict {position:absolute;z-index:4;display:none;left:2px;top:2px;
+	border-color: white;
+        border-width: 2px;
+        border-style: solid;
+	}
+  </style>
+  </head>
+
+
+<body>
+  <script>
+    $(document).ready(function(){
+
+      $('#pict').click(function(){
+	$('#pict').toggle('slow');
+      });
+
+      $('#thumbtrajet').click(function(){
+	$('#imgpict').attr({ src: '../Tech/Image/mapFidNZ.JPG'});
+	$('#pict').toggle('slow');
+      });
+
+      $('#thumbspeed').click(function(){
+	$('#imgpict').attr({ src: '../Tech/Image/FidNZSpeed.jpg'});
+	$('#pict').toggle('slow');
+      });
+
+    });
+  </script>
+<table class="w90">
+  <div id="pict"><img id="imgpict" style="cursor:pointer" title="Cliquer pour fermer"></div>
+  <tr>
+    <td width="60%">
+      <table>
+	  <tr>
+	    <td>
+	       <p class="std"><i><b>Traversée de Fidji vers Nlle Zélande.</b> <br>1200 nm et première descente sous les 30° de latitude Sud.</i><br>
+	       <i>On a dégusté...</i><br>Et on n'a pas vraiment pris le chemin le plus court...<br>Mais on a quand même mis 200 nm à Blue Callaloo, parti en même temps que nous...
+	       <br>Bilan des casses: la girouette en tête de mât est tombée à la mer, la pantoire s'est cassée en deux et le bout dehors est tombé dans l'eau...</p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	       <img id="thumbtrajet" style="cursor:pointer" title="Cliquer pour agrandir/cacher" width="200" src="../Tech/Image/mapFidNZ.JPG" />
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+		<br><p class="std"><b>Et pour ceux que la vitesse passionne...</b></p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	       <img id="thumbspeed" style="cursor:pointer" title="Cliquer pour agrandir/cacher" width="200" src="../Tech/Image/FidNZSpeed.jpg" />
+	    </td>
+	  </tr>
+      </table>
+    </td>
+    <td>
+      <table class="log">
+	<tr class="byellow"><td><b>Date</b></td><td><b>Lieu</b></td><td><b>Log (nm)</b></td></tr>
+	<tr><td>29/11/2010 au 08/12/2010</td><td>Fidji vers Nlle Zélande</td><td style="text-align: right;">11670</td></tr>
+	<tr><td>08/12/2010 au 16/12/2010</td><td>Nlle Zélande - Opua</td><td style="text-align: right;">11670</td></tr>
+	<tr><td>16/12/2010 au 17/12/2010</td><td>Nlle Zélande - Whangarei</td><td style="text-align: right;">11750</td></tr>
+      </table>
+    </td>  
+  </tr>
+</table>
+
+
+</body>
+</html> 

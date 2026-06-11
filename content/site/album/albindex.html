@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <link rel="stylesheet" type="text/css" href="../Tech/Style/MyStyle.css" />
+  <script language="JavaScript" type="text/javascript">
+    function ChangeSrc(source)
+    {
+          document.getElementById("AlbCorps").src = source;
+    }
+    function ShowImg(MenId,source)
+    {
+          document.getElementById(MenId).src = source;
+    }
+    function HideImg(MenId,source)
+    {
+          document.getElementById(MenId).style.display = "none";
+    }
+  </script>
+  </head>
+  <body>
+    <table class="Main">
+      <tr>
+        <td class="Left" style="background-color: silver;">
+        <table width=150px>
+          <tr>
+            <td class="menupointeur" 
+			onclick="return event.returnValue = ChangeSrc('./albhome.html');" 
+		>
+              Dernières photos
+            </td>
+          </tr>
+          <tr>
+            <td class="menupointeur" 
+			onclick="return event.returnValue = ChangeSrc('./albums.html');" 
+		>
+              Tous les albums
+            </td>
+          </tr>
+          <tr>
+            <td class="menupointeur" 
+			onmousedown="return event.returnValue = ChangeSrc('./videos.html');" 
+		>
+              Vidéos
+           </td>
+          </tr>
+        </table>
+        </td>
+        <td class="corps">
+          <iframe id="AlbCorps" src="./albhome.html" width=100% height=100% frameborder=0></iframe>
+        </td>
+      </tr>
+    </table>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8029555-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+  </body>
+</html>

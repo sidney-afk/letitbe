@@ -1,0 +1,79 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html> 
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="../Tech/Style/MyStyle.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <script src="../Tech/JQuery/jquery.js" type="text/javascript"></script>
+  
+    <style style="text/css">
+    #pict {position:absolute;z-index:4;display:none;left:2px;top:2px;
+	border-color: white;
+        border-width: 2px;
+        border-style: solid;
+	}
+    </style>
+  </head>
+
+<body>
+  <script>
+    $(document).ready(function(){
+
+      $('#pict').click(function(){
+	$('#pict').toggle('slow');
+      });
+
+      $('#thumbtrajet').click(function(){
+	$('#imgpict').attr({ src: './mapcook.JPG'});
+	$('#pict').toggle('slow');
+      });
+
+    });
+  </script>
+<table class="w90">
+  <div id="pict"><img id="imgpict" style="cursor:pointer" title="Cliquer pour fermer"></div>
+  <tr>
+    <td width="60%">
+      <table>
+	  <tr>
+	    <td>
+	       <p class="std"><i><b>Cook</b>. Traversée sans histoire de Maupihaa vers Aitutaki. Alizé 15/20N de SSE.</i><br></p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	       <p class="std"><i><b>Cook</b>. Traversée de Aitutaki vers Rarotonga toutes voiles dehors (mais avec 10 noeuds de vent).</i><br></p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	       <p class="std"><i><b>Cook</b>. De Rarotonga vers Beveridge Reef. 3 jours à plus de 30 noeuds. Fatiguant.</i><br></p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	       <p class="std"><i><b>Niue</b>. De Beveridge Reef à Niue. 30 heures au spi, puis au moteur. Pétole.</i><br></p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	       <img id="thumbtrajet" style="cursor:pointer" title="Cliquer pour agrandir/cacher" width="500" src="./mapcook.JPG" />
+	    </td>
+	  </tr>
+      </table>
+    </td>
+    <td>
+      <table class="log">
+	<tr class="byellow"><td><b>Date</b></td><td><b>Lieu</b></td><td><b>Log (nm)</b></td></tr>
+	<tr><td>19/7 au 26/7</td><td>Cook du sud - Aitutaki</td><td style="text-align: right;">8500</td></tr>
+	<tr><td>27/7 au 9/8</td><td>Cook du sud - Rarotonga</td><td style="text-align: right;">8650</td></tr>
+	<tr><td>13/8 au 18/8</td><td>Beveridge Reef</td><td style="text-align: right;">9110</td></tr>
+	<tr><td>19/8 au 27/8</td><td>Niue</td><td style="text-align: right;">9250</td></tr>
+      </table>
+    </td>  
+  </tr>
+</table>
+
+
+</body>
+</html> 

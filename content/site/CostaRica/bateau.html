@@ -1,0 +1,92 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html> 
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <link rel="stylesheet" type="text/css" href="../CR/Tech/Style/MyCRStyle.css" />
+
+<script type="text/javascript">
+  var index=1;
+
+  function goBack()
+    {
+    window.history.back()
+    }
+  function OnImg(sr,al,id)
+    {
+          document.getElementById(id).alt = sr;
+          document.getElementById(id).src = al;
+    }
+  function goMore(incr)
+    {
+    imgid = "img" + index;
+    txtid = "txt" + index;
+	document.getElementById(imgid).style.display = "none";
+	document.getElementById(txtid).style.display = "none";
+    index = index + incr;
+    if (index<1) index=3;
+    if (index>3) index=1;
+    imgid = "img" + index;
+    txtid = "txt" + index;
+	document.getElementById(imgid).style.display = "block";
+	document.getElementById(txtid).style.display = "block";
+	document.getElementById("txtpic").innerHTML = index+"/3";
+    }
+  function ShowPicture(name)
+    {
+          document.getElementById(name).src = "../CR/Tech/Image/back1.ico";
+    }
+  function HidePicture(name)
+    {
+          document.getElementById(name).src = "../CR/Tech/Image/back2.ico";
+    }</script>
+</head>
+
+<body>
+<table style="margin-left:auto;margin-right:auto; width:800px; background-color:#99FF66; padding: 10px;">
+  <tr>
+    <td colspan="3">
+		<p class="blackshadow">Nan, nan, nan, on fait plus de bateau !!!<br></p>
+		<p id="txtpic" class="std">1/3</p>
+	</td>
+	</tr>
+	<tr>
+	<td>
+			<img id="Lft" src="../CR/Tech/Image/left1.gif" alt="../CR/Tech/Image/left2.gif"
+             onclick="goMore(-1)" 
+             onmouseover="OnImg(src,alt,id)"
+             onmouseout="OnImg(src,alt,id)"
+			></img>
+	</td>
+	<td>
+					<img src="../data/CR/images/Bateau/P1.JPG" id="img1" style="margin-left:auto;margin-right:auto; display:block;"/>
+					<img src="../data/CR/images/Bateau/P2.JPG" id="img2" style="display:none;"/>
+					<img src="../data/CR/images/Bateau/P3.JPG" id="img3" style="display:none;"/>
+	</td>
+	<td>
+			<img id="Rght" src="../CR/Tech/Image/right1.gif" alt="../CR/Tech/Image/right2.gif"
+             onclick="goMore(1)" 
+             onmouseover="OnImg(src,alt,id)"
+             onmouseout="OnImg(src,alt,id)"
+			></img>
+	</td>
+	</tr>
+	<tr>
+    <td colspan="3">
+		<p id="txt1" class="std" style="background-color:lightgrey; display:block;"><B>LIB aux Tuamotu</b>.</p>
+		<p id="txt2" class="std" style="background-color:lightgrey; display:none;"><B>LIB au Canada</b>.</p>
+		<p id="txt3" class="std" style="background-color:lightgrey; display:none;"><B>LIB devant Mekiro</b>.</p>
+	</td>
+	</tr>
+</table>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8029555-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body> 
+</html> 

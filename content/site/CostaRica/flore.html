@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html> 
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <link rel="stylesheet" type="text/css" href="../CR/Tech/Style/MyCRStyle.css" />
+
+<script type="text/javascript">
+  var index=1;
+
+  function goBack()
+    {
+    window.history.back()
+    }
+  function OnImg(sr,al,id)
+    {
+          document.getElementById(id).alt = sr;
+          document.getElementById(id).src = al;
+    }
+  function goMore(incr)
+    {
+    imgid = "img" + index;
+    txtid = "txt" + index;
+	document.getElementById(imgid).style.display = "none";
+	document.getElementById(txtid).style.display = "none";
+    index = index + incr;
+    if (index<1) index=13;
+    if (index>13) index=1;
+    imgid = "img" + index;
+    txtid = "txt" + index;
+	document.getElementById(imgid).style.display = "block";
+	document.getElementById(txtid).style.display = "block";
+	document.getElementById("txtpic").innerHTML = index+"/13";
+    }
+  function ShowPicture(name)
+    {
+          document.getElementById(name).src = "../CR/Tech/Image/back1.ico";
+    }
+  function HidePicture(name)
+    {
+          document.getElementById(name).src = "../CR/Tech/Image/back2.ico";
+    }</script>
+</head>
+
+<body>
+<table style="margin-left:auto;margin-right:auto; width:800px; background-color:#99FF66; padding: 10px;">
+  <tr>
+    <td colspan="2">
+		<p class="blackshadow">Petit aperçu de ce qu'on trouve sur la finca<br></p>
+	</td>
+    <td>
+		<p id="txtpic" class="std">1/13</p>
+	</td>
+	</tr>
+	<tr>
+	<td>
+			<img id="Lft" src="../CR/Tech/Image/left1.gif" alt="../CR/Tech/Image/left2.gif"
+             onclick="goMore(-1)" 
+             onmouseover="OnImg(src,alt,id)"
+             onmouseout="OnImg(src,alt,id)"
+			></img>
+	</td>
+	<td>
+					<img src="../data/CR/images/Flore/P1.JPG" id="img1" style="margin-left:auto;margin-right:auto; display:block;"/>
+					<img src="../data/CR/images/Flore/P2.JPG" id="img2" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Flore/P3.JPG" id="img3" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Flore/P4.JPG" id="img4" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Flore/P5.JPG" id="img5" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Flore/P6.JPG" id="img6" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Flore/P7.JPG" id="img7" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Flore/P8.JPG" id="img8" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Flore/P9.JPG" id="img9" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Flore/P10.JPG" id="img10" style="margin-left:auto;margin-right:auto; display:none;"/>
+					<img src="../data/CR/images/Flore/P11.JPG" id="img11" style="margin-left:auto;margin-right:auto; display:none;"/>
+					<img src="../data/CR/images/Flore/P12.JPG" id="img12" style="margin-left:auto;margin-right:auto; display:none;"/>
+					<img src="../data/CR/images/Flore/P13.JPG" id="img13" style="margin-left:auto;margin-right:auto; display:none;"/>
+	</td>
+	<td>
+			<img id="Rght" src="../CR/Tech/Image/right1.gif" alt="../CR/Tech/Image/right2.gif"
+             onclick="goMore(1)" 
+             onmouseover="OnImg(src,alt,id)"
+             onmouseout="OnImg(src,alt,id)"
+			></img>
+	</td>
+	</tr>
+	<tr>
+    <td colspan="3">
+		<p id="txt1" class="std" style="background-color:lightgrey; display:block;"><B>Les fougères arborescentes</b> poussent dans le bosquet. Elles aiment les sous-bois humides</p>
+		<p id="txt2" class="std" style="background-color:lightgrey; display:none;"><B>Le Zapote</b> est une rivère qui borde la finca mais c'est aussi le nom de cet arbre grand et mince</p>
+		<p id="txt3" class="std" style="background-color:lightgrey; display:none;"><B>Le Ceiba</b> est assez volumineux quand il atteint un certain âge.</p>
+		<p id="txt4" class="std" style="background-color:lightgrey; display:none;"><B>Les 'Corazon de Jesus'</b>, dont les feuilles sont roses et vertes et en forme de coeur, sont très jolies.</p>
+		<p id="txt5" class="std" style="background-color:lightgrey; display:none;"><B>Les pensées de Nlle Guinée</b> sont magnifiques et, au Costa Rica, nous avons presque les mêmes.</p>
+		<p id="txt6" class="std" style="background-color:lightgrey; display:none;"><B>Une autre plante</b> verte et rose dont j'ignore le nom</p>
+		<p id="txt7" class="std" style="background-color:lightgrey; display:none;"><B>Le pochote</b> vient des plaines sèches du Guanacaste. C'est l'un des rares à perdre ses feuilles en 'hiver'</p>
+		<p id="txt8" class="std" style="background-color:lightgrey; display:none;"><B>L'arbre mystérieux</b> est l'un des grands arbres de la finca mais nous ignorons encore son nom. Pour l'heure.</p>
+		<p id="txt9" class="std" style="background-color:lightgrey; display:none;"><B>Le Madero Negro</b> est présent en abondance. Ses branches servent à faire des poteaux qui repoussent</p>
+		<p id="txt10" class="std" style="background-color:lightgrey; display:none;"><B>Le Nispero</b> est un arbre fort apprécié pour la résistance de son bois, raison pour laquelle il a tendance à disparaître. Nous, on le trouve beau.</p>
+		<p id="txt11" class="std" style="background-color:lightgrey; display:none;"><B>L'Anano</b> est un arbre dont le fruit ressemble vaguement à un avocat mais en plus sucré</p>
+		<p id="txt12" class="std" style="background-color:lightgrey; display:none;"><B>Le champignon fluo</b> se trouve au fond des bois. On dirait un truc psychédélique...</p>
+		<p id="txt13" class="std" style="background-color:lightgrey; display:none;"><B>Le champignon filet</b> se trouve aussi au fond des bois. Mais comment un champignon peut-il générer une telle structure??? That is ze questcheune.</p>
+		<p class = "std">Certes, le Costa Rica est réputé pour la diversité de son biotope mais qu'en est-il de notre finca? Pour se faire une petite idée, nous avons décidé de répertorier (à notre aise) la verdure de notre propriété<br><br>
+		</p>
+	</td>
+	</tr>
+</table>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8029555-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body> 
+</html> 
