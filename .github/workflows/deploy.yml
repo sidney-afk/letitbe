@@ -4,7 +4,8 @@ name: Déployer sur GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # claude/sweet-hopper-im4osx est la branche par défaut du dépôt
+    branches: [main, claude/sweet-hopper-im4osx]
   workflow_dispatch:
 
 permissions:
