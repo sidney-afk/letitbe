@@ -1,0 +1,70 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html> 
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="../Tech/Style/MyStyle.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <script src="../Tech/JQuery/jquery.js" type="text/javascript"></script>
+  
+  <style style="text/css">
+  #pict {position:absolute;z-index:4;display:none;left:2px;top:2px;
+	border-color: white;
+        border-width: 2px;
+        border-style: solid;
+	}
+  </style>
+  </head>
+
+
+<body>
+  <script>
+    $(document).ready(function(){
+
+      $('#pict').click(function(){
+	$('#pict').toggle('slow');
+      });
+
+      $('#thumbgamb').click(function(){
+	$('#imgpict').attr({ src: './trajetusa.jpg'});
+	$('#pict').toggle('slow');
+      });
+
+    });
+  </script>
+<table class="w90">
+  <div id="pict"><img id="imgpict" style="cursor:pointer" title="Cliquer pour fermer"></div>
+  <tr>
+    <td width="60%">
+      <table>
+	  <tr>
+	    <td>
+	       <p class="std"><i>La traversée de <b>Victoria à Port Angeles</b> est longue de plus de 20 nautiques, en plein bras de mer. Nos qualités de marin ont été mises à rude épreuve...</i><br></p>
+	       <p class="std"><i>La traversée de <b>Neah Bay à San Francisco</b> est longue de plus de 720 nautiques. A part la troisième journée marquée par un vent de 30 à 35 noeuds au portant, ce fut fort calme, l'air parfumé des effluves aromatiques émanant de nos moteurs</i><br></p>
+	       <p class="std"><i>Notre programme en quelques mots:</i> Traversée jusqu'à San Francisco, petit tour en campervan dans les parcs de l'ouest américain et, en novembre, direction San Diego et la chaleur en visitant les îles au large de Los Angeles.<br></p>
+	    </td>
+	    <td>
+	       <img id="thumbgamb" style="cursor:pointer" title="Cliquer pour agrandir/cacher" width="100" src="./trajetusa.jpg" />
+	    </td>
+	  </tr>
+      </table>
+    </td>
+    <td>
+      <table class="log">
+ 	    <tr class="byellow"><td><b>Date</b></td><td><b>Lieu</b></td><td><b>Log (nm)</b></td></tr>
+	    <tr><td>26/08/2013 au 04/09/2013</td><td>Port Angeles</td><td style="text-align: right;">23270</td></tr>
+	    <tr><td>04/09/2013 au 05/09/2013</td><td>Neah Bay</td><td style="text-align: right;">23320</td></tr>
+	    <tr><td>05/09/2013 au 10/09/2013</td><td>Neah Bay to San Francisco</td><td style="text-align: right;">24030</td></tr>
+	    <tr><td>10/09/2013 au 07/11/2013</td><td>San Francisco</td><td style="text-align: right;">24040</td></tr>
+	    <tr><td>09/11/2013 au 11/11/2013</td><td>San Miguel Island</td><td style="text-align: right;">24305</td></tr>
+	    <tr><td>11/11/2013 au 12/11/2013</td><td>Santa Cruz Island</td><td style="text-align: right;">24325</td></tr>
+	    <tr><td>12/11/2013 au 13/11/2013</td><td>Santa Barbara Island</td><td style="text-align: right;">24375</td></tr>
+	    <tr><td>13/11/2013 au 14/11/2013</td><td>Catalina Island</td><td style="text-align: right;">24405</td></tr>
+	    <tr><td>15/11/2013 au 13/01/2014</td><td>San Diego</td><td style="text-align: right;">24490</td></tr>
+      </table>
+    </td>  
+  </tr>
+</table>
+
+
+</body>
+</html> 

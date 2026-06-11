@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html> 
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="../Tech/Style/MyStyle.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <script src="../Tech/JQuery/jquery.js" type="text/javascript"></script>
+  
+    <style style="text/css">
+    #pict {position:absolute;z-index:4;display:none;left:2px;top:2px;
+	border-color: white;
+        border-width: 2px;
+        border-style: solid;
+	}
+    </style>
+  </head>
+
+<body>
+  <script>
+    $(document).ready(function(){
+
+      $('#pict').click(function(){
+	$('#pict').toggle('slow');
+      });
+
+      $('#thumbtrajet').click(function(){
+	$('#imgpict').attr({ src: '../Tech/Image/maptonga.JPG'});
+	$('#pict').toggle('slow');
+      });
+
+    });
+  </script>
+<table class="w90">
+  <div id="pict"><img id="imgpict" style="cursor:pointer" title="Cliquer pour fermer"></div>
+  <tr>
+    <td width="60%">
+      <table>
+	  <tr>
+	    <td>
+	       <p class="std"><i><b>Tonga</b>. Traversée de Niue vers Tonga. 250 nm et passage de la ligne de changement de jour.</i><br></p>
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	       <img id="thumbtrajet" style="cursor:pointer" title="Cliquer pour agrandir/cacher" width="500" src="../Tech/Image/maptonga.JPG" />
+	    </td>
+	  </tr>
+      </table>
+    </td>
+    <td>
+      <table class="log">
+	<tr class="byellow"><td><b>Date</b></td><td><b>Lieu</b></td><td><b>Log (nm)</b></td></tr>
+	<tr><td>31/8 au 24/9</td><td>Tonga - Neiafu</td><td style="text-align: right;">9500</td></tr>
+      </table>
+    </td>  
+  </tr>
+</table>
+
+
+</body>
+</html> 

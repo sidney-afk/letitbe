@@ -1,0 +1,120 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html> 
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="../Tech/Style/MyStyle.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <script src="../Tech/JQuery/jquery.js" type="text/javascript"></script>
+  
+  <style style="text/css">
+  #pict {position:absolute;z-index:4;display:none;left:2px;top:2px;
+	border-color: white;
+        border-width: 2px;
+        border-style: solid;
+	}
+  </style>
+  </head>
+
+
+<body>
+  <script>
+    $(document).ready(function(){
+
+      $('#pict').click(function(){
+	$('#pict').toggle('slow');
+      });
+
+      $('#thumbgamb').click(function(){
+	$('#imgpict').attr({ src: './trajetpol.jpg'});
+	$('#pict').toggle('slow');
+      });
+
+      $('#thumbmar').click(function(){
+	$('#imgpict').attr({ src: './trajetpolmar.jpg'});
+	$('#pict').toggle('slow');
+      });
+
+      $('#thumbtuam').click(function(){
+	$('#imgpict').attr({ src: './trajetpol2.jpg'});
+	$('#pict').toggle('slow');
+      });
+
+      $('#thumbsoc').click(function(){
+	$('#imgpict').attr({ src: './trajetpol3.jpg'});
+	$('#pict').toggle('slow');
+      });
+
+    });
+  </script>
+<table class="w90">
+  <div id="pict"><img id="imgpict" style="cursor:pointer" title="Cliquer pour fermer"></div>
+  <tr>
+    <td width="60%">
+      <table>
+	  <tr>
+	    <td>
+	       <p class="std"><i><b>Gambier-Marquises</b>. Sur ce coup-là, on a un peu tergiversé....</i><br></p>
+	    </td>
+	    <td>
+	       <img id="thumbgamb" style="cursor:pointer" title="Cliquer pour agrandir/cacher" width="100" src="./trajetpol.jpg" />
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	       <p class="std"><i><b>Marquises</b>. On les a toutes faites </i><br></p>
+	    </td>
+	    <td>
+	      <img  id="thumbmar" style="cursor:pointer" title="Cliquer pour agrandir/cacher" width="100" src="./trajetpolmar.jpg" />
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+	       <p class="std"><i><b>Marquises-Tuamotu</b>. En daar is de werk: tout droit ! </i><br></p>
+	    </td>
+	    <td>
+	      <img id="thumbtuam" style="cursor:pointer" title="Cliquer pour agrandir/cacher" width="100" src="./trajetpol2.jpg" />
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>
+		<p class="std"><i><b>Iles de la société</b>: on se promène.</i><br></p>
+	    </td>
+	    <td>
+	      <img id="thumbsoc" style="cursor:pointer" title="Cliquer pour agrandir/cacher" width="100" src="./trajetpol3.jpg" />
+	    </td>
+      </table>
+    </td>
+    <td>
+      <table class="log">
+	<tr class="byellow"><td><b>Date</b></td><td><b>Lieu</b></td><td><b>Log (nm)</b></td></tr>
+	<tr><td>12/8 au 10/12</td><td>Gambier</td><td style="text-align: right;">5305</td></tr>
+	<tr><td>16/12 au 20/12</td><td>Marquises - Fatu Hiva</td><td style="text-align: right;">6145</td></tr>
+	<tr><td>21/12 au 23/12</td><td>Marquises - Tahuata</td><td style="text-align: right;">6195</td></tr>
+	<tr><td>23/12 au 26/12</td><td>Marquises - Hiva Oa</td><td style="text-align: right;">6205</td></tr>
+	<tr><td>27/12 au 3/2</td><td>Marquises - Nuku Hiva</td><td style="text-align: right;">6355</td></tr>
+	<tr><td>4/2 au 24/2</td><td>Marquises - Ua Pou</td><td style="text-align: right;">6475</td></tr>
+	<tr><td>1/3 au 7/3</td><td>Marquises - Fatu Hiva</td><td style="text-align: right;">6665</td></tr>
+	<tr><td>7/3 au 12/3</td><td>Marquises - Tahuata</td><td style="text-align: right;">6710</td></tr>
+	<tr><td>12/3 au 19/3</td><td>Marquises - Hiva Oa</td><td style="text-align: right;">6720</td></tr>
+	<tr><td>20/3 au 23/3</td><td>Marquises - Ua HUka</td><td style="text-align: right;">6790</td></tr>
+	<tr><td>24/3 au 27/3</td><td>Marquises - Nuku Hiva</td><td style="text-align: right;">6820</td></tr>
+	<tr><td>31/3 au 6/4</td><td>Tuamotu - Kauehi</td><td style="text-align: right;">7340</td></tr>
+	<tr><td>6/4 au 20/4</td><td>Tuamotu - Fakarava</td><td style="text-align: right;">7400</td></tr>
+	<tr><td>16/4 au 17/4</td><td>Tuamotu - Faaite</td><td style="text-align: right;">7480</td></tr>
+	<tr><td>21/4</td><td>Tuamotu - Toau</td><td style="text-align: right;">7520</td></tr>
+	<tr><td>22/4 au 11/5</td><td>Tuamotu - Rangiroa</td><td style="text-align: right;">7620</td></tr>
+	<tr><td>11/5 au 20/5</td><td>Tuamotu - Tikehau</td><td style="text-align: right;">7670</td></tr>
+	<tr><td>21/5 au 22/6</td><td>Tahiti</td><td style="text-align: right;">7850</td></tr>
+	<tr><td>22/6 au 29/6</td><td>Moorea</td><td style="text-align: right;">7870</td></tr>
+	<tr><td>30/6 au 2/7</td><td>Huahine</td><td style="text-align: right;">7950</td></tr>
+	<tr><td>2/7 au 7/7</td><td>Raiatea et Tahaa</td><td style="text-align: right;">7975</td></tr>
+	<tr><td>7/7 au 14/7</td><td>Bora Bora</td><td style="text-align: right;">8000</td></tr>
+	<tr><td>15/7 au 16/7</td><td>Maupihaa</td><td style="text-align: right;">8130</td></tr>
+      </table>
+    </td>  
+  </tr>
+</table>
+
+
+</body>
+</html> 

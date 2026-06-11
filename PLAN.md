@@ -103,18 +103,127 @@ pas convaincu (sauf peut-être plus tard).
 
 ## Étapes de build
 
-1. Crawl + extraction + data model (bloqué jusqu'à l'accès réseau à laruel.be).
-2. Globe photoréaliste + route + timeline scrubber + bateau.
-3. Plongées vers les mouillages + galeries photos + extraits du blog.
-4. Chapitres scrollytelling.
-5. Mode Traversée.
-6. Fonctionnalités 1–7 (basculement carte ancienne, vents, ciel, météo…).
+1. ✅ Crawl + extraction + data model — **fait** (voir « État du pipeline » ci-dessous).
+> ✅ **Direction artistique (Sidney, juin 2026) : appliquée.** Sidney a fourni
+> une référence précise (globe cartoon solarpunk, textures mates peintes,
+> cel shading, ciel bleu clair cotonneux, jamais l'espace noir, esprit Breath
+> of the Wild). Le **mode Carnet** est désormais le rendu par défaut :
+> texture peinte générée depuis Natural Earth III (`pipeline/stylize_texture.py`),
+> cel shading demi-Lambert, ciel dégradé + nuages cotonneux, UI papier crème.
+> Le photoréalisme reste accessible (« Mode réaliste ») — première forme du
+> « basculement de carte » (fonctionnalité 1) ; le morphing animé entre les
+> deux et la variante « carte marine gravée » restent possibles plus tard.
+
+2. ✅ Globe photoréaliste + route + timeline scrubber + bateau — **fait** (`site/`,
+   Vite + Three.js ; `cd site && npm install && npm run dev`). Terminateur réel
+   (déclinaison saisonnière, longitude subsolaire ancrée au bateau pour éviter
+   le stroboscope en lecture), nuages, halo, étoiles d'ambiance, mouillages
+   survolables/cliquables, lecture ~3 min. Vérif visuelle headless :
+   `node capture.mjs <url> <png> <ms> "date=… zoom=…"` (npm i playwright-core).
+   Workflow Pages prêt : `.github/workflows/deploy.yml` (déploie depuis `main` ;
+   activer Settings → Pages → GitHub Actions).
+3. ✅ Plongées vers les mouillages + galeries photos + extraits du blog —
+   **fait** : clic sur une perle → vol de caméra (2,6 s) vers l'ancre →
+   « carnet de bord » qui glisse à droite : articles complets datés + photos
+   légendées qui émergent en cascade, lightbox plein écran, « Reprendre la
+   route » / Échap pour remonter. Photos servies en WebP
+   (`site/public/media/`, 1 178 fichiers, 33 Mo, généré par
+   `pipeline/sync_site_media.py` depuis `content/media/`).
+4. ✅ Chapitres scrollytelling — **fait** : bouton « ☰ Embarquer dans le
+   récit » → la molette fait avancer le bateau d'escale en escale (mapping
+   sur la séquence d'escales, pas le temps brut : les 17 mois néo-zélandais
+   ne pèsent pas les ¾ du défilement), caméra rapprochée qui suit, cartes de
+   chapitre (I → VIII + épilogue « La terre ferme ») avec textes
+   d'introduction originaux dans `site/src/recit.js`, indicateur de
+   progression, timeline synchronisée. Cliquer une perle quitte le récit et
+   plonge.
+5. ✅ Mode Traversée — **fait** : la lecture ⏵ embarque automatiquement
+   (suivi caméra, distance cinématique 2,5 R), les **photos des escales
+   affleurent** au passage (polaroïds qui montent de l'eau, restent 3,6 s,
+   se dissolvent — max 2 à l'écran, jamais deux fois la même escale par
+   lecture), **ambiance sonore d'océan synthétisée en WebAudio** (bruit
+   brownien + deux houles LFO déphasées, aucun fichier audio), bouton 🔊,
+   plus présente en lecture. Levers/couchers de soleil réels → étape 6.
+6. Fonctionnalités 1–7 — **météo vécue (7) : v1 faite** : bulletin ERA5 du
+   jour dans la timeline (« vent 67 km/h · mer 6,3 m · ⚠ coup de vent » le
+   28/5/2012 dans les 40èmes), nuages densifiés et lumière ternie selon la
+   nébulosité réelle du jour (uniforms lissés). Terminateur (4) : déclinaison
+   saisonnière faite, heure réelle à faire. **Vrai ciel (3) : v1 fait** —
+   les 9 096 étoiles du Yale Bright Star Catalog (`data/etoiles.json`,
+   245 Ko, `pipeline/fetch_etoiles.py`), couleurs par température, tailles
+   par magnitude, orientées par le temps sidéral découlant du soleil ancré
+   (vérifié : Acrux à 32,9° au-dessus de l'horizon de Tonga le 10/9/2010).
+   Restent : carte ancienne (1, → séance esthétique), vents en particules
+   (2, demande des champs de vent maillés par date — lourd, à discuter),
+   voilier fidèle (5) et transitions liquides (6, → séance esthétique).
 7. Polish, fallback, audio, déploiement GitHub Pages.
+
+## État du pipeline de contenu (session de juin 2026)
+
+Tout le contenu de laruel.be est archivé et structuré sur cette branche.
+Scripts dans `pipeline/` (Python : requests, beautifulsoup4, lxml, pillow),
+tous relançables et idempotents.
+
+| Fichier | Contenu |
+|---|---|
+| `content/site/` | Miroir fidèle du site (4 943 pages + 12 171 images, 700 Mo) |
+| `content/manifest.json` | URL → chemin, statut, taille, sha1 de chaque fichier |
+| `content/articles.json` | **720 articles datés** (13/2/2008 → 9/7/2017), textes + images légendées |
+| `content/albums.json` | **46 albums, 4 760 photos** avec légendes |
+| `content/route_log.json` | 134 escales depuis les tables de log de `/Voyages` |
+| `content/mouillages.json` | Escales géocodées (table curatée + validations) |
+| `content/meteo.json` | Météo ERA5 quotidienne : 1 693 jours (vent, rafales, nébulosité, pluie, T°, vagues `era5_ocean`) |
+| `content/videos.json` | 14 vidéos YouTube datées (toutes encore en ligne) |
+| `data/roadtrip.json` | Route camping-car sept-oct 2013 : 24 étapes, 4 972 miles (compteur dans les titres « Mxxxx - … ») |
+| `content/media/` | Dérivés WebP pleine taille + miniatures 480 px |
+| `content/bateau.json` | Caractéristiques et photos de référence du bateau |
+| `data/route.json` | Polyline horodatée : 134 points, log 0 → 24 490 nm |
+| `data/mouillages.json` | Escales enrichies : 537 articles rattachés par date |
+| `data/albums.json` | Albums pour le site |
+
+### Découvertes importantes
+
+- **Le blog WordPress `/blogactu/` est mort** (HTTP 500, PHP 8 incompatible) mais
+  son contenu intégral existe en statique dans `/Actu/actuNN.html` (01–18 + actu.html)
+  → c'est la source des 720 articles. Rien n'est perdu.
+- **Le voyage** : départ Martinique (Le Marin) **27/5/2009**, fin bateau
+  **San Diego 13/1/2014** (24 490 nm au log). NZ = 17 mois d'« hivernage » à
+  Whangarei (voyages NZ/Australie sans le bateau) — géré dans les jointures
+  et la trace météo.
+- **Le bateau** : catamaran **Fountaine-Pajot 2004, 14,05 m × 7,38 m**, 123 m²,
+  4 cabines (très probablement un **Bahia 46**, à confirmer sur photos —
+  `content/bateau.json`). ⚠️ Un catamaran **ne gîte presque pas** : adapter
+  l'animation 3D prévue (« gîte sous le vent ») → tangage/roulis légers plutôt.
+- **Dates exactes** : tables de log Date/Lieu/nm dans `/Voyages/trajet*.html`,
+  croisées avec les dates des articles. Les traversées sont des lignes de log
+  (ex. « Transpacifique 24/7→12/8/09 »), interpolées en orthodromie.
+- **33 images de contenu cassées sur le site original** (404 à la source,
+  listées dans le manifeste) — récupérables un jour via la Wayback Machine,
+  mais `web.archive.org` est **bloqué par la politique réseau** de cet
+  environnement (l'API `archive.org` répond, elle).
+- Open-Meteo (geocoding, archive ERA5, marine) et Nominatim sont accessibles.
+
+### Reste à faire (contenu)
+
+- ~~Route camping-car~~ ✅ `data/roadtrip.json` (le roadtrip des parcs s'est fait
+  **pendant** l'escale de San Francisco, sept-oct 2013, en plein shutdown
+  fédéral — pas après La Paz comme le supposait le contexte initial).
+- `content/media/` (WebP + miniatures) n'est **pas committé** (~480 Mo,
+  régénérable : `python3 pipeline/optimize_images.py`). Générer les **AVIF**
+  au build final (`--avif`, lent).
+- La météo vécue est validée contre le récit (ex. les 5 jours de pluie à Suva
+  fin nov. 2010 : 27-41 mm/j, 96-100 % de nuages dans ERA5 ✓ ; la tempête de
+  la transpacifique retour : rafales 94 km/h, vagues 6,3 m le 28/5/2012).
+  Vagues : modèle `era5_ocean` obligatoire (le modèle par défaut ne couvre
+  pas 2009-2014) ; 4 jours/1693 sans vagues (points enclavés/artefacts
+  d'interpolation côtière).
+- Confirmer le modèle exact du bateau sur les photos `Navigation/images/bateau*.jpg`.
+- Associer albums ↔ chapitres (les périodes des albums sont dans `albums.json`).
 
 ## Reprise de session (handoff)
 
-Ce dépôt était vide ; tout le travail est sur la branche `claude/sweet-hopper-im4osx`.
-La session précédente n'avait pas accès réseau à laruel.be (politique « Trusted »).
-**Prochaine session** : vérifier l'accès avec
-`curl -sI https://www.laruel.be/indexLIB.html`, puis dérouler le pipeline de contenu
-ci-dessus avant de coder le globe.
+Tout le travail est sur la branche `claude/gallant-newton-j3rxtc` (la branche
+`claude/sweet-hopper-im4osx` ne contient que le PLAN initial).
+**Prochaine session** : étape 2 du build — squelette Vite + Three.js, globe
+photoréaliste (textures NASA), tracé de la route depuis `data/route.json`,
+timeline scrubber, et le petit catamaran qui suit la trace.

@@ -1,0 +1,140 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN">
+<html> 
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <link rel="stylesheet" type="text/css" href="../CR/Tech/Style/MyCRStyle.css" />
+
+<script type="text/javascript">
+  var index=1;
+
+  function goBack()
+    {
+    window.history.back()
+    }
+  function OnImg(sr,al,id)
+    {
+          document.getElementById(id).alt = sr;
+          document.getElementById(id).src = al;
+    }
+  function goMore(incr)
+    {
+    imgid = "img" + index;
+    txtid = "txt" + index;
+	document.getElementById(imgid).style.display = "none";
+	document.getElementById(txtid).style.display = "none";
+    index = index + incr;
+    if (index<1) index=26;
+    if (index>26) index=1;
+    imgid = "img" + index;
+    txtid = "txt" + index;
+	document.getElementById(imgid).style.display = "block";
+	document.getElementById(txtid).style.display = "block";
+	document.getElementById("txtpic").innerHTML = index+"/26";
+    }
+  function ShowPicture(name)
+    {
+          document.getElementById(name).src = "../CR/Tech/Image/back1.ico";
+    }
+  function HidePicture(name)
+    {
+          document.getElementById(name).src = "../CR/Tech/Image/back2.ico";
+    }</script>
+</head>
+
+<body>
+<table style="margin:auto; width:800px; background-color:#99FF66; padding: 10px;">
+  <tr>
+    <td colspan="3">
+		<p class="blackshadow">Le Costa Rica, un zoo grandeur nature? </p>
+		<p class = "std">Très féru d'ornythologie et de serpentologie, au Costa Rica, je suis aux anges. Voici quelques photos prises exclusivement dans la finca! (Sauf l'iguane)<br><br>
+		</p>
+		<p id="txtpic" class="std">1/26</p>
+	</td>
+	</tr>
+	<tr>
+	<td>
+			<img id="Lft" src="../CR/Tech/Image/left1.gif" alt="../CR/Tech/Image/left2.gif"
+             onclick="goMore(-1)" 
+             onmouseover="OnImg(src,alt,id)"
+             onmouseout="OnImg(src,alt,id)"
+			></img>
+	</td>
+	<td>
+					<img src="../data/CR/images/Faune/P1.JPG" id="img1" style="margin-left:auto;margin-right:auto; display:block;"/>
+					<img src="../data/CR/images/Faune/P2.JPG" id="img2" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P3.JPG" id="img3" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P4.JPG" id="img4" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P5.JPG" id="img5" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P6.JPG" id="img6" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P7.JPG" id="img7" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P8.JPG" id="img8" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P9.JPG" id="img9" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P10.JPG" id="img10" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P11.jpg" id="img11" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P12.jpg" id="img12" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P13.jpg" id="img13" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P14.jpg" id="img14" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P15.JPG" id="img15" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P16.JPG" id="img16" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P17.JPG" id="img17" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/blog/2014-09-01/P1.JPG" id="img18" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P19.JPG" id="img19" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P20.JPG" id="img20" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P21.JPG" id="img21" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/blog/2014-09-21/P1.JPG" id="img22" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P23.JPG" id="img23" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P24.JPG" id="img24" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P25.JPG" id="img25" style="display:none;margin-left:auto;margin-right:auto;"/>
+					<img src="../data/CR/images/Faune/P26.JPG" id="img26" style="display:none;margin-left:auto;margin-right:auto;"/>
+	</td>
+	<td>
+			<img id="Rght" src="../CR/Tech/Image/right1.gif" alt="../CR/Tech/Image/right2.gif"
+             onclick="goMore(1)" 
+             onmouseover="OnImg(src,alt,id)"
+             onmouseout="OnImg(src,alt,id)"
+			></img>
+	</td>
+	</tr>
+	<tr>
+    <td colspan="3">
+		<p id="txt1" class="std" style="background-color:lightgrey; display:block;"><B>Le condor du Miravalles</b> - Espèce pas du tout menacée d'extinction, le condor du Miravalles se trouve sur les pentes du Miravalles, le volcan sur le flanc duquel nous envisageons de nous implanter. On le trouve surtout dans les décharges, où son appétit féroce le conduit lorsqu'il ne trouve pas de carcasses de tamanoir le long des routes.</p>
+		<p id="txt2" class="std" style="background-color:lightgrey; display:none;"><B>Le pinson rouge et noir</b> - Quel bel oiseau que ce pinson, dont le noir est profond et le rouge presque orange. Quand il déploie ses petites ailes, il est mignon tout plein.</p>
+		<p id="txt3" class="std" style="background-color:lightgrey; display:none;"><B>Le pinson jaune et brun</b> - Appelé aussi jaune gorge, ce pinson se distingue du précédent par ses couleurs dans les tons jaune. Il est tout petit et émet des gazouillis pratiquement inaudibles. Et s'il continue à manger mes bananes avant qu'elles ne soient mûres, je lui tranche la queue avec ma toute nouvelle machette.</p>
+		<p id="txt4" class="std" style="background-color:lightgrey; display:none;"><B>Le pic noir cendré</b> - Voilà un oiseau facétieux, capable de voler même quand il pleut, comme nombre de ses congénères. On le trouve en général sur les branches.</p>
+		<p id="txt5" class="std" style="background-color:lightgrey; display:none;"><B>Le serpent fédéral</b> - Aussi appelé serpent belge, à cause de son venin foudroyant et son incapacité légendaire à former un gouvernement, ce serpent se faufile parmi les herbes hautes, toujours à l'affût d'une proie facile à digérer.</p>
+		<p id="txt6" class="std" style="background-color:lightgrey; display:none;"><B>Le black beheaded mamba</b> - Très rare, ce serpent noir et luisant présente la particularité de n'avoir pas de tête. Il n'a qu'une queue, noire de surcroit, d'où son appellation.</p>
+		<p id="txt7" class="std" style="background-color:lightgrey; display:none;"><B>Le toucan</b> - Les toucans sont au Costa Rica, ce que les flamants sont à la Belgique, une espèce endémique ayant tendance à vouloir tout envahir. Toutefois, ils sont multicolores, au lieu d'être roses.</p>
+		<p id="txt8" class="std" style="background-color:lightgrey; display:none;"><B>La grenouille en maillot</b> - Dans les forêts primaires qui tapissent encore les flancs des volcans, on trouve une faune antédilluvienne, comme dans King Kong. La grenouille en maillot, qui ressemble à Spiderman, mais en plus petit, habite ses sous-bois.</p>
+		<p id="txt9" class="std" style="background-color:lightgrey; display:none;"><B>La limace papayo</b> - Reine du camouflage, elle est très difficile à repérer. On la trouve au dos des feuilles de papayer.</p>
+		<p id="txt10" class="std" style="background-color:lightgrey; display:none;"><B>L'iguane</b> - Reliquat d'une époque ancestrale durant laquelle ses congénères surdimensionnés faisaient la loi sur la planète, l'iguane n'a gardé de sa gloire passée que son port altier et son regard hypnotique. Mais le courage n'est pas sa qualité première...</p>
+		<p id="txt11" class="std" style="background-color:lightgrey; display:none;"><B>Le scorpion</b> - Centruroides Margaritatus, pour les érudits. C'est un scorpion inoffensif que les Incas utilisaient comme animal de compagnie. Mais il faut dire que les Incas étaient des barbares sanguinaires.</p>
+		<p id="txt12" class="std" style="background-color:lightgrey; display:none;"><B>La punaise turquoise</b> - C'est très joli. Et la punaise turquoise se promène souvent avec sa copine 'terre de sienne', ce qui met en valeur sa parure qui n'a d'égale que sa ramure.</p>
+		<p id="txt13" class="std" style="background-color:lightgrey; display:none;"><B>Le singe Congo</b> - Ces petits singes d'à peine 40 cm de haut sont capables d'émettre des cris guturaux d'une lugubrité telle que Dracula lui-même tremble d'épouvante en les entendant.</p>
+		<p id="txt14" class="std" style="background-color:lightgrey; display:none;"><B>Le zanten</b> - Ainsi nommé à cause des appendices gigantesques qui lui servent de détecteur d'obstacles, le zanten ressemble à un croisement entre une punaise, une sauterelle et une abeille.</p>
+		<p id="txt15" class="std" style="background-color:lightgrey; display:none;"><B>Le scarabée d'airain</b> - Cet insecte placide ne peut se déplacer rapidement car sa carapace en airain pèse bien plus qu'il ne peut supporter. Il reste donc attaché à une feuille jusqu'à ce qu'il meurt, épuisé, et tombe par terre comme une figue molle.</p>
+		<p id="txt16" class="std" style="background-color:lightgrey; display:none;"><B>Le caméléon des plaines</b> - Celui-là n'est pas facile à repérer, sauf quand il saute d'une branche à l'autre (surtout quand on la lui coupe, la branche).</p>
+		<p id="txt17" class="std" style="background-color:lightgrey; display:none;"><B>Le papillon trompe l'oeil</b> - Bleues au dessus, face de serpent en dessous, les ailes de ce papillon servent à la fois de camouflage et de support de beauté poétique.</p>
+		<p id="txt18" class="std" style="background-color:lightgrey; display:none;">Le <B>Tercio Pelo</b> - C'est le serpent le plus dangereux de la région, dont la morsure est fatale à quiconque ne dispose pas d'antidote. Heureusement, on ne le rencontre que rarement (et quand on le rencontre, on ne le raconte jamais, parce qu'on est mort...)</p>
+		<p id="txt19" class="std" style="background-color:lightgrey; display:none;"><B>Le lion des montagnes</b> - Je dois reconnaître qu'on n'est pas allé le chercher dans la jungle celui-là (ni dans la savane) mais je le trouve mignon notre husky à poils ras.</p>
+		<p id="txt20" class="std" style="background-color:lightgrey; display:none;"><B>La chenille à picots</b> - Nos bébés bananiers semblaient perdre leurs feuilles. Nous avons trouvé la responsable: cette chenille dont l'aspérité des épines dorsales n'a d'égale que l'appétit. Demain, elle se transformera en Morpho, splendide papillon bleu.</p>
+		<p id="txt21" class="std" style="background-color:lightgrey; display:none;"><B>Le phasme feuillu</b> - Incroyable, cet insecte (enfin, je crois) est vraiment hors du commun. Y a qu'à regarder ses yeux pour s'en rendre compte. En plus, il a des antennes de langouste.</p>
+		<p id="txt22" class="std" style="background-color:lightgrey; display:none;"><B>Ursule la Libellule</b> - Rouge selon Chouchou, mauve selon Chouchou, cette libellule est en vérité fuchsia.</p>
+		<p id="txt23" class="std" style="background-color:lightgrey; display:none;"><B>Le tatou</b> - Contrairement aux apparences, le tatou est un animal nocturne. Par contre, conformément à la croyance populaire, le tatou est végétarien et bien gentil, malgré son air antédiluvien.</p>
+		<p id="txt24" class="std" style="background-color:lightgrey; display:none;"><B>L'alien</b> - Venue d'un autre monde pour conquérir la Terre, cette chose horrible au physique abject ne s'est heureusement pas trop bien acclimatée à notre monde. Au lieu de mesurer 25m de long, comme sur Hubler 3b, sa planète d'origine, ici elle ne dépasse pas les 5 cm. Ouf.</p>
+		<p id="txt25" class="std" style="background-color:lightgrey; display:none;"><B>La grenouille arc-en-ciel</b> peuple les abords des marais, toujours à l'affut d'une proie facile. Quand une couleuvre approche la bave aux lèvres, elle s'éloigne en faisant des bonds, les 4 pattes écartées, comme les parachutistes.</p>
+		<p id="txt26" class="std" style="background-color:lightgrey; display:none;"><B>La mante-feuille</b> et non la feuille de menthe est la reine du camouflage. Impossible à repérer dans un arbre... mais sur un mur, c'est piece of cake, surtout quand on inspecte l'état d'avancement des travaux avec minutie, comme moi.</p>
+	</td>
+	</tr>
+</table>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-8029555-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body> 
+</html> 

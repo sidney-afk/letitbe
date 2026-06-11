@@ -1,0 +1,157 @@
+﻿      body { 
+        background-color: #006633;
+        padding: 5;
+        margin: 0;
+      }
+      table.main {
+		width: 100%;
+        height: 100%;
+        border: 0;
+        padding: 0;
+        border-spacing: 0;
+      }
+      table.w60 {
+		width: 60%;
+        padding: 2px;
+      }
+      td.body {
+        height: 100%;
+        width: 100%;
+      }
+      td {
+	    color: black;
+	    font-family: arial;
+	    font-size: 12px;
+	    border-style: solid;
+	    border-width: 0px;
+        vertical-align: top;
+      }
+      p.std {
+	    color: black;
+	    font-family: verdana;
+	    font-size: 12px;
+	    text-align: center;
+      }
+      p.beurk {
+	    color: black;
+	    font-family: arial;
+	    font-size: 16px;
+	    text-align: justify;
+      }
+      p.blackshadow {
+	    color: black;
+	    font-family: verdana;
+	    font-size: 16px;
+	    text-align: justify;
+		text-shadow: 5px 5px 5px #006600;
+		margin: 1px;
+      }
+      p.whiteshadow {
+	    color: white;
+	    font-family: verdana;
+	    font-size: 16px;
+	    text-align: center;
+		text-shadow: 5px 5px 5px black;
+		margin: 1px;
+      }
+      p.blck {
+	    color: black;
+	    font-family: verdana;
+	    font-size: 12px;
+	    text-align: justify;
+      }
+      p.petit {
+	    color: black;
+	    font-family: verdana;
+	    font-size: 10px;
+	    text-align: left;
+      }
+      p.welcome {
+	    color: #141714;
+	    font-family: verdana;
+	    font-size: 36px;
+	    text-align: left;
+		text-shadow: 5px 5px 5px #006600;
+     }
+      p.titre {
+	    color: white;
+	    font-family: arial;
+	    font-size: 18px;
+	    text-align: left;
+      }
+      p.PhotoComment {
+	    color: white;
+		font-style:italic;
+	    font-family: verdana;
+	    font-size: 12px;
+	    text-align: left;
+      }
+      a.contact {
+       	    text-decoration: none;
+	    color: blue;
+	    font-family: arial;
+	    font-size: 12px;
+	    text-align: right;
+      }
+      a.contact:hover {
+	    color: white;
+	    font-family: arial;
+	    font-size: 12px;
+	    text-align: right;
+      }
+      a.rubrique {
+       	text-decoration: none;
+	    color: white;
+	    font-family: Kristen ITC;
+	    font-size: 16px;
+	    text-align: right;
+        padding: 2px 2px 2px 2px;
+		margin:  2px 2px 2px 2px;
+		text-shadow: 5px 5px 5px black;
+      }
+      a.rubrique:hover {
+	    color: #00CC33;
+	    font-family: Kristen ITC;
+	    font-size: 16px;
+	    text-align: right;
+		text-shadow: 5px 5px 5px black;
+      }
+      span.tab { 
+        border-collapse: collapse; 
+        border-style: solid solid none solid;  
+        border-color: black; 
+        border-width: 1px 1px 0px 1px; 
+        background-color: #006633;
+        padding: 2px 0.5em 0px 0.5em; 
+        margin-top: 4px;
+        margin-right: 2px;
+        font-family: arial; 
+	    font-size: 14px;
+		color: white;
+        text-decoration: none;
+        width: 12%;
+        text-align: center;
+        float: left;
+      }
+      span.tab:hover { 
+		cursor: pointer;
+        border-color: black; 
+        background-color: darkgray;
+		color: black; 
+        letter-spacing: +1px;
+      }
+      img.cache {
+	    display: none;
+      }
+      img.photo {
+		border-color: white;
+        border-width: 1px;
+        border-style: solid;
+      }
+     img.map {
+	    display: block;
+		border: 1px;
+        border-color: black;
+		width: 350px;
+		height: 473px;
+      }

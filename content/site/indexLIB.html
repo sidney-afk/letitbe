@@ -1,0 +1,68 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+  <head>
+    <title>Laruel's Website</title>
+
+    <meta http-equiv="imagetoolbar" content="false">
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+    <meta name="keywords" content="Eric Laruel, Cécile Van Winnendael, Let It Be, Laruel">
+
+    <link rel="stylesheet" type="text/css" href="./Tech/Style/MyStyle.css" />
+    <LINK rel="SHORTCUT ICON" href="./Tech/Image/logo.ico">
+
+    <script type="text/javascript">
+      function CalcNbrJours() {
+        today=new Date();
+        var Depart=new Date(2013, 3, 1);
+        var UnJour=1000*60*60*24;
+        document.getElementById("duree").innerHTML="4 ans et 295 jours de voyage";
+        }
+    </script>
+
+  </head>
+  <body onload="CalcNbrJours()">
+    <table class="index">
+      <tr>
+        <td  class="header" style="background-image: url('./Tech/Image/banner.JPG')">
+        </td>
+      </tr>
+      <tr>
+        <td class="separ">
+          <table width=100%>
+            <tr>
+              <td width=25%>
+                <p class="petit">Nous avons fait un petit tour dans le Pacifique</p>
+              </td>
+              <td width=40%>
+                <p class="petit">24500 nautiques, des Galapagos à la Nouvelle Zélande et retour par l'Alaska !!</p>
+              </td>
+              <td width=20%>
+                <p id="duree" class="petit"></p>
+              </td>
+              <td width=15%>
+                <a class="lk" href="mailto:eric@laruel.be">Contactez-nous</a>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td class="body">
+          <iframe src="./tabs.html" width=100% height=100% frameborder=0></iframe>
+        </td>
+      </tr>
+    </table>
+
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+          var pageTracker = _gat._getTracker("UA-8029555-2");
+          pageTracker._trackPageview();
+          } catch(err) {}
+    </script>
+  </body>
+</html>

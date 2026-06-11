@@ -1,0 +1,21 @@
+{
+  "name": "le-sillage",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Le Sillage — cinq ans autour du Pacifique à bord de Let It Be",
+  "scripts": {
+    "sync-data": "mkdir -p public/data && cp ../data/*.json public/data/ && cp ../content/bateau.json ../content/videos.json ../content/meteo.json public/data/",
+    "predev": "npm run sync-data",
+    "prebuild": "npm run sync-data",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "three": "^0.182.0"
+  },
+  "devDependencies": {
+    "vite": "^7.3.0"
+  }
+}

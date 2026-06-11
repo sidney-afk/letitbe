@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html> 
+
+  <head>
+    <link rel="stylesheet" type="text/css" href="../Tech/Style/MyStyle.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<style>
+  #objmap {position:absolute;z-index:1;visibility:visible;width:600px;height:400px;}
+  #shipmap {position:absolute;z-index:2;opacity:0.9;left:470px;top:210px;}
+</style>
+
+    <script language="JavaScript" type="text/javascript">
+    function ShowPicture(name)
+      {
+          if (name=="MAR") {
+		document.getElementById("shipmap").style.top = 120
+		document.getElementById("shipmap").style.left = 640
+			}
+          else if (name=="PAN") {
+		document.getElementById("shipmap").style.top = 150
+		document.getElementById("shipmap").style.left = 560
+			}
+          else if (name=="POL") {
+		document.getElementById("shipmap").style.top = 270
+		document.getElementById("shipmap").style.left = 300
+			}
+           else if (name=="NZ") {
+		document.getElementById("shipmap").style.top = 330
+		document.getElementById("shipmap").style.left = 150
+			}
+           else if (name=="HAW") {
+		document.getElementById("shipmap").style.top = 70
+		document.getElementById("shipmap").style.left = 250
+			}
+           else if (name=="UNK") {
+		document.getElementById("shipmap").style.top = 60
+		document.getElementById("shipmap").style.left = 420
+			}
+      	document.getElementById("shipmap").style.display = "block";
+        }
+    function HidePicture(name)
+      {
+          document.getElementById("shipmap").style.display = "none";
+      }
+    </script>
+  </head>
+
+
+<body onload="ShowPicture('NZ')">
+<table class="w90">
+  <tr>
+    <td rowspan=10 width=730>
+      <div id="objmap">
+      <img id="WorldMap" src="../Tech/Image/PacificAll600.jpg" class="montre" border = "1"></img>
+	<div id="shipmap">
+	      <img id="Ship" src="../Tech/Image/Questions/Qbat.JPG" class="montre" border = "1"  width="29" height="22"></img>
+	</div>
+      </div>
+    </td>
+    <td>
+      <p class="titrecenter">Passez la souris sur le texte ci-dessous</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p class="react"
+             onmouseover="ShowPicture('MAR')"
+             onmouseout="HidePicture('MAR')"
+            >On part de Martinique en mai 2009 si tout se passe comme prévu. En juin, on est aux Aves, au nord du Vénézuela.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p class="react"
+             onmouseover="ShowPicture('PAN')"
+             onmouseout="HidePicture('PAN')"
+            >En juillet, on traverse le canal de Panama et on met le cap sur les Galapagos.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p class="react"
+             onmouseover="ShowPicture('POL')"
+             onmouseout="HidePicture('POL')"
+            >En août, on se repose aux Gambier après la traversée du siècle, on fait du cruising dans les Tuamotu et on hiverne aux Marquises d'octobre 2009 à mars 2010.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p class="react" 
+             onmouseover="ShowPicture('NZ')"
+             onmouseout="HidePicture('NZ')"
+            >On traverse l'archipel de la Société au printemps 2010, on franchit les îles Cooks, Samoa et Tonga à l'été 2010 puis on file au sud vers la Nlle Zélande, où l'on passe l'hiver 2010-2011 avec les Kiwis et les hakas. On reste en NZ jusqu'au printemps 2012 pour permettre aux enfants d'apprendre l'anglais à l'école kiwie. Pendant ce temps, on rigole avec les préposés à l'immigration.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p class="react"
+             onmouseover="ShowPicture('HAW')"
+             onmouseout="HidePicture('HAW')"
+            >En mai 2012, on repart vers l'est. On se fait une petite croisière de 3300nm vers les Gambier. On se fait les îles de la Société. On remonte aux Marquises puis on file sur Hawaii pour passer l'hiver 2012/2013.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p class="react" style="color:white"
+             onmouseover="ShowPicture('UNK')"
+             onmouseout="HidePicture('UNK')"
+            >Vers juin 2013, on quitte Hawaii, en direction du nord et on va au Canada, puis on redescend sur le Mexique. On vend le bateau, j'épouse le perroquet et me voilà reine. Mais comme j'en ai marre de faire des plans foireux, je n'en dirai pas plus...</p>
+    </td>
+  </tr>
+</table>
+
+
+</body>
+</html> 
