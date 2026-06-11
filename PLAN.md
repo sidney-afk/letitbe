@@ -135,7 +135,13 @@ pas convaincu (sauf peut-être plus tard).
    d'introduction originaux dans `site/src/recit.js`, indicateur de
    progression, timeline synchronisée. Cliquer une perle quitte le récit et
    plonge.
-5. Mode Traversée.
+5. ✅ Mode Traversée — **fait** : la lecture ⏵ embarque automatiquement
+   (suivi caméra, distance cinématique 2,5 R), les **photos des escales
+   affleurent** au passage (polaroïds qui montent de l'eau, restent 3,6 s,
+   se dissolvent — max 2 à l'écran, jamais deux fois la même escale par
+   lecture), **ambiance sonore d'océan synthétisée en WebAudio** (bruit
+   brownien + deux houles LFO déphasées, aucun fichier audio), bouton 🔊,
+   plus présente en lecture. Levers/couchers de soleil réels → étape 6.
 6. Fonctionnalités 1–7 (basculement carte ancienne, vents, ciel, météo…).
 7. Polish, fallback, audio, déploiement GitHub Pages.
 

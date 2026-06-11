@@ -10,6 +10,8 @@ import { creerEtoiles } from './stars.js';
 import { creerTimeline } from './timeline.js';
 import { creerPlongee } from './plongee.js';
 import { creerRecit } from './recit.js';
+import { creerTraversee } from './traversee.js';
+import { creerOcean } from './ocean.js';
 import { construireVoyage } from './geo.js';
 import { directionSoleil } from './sun.js';
 
@@ -92,6 +94,15 @@ applique(timeline.t);
 
 const plongee = creerPlongee({ camera, controls, timeline, regleSuivi, mouillagesParCle });
 const recit = creerRecit({ timeline, regleSuivi, routeData, controls });
+creerTraversee({ timeline, voyage, mouillagesParCle });
+
+const ocean = creerOcean();
+const sonBouton = document.getElementById('son-bouton');
+sonBouton.addEventListener('click', () => {
+  const actif = ocean.bascule();
+  sonBouton.textContent = actif ? '🔊' : '🔇';
+  sonBouton.setAttribute('aria-pressed', String(actif));
+});
 
 // — infobulle des mouillages —
 const infobulle = document.getElementById('infobulle');
@@ -149,6 +160,8 @@ window.__sillage = { camera, controls, timeline, voyage, bateau, plongee, route,
 
 const horloge = new THREE.Clock();
 let accumulateurSurvol = 0;
+let lectureAvant = false;
+const DISTANCE_TRAVERSEE = 2.5;
 
 renderer.setAnimationLoop(() => {
   const dt = horloge.getDelta();
@@ -157,9 +170,17 @@ renderer.setAnimationLoop(() => {
   plongee.metAJour(dt);
   recit.metAJour(dt);
   if (suivre && !plongee.enVol && !plongee.ouverte) suitLeBateau(Math.min(1, dt * 3.5));
-  if (recit.actif && !plongee.enVol) {
-    const d = camera.position.length();
-    camera.position.setLength(THREE.MathUtils.lerp(d, recit.distanceCamera, Math.min(1, dt * 2)));
+  if (timeline.enLecture && !lectureAvant) regleSuivi(true); // la Traversée embarque
+  lectureAvant = timeline.enLecture;
+  ocean.metAJour(dt, timeline.enLecture);
+
+  if (!plongee.enVol && !plongee.ouverte) {
+    const cible = recit.actif ? recit.distanceCamera
+      : timeline.enLecture ? DISTANCE_TRAVERSEE : null;
+    if (cible !== null) {
+      const d = camera.position.length();
+      camera.position.setLength(THREE.MathUtils.lerp(d, cible, Math.min(1, dt * 2)));
+    }
   }
 
   globe.anime(dt);

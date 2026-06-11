@@ -124,6 +124,69 @@ html, body { height: 100%; overflow: hidden; background: #000; }
 #date-courante { font-variant: small-caps; letter-spacing: .06em; color: var(--or); }
 #lieu-courant { font-style: italic; opacity: .85; text-align: right; }
 
+/* ——— Mode Traversée : les photos qui affleurent ——— */
+
+#son-bouton {
+  position: fixed;
+  top: 30px;
+  right: 248px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(223, 243, 255, .3);
+  background: rgba(8, 16, 26, .55);
+  font-size: 1.05rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background .2s;
+  z-index: 6;
+}
+#son-bouton:hover { background: rgba(232, 200, 122, .18); }
+#son-bouton[aria-pressed="true"] { border-color: rgba(232, 200, 122, .6); }
+body.plongee-ouverte #son-bouton { display: none; }
+
+#affleure {
+  position: fixed;
+  left: 36px;
+  bottom: 110px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+  pointer-events: none;
+  z-index: 3;
+}
+.affleure-carte {
+  width: min(230px, 26vw);
+  padding: 9px 9px 7px;
+  background: rgba(248, 244, 234, .96);
+  border-radius: 4px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, .55);
+  transform: rotate(var(--derive, 0deg));
+  animation: affleurer .9s cubic-bezier(.2, .8, .3, 1.08) both;
+}
+@keyframes affleurer {
+  from { transform: translateY(70px) rotate(var(--derive, 0deg)); opacity: 0; filter: blur(4px) saturate(.6); }
+  to { transform: rotate(var(--derive, 0deg)); opacity: 1; filter: none; }
+}
+.affleure-carte.disparait {
+  animation: dissout .9s ease both;
+}
+@keyframes dissout {
+  to { transform: translateY(-26px) rotate(var(--derive, 0deg)); opacity: 0; filter: blur(5px); }
+}
+.affleure-carte img {
+  width: 100%;
+  display: block;
+  border-radius: 2px;
+}
+.affleure-carte figcaption {
+  margin-top: 6px;
+  font-size: .76rem;
+  font-style: italic;
+  color: #3a3631;
+  text-align: center;
+}
+
 /* ——— le mode Récit : les chapitres au fil du scroll ——— */
 
 #recit-bouton {
