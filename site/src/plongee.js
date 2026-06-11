@@ -5,7 +5,7 @@
 import * as THREE from 'three';
 import { latLonVers3D } from './geo.js';
 
-const DISTANCE_PLONGEE = 1.09;   // ≈ 570 km : sous les nuages de la scène
+const DISTANCE_PLONGEE = 1.026;  // ≈ 165 km : la vue aérienne HD emplit l'écran
 const DISTANCE_ORBITE = 3.0;
 const DUREE_VOL_S = 2.6;
 
@@ -15,7 +15,8 @@ const formatLong = new Intl.DateTimeFormat('fr-FR', {
 
 const lisse = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-export function creerPlongee({ camera, controls, timeline, regleSuivi, mouillagesParCle }) {
+export function creerPlongee({ camera, controls, timeline, regleSuivi,
+  mouillagesParCle, scene, vuesAeriennes }) {
   const panneau = document.getElementById('plongee');
   const titre = document.getElementById('plongee-nom');
   const sousTitre = document.getElementById('plongee-dates');
@@ -27,6 +28,83 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi, mouillage
 
   let vol = null; // { t, depart:{dir,dist}, arrivee:{dir,dist}, alOuverture }
   let ouverte = false;
+
+  // — vue aérienne haute définition du mouillage (préchargée au build : on
+  // connaît d'avance tous les endroits cliquables — idée de Sidney) —
+  const chargeurTexture = new THREE.TextureLoader();
+  let patchAerien = null;
+  let opaciteCible = 0;
+
+  function montreVueAerienne(escale) {
+    const vue = vuesAeriennes[`${escale.nom}|${escale.date_arrivee}`];
+    if (!vue) return;
+    cacheVueAerienne();
+    const texture = chargeurTexture.load(`./${vue.fichier}`);
+    texture.colorSpace = THREE.SRGBColorSpace;
+    texture.anisotropy = 8;
+    const geo = new THREE.SphereGeometry(
+      1.0012, 64, 64,
+      THREE.MathUtils.degToRad(vue.lonMin + 180),
+      THREE.MathUtils.degToRad(vue.lonMax - vue.lonMin),
+      THREE.MathUtils.degToRad(90 - vue.latMax),
+      THREE.MathUtils.degToRad(vue.latMax - vue.latMin));
+    // bord en fondu : la vue HD se dissout dans le globe, pas de carré dur
+    const materiau = new THREE.ShaderMaterial({
+      transparent: true,
+      depthWrite: false,
+      uniforms: {
+        carte: { value: texture },
+        opacite: { value: 0 },
+      },
+      vertexShader: /* glsl */`
+        varying vec2 vUv;
+        void main() {
+          vUv = uv;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        }`,
+      fragmentShader: /* glsl */`
+        uniform sampler2D carte;
+        uniform float opacite;
+        varying vec2 vUv;
+        void main() {
+          vec2 bord = smoothstep(0.0, 0.12, vUv) * smoothstep(1.0, 0.88, vUv);
+          vec3 tex = texture2D(carte, vUv).rgb;
+          // l'océan profond de l'imagerie satellite est presque noir :
+          // on le fond dans le bleu du monde carnet, les terres, lagons
+          // et récifs gardent leur vraie image (éclaircie pour l'ambiance)
+          float clarte = max(max(tex.r, tex.g), tex.b);
+          float terre = smoothstep(0.06, 0.22, clarte);
+          vec3 bleuCarnet = vec3(0.46, 0.69, 0.86);
+          vec3 image = pow(tex, vec3(0.88)) * 1.18;
+          vec3 couleur = mix(bleuCarnet, image, terre);
+          gl_FragColor = vec4(couleur, opacite * bord.x * bord.y);
+        }`,
+    });
+    patchAerien = new THREE.Mesh(geo, materiau);
+    patchAerien.renderOrder = 1;
+    scene.add(patchAerien);
+    opaciteCible = 1;
+  }
+
+  function cacheVueAerienne() {
+    if (!patchAerien) return;
+    const ancien = patchAerien;
+    patchAerien = null;
+    opaciteCible = 0;
+    // petit fondu de sortie autonome puis nettoyage
+    const fondu = () => {
+      ancien.material.uniforms.opacite.value -= 0.06;
+      if (ancien.material.uniforms.opacite.value <= 0) {
+        scene.remove(ancien);
+        ancien.geometry.dispose();
+        ancien.material.uniforms.carte.value.dispose();
+        ancien.material.dispose();
+      } else {
+        requestAnimationFrame(fondu);
+      }
+    };
+    fondu();
+  }
 
   function lanceVol(versDir, versDist, alArrivee) {
     vol = {
@@ -41,6 +119,10 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi, mouillage
   }
 
   function metAJour(dt) {
+    if (patchAerien) {
+      const u = patchAerien.material.uniforms.opacite;
+      if (u.value < opaciteCible) u.value = Math.min(opaciteCible, u.value + dt * 0.9);
+    }
     if (!vol) return;
     vol.t = Math.min(1, vol.t + dt / DUREE_VOL_S);
     const f = lisse(vol.t);
@@ -61,8 +143,10 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi, mouillage
     const d1 = formatLong.format(new Date(escale.date_arrivee + 'T12:00:00Z'));
     const d2 = escale.date_depart && escale.date_depart !== escale.date_arrivee
       ? formatLong.format(new Date(escale.date_depart + 'T12:00:00Z')) : null;
+    const credit = vuesAeriennes[`${escale.nom}|${escale.date_arrivee}`]
+      ? ' · vue aérienne © Esri, Maxar' : '';
     sousTitre.textContent =
-      `${d2 ? `du ${d1} au ${d2}` : d1} · ${escale.log_nm.toLocaleString('fr-FR')} milles au log`;
+      `${d2 ? `du ${d1} au ${d2}` : d1} · ${escale.log_nm.toLocaleString('fr-FR')} milles au log${credit}`;
 
     flux.replaceChildren();
     const articles = escale.articles ?? [];
@@ -124,7 +208,8 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi, mouillage
     panneau.hidden = true;
     const complet = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`) ?? escale;
     timeline.vaA(new Date(escale.date_arrivee + 'T12:00:00Z').getTime(), true);
-    controls.minDistance = 1.05;
+    controls.minDistance = 1.012;
+    montreVueAerienne(complet);
     lanceVol(latLonVers3D(complet.lat, complet.lon, 1), DISTANCE_PLONGEE, () => {
       rempli(complet);
       panneau.hidden = false;
@@ -139,6 +224,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi, mouillage
     panneau.hidden = true;
     document.body.classList.remove('plongee-ouverte');
     ouverte = false;
+    cacheVueAerienne();
     lanceVol(camera.position.clone().normalize(), DISTANCE_ORBITE, () => {
       controls.minDistance = 1.25;
       regleSuivi(true); // on reprend la route en suivant le bateau

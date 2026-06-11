@@ -200,17 +200,47 @@ body[data-mode="carnet"] #titre {
 body[data-mode="carnet"] #titre h1 { color: #1c4a72; }
 body[data-mode="carnet"] #titre p { color: #2e3c4a; }
 
+/* le parchemin : papier chiffon, vignettage léger, double liseré brun */
 body[data-mode="carnet"] #timeline,
 body[data-mode="carnet"] #recit-carte,
 body[data-mode="carnet"] #plongee {
-  background: linear-gradient(170deg, rgba(252, 249, 240, .9), rgba(244, 237, 220, .94));
-  border-color: rgba(154, 108, 28, .35);
+  background:
+    radial-gradient(120% 140% at 18% 0%, rgba(255, 252, 242, .55), transparent 60%),
+    radial-gradient(130% 120% at 100% 100%, rgba(196, 160, 96, .22), transparent 55%),
+    linear-gradient(168deg, #f9f2df, #f1e5c6);
+  border: 1px solid rgba(122, 84, 40, .55);
+  box-shadow:
+    inset 0 0 0 3px rgba(252, 247, 235, .9),
+    inset 0 0 0 4px rgba(122, 84, 40, .35),
+    0 10px 30px rgba(40, 60, 90, .25);
+}
+body[data-mode="carnet"] #timeline { position: fixed; }
+body[data-mode="carnet"] #timeline::after {
+  content: "⚓";
+  position: absolute;
+  top: -11px;
+  left: 22px;
+  font-size: .95rem;
+  color: #8a6422;
+  background: #f8f1de;
+  padding: 0 6px;
+  border-radius: 8px;
+  border: 1px solid rgba(122, 84, 40, .4);
+}
+body[data-mode="carnet"] #recit-carte::after {
+  content: "❧";
+  position: absolute;
+  bottom: 8px;
+  right: 14px;
+  color: rgba(138, 100, 34, .65);
+  font-size: 1.2rem;
 }
 body[data-mode="carnet"] #timeline button,
 body[data-mode="carnet"] #remonter {
-  border-color: rgba(154, 108, 28, .55);
-  background: rgba(154, 108, 28, .08);
-  color: #9a6c1c;
+  border: 1px solid rgba(122, 84, 40, .6);
+  background: linear-gradient(170deg, #faf3e1, #efe1c0);
+  box-shadow: inset 0 0 0 2px rgba(252, 247, 235, .8), 0 2px 8px rgba(60, 45, 20, .18);
+  color: #7c5a16;
 }
 body[data-mode="carnet"] #curseur {
   background: linear-gradient(90deg, #c8922e var(--avancement, 0%), rgba(46, 60, 74, .18) var(--avancement, 0%));
@@ -221,9 +251,13 @@ body[data-mode="carnet"] #curseur::-webkit-slider-thumb {
   box-shadow: 0 0 10px rgba(200, 146, 46, .8);
 }
 body[data-mode="carnet"] #boutons-haut button {
-  background: rgba(252, 249, 240, .75);
-  border-color: rgba(154, 108, 28, .45);
-  color: #9a6c1c;
+  border: 1px solid rgba(122, 84, 40, .6);
+  background: linear-gradient(170deg, rgba(250, 243, 225, .92), rgba(239, 225, 192, .94));
+  box-shadow: inset 0 0 0 2px rgba(252, 247, 235, .8), 0 3px 10px rgba(60, 45, 20, .22);
+  color: #7c5a16;
+}
+body[data-mode="carnet"] #boutons-haut button:hover {
+  background: linear-gradient(170deg, #fdf8ea, #f3e7c8);
 }
 body[data-mode="carnet"] #recit-carte h2,
 body[data-mode="carnet"] #plongee-entete h2 { color: #1c4a72; }
@@ -240,9 +274,21 @@ body[data-mode="carnet"] #recit-indicateur {
   background: linear-gradient(180deg, #c8922e var(--avancement, 0%), rgba(46, 60, 74, .2) var(--avancement, 0%));
 }
 body[data-mode="carnet"] #infobulle {
-  background: rgba(252, 249, 240, .95);
-  border-color: rgba(154, 108, 28, .5);
-  color: #2e3c4a;
+  background:
+    linear-gradient(168deg, #faf3e1, #f0e3c4);
+  border: 1px solid rgba(122, 84, 40, .6);
+  box-shadow: inset 0 0 0 2px rgba(252, 247, 235, .85), 0 4px 14px rgba(40, 60, 90, .3);
+  color: #4a3a22;
+  font-variant: small-caps;
+  letter-spacing: .04em;
+}
+body[data-mode="carnet"] #infobulle::before {
+  content: "⚓ ";
+  color: #8a6422;
+}
+body[data-mode="carnet"] #infobulle .dates {
+  font-variant: normal;
+  color: #7a6848;
 }
 
 /* ——— Mode Traversée : les photos qui affleurent ——— */

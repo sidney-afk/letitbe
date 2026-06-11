@@ -143,13 +143,26 @@ export function creerBateau() {
     conteneur.quaternion.setFromRotationMatrix(matrice);
   }
 
-  function anime(temps, distanceCamera = 3) {
+  const camLocale = new THREE.Vector3();
+  function anime(temps, camera) {
     // léger tangage de catamaran — pas de gîte, Éric y tient
     bateau.rotation.x = Math.sin(temps * 1.7) * 0.025;
     bateau.rotation.z = Math.sin(temps * 1.1 + 1) * 0.012;
-    // bien visible à toutes les distances (échelle assumée non réaliste)
-    const s = THREE.MathUtils.clamp((distanceCamera - 1) * 0.026, 0.0055, 0.085);
+
+    const d = camera.position.length();
+    // une vraie miniature : énorme, toujours lisible au-dessus du globe
+    const s = THREE.MathUtils.clamp((d - 1) * 0.075, 0.002, 0.3);
     bateau.scale.setScalar(s);
+
+    // de loin, la figurine pivote pour se montrer de profil (silhouette
+    // de voilier, pas un point vu du ciel) ; de près elle reprend son cap
+    camLocale.copy(camera.position);
+    conteneur.worldToLocal(camLocale);
+    let beta = Math.atan2(camLocale.x, camLocale.z) - Math.PI / 2;
+    while (beta > Math.PI / 2) beta -= Math.PI;
+    while (beta < -Math.PI / 2) beta += Math.PI;
+    const profil = THREE.MathUtils.smoothstep(d, 1.7, 2.7);
+    bateau.rotation.y = beta * profil;
   }
 
   return { conteneur, positionne, anime };
