@@ -13,6 +13,8 @@ import { creerRecit } from './recit.js';
 import { creerTraversee } from './traversee.js';
 import { creerOcean } from './ocean.js';
 import { creerMeteo } from './meteo.js';
+import { creerCiel } from './ciel.js';
+import { creerNuagesCotonneux } from './nuages.js';
 import { construireVoyage } from './geo.js';
 import { soleilEtCiel } from './sun.js';
 
@@ -33,8 +35,9 @@ controls.maxDistance = 12;
 controls.rotateSpeed = 0.55;
 controls.enablePan = false;
 
-// lumières pour les matériaux Lambert du bateau (la Terre a son shader)
-scene.add(new THREE.HemisphereLight(0xcfe5ff, 0x202428, 1.1));
+// lumières pour les matériaux du bateau et des nuages (la Terre a ses shaders)
+const hemisphere = new THREE.HemisphereLight(0xcfe5ff, 0x202428, 1.1);
+scene.add(hemisphere);
 const soleilLampe = new THREE.DirectionalLight(0xfff3df, 2.2);
 scene.add(soleilLampe);
 
@@ -43,6 +46,34 @@ scene.add(etoiles.points);
 
 const globe = creerGlobe();
 scene.add(globe.groupe);
+
+const ciel = creerCiel();
+scene.add(ciel.mesh);
+const coton = creerNuagesCotonneux();
+scene.add(coton.groupe);
+
+// — Réaliste ⟷ Carnet (l'esthétique de Sidney est le mode par défaut) —
+const modeBouton = document.getElementById('mode-bouton');
+let mode = 'carnet';
+function regleMode(nouveau) {
+  mode = nouveau;
+  const carnetActif = mode === 'carnet';
+  document.body.dataset.mode = mode;
+  globe.regleMode(mode);
+  route.regleMode(mode);
+  ciel.mesh.visible = carnetActif;
+  coton.groupe.visible = carnetActif;
+  etoiles.points.visible = !carnetActif;
+  hemisphere.color.set(carnetActif ? 0xdfeeff : 0xcfe5ff);
+  hemisphere.groundColor.set(carnetActif ? 0xf2e4c8 : 0x202428);
+  hemisphere.intensity = carnetActif ? 1.6 : 1.1;
+  soleilLampe.intensity = carnetActif ? 1.6 : 2.2;
+  soleilLampe.color.set(carnetActif ? 0xfff0c8 : 0xfff3df);
+  modeBouton.textContent = carnetActif ? '🌍 Mode réaliste' : '🖍 Mode carnet';
+}
+modeBouton.addEventListener('click', () => {
+  regleMode(mode === 'carnet' ? 'photo' : 'carnet');
+});
 
 const [routeData, mouillagesData, meteo] = await Promise.all([
   fetch('./data/route.json').then(r => r.json()),
@@ -90,11 +121,13 @@ function applique(t) {
     Math.atan2(bateau.conteneur.position.z, -bateau.conteneur.position.x)) - 180;
   const { dirSoleil, gmstDeg } = soleilEtCiel(t, lon);
   globe.metAJourSoleil(dirSoleil);
+  ciel.metAJourSoleil(dirSoleil);
   soleilLampe.position.copy(dirSoleil).multiplyScalar(10);
   etoiles.oriente(gmstDeg);
   globe.regleMeteo(meteo.applique(t));
 }
 timeline.surChangement(applique);
+regleMode('carnet');
 applique(timeline.t);
 
 const plongee = creerPlongee({ camera, controls, timeline, regleSuivi, mouillagesParCle });
@@ -189,6 +222,7 @@ renderer.setAnimationLoop(() => {
   }
 
   globe.anime(dt);
+  coton.anime(dt, horloge.elapsedTime);
   bateau.anime(horloge.elapsedTime, camera.position.length());
 
   accumulateurSurvol += dt;

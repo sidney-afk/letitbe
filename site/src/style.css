@@ -135,12 +135,91 @@ html, body { height: 100%; overflow: hidden; background: #000; }
 }
 #lieu-courant { font-style: italic; opacity: .85; text-align: right; }
 
+/* ——— le mode Carnet : l'habillage clair et chaleureux ——— */
+
+#mode-bouton {
+  position: fixed;
+  top: 30px;
+  right: 248px;
+  padding: 10px 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(232, 200, 122, .5);
+  background: rgba(8, 16, 26, .55);
+  color: var(--or);
+  font: inherit;
+  font-size: .88rem;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: background .2s;
+  z-index: 6;
+}
+#mode-bouton:hover { background: rgba(232, 200, 122, .18); }
+body.plongee-ouverte #mode-bouton { display: none; }
+
+body[data-mode="carnet"] {
+  --or: #9a6c1c;
+  --ecume: #2e3c4a;
+}
+body[data-mode="carnet"] #titre {
+  text-shadow: 0 0 16px rgba(255, 255, 255, .95), 0 0 4px rgba(255, 255, 255, .9),
+    0 1px 2px rgba(255, 255, 255, .85);
+}
+body[data-mode="carnet"] #titre h1 { color: #1c4a72; }
+body[data-mode="carnet"] #titre p { color: #2e3c4a; }
+
+body[data-mode="carnet"] #timeline,
+body[data-mode="carnet"] #recit-carte,
+body[data-mode="carnet"] #plongee {
+  background: linear-gradient(170deg, rgba(252, 249, 240, .9), rgba(244, 237, 220, .94));
+  border-color: rgba(154, 108, 28, .35);
+}
+body[data-mode="carnet"] #timeline button,
+body[data-mode="carnet"] #remonter {
+  border-color: rgba(154, 108, 28, .55);
+  background: rgba(154, 108, 28, .08);
+  color: #9a6c1c;
+}
+body[data-mode="carnet"] #curseur {
+  background: linear-gradient(90deg, #c8922e var(--avancement, 0%), rgba(46, 60, 74, .18) var(--avancement, 0%));
+}
+body[data-mode="carnet"] #curseur::-webkit-slider-thumb {
+  background: #fffdf6;
+  border-color: #c8922e;
+  box-shadow: 0 0 10px rgba(200, 146, 46, .8);
+}
+body[data-mode="carnet"] #recit-bouton,
+body[data-mode="carnet"] #mode-bouton,
+body[data-mode="carnet"] #son-bouton {
+  background: rgba(252, 249, 240, .75);
+  border-color: rgba(154, 108, 28, .45);
+  color: #9a6c1c;
+}
+body[data-mode="carnet"] #recit-carte h2,
+body[data-mode="carnet"] #plongee-entete h2 { color: #1c4a72; }
+body[data-mode="carnet"] .recit-texte,
+body[data-mode="carnet"] .article-texte { color: #3a3530; }
+body[data-mode="carnet"] .recit-periode,
+body[data-mode="carnet"] #plongee-entete p { color: #6c6256; }
+body[data-mode="carnet"] #plongee-flux h3 { color: #1c4a72; }
+body[data-mode="carnet"] #plongee-flux figcaption { color: #6c6256; }
+body[data-mode="carnet"] .plongee-vide { color: #6c6256; }
+body[data-mode="carnet"] #plongee-entete { border-bottom-color: rgba(154, 108, 28, .25); }
+body[data-mode="carnet"] #recit-aide { color: #2e3c4a; }
+body[data-mode="carnet"] #recit-indicateur {
+  background: linear-gradient(180deg, #c8922e var(--avancement, 0%), rgba(46, 60, 74, .2) var(--avancement, 0%));
+}
+body[data-mode="carnet"] #infobulle {
+  background: rgba(252, 249, 240, .95);
+  border-color: rgba(154, 108, 28, .5);
+  color: #2e3c4a;
+}
+
 /* ——— Mode Traversée : les photos qui affleurent ——— */
 
 #son-bouton {
   position: fixed;
   top: 30px;
-  right: 248px;
+  right: 408px;
   width: 42px;
   height: 42px;
   border-radius: 50%;

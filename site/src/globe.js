@@ -22,6 +22,8 @@ export function creerGlobe() {
   const normales = charge('./textures/earth_normal_2048.jpg', THREE.NoColorSpace);
   const nuages = charge('./textures/clouds_2048.jpg', THREE.NoColorSpace);
 
+  const carnet = charge('./textures/earth_carnet.jpg');
+
   const uniforms = {
     carteJour: { value: jour },
     carteNuit: { value: nuit },
@@ -33,9 +35,58 @@ export function creerGlobe() {
   const meteoNuages = { value: 1 };
   const cibleMeteo = { nuages: 1, lumiere: 1 };
 
-  const terre = new THREE.Mesh(
-    new THREE.SphereGeometry(RAYON, 128, 64),
-    new THREE.ShaderMaterial({
+  // matériau « peint à la main » du mode Carnet : demi-Lambert en bandes
+  // douces (pas de face nocturne), ombres bleutées plutôt que noires,
+  // liseré de lumière crème — l'esprit cel shading de la référence.
+  const matiereCarnet = new THREE.ShaderMaterial({
+    uniforms: {
+      carteCarnet: { value: carnet },
+      dirSoleil: uniforms.dirSoleil,
+      meteoLumiere: uniforms.meteoLumiere,
+    },
+    vertexShader: /* glsl */`
+      varying vec2 vUv;
+      varying vec3 vNormaleM;
+      varying vec3 vPosM;
+      void main() {
+        vUv = uv;
+        vNormaleM = normalize(mat3(modelMatrix) * normal);
+        vec4 pm = modelMatrix * vec4(position, 1.0);
+        vPosM = pm.xyz;
+        gl_Position = projectionMatrix * viewMatrix * pm;
+      }`,
+    fragmentShader: /* glsl */`
+      uniform sampler2D carteCarnet;
+      uniform vec3 dirSoleil;
+      uniform float meteoLumiere;
+      varying vec2 vUv;
+      varying vec3 vNormaleM;
+      varying vec3 vPosM;
+      void main() {
+        vec3 n = normalize(vNormaleM);
+        vec3 tex = texture2D(carteCarnet, vUv).rgb;
+
+        float ndl = dot(n, dirSoleil) * 0.5 + 0.5; // demi-Lambert : pas de nuit
+        // trois bandes d'éclairage aux transitions douces
+        float bandes = 0.62
+          + 0.16 * smoothstep(0.30, 0.40, ndl)
+          + 0.28 * smoothstep(0.55, 0.68, ndl);
+        vec3 couleur = tex * bandes * 1.3 * vec3(1.0, 0.975, 0.93);
+        // l'ombre est fraîche et bleutée, jamais sombre
+        couleur = mix(couleur * vec3(0.78, 0.86, 1.10), couleur,
+                      smoothstep(0.18, 0.52, ndl));
+
+        // liseré de lumière crème sur le bord
+        vec3 versCam = normalize(cameraPosition - vPosM);
+        float bord = pow(1.0 - max(dot(n, versCam), 0.0), 2.4);
+        couleur += vec3(1.0, 0.96, 0.86) * bord * 0.28;
+
+        couleur *= mix(1.0, meteoLumiere, 0.6); // la grisaille, en douceur
+        gl_FragColor = vec4(couleur, 1.0);
+      }`,
+  });
+
+  const matierePhoto = new THREE.ShaderMaterial({
       uniforms,
       vertexShader: /* glsl */`
         varying vec2 vUv;
@@ -94,8 +145,10 @@ export function creerGlobe() {
 
           gl_FragColor = vec4(couleur, 1.0);
         }`,
-    }),
-  );
+  });
+
+  const terre = new THREE.Mesh(
+    new THREE.SphereGeometry(RAYON, 128, 64), matierePhoto);
   groupe.add(terre);
 
   const meshNuages = new THREE.Mesh(
@@ -170,6 +223,12 @@ export function creerGlobe() {
   return {
     groupe,
     metAJourSoleil(dir) { uniforms.dirSoleil.value.copy(dir); },
+    regleMode(mode) {
+      const carnetActif = mode === 'carnet';
+      terre.material = carnetActif ? matiereCarnet : matierePhoto;
+      meshNuages.visible = !carnetActif; // le Carnet a ses nuages cotonneux
+      halo.visible = !carnetActif;
+    },
     regleMeteo({ nuages, lumiere }) {
       cibleMeteo.nuages = nuages;
       cibleMeteo.lumiere = lumiere;

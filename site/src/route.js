@@ -99,5 +99,19 @@ export function creerRoute(voyage, routeData) {
     resolution.set(w, h);
   }
 
-  return { groupe, metAJourTemps, surResize, perles, escales };
+  function regleMode(mode) {
+    if (mode === 'carnet') {
+      ligneSillage.material.color.set(0xf2a035); // or chaud sur océan vif
+      ligneComplete.material.color.set(0xffffff);
+      ligneComplete.material.opacity = 0.4;
+      matPerle.color.set(0xfff3da);
+    } else {
+      ligneSillage.material.color.set(0xeec97e);
+      ligneComplete.material.color.set(0x6a86a0);
+      ligneComplete.material.opacity = 0.5;
+      matPerle.color.set(0xffd896);
+    }
+  }
+
+  return { groupe, metAJourTemps, surResize, regleMode, perles, escales };
 }

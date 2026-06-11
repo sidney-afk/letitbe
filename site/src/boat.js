@@ -103,7 +103,7 @@ export function creerBateau() {
     bateau.rotation.x = Math.sin(temps * 1.7) * 0.025;
     bateau.rotation.z = Math.sin(temps * 1.1 + 1) * 0.012;
     // taille à peu près constante à l'écran, pour rester lisible de loin
-    const s = THREE.MathUtils.clamp((distanceCamera - 1) * 0.011, 0.0015, 0.045);
+    const s = THREE.MathUtils.clamp((distanceCamera - 1) * 0.0135, 0.002, 0.05);
     bateau.scale.setScalar(s);
   }
 

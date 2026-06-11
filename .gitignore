@@ -10,3 +10,4 @@ dist/
 # copies générées par « npm run sync-data » depuis ../data
 site/public/data/
 /package-lock.json
+site/public/textures/ne3_8k.jpg
