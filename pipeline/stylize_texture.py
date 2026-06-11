@@ -25,9 +25,9 @@ URL_NE3 = "https://www.shadedrelief.com/natural3/ne3_data/8192/textures/2_no_clo
 
 LARGEUR = 8192  # plein format NE3 : les atolls restent nets en plongée
 
-OCEAN_PROFOND = np.array([62, 122, 186], dtype=np.float32)
-OCEAN_MOYEN = np.array([86, 152, 208], dtype=np.float32)
-OCEAN_LAGON = np.array([138, 212, 232], dtype=np.float32)
+OCEAN_PROFOND = np.array([84, 144, 202], dtype=np.float32)
+OCEAN_MOYEN = np.array([106, 170, 218], dtype=np.float32)
+OCEAN_LAGON = np.array([152, 220, 236], dtype=np.float32)
 PLAGE = np.array([246, 228, 180], dtype=np.float32)
 
 

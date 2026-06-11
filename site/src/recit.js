@@ -1,9 +1,8 @@
-// Le mode Récit (étape 4 du plan) : le défilement pilote le bateau le long
-// de la route, chapitre par chapitre. Le « scroll » est mappé sur la suite
-// des escales (et non sur le temps brut : les dix-sept mois néo-zélandais
-// pèseraient sinon les trois quarts du voyage).
-
-import * as THREE from 'three';
+// Le mode Récit (étape 4 du plan) : un habillage narratif au-dessus de la
+// timeline. Les cartes de chapitre s'affichent au fil du voyage, la caméra
+// se rapproche et suit le bateau — et c'est le curseur (ou la lecture ⏵)
+// qui fait avancer l'histoire : la molette reste dédiée au zoom, partout
+// (demande de Sidney).
 
 const DISTANCE_RECIT = 2.05;
 
@@ -89,45 +88,21 @@ const EPILOGUE = {
     + 'pour mémoire.',
 };
 
-export function creerRecit({ timeline, regleSuivi, routeData, controls }) {
+const JOUR_MS = 86400e3;
+
+export function creerRecit({ timeline, regleSuivi, voyage }) {
   const bouton = document.getElementById('recit-bouton');
   const carte = document.getElementById('recit-carte');
   const indicateur = document.getElementById('recit-indicateur');
   const aide = document.getElementById('recit-aide');
 
-  // points de contrôle : les arrivées de chaque escale, à part égale de
-  // scroll, plus le départ final (la fin du chapitre bateau à San Diego)
-  const arrivees = routeData
-    .filter(e => e.date_arrivee)
-    .map(e => ({
-      t: new Date(e.date_arrivee + 'T12:00:00Z').getTime(),
-      chapitre: e.chapitre,
-    }));
-  const derniere = routeData[routeData.length - 1];
-  if (derniere.date_depart) {
-    arrivees.push({
-      t: new Date(derniere.date_depart + 'T12:00:00Z').getTime(),
-      chapitre: derniere.chapitre,
-    });
-  }
-
   let actif = false;
-  let cible = 0;       // fraction de scroll visée [0..1+épilogue]
-  let courant = 0;     // fraction lissée
   let chapitreAffiche = null;
 
-  const FIN = 1.06;    // un peu d'élan après San Diego pour l'épilogue
-
-  function fractionVersTemps(f) {
-    const x = THREE.MathUtils.clamp(f, 0, 1) * (arrivees.length - 1);
-    const i = Math.min(Math.floor(x), arrivees.length - 2);
-    return THREE.MathUtils.lerp(arrivees[i].t, arrivees[i + 1].t, x - i);
-  }
-
-  function chapitreA(f) {
-    if (f >= 1.0) return ['__epilogue__', EPILOGUE];
-    const i = Math.round(THREE.MathUtils.clamp(f, 0, 1) * (arrivees.length - 1));
-    const nom = arrivees[i].chapitre;
+  function chapitreA(t) {
+    if (t >= voyage.fin - 2 * JOUR_MS) return ['__epilogue__', EPILOGUE];
+    const e = voyage.segmentA(t)?.escale;
+    const nom = e?.chapitre;
     return [nom, CHAPITRES[nom]];
   }
 
@@ -152,25 +127,27 @@ export function creerRecit({ timeline, regleSuivi, routeData, controls }) {
       () => carte.classList.add('visible')));
   }
 
+  function applique(t) {
+    if (!actif) return;
+    const [nom, c] = chapitreA(t);
+    afficheChapitre(nom, c);
+    const f = (t - voyage.debut) / (voyage.fin - voyage.debut);
+    indicateur.style.setProperty('--avancement', `${f * 100}%`);
+  }
+
   function entre() {
     actif = true;
     document.body.classList.add('recit-actif');
     bouton.textContent = '✕ Quitter le récit';
-    // on reprend là où en est la timeline
-    const t = timeline.t;
-    let i = arrivees.findIndex(a => a.t > t);
-    if (i < 0) i = arrivees.length - 1;
-    cible = courant = Math.max(0, (i - 1) / (arrivees.length - 1));
     chapitreAffiche = null;
     regleSuivi(true);
-    controls.enabled = false; // la molette appartient au récit
+    applique(timeline.t);
     aide.hidden = false;
     setTimeout(() => { aide.hidden = true; }, 5200);
   }
 
   function sort() {
     actif = false;
-    controls.enabled = true;
     document.body.classList.remove('recit-actif');
     bouton.textContent = '☰ Embarquer dans le récit';
     carte.classList.remove('visible');
@@ -179,33 +156,9 @@ export function creerRecit({ timeline, regleSuivi, routeData, controls }) {
   }
 
   bouton.addEventListener('click', () => (actif ? sort() : entre()));
-
-  addEventListener('wheel', (e) => {
-    if (!actif) return;
-    e.preventDefault();
-    cible = THREE.MathUtils.clamp(cible + e.deltaY * 0.00012, 0, FIN);
-  }, { passive: false });
-
-  let toucheY = null;
-  addEventListener('touchstart', (e) => { toucheY = e.touches[0].clientY; });
-  addEventListener('touchmove', (e) => {
-    if (!actif || toucheY === null) return;
-    cible = THREE.MathUtils.clamp(
-      cible + (toucheY - e.touches[0].clientY) * 0.0008, 0, FIN);
-    toucheY = e.touches[0].clientY;
-  });
-
-  function metAJour(dt) {
-    if (!actif) return;
-    courant += (cible - courant) * Math.min(1, dt * 3);
-    timeline.vaA(fractionVersTemps(courant), true);
-    const [nom, c] = chapitreA(courant);
-    afficheChapitre(nom, c);
-    indicateur.style.setProperty('--avancement', `${Math.min(1, courant) * 100}%`);
-  }
+  timeline.surChangement(applique);
 
   return {
-    metAJour,
     sort,
     get actif() { return actif; },
     get distanceCamera() { return DISTANCE_RECIT; },

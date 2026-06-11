@@ -48,7 +48,7 @@ export function creerRoute(voyage, routeData) {
   geoComplete.setPositions(positions);
   const ligneComplete = new Line2(geoComplete, new LineMaterial({
     color: 0x6a86a0,
-    linewidth: 1.4,
+    linewidth: 2.2,
     transparent: true,
     opacity: 0.5,
     resolution,
@@ -60,7 +60,7 @@ export function creerRoute(voyage, routeData) {
   geoSillage.setPositions(positions);
   const ligneSillage = new Line2(geoSillage, new LineMaterial({
     color: 0xeec97e,
-    linewidth: 2.6,
+    linewidth: 4.2,
     transparent: true,
     opacity: 0.95,
     resolution,
@@ -68,22 +68,44 @@ export function creerRoute(voyage, routeData) {
   ligneSillage.computeLineDistances();
   groupe.add(ligneSillage);
 
-  // mouillages : petites perles dorées, cliquables
+  // mouillages : épingles or et crème, taille d'écran ~constante, avec une
+  // cible de clic invisible bien plus généreuse que le dessin
   const escales = routeData.filter(e => e.type !== 'traversee' && e.date_arrivee);
-  const geoPerle = new THREE.SphereGeometry(0.0035, 10, 8);
-  const matPerle = new THREE.MeshBasicMaterial({
-    color: 0xffd896,
-    transparent: true,
-    opacity: 0.85,
+  const matAnneau = new THREE.MeshBasicMaterial({ color: 0xc8922e });
+  const matCoeur = new THREE.MeshBasicMaterial({ color: 0xfffbef });
+  const matCible = new THREE.MeshBasicMaterial({
+    transparent: true, opacity: 0, depthWrite: false,
   });
-  const perles = new THREE.InstancedMesh(geoPerle, matPerle, escales.length);
+  const anneaux = new THREE.InstancedMesh(
+    new THREE.TorusGeometry(1, 0.22, 8, 28), matAnneau, escales.length);
+  const coeurs = new THREE.InstancedMesh(
+    new THREE.SphereGeometry(0.62, 12, 10), matCoeur, escales.length);
+  const cibles = new THREE.InstancedMesh(
+    new THREE.SphereGeometry(3.2, 8, 6), matCible, escales.length);
+  const positionsPerles = escales.map(e => latLonVers3D(e.lat, e.lon, ALTITUDE));
+  groupe.add(anneaux, coeurs, cibles);
+
   const m = new THREE.Matrix4();
-  escales.forEach((e, i) => {
-    m.setPosition(latLonVers3D(e.lat, e.lon, ALTITUDE));
-    perles.setMatrixAt(i, m);
-  });
-  perles.instanceMatrix.needsUpdate = true;
-  groupe.add(perles);
+  const q = new THREE.Quaternion();
+  const versCamera = new THREE.Vector3();
+  const echelle = new THREE.Vector3();
+  function orientePerles(camera) {
+    // ~9 px à l'écran quelle que soit la distance, anneaux face caméra
+    const d = camera.position.length();
+    const s = THREE.MathUtils.clamp((d - 1) * 0.0035, 0.0006, 0.009);
+    echelle.setScalar(s);
+    positionsPerles.forEach((p, i) => {
+      versCamera.copy(camera.position).sub(p).normalize();
+      q.setFromUnitVectors(new THREE.Vector3(0, 0, 1), versCamera);
+      m.compose(p, q, echelle);
+      anneaux.setMatrixAt(i, m);
+      coeurs.setMatrixAt(i, m);
+      cibles.setMatrixAt(i, m);
+    });
+    anneaux.instanceMatrix.needsUpdate = true;
+    coeurs.instanceMatrix.needsUpdate = true;
+    cibles.instanceMatrix.needsUpdate = true;
+  }
 
   function metAJourTemps(t) {
     // nombre de segments instanciés dont le départ est déjà passé
@@ -103,15 +125,18 @@ export function creerRoute(voyage, routeData) {
     if (mode === 'carnet') {
       ligneSillage.material.color.set(0xf2a035); // or chaud sur océan vif
       ligneComplete.material.color.set(0xffffff);
-      ligneComplete.material.opacity = 0.4;
-      matPerle.color.set(0xfff3da);
+      ligneComplete.material.opacity = 0.55;
+      matAnneau.color.set(0xc8922e);
     } else {
       ligneSillage.material.color.set(0xeec97e);
-      ligneComplete.material.color.set(0x6a86a0);
+      ligneComplete.material.color.set(0x8fa9c0);
       ligneComplete.material.opacity = 0.5;
-      matPerle.color.set(0xffd896);
+      matAnneau.color.set(0xeec97e);
     }
   }
 
-  return { groupe, metAJourTemps, surResize, regleMode, perles, escales };
+  return {
+    groupe, metAJourTemps, surResize, regleMode, orientePerles,
+    cibles, escales,
+  };
 }
