@@ -1,0 +1,9 @@
+# Dérivés régénérables depuis content/site/ (committé) :
+#   python3 pipeline/optimize_images.py
+# ~500 Mo de WebP — inutile de doubler le poids du dépôt.
+content/media/
+
+__pycache__/
+*.pyc
+node_modules/
+dist/

@@ -374,19 +374,7 @@
       "legende": ""
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Canal de Panama",
-  "lat": 9.12,
-  "lon": -79.72,
-  "log_nm": 1250,
-  "date_arrivee": "2009-06-25",
-  "date_depart": null,
-  "type": "traversee",
-  "chapitre": "Vers le Pacifique",
-  "articles": [
+   },
    {
     "id": 48,
     "date": "2009-06-20",
@@ -401,8 +389,7 @@
       "src": "Tech/Image/Blog/2009_06_20/Panne.JPG",
       "legende": "L'étouffoir tribord pend misérablement"
      }
-    ],
-    "en_mer": true
+    ]
    },
    {
     "id": 49,
@@ -426,8 +413,7 @@
       "src": "Tech/Image/Blog/2009_06_22/vidange.JPG",
       "legende": ""
      }
-    ],
-    "en_mer": true
+    ]
    },
    {
     "id": 50,
@@ -447,9 +433,20 @@
       "src": "Tech/Image/Blog/2009_06_23/lave2.JPG",
       "legende": "Les mousses moussent"
      }
-    ],
-    "en_mer": true
-   },
+    ]
+   }
+  ]
+ },
+ {
+  "nom": "Canal de Panama",
+  "lat": 9.12,
+  "lon": -79.72,
+  "log_nm": 1250,
+  "date_arrivee": "2009-06-25",
+  "date_depart": null,
+  "type": "traversee",
+  "chapitre": "Vers le Pacifique",
+  "articles": [
    {
     "id": 51,
     "date": "2009-06-24",
@@ -5820,19 +5817,7 @@
       "legende": "Plein de gasoil."
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Fidji vers Nlle Zélande",
-  "lat": -35.31,
-  "lon": 174.121,
-  "log_nm": 11670,
-  "date_arrivee": "2010-11-29",
-  "date_depart": "2010-12-08",
-  "type": "traversee",
-  "chapitre": "La Nouvelle-Zélande",
-  "articles": [
+   },
    {
     "id": 297,
     "date": "2010-11-29",
@@ -5852,7 +5837,19 @@
       "legende": "On ne navigue pas avec des cheveux sales."
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Fidji vers Nlle Zélande",
+  "lat": -35.31,
+  "lon": 174.121,
+  "log_nm": 11670,
+  "date_arrivee": "2010-11-29",
+  "date_depart": "2010-12-08",
+  "type": "traversee",
+  "chapitre": "La Nouvelle-Zélande",
+  "articles": [
    {
     "id": 298,
     "date": "2010-12-04",

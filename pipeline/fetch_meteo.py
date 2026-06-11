@@ -96,14 +96,16 @@ def trace_quotidienne(mouillages: list[dict]) -> list[dict]:
             if narr and (narr - dep).days > 1:
                 total = (narr - dep).days
                 for k in range(1, total):
-                    if total <= 30 and n["type"] != "traversee":
+                    if n["type"] == "traversee" or total > 30:
+                        # en attente au mouillage (le temps de mer est porté
+                        # par la ligne de traversée) ou hivernage immobile
+                        pose(dep + timedelta(days=k), m["lat"], m["lon"],
+                             m["nom"], False)
+                    else:
                         t = k / total
                         lat, lon = interpole_ortho(m, n, t)
                         pose(dep + timedelta(days=k), lat, lon,
                              f"En mer ({m['nom']} → {n['nom']})", True)
-                    elif total > 30:
-                        pose(dep + timedelta(days=k), m["lat"], m["lon"],
-                             m["nom"], False)
     return [jours[k] for k in sorted(jours)]
 
 

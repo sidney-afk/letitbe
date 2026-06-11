@@ -63,13 +63,14 @@ def main() -> None:
             return None
         a = date.fromisoformat(m["date_arrivee"])
         d = date.fromisoformat(m["date_depart"]) if m["date_depart"] else a
-        # trou long avant l'escale suivante : le bateau n'a pas bougé
-        # (hivernage à Whangarei pendant les voyages NZ/Australie) —
-        # l'escale reste « active » jusqu'au départ réel
+        # l'escale reste « active » jusqu'au départ réel : trou long = bateau
+        # immobile (hivernage à Whangarei pendant les voyages NZ/Australie) ;
+        # trou avant une traversée = attente au mouillage (préparatifs)
         if i + 1 < len(mouillages) and mouillages[i + 1]["date_arrivee"]:
-            narr = date.fromisoformat(mouillages[i + 1]["date_arrivee"])
-            if (narr - d).days > 30:
-                d = narr - timedelta(days=1)
+            suivant = mouillages[i + 1]
+            narr = date.fromisoformat(suivant["date_arrivee"])
+            if (narr - d).days > 30 or suivant["type"] == "traversee":
+                d = max(d, narr - timedelta(days=1))
         return a, d
 
     pour_mouillage: dict[int, list[dict]] = {i: [] for i in range(len(mouillages))}
