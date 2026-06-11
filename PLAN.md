@@ -127,7 +127,14 @@ pas convaincu (sauf peut-être plus tard).
    route » / Échap pour remonter. Photos servies en WebP
    (`site/public/media/`, 1 178 fichiers, 33 Mo, généré par
    `pipeline/sync_site_media.py` depuis `content/media/`).
-4. Chapitres scrollytelling.
+4. ✅ Chapitres scrollytelling — **fait** : bouton « ☰ Embarquer dans le
+   récit » → la molette fait avancer le bateau d'escale en escale (mapping
+   sur la séquence d'escales, pas le temps brut : les 17 mois néo-zélandais
+   ne pèsent pas les ¾ du défilement), caméra rapprochée qui suit, cartes de
+   chapitre (I → VIII + épilogue « La terre ferme ») avec textes
+   d'introduction originaux dans `site/src/recit.js`, indicateur de
+   progression, timeline synchronisée. Cliquer une perle quitte le récit et
+   plonge.
 5. Mode Traversée.
 6. Fonctionnalités 1–7 (basculement carte ancienne, vents, ciel, météo…).
 7. Polish, fallback, audio, déploiement GitHub Pages.

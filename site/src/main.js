@@ -9,6 +9,7 @@ import { creerBateau } from './boat.js';
 import { creerEtoiles } from './stars.js';
 import { creerTimeline } from './timeline.js';
 import { creerPlongee } from './plongee.js';
+import { creerRecit } from './recit.js';
 import { construireVoyage } from './geo.js';
 import { directionSoleil } from './sun.js';
 
@@ -90,6 +91,7 @@ timeline.surChangement(applique);
 applique(timeline.t);
 
 const plongee = creerPlongee({ camera, controls, timeline, regleSuivi, mouillagesParCle });
+const recit = creerRecit({ timeline, regleSuivi, routeData, controls });
 
 // — infobulle des mouillages —
 const infobulle = document.getElementById('infobulle');
@@ -104,7 +106,9 @@ canvas.addEventListener('pointermove', (e) => {
 });
 
 canvas.addEventListener('click', () => {
-  if (escaleSurvolee?.date_arrivee) plongee.vers(escaleSurvolee);
+  if (!escaleSurvolee?.date_arrivee) return;
+  if (recit.actif) recit.sort(); // on quitte le récit pour plonger
+  plongee.vers(escaleSurvolee);
 });
 
 const formatCourt = new Intl.DateTimeFormat('fr-FR', {
@@ -141,7 +145,7 @@ addEventListener('resize', redimensionne);
 redimensionne();
 
 // poignée de débogage (capture.mjs, console)
-window.__sillage = { camera, controls, timeline, voyage, bateau, plongee, route };
+window.__sillage = { camera, controls, timeline, voyage, bateau, plongee, route, recit };
 
 const horloge = new THREE.Clock();
 let accumulateurSurvol = 0;
@@ -151,7 +155,12 @@ renderer.setAnimationLoop(() => {
 
   timeline.metAJour(dt * 1000);
   plongee.metAJour(dt);
+  recit.metAJour(dt);
   if (suivre && !plongee.enVol && !plongee.ouverte) suitLeBateau(Math.min(1, dt * 3.5));
+  if (recit.actif && !plongee.enVol) {
+    const d = camera.position.length();
+    camera.position.setLength(THREE.MathUtils.lerp(d, recit.distanceCamera, Math.min(1, dt * 2)));
+  }
 
   globe.anime(dt);
   bateau.anime(horloge.elapsedTime, camera.position.length());
