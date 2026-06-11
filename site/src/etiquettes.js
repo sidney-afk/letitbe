@@ -32,24 +32,26 @@ const LIEUX = [
 function spriteTexte(texte, important) {
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d');
-  const police = `italic ${important ? 64 : 52}px Iowan Old Style, Palatino, Georgia, serif`;
+  // gros caractères : la texture reste nette même quand l'étiquette grossit
+  const police = `italic 600 ${important ? 150 : 122}px Iowan Old Style, Palatino, Georgia, serif`;
   ctx.font = police;
-  const largeur = Math.ceil(ctx.measureText(texte).width) + 48;
+  const largeur = Math.ceil(ctx.measureText(texte).width) + 110;
   c.width = largeur;
-  c.height = 96;
+  c.height = 220;
   ctx.font = police;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-  // halo crème pour rester lisible sur l'océan comme sur la terre
-  ctx.shadowColor = 'rgba(255,252,240,0.95)';
-  ctx.shadowBlur = 14;
-  ctx.fillStyle = '#27425c';
-  ctx.fillText(texte, largeur / 2, 48);
+  // halo parchemin épais : lisible sur l'océan comme sur la terre
+  ctx.shadowColor = 'rgba(255,250,234,0.98)';
+  ctx.shadowBlur = 30;
+  ctx.fillStyle = '#5b3d1e';
+  for (let i = 0; i < 3; i++) ctx.fillText(texte, largeur / 2, 112);
   ctx.shadowBlur = 0;
-  ctx.fillText(texte, largeur / 2, 48);
+  ctx.fillText(texte, largeur / 2, 112);
   const texture = new THREE.CanvasTexture(c);
   texture.colorSpace = THREE.SRGBColorSpace;
-  return { texture, ratio: largeur / 96 };
+  texture.anisotropy = 4;
+  return { texture, ratio: largeur / 220 };
 }
 
 export function creerEtiquettes() {
@@ -69,16 +71,18 @@ export function creerEtiquettes() {
   }
 
   function anime(camera) {
-    // taille d'écran ~constante, estompage quand on est très près ou
-    // quand l'étiquette passe derrière le globe
+    // bien lisible de loin, et qui grossit encore quand on s'approche
+    // (en angle apparent) ; estompée très près et derrière le globe
     const d = camera.position.length();
-    const h = THREE.MathUtils.clamp((d - 1) * 0.018, 0.004, 0.05);
+    // angle apparent : ~85 px de loin, jusqu'à ~170 px en s'approchant
+    const theta = THREE.MathUtils.clamp(0.04 + (3.4 - d) * 0.02, 0.04, 0.09);
+    const h = Math.min(theta * (d - 1), 0.1);
     for (const { sprite, ratio, important } of sprites) {
-      const hh = h * (important ? 1 : 0.78);
+      const hh = h * (important ? 1 : 0.72);
       sprite.scale.set(hh * ratio, hh, 1);
       const devant = sprite.position.dot(camera.position) > 0.9;
       sprite.material.opacity = devant
-        ? THREE.MathUtils.clamp((d - 1.12) / 0.25, 0, 0.92) : 0;
+        ? THREE.MathUtils.clamp((d - 1.1) / 0.2, 0, 0.95) : 0;
     }
   }
 

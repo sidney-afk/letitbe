@@ -74,13 +74,13 @@ export function creerGlobe() {
                                  + dn.y * cross(n, vec3(0.0, 1.0, 0.0))));
 
         float ndl = dot(n, dirSoleil) * 0.5 + 0.5; // demi-Lambert : pas de nuit
-        // trois bandes d'éclairage aux transitions douces
-        float bandes = 0.62
-          + 0.16 * smoothstep(0.30, 0.40, ndl)
-          + 0.28 * smoothstep(0.55, 0.68, ndl);
-        vec3 couleur = tex * bandes * 1.3 * vec3(1.0, 0.975, 0.93);
+        // trois bandes d'éclairage aux transitions douces, base claire
+        float bandes = 0.74
+          + 0.13 * smoothstep(0.30, 0.40, ndl)
+          + 0.21 * smoothstep(0.55, 0.68, ndl);
+        vec3 couleur = tex * bandes * 1.32 * vec3(1.0, 0.98, 0.94);
         // l'ombre est fraîche et bleutée, jamais sombre
-        couleur = mix(couleur * vec3(0.78, 0.86, 1.10), couleur,
+        couleur = mix(couleur * vec3(0.85, 0.91, 1.08), couleur,
                       smoothstep(0.18, 0.52, ndl));
 
         // liseré de lumière crème sur le bord

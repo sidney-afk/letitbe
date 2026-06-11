@@ -1,0 +1,891 @@
+{
+ "Martinique|2009-05-27": {
+  "fichier": "media/aerien/0.webp",
+  "lonMin": -61.34765625,
+  "lonMax": -60.46875,
+  "latMax": 14.944784875088363,
+  "latMin": 14.093957177836227
+ },
+ "Ste Lucie|2009-05-29": {
+  "fichier": "media/aerien/1.webp",
+  "lonMin": -61.34765625,
+  "lonMax": -60.46875,
+  "latMax": 14.434680215297277,
+  "latMin": 13.581920900545843
+ },
+ "Los Roques|2009-06-03": {
+  "fichier": "media/aerien/2.webp",
+  "lonMin": -67.1484375,
+  "lonMax": -66.26953125,
+  "latMax": 12.3829283384874,
+  "latMin": 11.523087506868508
+ },
+ "Los Aves|2009-06-04": {
+  "fichier": "media/aerien/3.webp",
+  "lonMin": -67.8515625,
+  "lonMax": -66.97265625,
+  "latMax": 12.3829283384874,
+  "latMin": 11.523087506868508
+ },
+ "Aruba|2009-06-07": {
+  "fichier": "media/aerien/4.webp",
+  "lonMin": -70.48828125,
+  "lonMax": -69.609375,
+  "latMax": 12.897489183755896,
+  "latMin": 12.039320557540568
+ },
+ "San Blas|2009-06-13": {
+  "fichier": "media/aerien/5.webp",
+  "lonMin": -79.453125,
+  "lonMax": -78.57421875,
+  "latMax": 9.96885060854611,
+  "latMin": 9.102096738726447
+ },
+ "Panama|2009-06-18": {
+  "fichier": "media/aerien/6.webp",
+  "lonMin": -80.33203125,
+  "lonMax": -79.453125,
+  "latMax": 9.795677582829734,
+  "latMin": 8.928487062665505
+ },
+ "Balboa (l'oeil du tigre)|2009-06-27": {
+  "fichier": "media/aerien/8.webp",
+  "lonMin": -79.98046875,
+  "lonMax": -79.1015625,
+  "latMax": 9.449061826881424,
+  "latMin": 8.581021215641846
+ },
+ "Las Perlas|2009-06-28": {
+  "fichier": "media/aerien/9.webp",
+  "lonMin": -79.453125,
+  "lonMax": -78.57421875,
+  "latMax": 9.102096738726447,
+  "latMin": 8.233237111274557
+ },
+ "Galapagos|2009-07-08": {
+  "fichier": "media/aerien/10.webp",
+  "lonMin": -90.703125,
+  "lonMax": -89.82421875,
+  "latMax": -0.3515602939922723,
+  "latMin": -1.2303741774326067
+ },
+ "Gambier|2009-08-12": {
+  "fichier": "media/aerien/12.webp",
+  "lonMin": -135.3515625,
+  "lonMax": -134.47265625,
+  "latMax": -22.755920681486394,
+  "latMin": -23.56398712845122
+ },
+ "Marquises - Fatu Hiva|2009-12-16": {
+  "fichier": "media/aerien/13.webp",
+  "lonMin": -139.04296875,
+  "lonMax": -138.1640625,
+  "latMax": -9.96885060854611,
+  "latMin": -10.833305983642491
+ },
+ "Marquises - Tahuata|2009-12-21": {
+  "fichier": "media/aerien/14.webp",
+  "lonMin": -139.5703125,
+  "lonMax": -138.69140625,
+  "latMax": -9.449061826881424,
+  "latMin": -10.314919285813154
+ },
+ "Marquises - Hiva Oa|2009-12-23": {
+  "fichier": "media/aerien/15.webp",
+  "lonMin": -139.39453125,
+  "lonMax": -138.515625,
+  "latMax": -9.449061826881424,
+  "latMin": -10.314919285813154
+ },
+ "Marquises - Nuku Hiva|2009-12-27": {
+  "fichier": "media/aerien/16.webp",
+  "lonMin": -140.44921875,
+  "lonMax": -139.5703125,
+  "latMax": -8.407168163601074,
+  "latMin": -9.275622176792101
+ },
+ "Marquises - Ua Pou|2010-02-04": {
+  "fichier": "media/aerien/17.webp",
+  "lonMin": -140.44921875,
+  "lonMax": -139.5703125,
+  "latMax": -8.928487062665505,
+  "latMin": -9.795677582829734
+ },
+ "Marquises - Fatu Hiva|2010-03-01": {
+  "fichier": "media/aerien/18.webp",
+  "lonMin": -139.04296875,
+  "lonMax": -138.1640625,
+  "latMax": -9.96885060854611,
+  "latMin": -10.833305983642491
+ },
+ "Marquises - Tahuata|2010-03-07": {
+  "fichier": "media/aerien/19.webp",
+  "lonMin": -139.5703125,
+  "lonMax": -138.69140625,
+  "latMax": -9.449061826881424,
+  "latMin": -10.314919285813154
+ },
+ "Marquises - Hiva Oa|2010-03-12": {
+  "fichier": "media/aerien/20.webp",
+  "lonMin": -139.39453125,
+  "lonMax": -138.515625,
+  "latMax": -9.449061826881424,
+  "latMin": -10.314919285813154
+ },
+ "Marquises - Ua HUka|2010-03-20": {
+  "fichier": "media/aerien/21.webp",
+  "lonMin": -139.921875,
+  "lonMax": -139.04296875,
+  "latMax": -8.581021215641846,
+  "latMin": -9.449061826881424
+ },
+ "Marquises - Nuku Hiva|2010-03-24": {
+  "fichier": "media/aerien/22.webp",
+  "lonMin": -140.44921875,
+  "lonMax": -139.5703125,
+  "latMax": -8.407168163601074,
+  "latMin": -9.275622176792101
+ },
+ "Tuamotu - Kauehi|2010-03-31": {
+  "fichier": "media/aerien/23.webp",
+  "lonMin": -145.546875,
+  "lonMax": -144.66796875,
+  "latMax": -15.453680224345835,
+  "latMin": -16.299051014581828
+ },
+ "Tuamotu - Fakarava|2010-04-06": {
+  "fichier": "media/aerien/24.webp",
+  "lonMin": -146.07421875,
+  "lonMax": -145.1953125,
+  "latMax": -15.623036831528259,
+  "latMin": -16.46769474828896
+ },
+ "Tuamotu - Faaite|2010-04-16": {
+  "fichier": "media/aerien/25.webp",
+  "lonMin": -145.72265625,
+  "lonMax": -144.84375,
+  "latMax": -16.299051014581828,
+  "latMin": -17.140790393316646
+ },
+ "Tuamotu - Toau|2010-04-21": {
+  "fichier": "media/aerien/26.webp",
+  "lonMin": -146.42578125,
+  "lonMax": -145.546875,
+  "latMax": -15.453680224345835,
+  "latMin": -16.299051014581828
+ },
+ "Tuamotu - Rangiroa|2010-04-22": {
+  "fichier": "media/aerien/27.webp",
+  "lonMin": -148.0078125,
+  "lonMax": -147.12890625,
+  "latMax": -14.604847155053898,
+  "latMin": -15.453680224345835
+ },
+ "Tuamotu - Tikehau|2010-05-11": {
+  "fichier": "media/aerien/28.webp",
+  "lonMin": -148.7109375,
+  "lonMax": -147.83203125,
+  "latMax": -14.774882506516267,
+  "latMin": -15.623036831528259
+ },
+ "Tahiti|2010-05-21": {
+  "fichier": "media/aerien/29.webp",
+  "lonMin": -149.94140625,
+  "lonMax": -149.0625,
+  "latMax": -17.140790393316646,
+  "latMin": -17.97873309555617
+ },
+ "Moorea|2010-06-22": {
+  "fichier": "media/aerien/30.webp",
+  "lonMin": -150.29296875,
+  "lonMax": -149.4140625,
+  "latMax": -17.140790393316646,
+  "latMin": -17.97873309555617
+ },
+ "Huahine|2010-06-30": {
+  "fichier": "media/aerien/31.webp",
+  "lonMin": -151.5234375,
+  "lonMax": -150.64453125,
+  "latMax": -16.299051014581828,
+  "latMin": -17.140790393316646
+ },
+ "Raiatea et Tahaa|2010-07-02": {
+  "fichier": "media/aerien/32.webp",
+  "lonMin": -151.875,
+  "lonMax": -150.99609375,
+  "latMax": -16.299051014581828,
+  "latMin": -17.140790393316646
+ },
+ "Bora Bora|2010-07-07": {
+  "fichier": "media/aerien/33.webp",
+  "lonMin": -152.2265625,
+  "lonMax": -151.34765625,
+  "latMax": -16.130262012034756,
+  "latMin": -16.972741019999017
+ },
+ "Maupihaa|2010-07-15": {
+  "fichier": "media/aerien/34.webp",
+  "lonMin": -154.3359375,
+  "lonMax": -153.45703125,
+  "latMax": -16.46769474828896,
+  "latMin": -17.308687886770024
+ },
+ "Cook du sud - Aitutaki|2010-07-19": {
+  "fichier": "media/aerien/35.webp",
+  "lonMin": -160.3125,
+  "lonMax": -159.43359375,
+  "latMax": -18.47960905583197,
+  "latMin": -19.31114335506464
+ },
+ "Cook du sud - Rarotonga|2010-07-27": {
+  "fichier": "media/aerien/36.webp",
+  "lonMin": -160.13671875,
+  "lonMax": -159.2578125,
+  "latMax": -20.797201434306995,
+  "latMin": -21.616579336740603
+ },
+ "Beveridge Reef|2010-08-13": {
+  "fichier": "media/aerien/37.webp",
+  "lonMin": -168.22265625,
+  "lonMax": -167.34375,
+  "latMax": -19.642587534013032,
+  "latMin": -20.46818922264095
+ },
+ "Niue|2010-08-19": {
+  "fichier": "media/aerien/38.webp",
+  "lonMin": -170.33203125,
+  "lonMax": -169.453125,
+  "latMax": -18.646245142670605,
+  "latMin": -19.476950206488414
+ },
+ "Tonga - Neiafu|2010-08-31": {
+  "fichier": "media/aerien/39.webp",
+  "lonMin": -174.375,
+  "lonMax": -173.49609375,
+  "latMax": -18.312810846425442,
+  "latMin": -19.14516819620529
+ },
+ "Fidji - Savusavu|2010-09-27": {
+  "fichier": "media/aerien/40.webp",
+  "lonMin": 178.9453125,
+  "lonMax": 179.82421875,
+  "latMax": -16.299051014581828,
+  "latMin": -17.140790393316646
+ },
+ "Fidji - Makogai|2010-10-03": {
+  "fichier": "media/aerien/41.webp",
+  "lonMin": 178.59375,
+  "lonMax": 179.47265625,
+  "latMax": -16.972741019999017,
+  "latMin": -17.811456088564476
+ },
+ "Fidji - Naigani|2010-10-05": {
+  "fichier": "media/aerien/42.webp",
+  "lonMin": 178.2421875,
+  "lonMax": 179.12109375,
+  "latMax": -17.140790393316646,
+  "latMin": -17.97873309555617
+ },
+ "Fidji - Nananu|2010-10-07": {
+  "fichier": "media/aerien/43.webp",
+  "lonMin": 177.71484375,
+  "lonMax": 178.59375,
+  "latMax": -16.80454107638345,
+  "latMin": -17.644022027872726
+ },
+ "Fidji - Natunuku|2010-10-10": {
+  "fichier": "media/aerien/44.webp",
+  "lonMin": 177.5390625,
+  "lonMax": 178.41796875,
+  "latMax": -16.972741019999017,
+  "latMin": -17.811456088564476
+ },
+ "Fidji - Nadi|2010-10-11": {
+  "fichier": "media/aerien/45.webp",
+  "lonMin": 177.01171875,
+  "lonMax": 177.890625,
+  "latMax": -17.308687886770024,
+  "latMin": -18.145851771694467
+ },
+ "Fidji - Malakati|2010-10-17": {
+  "fichier": "media/aerien/46.webp",
+  "lonMin": 177.01171875,
+  "lonMax": 177.890625,
+  "latMax": -16.46769474828896,
+  "latMin": -17.308687886770024
+ },
+ "Fidji - Sawa-I-Lau|2010-10-19": {
+  "fichier": "media/aerien/47.webp",
+  "lonMin": 177.01171875,
+  "lonMax": 177.890625,
+  "latMax": -16.46769474828896,
+  "latMin": -17.308687886770024
+ },
+ "Fidji - Yasawairara|2010-10-22": {
+  "fichier": "media/aerien/48.webp",
+  "lonMin": 177.1875,
+  "lonMax": 178.06640625,
+  "latMax": -16.299051014581828,
+  "latMin": -17.140790393316646
+ },
+ "Fidji - Blue Lagoon|2010-10-25": {
+  "fichier": "media/aerien/49.webp",
+  "lonMin": 177.01171875,
+  "lonMax": 177.890625,
+  "latMax": -16.46769474828896,
+  "latMin": -17.308687886770024
+ },
+ "Fidji - Likuliku|2010-10-28": {
+  "fichier": "media/aerien/50.webp",
+  "lonMin": 176.66015625,
+  "lonMax": 177.5390625,
+  "latMax": -16.80454107638345,
+  "latMin": -17.644022027872726
+ },
+ "Fidji - Vanua Lailai|2010-10-30": {
+  "fichier": "media/aerien/51.webp",
+  "lonMin": 176.66015625,
+  "lonMax": 177.5390625,
+  "latMax": -16.972741019999017,
+  "latMin": -17.811456088564476
+ },
+ "Fidji - Mana|2010-11-02": {
+  "fichier": "media/aerien/52.webp",
+  "lonMin": 176.66015625,
+  "lonMax": 177.5390625,
+  "latMax": -17.308687886770024,
+  "latMin": -18.145851771694467
+ },
+ "Fidji - Cuvu|2010-11-04": {
+  "fichier": "media/aerien/53.webp",
+  "lonMin": 177.01171875,
+  "lonMax": 177.890625,
+  "latMax": -17.811456088564476,
+  "latMin": -18.646245142670605
+ },
+ "Fidji - Naboutini|2010-11-05": {
+  "fichier": "media/aerien/54.webp",
+  "lonMin": 177.1875,
+  "lonMax": 178.06640625,
+  "latMax": -17.811456088564476,
+  "latMin": -18.646245142670605
+ },
+ "Fidji - Namalata|2010-11-06": {
+  "fichier": "media/aerien/55.webp",
+  "lonMin": 177.71484375,
+  "lonMax": 178.59375,
+  "latMax": -18.646245142670605,
+  "latMin": -19.476950206488414
+ },
+ "Fidji - Gasele|2010-11-09": {
+  "fichier": "media/aerien/56.webp",
+  "lonMin": 177.5390625,
+  "lonMax": 178.41796875,
+  "latMax": -18.646245142670605,
+  "latMin": -19.476950206488414
+ },
+ "Fidji - Kavala Bay|2010-11-10": {
+  "fichier": "media/aerien/57.webp",
+  "lonMin": 178.06640625,
+  "lonMax": 178.9453125,
+  "latMax": -18.646245142670605,
+  "latMin": -19.476950206488414
+ },
+ "Fidji - Vuro Island|2010-11-11": {
+  "fichier": "media/aerien/58.webp",
+  "lonMin": 178.06640625,
+  "lonMax": 178.9453125,
+  "latMax": -18.47960905583197,
+  "latMin": -19.31114335506464
+ },
+ "Fidji - Korolevu Bay|2010-11-13": {
+  "fichier": "media/aerien/59.webp",
+  "lonMin": 178.06640625,
+  "lonMax": 178.9453125,
+  "latMax": -18.47960905583197,
+  "latMin": -19.31114335506464
+ },
+ "Fidji - Matasawalevu|2010-11-15": {
+  "fichier": "media/aerien/60.webp",
+  "lonMin": 178.06640625,
+  "lonMax": 178.9453125,
+  "latMax": -18.47960905583197,
+  "latMin": -19.31114335506464
+ },
+ "Fidji - Naqara Bay|2010-11-18": {
+  "fichier": "media/aerien/61.webp",
+  "lonMin": 178.06640625,
+  "lonMax": 178.9453125,
+  "latMax": -18.47960905583197,
+  "latMin": -19.31114335506464
+ },
+ "Fidji - Dravuni|2010-11-20": {
+  "fichier": "media/aerien/62.webp",
+  "lonMin": 178.06640625,
+  "lonMax": 178.9453125,
+  "latMax": -18.312810846425442,
+  "latMin": -19.14516819620529
+ },
+ "Fidji - Suva|2010-11-24": {
+  "fichier": "media/aerien/63.webp",
+  "lonMin": 178.06640625,
+  "lonMax": 178.9453125,
+  "latMax": -17.644022027872726,
+  "latMin": -18.47960905583197
+ },
+ "Nlle Zélande - Opua|2010-12-08": {
+  "fichier": "media/aerien/65.webp",
+  "lonMin": 173.671875,
+  "lonMax": 174.55078125,
+  "latMax": -34.885930940753155,
+  "latMin": -35.6037187406973
+ },
+ "Nlle Zélande - Whangarei|2010-12-16": {
+  "fichier": "media/aerien/66.webp",
+  "lonMin": 173.84765625,
+  "lonMax": 174.7265625,
+  "latMax": -35.31736632923787,
+  "latMin": -36.03133177633188
+ },
+ "Gambier|2012-06-09": {
+  "fichier": "media/aerien/68.webp",
+  "lonMin": -135.3515625,
+  "lonMax": -134.47265625,
+  "latMax": -22.755920681486394,
+  "latMin": -23.56398712845122
+ },
+ "Tahiti|2012-07-18": {
+  "fichier": "media/aerien/69.webp",
+  "lonMin": -149.94140625,
+  "lonMax": -149.0625,
+  "latMax": -17.140790393316646,
+  "latMin": -17.97873309555617
+ },
+ "Moorea|2012-07-22": {
+  "fichier": "media/aerien/70.webp",
+  "lonMin": -150.29296875,
+  "lonMax": -149.4140625,
+  "latMax": -17.140790393316646,
+  "latMin": -17.97873309555617
+ },
+ "Huahine|2012-07-23": {
+  "fichier": "media/aerien/71.webp",
+  "lonMin": -151.5234375,
+  "lonMax": -150.64453125,
+  "latMax": -16.299051014581828,
+  "latMin": -17.140790393316646
+ },
+ "Raiatea|2012-07-26": {
+  "fichier": "media/aerien/72.webp",
+  "lonMin": -151.875,
+  "lonMax": -150.99609375,
+  "latMax": -16.299051014581828,
+  "latMin": -17.140790393316646
+ },
+ "Bora Bora|2012-07-27": {
+  "fichier": "media/aerien/73.webp",
+  "lonMin": -152.2265625,
+  "lonMax": -151.34765625,
+  "latMax": -16.130262012034756,
+  "latMin": -16.972741019999017
+ },
+ "Moorea|2012-07-31": {
+  "fichier": "media/aerien/74.webp",
+  "lonMin": -150.29296875,
+  "lonMax": -149.4140625,
+  "latMax": -17.140790393316646,
+  "latMin": -17.97873309555617
+ },
+ "Tahiti|2012-08-06": {
+  "fichier": "media/aerien/75.webp",
+  "lonMin": -149.94140625,
+  "lonMax": -149.0625,
+  "latMax": -17.140790393316646,
+  "latMin": -17.97873309555617
+ },
+ "Moorea|2012-08-19": {
+  "fichier": "media/aerien/76.webp",
+  "lonMin": -150.29296875,
+  "lonMax": -149.4140625,
+  "latMax": -17.140790393316646,
+  "latMin": -17.97873309555617
+ },
+ "Tahiti|2012-08-28": {
+  "fichier": "media/aerien/77.webp",
+  "lonMin": -149.94140625,
+  "lonMax": -149.0625,
+  "latMax": -17.140790393316646,
+  "latMin": -17.97873309555617
+ },
+ "Fakarava|2012-09-04": {
+  "fichier": "media/aerien/78.webp",
+  "lonMin": -145.8984375,
+  "lonMax": -145.01953125,
+  "latMax": -16.130262012034756,
+  "latMin": -16.972741019999017
+ },
+ "Tahanea|2012-09-24": {
+  "fichier": "media/aerien/79.webp",
+  "lonMin": -145.1953125,
+  "lonMax": -144.31640625,
+  "latMax": -16.46769474828896,
+  "latMin": -17.308687886770024
+ },
+ "Makemo|2012-10-03": {
+  "fichier": "media/aerien/80.webp",
+  "lonMin": -143.96484375,
+  "lonMax": -143.0859375,
+  "latMax": -16.130262012034756,
+  "latMin": -16.972741019999017
+ },
+ "Hiva Oa|2012-10-29": {
+  "fichier": "media/aerien/81.webp",
+  "lonMin": -139.39453125,
+  "lonMax": -138.515625,
+  "latMax": -9.449061826881424,
+  "latMin": -10.314919285813154
+ },
+ "Tahuata|2012-11-13": {
+  "fichier": "media/aerien/82.webp",
+  "lonMin": -139.5703125,
+  "lonMax": -138.69140625,
+  "latMax": -9.449061826881424,
+  "latMin": -10.314919285813154
+ },
+ "Hiva Oa|2012-11-19": {
+  "fichier": "media/aerien/83.webp",
+  "lonMin": -139.39453125,
+  "lonMax": -138.515625,
+  "latMax": -9.449061826881424,
+  "latMin": -10.314919285813154
+ },
+ "Ua Pou|2012-11-27": {
+  "fichier": "media/aerien/84.webp",
+  "lonMin": -140.44921875,
+  "lonMax": -139.5703125,
+  "latMax": -8.928487062665505,
+  "latMin": -9.795677582829734
+ },
+ "Nuku Hiva|2012-12-18": {
+  "fichier": "media/aerien/85.webp",
+  "lonMin": -140.44921875,
+  "lonMax": -139.5703125,
+  "latMax": -8.407168163601074,
+  "latMin": -9.275622176792101
+ },
+ "Tahuata|2013-01-24": {
+  "fichier": "media/aerien/86.webp",
+  "lonMin": -139.5703125,
+  "lonMax": -138.69140625,
+  "latMax": -9.449061826881424,
+  "latMin": -10.314919285813154
+ },
+ "Hiva Oa|2013-02-01": {
+  "fichier": "media/aerien/87.webp",
+  "lonMin": -139.39453125,
+  "lonMax": -138.515625,
+  "latMax": -9.449061826881424,
+  "latMin": -10.314919285813154
+ },
+ "Nuku Hiva|2013-02-09": {
+  "fichier": "media/aerien/88.webp",
+  "lonMin": -140.44921875,
+  "lonMax": -139.5703125,
+  "latMax": -8.407168163601074,
+  "latMin": -9.275622176792101
+ },
+ "Hilo - Big Island|2013-03-04": {
+  "fichier": "media/aerien/90.webp",
+  "lonMin": -155.56640625,
+  "lonMax": -154.6875,
+  "latMax": 20.13847031245115,
+  "latMin": 19.31114335506464
+ },
+ "Lahaina - Maui|2013-04-29": {
+  "fichier": "media/aerien/91.webp",
+  "lonMin": -157.1484375,
+  "lonMax": -156.26953125,
+  "latMax": 21.28937435586042,
+  "latMin": 20.46818922264095
+ },
+ "Honokahua - Maui|2013-05-05": {
+  "fichier": "media/aerien/92.webp",
+  "lonMin": -157.1484375,
+  "lonMax": -156.26953125,
+  "latMax": 21.453068633086776,
+  "latMin": 20.632784250388017
+ },
+ "Puko'o - Molokai|2013-05-07": {
+  "fichier": "media/aerien/93.webp",
+  "lonMin": -157.32421875,
+  "lonMax": -156.4453125,
+  "latMax": 21.453068633086776,
+  "latMin": 20.632784250388017
+ },
+ "Ilio Point - Molokai|2013-05-18": {
+  "fichier": "media/aerien/94.webp",
+  "lonMin": -157.67578125,
+  "lonMax": -156.796875,
+  "latMax": 21.616579336740603,
+  "latMin": 20.797201434306995
+ },
+ "Honolulu - Oahu|2013-05-19": {
+  "fichier": "media/aerien/95.webp",
+  "lonMin": -158.203125,
+  "lonMax": -157.32421875,
+  "latMax": 21.779905342529634,
+  "latMin": 20.961439614096836
+ },
+ "Prince Rupert|2013-06-30": {
+  "fichier": "media/aerien/97.webp",
+  "lonMin": -130.78125,
+  "lonMax": -129.90234375,
+  "latMax": 54.57206165565852,
+  "latMin": 54.05938788662358
+ },
+ "Gunboat Harbour|2013-07-09": {
+  "fichier": "media/aerien/98.webp",
+  "lonMin": -130.60546875,
+  "lonMax": -129.7265625,
+  "latMax": 54.1624339680678,
+  "latMin": 53.64463782485652
+ },
+ "Grenville Channel|2013-07-11": {
+  "fichier": "media/aerien/99.webp",
+  "lonMin": -130.078125,
+  "lonMax": -129.19921875,
+  "latMax": 53.85252660044952,
+  "latMin": 53.33087298301705
+ },
+ "Coghlan Anchorage|2013-07-12": {
+  "fichier": "media/aerien/100.webp",
+  "lonMin": -129.7265625,
+  "lonMax": -128.84765625,
+  "latMax": 53.64463782485652,
+  "latMin": 53.120405283106564
+ },
+ "Green Spit|2013-07-13": {
+  "fichier": "media/aerien/101.webp",
+  "lonMin": -129.0234375,
+  "lonMax": -128.14453125,
+  "latMax": 53.2257684357902,
+  "latMin": 52.69636107827448
+ },
+ "Work Bay|2013-07-14": {
+  "fichier": "media/aerien/102.webp",
+  "lonMin": -128.84765625,
+  "lonMax": -127.96875,
+  "latMax": 52.90890204777026,
+  "latMin": 52.3755991766591
+ },
+ "Unnamed Bay|2013-07-15": {
+  "fichier": "media/aerien/103.webp",
+  "lonMin": -128.49609375,
+  "lonMax": -127.6171875,
+  "latMax": 52.48278022207821,
+  "latMin": 51.944264879028765
+ },
+ "Beales Bay|2013-07-16": {
+  "fichier": "media/aerien/104.webp",
+  "lonMin": -128.49609375,
+  "lonMax": -127.6171875,
+  "latMax": 52.26815737376817,
+  "latMin": 51.72702815704774
+ },
+ "Fougner Bay|2013-07-17": {
+  "fichier": "media/aerien/105.webp",
+  "lonMin": -128.3203125,
+  "lonMax": -127.44140625,
+  "latMax": 52.160454557747045,
+  "latMin": 51.6180165487737
+ },
+ "Millbrook Cove|2013-07-18": {
+  "fichier": "media/aerien/106.webp",
+  "lonMin": -128.14453125,
+  "lonMax": -127.265625,
+  "latMax": 51.6180165487737,
+  "latMin": 51.069016659603896
+ },
+ "Blunden Harbour|2013-07-19": {
+  "fichier": "media/aerien/107.webp",
+  "lonMin": -127.79296875,
+  "lonMax": -126.9140625,
+  "latMax": 51.17934297928927,
+  "latMin": 50.625073063414355
+ },
+ "Port Mc Neil|2013-07-20": {
+  "fichier": "media/aerien/108.webp",
+  "lonMin": -127.44140625,
+  "lonMax": -126.5625,
+  "latMax": 50.84757295365388,
+  "latMin": 50.28933925329178
+ },
+ "Port Harvey|2013-07-23": {
+  "fichier": "media/aerien/109.webp",
+  "lonMin": -126.73828125,
+  "lonMax": -125.859375,
+  "latMax": 50.84757295365388,
+  "latMin": 50.28933925329178
+ },
+ "Crawford Anchorage|2013-07-24": {
+  "fichier": "media/aerien/110.webp",
+  "lonMin": -125.859375,
+  "lonMax": -124.98046875,
+  "latMax": 50.73645513701065,
+  "latMin": 50.17689812200106
+ },
+ "Squirel Cove|2013-07-25": {
+  "fichier": "media/aerien/111.webp",
+  "lonMin": -125.33203125,
+  "lonMax": -124.453125,
+  "latMax": 50.40151532278236,
+  "latMin": 49.83798245308484
+ },
+ "Cochrane Island|2013-07-26": {
+  "fichier": "media/aerien/112.webp",
+  "lonMin": -125.15625,
+  "lonMax": -124.27734375,
+  "latMax": 50.28933925329178,
+  "latMin": 49.72447918871299
+ },
+ "Nelson Island|2013-07-27": {
+  "fichier": "media/aerien/113.webp",
+  "lonMin": -124.62890625,
+  "lonMax": -123.75,
+  "latMax": 49.95121990866204,
+  "latMin": 49.38237278700955
+ },
+ "Jedediah Island|2013-07-28": {
+  "fichier": "media/aerien/114.webp",
+  "lonMin": -124.62890625,
+  "lonMax": -123.75,
+  "latMax": 49.83798245308484,
+  "latMin": 49.26780455063753
+ },
+ "Dolphin Beach|2013-07-28": {
+  "fichier": "media/aerien/115.webp",
+  "lonMin": -124.62890625,
+  "lonMax": -123.75,
+  "latMax": 49.610709938074216,
+  "latMin": 49.03786794532642
+ },
+ "Vancouver|2013-07-29": {
+  "fichier": "media/aerien/116.webp",
+  "lonMin": -123.57421875,
+  "lonMax": -122.6953125,
+  "latMax": 49.610709938074216,
+  "latMin": 49.03786794532642
+ },
+ "Kendrick Island|2013-08-12": {
+  "fichier": "media/aerien/117.webp",
+  "lonMin": -124.1015625,
+  "lonMax": -123.22265625,
+  "latMax": 49.38237278700955,
+  "latMin": 48.80686346108518
+ },
+ "Thetis Island|2013-08-13": {
+  "fichier": "media/aerien/118.webp",
+  "lonMin": -124.1015625,
+  "lonMax": -123.22265625,
+  "latMax": 49.26780455063753,
+  "latMin": 48.6909603909255
+ },
+ "Montague Harbour|2013-08-14": {
+  "fichier": "media/aerien/119.webp",
+  "lonMin": -123.75,
+  "lonMax": -122.87109375,
+  "latMax": 49.15296965617039,
+  "latMin": 48.57478991092886
+ },
+ "Bedwell Harbour|2013-08-15": {
+  "fichier": "media/aerien/120.webp",
+  "lonMin": -123.75,
+  "lonMax": -122.87109375,
+  "latMax": 49.03786794532642,
+  "latMin": 48.45835188280866
+ },
+ "Sidney|2013-08-20": {
+  "fichier": "media/aerien/121.webp",
+  "lonMin": -123.75,
+  "lonMax": -122.87109375,
+  "latMax": 48.92249926375824,
+  "latMin": 48.341646172374595
+ },
+ "D'Arcy Island|2013-08-21": {
+  "fichier": "media/aerien/122.webp",
+  "lonMin": -123.75,
+  "lonMax": -122.87109375,
+  "latMax": 48.80686346108518,
+  "latMin": 48.22467264956519
+ },
+ "Chatham Islands|2013-08-22": {
+  "fichier": "media/aerien/123.webp",
+  "lonMin": -123.75,
+  "lonMax": -122.87109375,
+  "latMax": 48.6909603909255,
+  "latMin": 48.10743118848039
+ },
+ "Victoria|2013-08-24": {
+  "fichier": "media/aerien/124.webp",
+  "lonMin": -123.75,
+  "lonMax": -122.87109375,
+  "latMax": 48.6909603909255,
+  "latMin": 48.10743118848039
+ },
+ "Port Angeles|2013-08-26": {
+  "fichier": "media/aerien/125.webp",
+  "lonMin": -123.92578125,
+  "lonMax": -123.046875,
+  "latMax": 48.45835188280866,
+  "latMin": 47.8721439688873
+ },
+ "Neah Bay|2013-09-04": {
+  "fichier": "media/aerien/126.webp",
+  "lonMin": -124.98046875,
+  "lonMax": -124.1015625,
+  "latMax": 48.6909603909255,
+  "latMin": 48.10743118848039
+ },
+ "San Francisco|2013-09-10": {
+  "fichier": "media/aerien/128.webp",
+  "lonMin": -122.87109375,
+  "lonMax": -121.9921875,
+  "latMax": 38.13455657705413,
+  "latMin": 37.43997405227058
+ },
+ "San Miguel Island|2013-11-09": {
+  "fichier": "media/aerien/129.webp",
+  "lonMin": -120.76171875,
+  "lonMax": -119.8828125,
+  "latMax": 34.452218472826544,
+  "latMin": 33.7243396617476
+ },
+ "Santa Cruz Island|2013-11-11": {
+  "fichier": "media/aerien/130.webp",
+  "lonMin": -120.05859375,
+  "lonMax": -119.1796875,
+  "latMax": 34.452218472826544,
+  "latMin": 33.7243396617476
+ },
+ "Santa Barbara Island|2013-11-12": {
+  "fichier": "media/aerien/131.webp",
+  "lonMin": -119.53125,
+  "lonMax": -118.65234375,
+  "latMax": 33.87041555094183,
+  "latMin": 33.137551192346145
+ },
+ "Catalina Island|2013-11-13": {
+  "fichier": "media/aerien/132.webp",
+  "lonMin": -119.00390625,
+  "lonMax": -118.125,
+  "latMax": 33.87041555094183,
+  "latMin": 33.137551192346145
+ },
+ "San Diego|2013-11-15": {
+  "fichier": "media/aerien/133.webp",
+  "lonMin": -117.59765625,
+  "lonMax": -116.71875,
+  "latMax": 33.137551192346145,
+  "latMin": 32.398515802474016
+ }
+}

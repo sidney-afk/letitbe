@@ -79,9 +79,10 @@ modeBouton.addEventListener('click', () => {
   regleMode(mode === 'carnet' ? 'photo' : 'carnet');
 });
 
-const [routeData, mouillagesData, meteo] = await Promise.all([
+const [routeData, mouillagesData, vuesAeriennes, meteo] = await Promise.all([
   fetch('./data/route.json').then(r => r.json()),
   fetch('./data/mouillages.json').then(r => r.json()),
+  fetch('./data/vues_aeriennes.json').then(r => r.json()),
   creerMeteo(),
 ]);
 const voyage = construireVoyage(routeData);
@@ -100,15 +101,19 @@ const timeline = creerTimeline(voyage);
 camera.position.copy(voyage.position(voyage.debut)).normalize().multiplyScalar(3.4);
 camera.lookAt(0, 0, 0);
 
-// — suivi du bateau —
+// — suivi du bateau : « collant » —
+// Le bouton ⌖ est la seule vraie bascule. Faire tourner le globe à la main
+// ne fait que suspendre le suivi ; toucher la timeline le réengage.
 const boutonSuivre = document.getElementById('suivre');
 let suivre = true;
+let suiviEnPause = false;
 function regleSuivi(actif) {
   suivre = actif;
+  suiviEnPause = false;
   boutonSuivre.setAttribute('aria-pressed', String(actif));
 }
 boutonSuivre.addEventListener('click', () => regleSuivi(!suivre));
-controls.addEventListener('start', () => regleSuivi(false));
+controls.addEventListener('start', () => { suiviEnPause = true; });
 
 function suitLeBateau(force = 1) {
   const distance = camera.position.length();
@@ -131,10 +136,13 @@ function applique(t) {
   globe.regleMeteo(meteo.applique(t));
 }
 timeline.surChangement(applique);
+timeline.surChangement(() => { suiviEnPause = false; }); // la timeline réengage le suivi
 regleMode('carnet');
 applique(timeline.t);
 
-const plongee = creerPlongee({ camera, controls, timeline, regleSuivi, mouillagesParCle });
+const plongee = creerPlongee({
+  camera, controls, timeline, regleSuivi, mouillagesParCle, scene, vuesAeriennes,
+});
 const recit = creerRecit({ timeline, regleSuivi, voyage });
 creerTraversee({ timeline, voyage, mouillagesParCle });
 
@@ -215,7 +223,7 @@ renderer.setAnimationLoop(() => {
 
   timeline.metAJour(dt * 1000);
   plongee.metAJour(dt);
-  if (suivre && !plongee.enVol) suitLeBateau(Math.min(1, dt * 3.5));
+  if (suivre && !suiviEnPause && !plongee.enVol) suitLeBateau(Math.min(1, dt * 3.5));
   if (timeline.enLecture && !lectureAvant) regleSuivi(true); // la Traversée embarque
   lectureAvant = timeline.enLecture;
   ocean.metAJour(dt, timeline.enLecture);
@@ -239,7 +247,7 @@ renderer.setAnimationLoop(() => {
   coton.anime(dt, horloge.elapsedTime, camera);
   etiquettes.anime(camera);
   route.orientePerles(camera);
-  bateau.anime(horloge.elapsedTime, camera.position.length());
+  bateau.anime(horloge.elapsedTime, camera);
 
   accumulateurSurvol += dt;
   if (accumulateurSurvol > 0.08 && !plongee.enVol) { // raycast décimé

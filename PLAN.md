@@ -203,6 +203,19 @@ tous relançables et idempotents.
   environnement (l'API `archive.org` répond, elle).
 - Open-Meteo (geocoding, archive ERA5, marine) et Nominatim sont accessibles.
 
+### Retours de Sidney (2e tour, juin 2026) — appliqués
+
+Proportions volontairement fausses (« une miniature ») : bateau-figurine
+énorme qui se met de profil vu de loin, trajet en pointillés ronds façon
+carte au trésor, bagues d'escale imposantes, étiquettes des lieux qui
+grossissent au zoom. **Vues aériennes HD préchargées** (idée de Sidney) :
+127 mosaïques Esri 5×5 (z11, ~97 km, 7 Mo, `pipeline/fetch_vues_aeriennes.py`,
+crédit « © Esri, Maxar » dans le carnet) plaquées sur le globe pendant la
+plongée (1.026 R), océan satellite fondu dans le bleu carnet. UI parchemin
+(⚓, doubles liserés), favicon, molette = zoom partout (le récit s'avance au
+curseur), suivi « collant » (la timeline réengage), rotation adoucie au sol.
+Audit de code complet : à faire dans une session dédiée.
+
 ### Reste à faire (contenu)
 
 - ~~Route camping-car~~ ✅ `data/roadtrip.json` (le roadtrip des parcs s'est fait
