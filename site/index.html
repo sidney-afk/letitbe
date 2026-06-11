@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Le Sillage — cinq ans autour du Pacifique</title>
+  <meta name="description" content="Le voyage de la famille Laruel à bord du catamaran Let It Be : 24 500 milles autour du Pacifique, de la Martinique à San Diego par la Nouvelle-Zélande et l'Alaska.">
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <canvas id="scene"></canvas>
+
+  <header id="titre">
+    <h1>Le Sillage</h1>
+    <p>Cinq ans autour du Pacifique à bord de <em>Let It Be</em></p>
+  </header>
+
+  <div id="infobulle" hidden></div>
+
+  <footer id="timeline">
+    <button id="lecture" title="Larguer les amarres">⏵</button>
+    <div id="timeline-corps">
+      <input id="curseur" type="range" min="0" max="1" step="any" value="0"
+             aria-label="Curseur temporel du voyage">
+      <div id="timeline-libelle">
+        <span id="date-courante">27 mai 2009</span>
+        <span id="lieu-courant">Martinique, Le Marin</span>
+      </div>
+    </div>
+    <button id="suivre" title="Suivre le bateau" aria-pressed="true">⌖</button>
+  </footer>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>
