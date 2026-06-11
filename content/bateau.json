@@ -1,0 +1,36 @@
+{
+ "nom": "Let It Be",
+ "type": "catamaran",
+ "modele_probable": "Fountaine-Pajot Bahia 46",
+ "note_modele": "Déduit des caractéristiques publiées (14,05 m × 7,38 m, 2004, 123 m² de voilure, 4 cabines) — à confirmer visuellement sur les photos. Important pour la 3D : un catamaran ne gîte presque pas, contrairement à ce que prévoyait PLAN.md.",
+ "source": "content/site/Navigation/batindex.html",
+ "caracteristiques": {
+  "fabricant": "Fountaine-Pajot",
+  "annee_construction": 2004,
+  "longueur_m": 14.05,
+  "bau_m": 7.38,
+  "tirant_eau_m": 1.30,
+  "surface_voilure_m2": 123,
+  "poids_kg": 9500,
+  "amenagement": "4 cabines doubles (+WC)",
+  "reservoir_eau_l": 760,
+  "reservoir_gasoil_l": 400,
+  "couleur": "Blanc avec des lignes rouges et un tatoo (clef de sol maorie)",
+  "moteurs": "Inboard diesel 2 × 54 CV",
+  "greement_ajouts": ["Portique en inox", "Bout dehors", "Spi asymétrique", "2 éoliennes Rutland 913", "Panneaux solaires", "Bimini intégral", "Antenne satellite BGAN"]
+ },
+ "photos_reference": [
+  {"src": "Navigation/images/bateau1.jpg", "legende": "Let It Be sous voile"},
+  {"src": "Navigation/images/bateau2.jpg", "legende": "Let It Be à Moorea"},
+  {"src": "Navigation/images/bateau3.jpg", "legende": "Le capitaine aux commandes"},
+  {"src": "Navigation/images/bateau4.jpg", "legende": "Let It Be aux Tonga"},
+  {"src": "Navigation/images/bateau5.jpg", "legende": "Let It Be aux Gambier"},
+  {"src": "Navigation/images/bateau6.jpg", "legende": "Lecture sur le bimini"},
+  {"src": "Navigation/images/bateau7.jpg", "legende": "Le carré"},
+  {"src": "Navigation/images/bateau8.jpg", "legende": "Le cockpit"},
+  {"src": "Navigation/images/bateau9.jpg", "legende": "La clef de sol maorie"},
+  {"src": "Navigation/images/bateau10.jpg", "legende": "Rentrée de spi aux Fidji"},
+  {"src": "Navigation/images/bateau11.jpg", "legende": "Le bateau dans l'atoll de Faaite aux Tuamotu"},
+  {"src": "Tech/Image/batplan.jpg", "legende": "Plan du bateau"}
+ ]
+}

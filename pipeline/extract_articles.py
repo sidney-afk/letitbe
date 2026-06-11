@@ -49,6 +49,11 @@ def parse_date(brut: str, annee_defaut: int | None) -> tuple[str | None, str | N
     s = sans_accents(brut.lower()).replace("1er", "1")
     s = s.replace("&nbsp;", " ").strip()
 
+    if s == "20 jan 2001":
+        # coquille du site original : les images de cet article (ski dans le
+        # Jura avant le départ) sont dans Tech/Image/Blog/20-01-2009/
+        return "2009-01-20", None
+
     # jj/mm/aaaa, avec plage éventuelle jj-jj/mm/aaaa ou jj et jj/mm/aaaa
     m = re.search(r"(\d{1,2})(?:\s*(?:-|au|et)\s*(\d{1,2}))?/(\d{1,2})/(\d{4})", s)
     if m:
@@ -95,6 +100,9 @@ def parse_date(brut: str, annee_defaut: int | None) -> tuple[str | None, str | N
 def normalise_src(src: str, page: str) -> str:
     """Chemin site-relatif (« Tech/Blog/Fidji/2010-11-27/P1.JPG »)."""
     src = src.strip().replace("\\", "/")
+    src = re.sub(r"^https?://(www\.)?laruel\.be/", "/", src, flags=re.I)
+    if src.startswith("/"):
+        return src.lstrip("/")
     src = re.sub(r"^(\./)+", "", src)
     base = f"Actu/{page}"
     parts = (Path(base).parent / src).as_posix().split("/")
