@@ -5,6 +5,58 @@
 > les parents (Éric & Cécile) — un chef-d'œuvre web 2026. Hébergement : GitHub Pages,
 > site 100 % statique, aucun backend.
 
+## ⚠️ À LIRE EN PREMIER — handoff de Sidney (fin de session, juin 2026)
+
+Sidney a clos la session précédente avec ce bilan : **la base est solide mais
+il n'est pas pleinement satisfait**. Les changements demandés ont été faits,
+mais trop littéralement — pas assez d'ampleur, pas assez d'extrapolation de
+ses intentions. Consignes pour la prochaine session :
+
+1. **Être proactif.** Ne pas attendre que Sidney teste et dresse la liste des
+   défauts : **tester le site soi-même** (build + `site/capture.mjs` en
+   headless, parcourir les vues, plongées, récit, modes…), trouver ce qui
+   cloche ou manque d'âme, et l'améliorer sans qu'on le demande.
+2. **Extrapoler ses demandes** au lieu de les exécuter au minimum. Quand il
+   dit « plus grand », penser « visible et délicieux à toute distance » ;
+   quand il dit « pirate », repenser TOUTE l'expérience dans ce langage.
+3. **Rendre les choses nettement meilleures**, pas incrémentalement.
+
+### Sa vision (synthèse de ses 3 derniers retours)
+
+- **Une miniature de planète, pas un globe réaliste.** Les proportions sont
+  volontairement fausses : le TRAJET est le héros (gros, doux, « avec des
+  ronds », carte au trésor) ; le bateau est une figurine énorme, toujours
+  visible, fidèle au vrai catamaran ; les lieux visités plus imposants que la
+  vraie géographie ; le reste de la planète est un décor.
+- **Esthétique : Zelda Breath of the Wild × carte au trésor / pirate.**
+  Solarpunk doux, textures mates peintes, cel shading, ciel bleu clair
+  cotonneux, jamais d'espace noir. Ce langage doit imprégner TOUT : boutons,
+  timeline, infobulles, panneaux, typographie, transitions, sons. Il a trouvé
+  les boutons « très basiques » — il faut un vrai design, pas des pilules CSS.
+- **L'océan encore trop foncé** à son goût à chaque itération : ne pas avoir
+  peur d'aller très clair/lumineux. Il rêve aussi d'une planète globalement
+  « plus jolie » (relief 3D sculpté façon diorama, vraies montagnes qui se
+  soulèvent, vaguelettes, îles du voyage agrandies physiquement…) — il a dit
+  « tant pis » mais il en a envie : c'est le genre d'extrapolation attendue.
+- **Navigation** : molette = zoom partout ; récit piloté par le curseur ;
+  suivi du bateau « collant » (la timeline le réengage, seul ⌖ le coupe) ;
+  rotation adoucie au sol ; fermer le carnet en cliquant ailleurs.
+- **Plongées** : il ADORE cliquer sur une escale → zoom + récit + photos.
+  Les vues aériennes HD préchargées (Esri) étaient son idée. Continuer dans
+  ce sens : que chaque plongée soit un petit bijou.
+- Déjà réglé mais à ne pas casser : favicon, étiquettes des lieux qui
+  grossissent au zoom, pas de sélection de texte accidentelle, photos qui
+  affleurent en Traversée, océan sonore WebAudio, météo vécue ERA5, vrai ciel.
+
+### État technique au passage de relais
+
+Branche de travail précédente : `claude/gallant-newton-j3rxtc`. **PR #3 en
+attente de merge** (https://github.com/sidney-afk/letitbe/pull/3) : miniature,
+carte au trésor, vues aériennes HD, parchemin, favicon, suivi collant.
+Le site se déploie via GitHub Actions sur la branche par défaut
+(`claude/sweet-hopper-im4osx`) → https://sidney-afk.github.io/letitbe/
+Un audit complet du code est attendu (promis à Sidney, jamais fait).
+
 ## Contexte (recherches déjà effectuées)
 
 - **Le voyage** : ~5 ans, ~24 500 milles nautiques. Caraïbes (Martinique, Los Roques…)
