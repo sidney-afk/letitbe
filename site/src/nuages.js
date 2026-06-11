@@ -37,10 +37,13 @@ export function creerNuagesCotonneux() {
   const degrade = new Uint8Array([170, 215, 255]);
   const gradientMap = new THREE.DataTexture(degrade, 3, 1, THREE.RedFormat);
   gradientMap.needsUpdate = true;
-  const matiere = new THREE.MeshToonMaterial({ color: 0xffffff, gradientMap });
 
   const nuages = [];
   for (let i = 0; i < NOMBRE; i++) {
+    // matériau par nuage : chacun s'estompe quand la caméra s'approche
+    const matiere = new THREE.MeshToonMaterial({
+      color: 0xffffff, gradientMap, transparent: true,
+    });
     const mesh = new THREE.Mesh(geometrieNuage(alea), matiere);
     const dir = new THREE.Vector3(
       alea() * 2 - 1,
@@ -55,10 +58,17 @@ export function creerNuagesCotonneux() {
     groupe.add(mesh);
   }
 
-  function anime(dt, temps) {
+  const posMonde = new THREE.Vector3();
+  function anime(dt, temps, camera) {
     groupe.rotation.y += dt * 0.006;
     for (const n of nuages) {
       n.mesh.position.y = n.base + Math.sin(temps * 0.25 + n.phase) * 0.02;
+      if (camera) {
+        // un nuage qui frôle la caméra s'efface au lieu de boucher la vue
+        n.mesh.getWorldPosition(posMonde);
+        const d = posMonde.distanceTo(camera.position);
+        n.mesh.material.opacity = THREE.MathUtils.clamp((d - 0.3) / 0.45, 0, 1);
+      }
     }
   }
 

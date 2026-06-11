@@ -15,6 +15,7 @@ import { creerOcean } from './ocean.js';
 import { creerMeteo } from './meteo.js';
 import { creerCiel } from './ciel.js';
 import { creerNuagesCotonneux } from './nuages.js';
+import { creerEtiquettes } from './etiquettes.js';
 import { construireVoyage } from './geo.js';
 import { soleilEtCiel } from './sun.js';
 
@@ -51,6 +52,8 @@ const ciel = creerCiel();
 scene.add(ciel.mesh);
 const coton = creerNuagesCotonneux();
 scene.add(coton.groupe);
+const etiquettes = creerEtiquettes();
+scene.add(etiquettes.groupe);
 
 // — Réaliste ⟷ Carnet (l'esthétique de Sidney est le mode par défaut) —
 const modeBouton = document.getElementById('mode-bouton');
@@ -63,6 +66,7 @@ function regleMode(nouveau) {
   route.regleMode(mode);
   ciel.mesh.visible = carnetActif;
   coton.groupe.visible = carnetActif;
+  etiquettes.groupe.visible = carnetActif;
   etoiles.points.visible = !carnetActif;
   hemisphere.color.set(carnetActif ? 0xdfeeff : 0xcfe5ff);
   hemisphere.groundColor.set(carnetActif ? 0xf2e4c8 : 0x202428);
@@ -131,7 +135,7 @@ regleMode('carnet');
 applique(timeline.t);
 
 const plongee = creerPlongee({ camera, controls, timeline, regleSuivi, mouillagesParCle });
-const recit = creerRecit({ timeline, regleSuivi, routeData, controls });
+const recit = creerRecit({ timeline, regleSuivi, voyage });
 creerTraversee({ timeline, voyage, mouillagesParCle });
 
 const ocean = creerOcean();
@@ -154,10 +158,15 @@ canvas.addEventListener('pointermove', (e) => {
   infobulle.style.top = `${e.clientY + 10}px`;
 });
 
-canvas.addEventListener('click', () => {
-  if (!escaleSurvolee?.date_arrivee) return;
-  if (recit.actif) recit.sort(); // on quitte le récit pour plonger
-  plongee.vers(escaleSurvolee);
+canvas.addEventListener('click', (e) => {
+  pointeur.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  chercheSurvol(); // le survol throttlé peut être périmé au moment du clic
+  if (escaleSurvolee?.date_arrivee) {
+    if (recit.actif) recit.sort(); // on quitte le récit pour plonger
+    plongee.vers(escaleSurvolee);
+  } else if (plongee.ouverte) {
+    plongee.remonte(); // cliquer ailleurs referme le carnet
+  }
 });
 
 const formatCourt = new Intl.DateTimeFormat('fr-FR', {
@@ -165,7 +174,7 @@ const formatCourt = new Intl.DateTimeFormat('fr-FR', {
 });
 function chercheSurvol() {
   raycaster.setFromCamera(pointeur, camera);
-  const hits = raycaster.intersectObject(route.perles);
+  const hits = raycaster.intersectObject(route.cibles);
   const hit = hits.find(h => h.instanceId !== undefined);
   escaleSurvolee = hit ? route.escales[hit.instanceId] : null;
   if (escaleSurvolee) {
@@ -206,23 +215,30 @@ renderer.setAnimationLoop(() => {
 
   timeline.metAJour(dt * 1000);
   plongee.metAJour(dt);
-  recit.metAJour(dt);
-  if (suivre && !plongee.enVol && !plongee.ouverte) suitLeBateau(Math.min(1, dt * 3.5));
+  if (suivre && !plongee.enVol) suitLeBateau(Math.min(1, dt * 3.5));
   if (timeline.enLecture && !lectureAvant) regleSuivi(true); // la Traversée embarque
   lectureAvant = timeline.enLecture;
   ocean.metAJour(dt, timeline.enLecture);
+
+  // la rotation s'adoucit quand on est près du sol (sinon chaque
+  // mouvement de souris est démesuré en zoom fort)
+  const distance = camera.position.length();
+  controls.rotateSpeed = 0.55 * THREE.MathUtils.clamp((distance - 1) / 2.4, 0.05, 1);
+  controls.zoomSpeed = THREE.MathUtils.clamp((distance - 1) / 1.6, 0.25, 1);
 
   if (!plongee.enVol && !plongee.ouverte) {
     const cible = recit.actif ? recit.distanceCamera
       : timeline.enLecture ? DISTANCE_TRAVERSEE : null;
     if (cible !== null) {
-      const d = camera.position.length();
-      camera.position.setLength(THREE.MathUtils.lerp(d, cible, Math.min(1, dt * 2)));
+      camera.position.setLength(
+        THREE.MathUtils.lerp(distance, cible, Math.min(1, dt * 2)));
     }
   }
 
   globe.anime(dt);
-  coton.anime(dt, horloge.elapsedTime);
+  coton.anime(dt, horloge.elapsedTime, camera);
+  etiquettes.anime(camera);
+  route.orientePerles(camera);
   bateau.anime(horloge.elapsedTime, camera.position.length());
 
   accumulateurSurvol += dt;

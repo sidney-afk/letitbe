@@ -121,7 +121,6 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi, mouillage
   }
 
   function vers(escale) {
-    regleSuivi(false);
     panneau.hidden = true;
     const complet = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`) ?? escale;
     timeline.vaA(new Date(escale.date_arrivee + 'T12:00:00Z').getTime(), true);
@@ -142,6 +141,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi, mouillage
     ouverte = false;
     lanceVol(camera.position.clone().normalize(), DISTANCE_ORBITE, () => {
       controls.minDistance = 1.25;
+      regleSuivi(true); // on reprend la route en suivant le bateau
     });
   }
 
@@ -155,6 +155,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi, mouillage
 
   return {
     vers,
+    remonte,
     metAJour,
     get enVol() { return vol !== null; },
     get ouverte() { return ouverte; },

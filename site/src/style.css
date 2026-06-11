@@ -9,6 +9,11 @@
 
 html, body { height: 100%; overflow: hidden; background: #000; }
 
+/* pas de sélection bleue accidentelle en manipulant le globe ;
+   les textes de lecture restent sélectionnables */
+body { user-select: none; -webkit-user-select: none; }
+#plongee-flux, #recit-carte { user-select: text; -webkit-user-select: text; }
+
 #scene {
   position: fixed;
   inset: 0;
@@ -74,15 +79,25 @@ html, body { height: 100%; overflow: hidden; background: #000; }
   flex: none;
   width: 42px;
   height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 50%;
   border: 1px solid rgba(232, 200, 122, .55);
   background: rgba(232, 200, 122, .1);
   color: var(--or);
-  font-size: 1.15rem;
+  font-size: 1.05rem;
+  line-height: 1;
   cursor: pointer;
-  transition: background .2s, transform .15s;
+  box-shadow: 0 2px 10px rgba(10, 20, 35, .18);
+  transition: background .2s, transform .15s, box-shadow .2s;
 }
-#timeline button:hover { background: rgba(232, 200, 122, .25); transform: scale(1.06); }
+#timeline button:hover {
+  background: rgba(232, 200, 122, .25);
+  transform: scale(1.06);
+  box-shadow: 0 4px 14px rgba(10, 20, 35, .25);
+}
+#lecture { padding-left: 3px; } /* le triangle ⏵ paraît sinon décentré */
 #timeline button[aria-pressed="false"] { opacity: .45; border-color: rgba(223, 243, 255, .25); color: var(--ecume); }
 
 #timeline-corps { flex: 1; }
@@ -137,24 +152,42 @@ html, body { height: 100%; overflow: hidden; background: #000; }
 
 /* ——— le mode Carnet : l'habillage clair et chaleureux ——— */
 
-#mode-bouton {
+#boutons-haut {
   position: fixed;
-  top: 30px;
-  right: 248px;
-  padding: 10px 16px;
+  top: 26px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 6;
+}
+#boutons-haut button {
+  padding: 10px 17px;
   border-radius: 22px;
   border: 1px solid rgba(232, 200, 122, .5);
   background: rgba(8, 16, 26, .55);
   color: var(--or);
   font: inherit;
-  font-size: .88rem;
+  font-size: .9rem;
+  letter-spacing: .02em;
   cursor: pointer;
   backdrop-filter: blur(8px);
-  transition: background .2s;
-  z-index: 6;
+  box-shadow: 0 3px 14px rgba(8, 16, 30, .22);
+  transition: background .2s, transform .15s, box-shadow .2s;
 }
-#mode-bouton:hover { background: rgba(232, 200, 122, .18); }
-body.plongee-ouverte #mode-bouton { display: none; }
+#boutons-haut button:hover {
+  background: rgba(232, 200, 122, .2);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(8, 16, 30, .3);
+}
+#son-bouton {
+  width: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 0 !important;
+}
+body.plongee-ouverte #boutons-haut { display: none; }
 
 body[data-mode="carnet"] {
   --or: #9a6c1c;
@@ -187,9 +220,7 @@ body[data-mode="carnet"] #curseur::-webkit-slider-thumb {
   border-color: #c8922e;
   box-shadow: 0 0 10px rgba(200, 146, 46, .8);
 }
-body[data-mode="carnet"] #recit-bouton,
-body[data-mode="carnet"] #mode-bouton,
-body[data-mode="carnet"] #son-bouton {
+body[data-mode="carnet"] #boutons-haut button {
   background: rgba(252, 249, 240, .75);
   border-color: rgba(154, 108, 28, .45);
   color: #9a6c1c;
@@ -216,24 +247,7 @@ body[data-mode="carnet"] #infobulle {
 
 /* ——— Mode Traversée : les photos qui affleurent ——— */
 
-#son-bouton {
-  position: fixed;
-  top: 30px;
-  right: 408px;
-  width: 42px;
-  height: 42px;
-  border-radius: 50%;
-  border: 1px solid rgba(223, 243, 255, .3);
-  background: rgba(8, 16, 26, .55);
-  font-size: 1.05rem;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  transition: background .2s;
-  z-index: 6;
-}
-#son-bouton:hover { background: rgba(232, 200, 122, .18); }
-#son-bouton[aria-pressed="true"] { border-color: rgba(232, 200, 122, .6); }
-body.plongee-ouverte #son-bouton { display: none; }
+#son-bouton[aria-pressed="true"] { border-color: rgba(232, 200, 122, .8); }
 
 #affleure {
   position: fixed;
@@ -277,27 +291,7 @@ body.plongee-ouverte #son-bouton { display: none; }
   text-align: center;
 }
 
-/* ——— le mode Récit : les chapitres au fil du scroll ——— */
-
-#recit-bouton {
-  position: fixed;
-  top: 30px;
-  right: 32px;
-  padding: 10px 18px;
-  border-radius: 22px;
-  border: 1px solid rgba(232, 200, 122, .5);
-  background: rgba(8, 16, 26, .55);
-  color: var(--or);
-  font: inherit;
-  font-size: .92rem;
-  letter-spacing: .03em;
-  cursor: pointer;
-  backdrop-filter: blur(8px);
-  transition: background .2s;
-  z-index: 6;
-}
-#recit-bouton:hover { background: rgba(232, 200, 122, .18); }
-body.plongee-ouverte #recit-bouton { display: none; }
+/* ——— le mode Récit : les chapitres au fil du voyage ——— */
 
 #recit-carte {
   position: fixed;

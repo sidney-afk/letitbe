@@ -1,13 +1,13 @@
-// Let It Be en miniature mignonne : catamaran toon (deux coques blanches
-// dodues à liseré rouge, trampoline, voiles crème bien rondes, fanion rouge),
-// dans l'esprit cartoon du mode Carnet. Pas de gîte — c'est un cata.
-// Échelle volontairement exagérée pour rester visible à l'échelle du globe.
+// Let It Be en miniature : catamaran toon inspiré des photos du vrai bateau
+// (Fountaine-Pajot blanc à liserés rouges, grand-voile à corne, bimini).
+// Échelle volontairement très exagérée — Sidney préfère le voir de loin.
+// Pas de gîte : c'est un cata.
 
 import * as THREE from 'three';
 import { RAYON } from './geo.js';
 
 function matiereToon(couleur) {
-  const degrade = new Uint8Array([150, 205, 255]);
+  const degrade = new Uint8Array([155, 208, 255]);
   const gradientMap = new THREE.DataTexture(degrade, 3, 1, THREE.RedFormat);
   gradientMap.needsUpdate = true;
   return new THREE.MeshToonMaterial({
@@ -22,70 +22,97 @@ export function creerBateau() {
 
   const blanc = matiereToon(0xffffff);
   const rouge = matiereToon(0xd64533);
-  const creme = matiereToon(0xfff8e8);
-  const bois = matiereToon(0xc89a62);
+  const creme = matiereToon(0xfff9ec);
+  const gris = matiereToon(0x9aa2ab);
+  const vitre = matiereToon(0x35506b);
 
-  // coques dodues (axe Z = avant)
-  const geoCoque = new THREE.CapsuleGeometry(0.105, 0.56, 6, 12);
+  // — coques dodues (axe Z = avant, étrave vers +Z) —
+  const geoCoque = new THREE.CapsuleGeometry(0.105, 0.62, 6, 14);
   geoCoque.rotateX(Math.PI / 2);
   for (const cote of [-1, 1]) {
     const coque = new THREE.Mesh(geoCoque, blanc);
-    coque.position.set(cote * 0.27, 0.05, 0);
-    coque.scale.y = 0.78;
+    coque.position.set(cote * 0.28, 0.05, 0);
+    coque.scale.y = 0.8;
     bateau.add(coque);
 
-    const liseret = new THREE.Mesh(
-      new THREE.CapsuleGeometry(0.024, 0.6, 4, 8), rouge);
-    liseret.geometry = liseret.geometry.clone();
-    liseret.rotation.x = Math.PI / 2;
-    liseret.position.set(cote * 0.355, 0.09, 0);
-    liseret.scale.set(1, 1, 0.6);
-    bateau.add(liseret);
+    // double liseré rouge du vrai Let It Be
+    for (const [h, ep] of [[0.105, 0.022], [0.065, 0.012]]) {
+      const liseret = new THREE.Mesh(
+        new THREE.CapsuleGeometry(ep, 0.66, 4, 10), rouge);
+      liseret.rotation.x = Math.PI / 2;
+      liseret.position.set(cote * 0.355, h, 0.01);
+      liseret.scale.set(1, 1, 0.5);
+      bateau.add(liseret);
+    }
   }
 
-  // nacelle ronde et rouf joufflu
-  const pont = new THREE.Mesh(new THREE.BoxGeometry(0.56, 0.06, 0.5), blanc);
-  pont.position.set(0, 0.13, -0.02);
-  bateau.add(pont);
-  const rouf = new THREE.Mesh(
-    new THREE.SphereGeometry(0.19, 14, 10), blanc);
-  rouf.position.set(0, 0.16, -0.06);
-  rouf.scale.set(1.05, 0.62, 0.95);
+  // — nacelle pleine largeur et rouf vitré —
+  const nacelle = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.08, 0.55), blanc);
+  nacelle.position.set(0, 0.14, -0.02);
+  bateau.add(nacelle);
+  const rouf = new THREE.Mesh(new THREE.SphereGeometry(0.21, 16, 12), blanc);
+  rouf.position.set(0, 0.17, 0.03);
+  rouf.scale.set(1.25, 0.6, 1.05);
   bateau.add(rouf);
+  const baie = new THREE.Mesh(new THREE.SphereGeometry(0.205, 16, 12), vitre);
+  baie.position.set(0, 0.175, 0.045);
+  baie.scale.set(1.18, 0.5, 0.98);
+  bateau.add(baie);
+  // bimini à l'arrière
+  const bimini = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.025, 0.22), creme);
+  bimini.position.set(0, 0.34, -0.28);
+  bateau.add(bimini);
 
-  // gréement
+  // — gréement —
   const mat = new THREE.Mesh(
-    new THREE.CylinderGeometry(0.014, 0.02, 1.05, 8), bois);
-  mat.position.set(0, 0.65, 0.02);
+    new THREE.CylinderGeometry(0.016, 0.024, 1.18, 8), gris);
+  mat.position.set(0, 0.78, 0.06);
   bateau.add(mat);
+  const bome = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.014, 0.014, 0.62, 8), gris);
+  bome.rotation.x = Math.PI / 2;
+  bome.position.set(0, 0.3, -0.26);
+  bateau.add(bome);
 
-  // voiles : des triangles légèrement bombés (vertex du milieu poussé)
-  const grandVoile = new THREE.Mesh(voileBombee(
-    new THREE.Vector3(0, 0.16, 0.0),
-    new THREE.Vector3(0, 1.14, 0.02),
-    new THREE.Vector3(0, 0.18, -0.56),
-    0.07,
-  ), creme);
+  // — grand-voile à corne (comme sur les photos), bombée par le vent —
+  const grandVoile = new THREE.Mesh(voileBombee([
+    new THREE.Vector3(0, 0.32, -0.56),  // point d'écoute
+    new THREE.Vector3(0, 0.32, 0.04),   // amure au mât
+    new THREE.Vector3(0, 1.36, 0.07),   // tête
+    new THREE.Vector3(0, 1.22, -0.26),  // la corne
+  ], 0.085), creme);
   bateau.add(grandVoile);
+  // liseré rouge sur la chute, clin d'œil aux lignes du bateau
+  const chute = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.008, 0.008, 1.08, 6), rouge);
+  chute.position.set(0, 0.78, -0.42);
+  chute.rotation.x = 0.28;
+  bateau.add(chute);
 
-  const genois = new THREE.Mesh(voileBombee(
-    new THREE.Vector3(0, 0.14, 0.62),
-    new THREE.Vector3(0, 1.06, 0.04),
-    new THREE.Vector3(0, 0.14, 0.06),
-    -0.06,
-  ), creme);
+  // — génois sur l'étrave —
+  const genois = new THREE.Mesh(voileBombee([
+    new THREE.Vector3(0, 0.16, 0.7),
+    new THREE.Vector3(0, 1.3, 0.08),
+    new THREE.Vector3(0, 0.16, 0.1),
+  ], -0.07), creme);
   bateau.add(genois);
 
-  // le fanion rouge en tête de mât
-  const fanion = new THREE.Mesh(voileBombee(
-    new THREE.Vector3(0, 1.17, 0.02),
-    new THREE.Vector3(0, 1.10, 0.02),
-    new THREE.Vector3(0, 1.135, -0.16),
-    0.02,
-  ), rouge);
+  // — la clef de sol du tatoo, stylisée en spirale rouge sur la coque —
+  const clef = new THREE.Mesh(
+    new THREE.TorusGeometry(0.045, 0.011, 6, 16, Math.PI * 1.6), rouge);
+  clef.position.set(0.385, 0.06, 0.22);
+  clef.rotation.y = Math.PI / 2;
+  bateau.add(clef);
+
+  // — fanion rouge en tête de mât —
+  const fanion = new THREE.Mesh(voileBombee([
+    new THREE.Vector3(0, 1.42, 0.07),
+    new THREE.Vector3(0, 1.33, 0.07),
+    new THREE.Vector3(0, 1.375, -0.12),
+  ], 0.02), rouge);
   bateau.add(fanion);
 
-  bateau.scale.setScalar(0.016);
+  bateau.scale.setScalar(0.03);
 
   const conteneur = new THREE.Group();
   conteneur.add(bateau);
@@ -120,20 +147,26 @@ export function creerBateau() {
     // léger tangage de catamaran — pas de gîte, Éric y tient
     bateau.rotation.x = Math.sin(temps * 1.7) * 0.025;
     bateau.rotation.z = Math.sin(temps * 1.1 + 1) * 0.012;
-    // taille à peu près constante à l'écran, pour rester lisible de loin
-    const s = THREE.MathUtils.clamp((distanceCamera - 1) * 0.0135, 0.003, 0.05);
+    // bien visible à toutes les distances (échelle assumée non réaliste)
+    const s = THREE.MathUtils.clamp((distanceCamera - 1) * 0.026, 0.0055, 0.085);
     bateau.scale.setScalar(s);
   }
 
   return { conteneur, positionne, anime };
 }
 
-// triangle de voile dont le centre est gonflé vers tribord (effet « vent »)
-function voileBombee(a, b, c, bombement) {
-  const centre = a.clone().add(b).add(c).multiplyScalar(1 / 3)
+// voile bombée : triangle ou quadrilatère dont le centre est gonflé
+// vers tribord (effet « vent dans la toile »)
+function voileBombee(coins, bombement) {
+  const centre = coins.reduce((a, p) => a.add(p), new THREE.Vector3())
+    .multiplyScalar(1 / coins.length)
     .add(new THREE.Vector3(bombement, 0, 0));
+  const sommets = [];
+  for (let i = 0; i < coins.length; i++) {
+    sommets.push(coins[i], coins[(i + 1) % coins.length], centre);
+  }
   const geo = new THREE.BufferGeometry();
-  geo.setFromPoints([a, b, centre, b, c, centre, c, a, centre]);
+  geo.setFromPoints(sommets);
   geo.computeVertexNormals();
   return geo;
 }
