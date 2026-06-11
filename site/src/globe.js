@@ -41,6 +41,7 @@ export function creerGlobe() {
   const matiereCarnet = new THREE.ShaderMaterial({
     uniforms: {
       carteCarnet: { value: carnet },
+      carteNormales: { value: normales },
       dirSoleil: uniforms.dirSoleil,
       meteoLumiere: uniforms.meteoLumiere,
     },
@@ -57,6 +58,7 @@ export function creerGlobe() {
       }`,
     fragmentShader: /* glsl */`
       uniform sampler2D carteCarnet;
+      uniform sampler2D carteNormales;
       uniform vec3 dirSoleil;
       uniform float meteoLumiere;
       varying vec2 vUv;
@@ -65,6 +67,11 @@ export function creerGlobe() {
       void main() {
         vec3 n = normalize(vNormaleM);
         vec3 tex = texture2D(carteCarnet, vUv).rgb;
+        // relief « sculpté » façon diorama : la carte de normales accentuée
+        // (elle est plate sur l'océan, le relief n'apparaît que sur terre)
+        vec3 dn = texture2D(carteNormales, vUv).rgb * 2.0 - 1.0;
+        n = normalize(n + 0.6 * (dn.x * vec3(0.0, 1.0, 0.0)
+                                 + dn.y * cross(n, vec3(0.0, 1.0, 0.0))));
 
         float ndl = dot(n, dirSoleil) * 0.5 + 0.5; // demi-Lambert : pas de nuit
         // trois bandes d'éclairage aux transitions douces

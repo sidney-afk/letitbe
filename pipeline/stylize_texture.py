@@ -23,11 +23,11 @@ TEX = ROOT / "site" / "public" / "textures"
 SOURCE = TEX / "ne3_8k.jpg"  # non committé (9,5 Mo) : retéléchargé au besoin
 URL_NE3 = "https://www.shadedrelief.com/natural3/ne3_data/8192/textures/2_no_clouds_8k.jpg"
 
-LARGEUR = 4096
+LARGEUR = 8192  # plein format NE3 : les atolls restent nets en plongée
 
-OCEAN_PROFOND = np.array([44, 108, 178], dtype=np.float32)
-OCEAN_MOYEN = np.array([64, 138, 206], dtype=np.float32)
-OCEAN_LAGON = np.array([116, 204, 228], dtype=np.float32)
+OCEAN_PROFOND = np.array([62, 122, 186], dtype=np.float32)
+OCEAN_MOYEN = np.array([86, 152, 208], dtype=np.float32)
+OCEAN_LAGON = np.array([138, 212, 232], dtype=np.float32)
 PLAGE = np.array([246, 228, 180], dtype=np.float32)
 
 
@@ -60,9 +60,10 @@ def main() -> None:
         ImageFilter.GaussianBlur(3.5))).astype(np.float32) / 255.0
 
     t = np.clip(proche * 2.6, 0, 1)
-    # bandes douces : large → moyen → lagon
-    bande1 = np.clip((t - 0.18) / 0.1, 0, 1)
-    bande2 = np.clip((t - 0.55) / 0.12, 0, 1)
+    # bandes douces : large → moyen → lagon (plateau côtier généreux,
+    # comme la référence)
+    bande1 = np.clip((t - 0.10) / 0.14, 0, 1)
+    bande2 = np.clip((t - 0.50) / 0.14, 0, 1)
     ocean_rgb = (OCEAN_PROFOND[None, None]
                  + (OCEAN_MOYEN - OCEAN_PROFOND)[None, None] * bande1[..., None]
                  + (OCEAN_LAGON - OCEAN_MOYEN)[None, None] * bande2[..., None])
