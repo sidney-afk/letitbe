@@ -14,7 +14,7 @@ import { creerTraversee } from './traversee.js';
 import { creerOcean } from './ocean.js';
 import { creerMeteo } from './meteo.js';
 import { construireVoyage } from './geo.js';
-import { directionSoleil } from './sun.js';
+import { soleilEtCiel } from './sun.js';
 
 const canvas = document.getElementById('scene');
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
@@ -38,7 +38,8 @@ scene.add(new THREE.HemisphereLight(0xcfe5ff, 0x202428, 1.1));
 const soleilLampe = new THREE.DirectionalLight(0xfff3df, 2.2);
 scene.add(soleilLampe);
 
-scene.add(creerEtoiles());
+const etoiles = await creerEtoiles();
+scene.add(etoiles.points);
 
 const globe = creerGlobe();
 scene.add(globe.groupe);
@@ -87,9 +88,10 @@ function applique(t) {
   route.metAJourTemps(t);
   const lon = THREE.MathUtils.radToDeg(
     Math.atan2(bateau.conteneur.position.z, -bateau.conteneur.position.x)) - 180;
-  const soleil = directionSoleil(t, lon);
-  globe.metAJourSoleil(soleil);
-  soleilLampe.position.copy(soleil).multiplyScalar(10);
+  const { dirSoleil, gmstDeg } = soleilEtCiel(t, lon);
+  globe.metAJourSoleil(dirSoleil);
+  soleilLampe.position.copy(dirSoleil).multiplyScalar(10);
+  etoiles.oriente(gmstDeg);
   globe.regleMeteo(meteo.applique(t));
 }
 timeline.surChangement(applique);
@@ -159,7 +161,7 @@ addEventListener('resize', redimensionne);
 redimensionne();
 
 // poignée de débogage (capture.mjs, console)
-window.__sillage = { camera, controls, timeline, voyage, bateau, plongee, route, recit };
+window.__sillage = { camera, controls, timeline, voyage, bateau, plongee, route, recit, etoiles };
 
 const horloge = new THREE.Clock();
 let accumulateurSurvol = 0;

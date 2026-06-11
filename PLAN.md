@@ -146,9 +146,13 @@ pas convaincu (sauf peut-être plus tard).
    jour dans la timeline (« vent 67 km/h · mer 6,3 m · ⚠ coup de vent » le
    28/5/2012 dans les 40èmes), nuages densifiés et lumière ternie selon la
    nébulosité réelle du jour (uniforms lissés). Terminateur (4) : déclinaison
-   saisonnière faite, heure réelle à faire. Restent : carte ancienne (1, →
-   séance esthétique), vents en particules (2, demande des champs de vent
-   maillés par date — lourd, à discuter), vrai ciel (3, catalogue d'étoiles),
+   saisonnière faite, heure réelle à faire. **Vrai ciel (3) : v1 fait** —
+   les 9 096 étoiles du Yale Bright Star Catalog (`data/etoiles.json`,
+   245 Ko, `pipeline/fetch_etoiles.py`), couleurs par température, tailles
+   par magnitude, orientées par le temps sidéral découlant du soleil ancré
+   (vérifié : Acrux à 32,9° au-dessus de l'horizon de Tonga le 10/9/2010).
+   Restent : carte ancienne (1, → séance esthétique), vents en particules
+   (2, demande des champs de vent maillés par date — lourd, à discuter),
    voilier fidèle (5) et transitions liquides (6, → séance esthétique).
 7. Polish, fallback, audio, déploiement GitHub Pages.
 
