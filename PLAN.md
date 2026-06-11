@@ -104,13 +104,15 @@ pas convaincu (sauf peut-être plus tard).
 ## Étapes de build
 
 1. ✅ Crawl + extraction + data model — **fait** (voir « État du pipeline » ci-dessous).
-> ⚠️ **Direction artistique (demande de Sidney, juin 2026)** : les rendus
-> photoréalistes de la Terre sont jugés trop austères — Sidney imagine une
-> esthétique **plus enfantine, plus joviale**. À discuter avec lui avant le
-> polish : proposer des pistes (globe illustré façon carnet de voyage /
-> aquarelle, couleurs saturées et chaleureuses, soleil descriptif…). La piste
-> aquarelle pourrait devenir un mode du « basculement de carte » (fonctionnalité
-> 1). L'architecture ne change pas : seuls les textures/shaders/UI s'habillent.
+> ✅ **Direction artistique (Sidney, juin 2026) : appliquée.** Sidney a fourni
+> une référence précise (globe cartoon solarpunk, textures mates peintes,
+> cel shading, ciel bleu clair cotonneux, jamais l'espace noir, esprit Breath
+> of the Wild). Le **mode Carnet** est désormais le rendu par défaut :
+> texture peinte générée depuis Natural Earth III (`pipeline/stylize_texture.py`),
+> cel shading demi-Lambert, ciel dégradé + nuages cotonneux, UI papier crème.
+> Le photoréalisme reste accessible (« Mode réaliste ») — première forme du
+> « basculement de carte » (fonctionnalité 1) ; le morphing animé entre les
+> deux et la variante « carte marine gravée » restent possibles plus tard.
 
 2. ✅ Globe photoréaliste + route + timeline scrubber + bateau — **fait** (`site/`,
    Vite + Three.js ; `cd site && npm install && npm run dev`). Terminateur réel
