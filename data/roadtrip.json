@@ -1,0 +1,218 @@
+[
+ {
+  "date": "2013-09-25",
+  "miles": 0,
+  "lieu": "Départ Emeryville (San Francisco)",
+  "lat": 37.84,
+  "lon": -122.292,
+  "article_id": null,
+  "titre": "Départ du roadtrip"
+ },
+ {
+  "date": "2013-09-26",
+  "miles": 740,
+  "lieu": "Vers Yellowstone (Idaho, via Davis)",
+  "lat": 42.56,
+  "lon": -114.47,
+  "article_id": 540,
+  "titre": "M740 - Et c'est reparti !!!"
+ },
+ {
+  "date": "2013-09-27",
+  "miles": 983,
+  "lieu": "West Yellowstone",
+  "lat": 44.662,
+  "lon": -111.104,
+  "article_id": 541,
+  "titre": "M983 - YellowStone, nous voici !!!"
+ },
+ {
+  "date": "2013-09-28",
+  "miles": 1010,
+  "lieu": "Yellowstone",
+  "lat": 44.46,
+  "lon": -110.828,
+  "article_id": 542,
+  "titre": "M1010 - YellowStone, l'exploration commence"
+ },
+ {
+  "date": "2013-09-29",
+  "miles": 1089,
+  "lieu": "Yellowstone — safari",
+  "lat": 44.916,
+  "lon": -110.42,
+  "article_id": 543,
+  "titre": "M1089 - YellowStone, journée safari"
+ },
+ {
+  "date": "2013-09-30",
+  "miles": 1172,
+  "lieu": "Yellowstone — pluie",
+  "lat": 44.46,
+  "lon": -110.828,
+  "article_id": 544,
+  "titre": "M1172 - YellowStone, journée pluvieuse"
+ },
+ {
+  "date": "2013-10-01",
+  "miles": 1359,
+  "lieu": "Yellowstone — shutdown fédéral",
+  "lat": 44.133,
+  "lon": -110.666,
+  "article_id": 545,
+  "titre": "M1359 - YellowStone, shutdown"
+ },
+ {
+  "date": "2013-10-02",
+  "miles": 1524,
+  "lieu": "À travers le Wyoming",
+  "lat": 42.834,
+  "lon": -108.73,
+  "article_id": 546,
+  "titre": "M1524 - A travers le Wyoming"
+ },
+ {
+  "date": "2013-10-04",
+  "miles": 1954,
+  "lieu": "Dead Horse Point",
+  "lat": 38.483,
+  "lon": -109.741,
+  "article_id": 547,
+  "titre": "M1954 - Dead Horse Point"
+ },
+ {
+  "date": "2013-10-05",
+  "miles": 2159,
+  "lieu": "Canyonlands",
+  "lat": 38.327,
+  "lon": -109.861,
+  "article_id": 548,
+  "titre": "M2159 - Canyonlands"
+ },
+ {
+  "date": "2013-10-06",
+  "miles": 2275,
+  "lieu": "Natural Bridges",
+  "lat": 37.601,
+  "lon": -110.01,
+  "article_id": 549,
+  "titre": "M2275 - Natural Bridges"
+ },
+ {
+  "date": "2013-10-08",
+  "miles": 2483,
+  "lieu": "Monument Valley (Goosenecks, Vallée des Dieux)",
+  "lat": 36.983,
+  "lon": -110.099,
+  "article_id": 550,
+  "titre": "M2483 - En territoire Navajo"
+ },
+ {
+  "date": "2013-10-10",
+  "miles": 2673,
+  "lieu": "Meteor Crater (après Canyon de Chelly)",
+  "lat": 35.027,
+  "lon": -111.022,
+  "article_id": 551,
+  "titre": "M2673 - Petite pause"
+ },
+ {
+  "date": "2013-10-12",
+  "miles": 2916,
+  "lieu": "Route 66, Kingman-Oatman",
+  "lat": 35.189,
+  "lon": -114.053,
+  "article_id": 552,
+  "titre": "M2916 - On route 66"
+ },
+ {
+  "date": "2013-10-15",
+  "miles": 3190,
+  "lieu": "Grand Canyon",
+  "lat": 36.054,
+  "lon": -112.14,
+  "article_id": 553,
+  "titre": "M3190 - Grand Canyon"
+ },
+ {
+  "date": "2013-10-16",
+  "miles": 3326,
+  "lieu": "Grand Canyon (suite)",
+  "lat": 36.054,
+  "lon": -112.14,
+  "article_id": 554,
+  "titre": "M3326 - Grand Canyon"
+ },
+ {
+  "date": "2013-10-17",
+  "miles": 3487,
+  "lieu": "Antelope Canyon (Page)",
+  "lat": 36.862,
+  "lon": -111.374,
+  "article_id": 555,
+  "titre": "M3487 - Antelope Canyon"
+ },
+ {
+  "date": "2013-10-18",
+  "miles": 3495,
+  "lieu": "Bryce Canyon",
+  "lat": 37.623,
+  "lon": -112.166,
+  "article_id": 556,
+  "titre": "M3495 - Bryce Canyon"
+ },
+ {
+  "date": "2013-10-19",
+  "miles": 3595,
+  "lieu": "Zion",
+  "lat": 37.202,
+  "lon": -112.987,
+  "article_id": 557,
+  "titre": "M3595 - Zion"
+ },
+ {
+  "date": "2013-10-21",
+  "miles": 3840,
+  "lieu": "Las Vegas",
+  "lat": 36.17,
+  "lon": -115.14,
+  "article_id": 558,
+  "titre": "M3840 - Las Vegas"
+ },
+ {
+  "date": "2013-10-23",
+  "miles": 4087,
+  "lieu": "Death Valley",
+  "lat": 36.462,
+  "lon": -116.867,
+  "article_id": 559,
+  "titre": "M4087 - Death Valley"
+ },
+ {
+  "date": "2013-10-24",
+  "miles": 4345,
+  "lieu": "Mammoth Mountain",
+  "lat": 37.651,
+  "lon": -118.972,
+  "article_id": 560,
+  "titre": "M4345 - Mammoth Mountain"
+ },
+ {
+  "date": "2013-10-26",
+  "miles": 4491,
+  "lieu": "Yosemite",
+  "lat": 37.746,
+  "lon": -119.593,
+  "article_id": 561,
+  "titre": "M4491 - Yosemite"
+ },
+ {
+  "date": "2013-10-29",
+  "miles": 4972,
+  "lieu": "Retour San Francisco (via Sequoia NP)",
+  "lat": 37.84,
+  "lon": -122.292,
+  "article_id": 562,
+  "titre": "M4972 - Fin du roadtrip"
+ }
+]

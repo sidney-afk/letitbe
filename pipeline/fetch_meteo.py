@@ -124,45 +124,62 @@ def groupes_consecutifs(trace: list[dict]):
     yield groupe
 
 
-def fetch_groupe(session: requests.Session, groupe: list[dict]) -> None:
+CLES = {
+    "wind_speed_10m_max": "vent_max_kmh",
+    "wind_gusts_10m_max": "rafales_max_kmh",
+    "wind_direction_10m_dominant": "dir_vent_deg",
+    "temperature_2m_min": "temp_min_c",
+    "temperature_2m_max": "temp_max_c",
+    "cloud_cover_mean": "nebulosite_pct",
+    "precipitation_sum": "pluie_mm",
+    "wave_height_max": "vague_max_m",
+    "wave_period_max": "periode_vague_s",
+}
+
+
+def fetch_api(session: requests.Session, groupe: list[dict],
+              url: str, vars_: str, extra: dict) -> None:
     lat, lon = groupe[0]["lat"], groupe[0]["lon"]
     d1, d2 = groupe[0]["date"], groupe[-1]["date"]
-    for url, vars_, prefixe in ((ARCHIVE, DAILY_VARS, ""),
-                                (MARINE, MARINE_VARS, "")):
-        for attempt in range(4):
-            time.sleep(DELAY * (1 + attempt * 3))
-            try:
-                r = session.get(url, params={
-                    "latitude": lat, "longitude": lon,
-                    "start_date": d1, "end_date": d2, "daily": vars_,
-                }, timeout=30)
-                if r.status_code == 429:
-                    time.sleep(5)
-                    continue
-                r.raise_for_status()
-                daily = r.json().get("daily", {})
-                break
-            except requests.RequestException:
-                daily = {}
-        cles = {
-            "wind_speed_10m_max": "vent_max_kmh",
-            "wind_gusts_10m_max": "rafales_max_kmh",
-            "wind_direction_10m_dominant": "dir_vent_deg",
-            "temperature_2m_min": "temp_min_c",
-            "temperature_2m_max": "temp_max_c",
-            "cloud_cover_mean": "nebulosite_pct",
-            "precipitation_sum": "pluie_mm",
-            "wave_height_max": "vague_max_m",
-            "wave_period_max": "periode_vague_s",
-        }
-        dates_api = daily.get("time", [])
-        index = {d: i for i, d in enumerate(dates_api)}
-        for rec in groupe:
-            i = index.get(rec["date"])
-            for api_k, k in cles.items():
-                if api_k in daily and i is not None:
-                    v = daily[api_k][i]
-                    rec[k] = round(v, 1) if isinstance(v, float) else v
+    daily = None
+    for attempt in range(5):
+        time.sleep(DELAY)
+        try:
+            r = session.get(url, params={
+                "latitude": lat, "longitude": lon,
+                "start_date": d1, "end_date": d2, "daily": vars_, **extra,
+            }, timeout=30)
+            if r.status_code == 429:
+                time.sleep(10 * (attempt + 1))
+                continue
+            r.raise_for_status()
+            daily = r.json().get("daily", {})
+            break
+        except requests.RequestException as exc:
+            print(f"  !! {d1} ({lat},{lon}) {url.split('/')[2]}: {exc}",
+                  flush=True)
+            time.sleep(2 ** attempt)
+    if daily is None:
+        return  # échec transport : ne pas marquer, on retentera à la reprise
+    index = {d: i for i, d in enumerate(daily.get("time", []))}
+    for rec in groupe:
+        i = index.get(rec["date"])
+        for api_k in vars_.split(","):
+            k = CLES[api_k]
+            v = daily.get(api_k)[i] if api_k in daily and i is not None else None
+            # la valeur est enregistrée même à null (point hors de la grille
+            # du modèle de vagues) pour marquer la réponse de l'API
+            rec[k] = round(v, 1) if isinstance(v, float) else v
+
+
+def fetch_groupe(session: requests.Session, groupe: list[dict]) -> None:
+    if not all(r.get("vent_max_kmh") is not None for r in groupe):
+        fetch_api(session, groupe, ARCHIVE, DAILY_VARS, {})
+    if not all("vague_max_m" in r for r in groupe):
+        # le modèle de vagues par défaut ne couvre pas 2009-2014 :
+        # era5_ocean (réanalyse ECMWF) couvre tout le voyage
+        fetch_api(session, groupe, MARINE, MARINE_VARS,
+                  {"models": "era5_ocean"})
 
 
 def main() -> None:
@@ -184,10 +201,7 @@ def main() -> None:
     print(f"{len(groupes)} requêtes de groupe (×2 API)")
     session = requests.Session()
     for i, g in enumerate(groupes):
-        if all(r.get("vent_max_kmh") is not None for r in g):
-            continue  # déjà renseigné (les vagues sont best-effort : points
-            # côtiers/terrestres hors de la grille du modèle de vagues)
-        fetch_groupe(session, g)
+        fetch_groupe(session, g)  # saute en interne ce qui est déjà renseigné
         if (i + 1) % 25 == 0:
             print(f"  …{i + 1}/{len(groupes)}", flush=True)
             OUT_PATH.write_text(json.dumps(trace, ensure_ascii=False, indent=1))

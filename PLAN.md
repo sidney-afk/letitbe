@@ -125,7 +125,9 @@ tous relançables et idempotents.
 | `content/albums.json` | **46 albums, 4 760 photos** avec légendes |
 | `content/route_log.json` | 134 escales depuis les tables de log de `/Voyages` |
 | `content/mouillages.json` | Escales géocodées (table curatée + validations) |
-| `content/meteo.json` | Météo ERA5 quotidienne le long de la route (vent, nébulosité, pluie, vagues) |
+| `content/meteo.json` | Météo ERA5 quotidienne : 1 693 jours (vent, rafales, nébulosité, pluie, T°, vagues `era5_ocean`) |
+| `content/videos.json` | 14 vidéos YouTube datées (toutes encore en ligne) |
+| `data/roadtrip.json` | Route camping-car sept-oct 2013 : 24 étapes, 4 972 miles (compteur dans les titres « Mxxxx - … ») |
 | `content/media/` | Dérivés WebP pleine taille + miniatures 480 px |
 | `content/bateau.json` | Caractéristiques et photos de référence du bateau |
 | `data/route.json` | Polyline horodatée : 134 points, log 0 → 24 490 nm |
@@ -156,9 +158,18 @@ tous relançables et idempotents.
 
 ### Reste à faire (contenu)
 
-- **Route camping-car** (USA 2013 parcs nationaux + 2014 vers le Costa Rica) :
-  à reconstituer en lisant les articles 2014+ (actu16-18) — pas de table de log.
-- Générer les **AVIF** au build final (`optimize_images.py --avif`, lent).
+- ~~Route camping-car~~ ✅ `data/roadtrip.json` (le roadtrip des parcs s'est fait
+  **pendant** l'escale de San Francisco, sept-oct 2013, en plein shutdown
+  fédéral — pas après La Paz comme le supposait le contexte initial).
+- `content/media/` (WebP + miniatures) n'est **pas committé** (~480 Mo,
+  régénérable : `python3 pipeline/optimize_images.py`). Générer les **AVIF**
+  au build final (`--avif`, lent).
+- La météo vécue est validée contre le récit (ex. les 5 jours de pluie à Suva
+  fin nov. 2010 : 27-41 mm/j, 96-100 % de nuages dans ERA5 ✓ ; la tempête de
+  la transpacifique retour : rafales 94 km/h, vagues 6,3 m le 28/5/2012).
+  Vagues : modèle `era5_ocean` obligatoire (le modèle par défaut ne couvre
+  pas 2009-2014) ; 4 jours/1693 sans vagues (points enclavés/artefacts
+  d'interpolation côtière).
 - Confirmer le modèle exact du bateau sur les photos `Navigation/images/bateau*.jpg`.
 - Associer albums ↔ chapitres (les périodes des albums sont dans `albums.json`).
 
