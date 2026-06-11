@@ -28,7 +28,10 @@ export function creerGlobe() {
     carteSpec: { value: spec },
     carteNormales: { value: normales },
     dirSoleil: { value: new THREE.Vector3(1, 0, 0) },
+    meteoLumiere: { value: 1 },  // grisaille du jour (météo vécue)
   };
+  const meteoNuages = { value: 1 };
+  const cibleMeteo = { nuages: 1, lumiere: 1 };
 
   const terre = new THREE.Mesh(
     new THREE.SphereGeometry(RAYON, 128, 64),
@@ -51,6 +54,7 @@ export function creerGlobe() {
         uniform sampler2D carteSpec;
         uniform sampler2D carteNormales;
         uniform vec3 dirSoleil;
+        uniform float meteoLumiere;
         varying vec2 vUv;
         varying vec3 vNormaleM;
         varying vec3 vPosM;
@@ -65,7 +69,7 @@ export function creerGlobe() {
           float jourMix = smoothstep(-0.12, 0.18, cosSoleil);
 
           vec3 cJour = texture2D(carteJour, vUv).rgb;
-          float eclairage = 0.18 + 1.05 * max(cosSoleil, 0.0);
+          float eclairage = (0.18 + 1.05 * max(cosSoleil, 0.0)) * meteoLumiere;
           cJour *= eclairage;
 
           // reflet du soleil sur l'océan
@@ -102,6 +106,7 @@ export function creerGlobe() {
       uniforms: {
         carteNuages: { value: nuages },
         dirSoleil: uniforms.dirSoleil,
+        meteoNuages,
       },
       vertexShader: /* glsl */`
         varying vec2 vUv;
@@ -114,10 +119,11 @@ export function creerGlobe() {
       fragmentShader: /* glsl */`
         uniform sampler2D carteNuages;
         uniform vec3 dirSoleil;
+        uniform float meteoNuages;
         varying vec2 vUv;
         varying vec3 vNormaleM;
         void main() {
-          float d = texture2D(carteNuages, vUv).r;
+          float d = texture2D(carteNuages, vUv).r * meteoNuages;
           float alpha = smoothstep(0.08, 0.85, d) * 0.85;
           float cosSoleil = dot(normalize(vNormaleM), dirSoleil);
           float eclat = 0.08 + 0.97 * max(cosSoleil, 0.0);
@@ -164,6 +170,15 @@ export function creerGlobe() {
   return {
     groupe,
     metAJourSoleil(dir) { uniforms.dirSoleil.value.copy(dir); },
-    anime(dt) { meshNuages.rotation.y += dt * 0.0035; },
+    regleMeteo({ nuages, lumiere }) {
+      cibleMeteo.nuages = nuages;
+      cibleMeteo.lumiere = lumiere;
+    },
+    anime(dt) {
+      meshNuages.rotation.y += dt * 0.0035;
+      const k = Math.min(1, dt * 1.2); // la météo change en douceur
+      meteoNuages.value += (cibleMeteo.nuages - meteoNuages.value) * k;
+      uniforms.meteoLumiere.value += (cibleMeteo.lumiere - uniforms.meteoLumiere.value) * k;
+    },
   };
 }

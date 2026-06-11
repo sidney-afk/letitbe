@@ -12,6 +12,7 @@ import { creerPlongee } from './plongee.js';
 import { creerRecit } from './recit.js';
 import { creerTraversee } from './traversee.js';
 import { creerOcean } from './ocean.js';
+import { creerMeteo } from './meteo.js';
 import { construireVoyage } from './geo.js';
 import { directionSoleil } from './sun.js';
 
@@ -42,9 +43,10 @@ scene.add(creerEtoiles());
 const globe = creerGlobe();
 scene.add(globe.groupe);
 
-const [routeData, mouillagesData] = await Promise.all([
+const [routeData, mouillagesData, meteo] = await Promise.all([
   fetch('./data/route.json').then(r => r.json()),
   fetch('./data/mouillages.json').then(r => r.json()),
+  creerMeteo(),
 ]);
 const voyage = construireVoyage(routeData);
 const mouillagesParCle = new Map(
@@ -88,6 +90,7 @@ function applique(t) {
   const soleil = directionSoleil(t, lon);
   globe.metAJourSoleil(soleil);
   soleilLampe.position.copy(soleil).multiplyScalar(10);
+  globe.regleMeteo(meteo.applique(t));
 }
 timeline.surChangement(applique);
 applique(timeline.t);

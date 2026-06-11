@@ -142,7 +142,14 @@ pas convaincu (sauf peut-être plus tard).
    lecture), **ambiance sonore d'océan synthétisée en WebAudio** (bruit
    brownien + deux houles LFO déphasées, aucun fichier audio), bouton 🔊,
    plus présente en lecture. Levers/couchers de soleil réels → étape 6.
-6. Fonctionnalités 1–7 (basculement carte ancienne, vents, ciel, météo…).
+6. Fonctionnalités 1–7 — **météo vécue (7) : v1 faite** : bulletin ERA5 du
+   jour dans la timeline (« vent 67 km/h · mer 6,3 m · ⚠ coup de vent » le
+   28/5/2012 dans les 40èmes), nuages densifiés et lumière ternie selon la
+   nébulosité réelle du jour (uniforms lissés). Terminateur (4) : déclinaison
+   saisonnière faite, heure réelle à faire. Restent : carte ancienne (1, →
+   séance esthétique), vents en particules (2, demande des champs de vent
+   maillés par date — lourd, à discuter), vrai ciel (3, catalogue d'étoiles),
+   voilier fidèle (5) et transitions liquides (6, → séance esthétique).
 7. Polish, fallback, audio, déploiement GitHub Pages.
 
 ## État du pipeline de contenu (session de juin 2026)

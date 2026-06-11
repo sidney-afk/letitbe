@@ -122,6 +122,17 @@ html, body { height: 100%; overflow: hidden; background: #000; }
   font-size: .92rem;
 }
 #date-courante { font-variant: small-caps; letter-spacing: .06em; color: var(--or); }
+#meteo-jour {
+  flex: 1;
+  text-align: center;
+  font-size: .8rem;
+  opacity: .6;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 10px;
+}
 #lieu-courant { font-style: italic; opacity: .85; text-align: right; }
 
 /* ——— Mode Traversée : les photos qui affleurent ——— */
