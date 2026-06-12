@@ -1,17 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <!-- Le Sillage : petit catamaran sur le globe -->
+  <!-- Le Sillage : le catamaran, sa route d'or et le X du trésor -->
   <defs>
     <linearGradient id="ciel" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#8ec9f5"/>
-      <stop offset="1" stop-color="#c4e4fb"/>
+      <stop offset="0" stop-color="#9ed1f6"/>
+      <stop offset="1" stop-color="#cfeafc"/>
     </linearGradient>
   </defs>
   <circle cx="32" cy="32" r="30" fill="url(#ciel)"/>
-  <circle cx="32" cy="46" r="26" fill="#7db8e8"/>
-  <path d="M14 49 a26 26 0 0 1 36 -2 q-4 4 -10 5 l-16 0 q-6 -1 -10 -3z" fill="#a8d9a0"/>
-  <path d="M30 14 q-9 12 -10 24 l10 0 z" fill="#fff8e8" stroke="#e8d9b8" stroke-width="1"/>
-  <path d="M34 16 q7 10 8 22 l-8 0 z" fill="#fff3da" stroke="#e8d9b8" stroke-width="1"/>
-  <rect x="31" y="12" width="2" height="27" rx="1" fill="#9a6c1c"/>
-  <path d="M16 40 q16 -5 32 0 l-3 7 q-13 4 -26 0 z" fill="#fffdf6" stroke="#d64533" stroke-width="1.6"/>
-  <path d="M32 12 l8 3 -8 3 z" fill="#d64533"/>
+  <circle cx="32" cy="47" r="27" fill="#aedcf2"/>
+  <path d="M13 50 a27 27 0 0 1 38 -2 q-4 4 -10 5 l-18 0 q-6 -1 -10 -3z" fill="#a8d9a0"/>
+  <path d="M8 38 q10 -9 21 -7" fill="none" stroke="#c8922e" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="0 6.5"/>
+  <path d="M50 30 l6 6 m0 -6 l-6 6" stroke="#a3252b" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M29 13 q-9 12 -10 24 l10 0 z" fill="#fff8e8" stroke="#e0cfa6" stroke-width="1"/>
+  <path d="M33 15 q7 10 8 22 l-8 0 z" fill="#fff3da" stroke="#e0cfa6" stroke-width="1"/>
+  <rect x="30" y="11" width="2" height="28" rx="1" fill="#9a6c1c"/>
+  <path d="M15 39 q16 -5 32 0 l-3 7 q-13 4 -26 0 z" fill="#fffdf6" stroke="#d64533" stroke-width="1.6"/>
+  <path d="M31 11 l8 3 -8 3 z" fill="#d64533"/>
 </svg>

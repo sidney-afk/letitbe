@@ -39,8 +39,9 @@ export function creerTimeline(voyage) {
 
   function lecture(active) {
     enLecture = active ?? !enLecture;
-    boutonLecture.textContent = enLecture ? '⏸' : '⏵';
+    boutonLecture.classList.toggle('en-lecture', enLecture);
     boutonLecture.title = enLecture ? 'Jeter l’ancre' : 'Larguer les amarres';
+    boutonLecture.setAttribute('aria-label', boutonLecture.title);
   }
 
   curseur.addEventListener('input', () => {

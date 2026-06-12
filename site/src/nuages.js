@@ -4,7 +4,7 @@
 import * as THREE from 'three';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 
-const NOMBRE = 16;
+const NOMBRE = 22;
 
 function geometrieNuage(alea) {
   const boules = [];
@@ -14,12 +14,19 @@ function geometrieNuage(alea) {
     const g = new THREE.SphereGeometry(r, 9, 7);
     g.translate(
       (alea() - 0.5) * 2.4,
-      (alea() - 0.5) * 0.7,
+      (alea() - 0.5) * 0.55,
       (alea() - 0.5) * 1.1,
     );
     boules.push(g);
   }
   const geo = mergeGeometries(boules);
+  // la base s'aplatit : après le lookAt vers le globe, le +Z local est
+  // le dessous du nuage — on le rabote, façon nuage peint à la main
+  const pos = geo.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    const z = pos.getZ(i);
+    if (z > 0.15) pos.setZ(i, 0.15 + (z - 0.15) * 0.22);
+  }
   geo.computeVertexNormals();
   return geo;
 }

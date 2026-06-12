@@ -240,3 +240,37 @@ Tout le travail est sur la branche `claude/gallant-newton-j3rxtc` (la branche
 **Prochaine session** : étape 2 du build — squelette Vite + Three.js, globe
 photoréaliste (textures NASA), tracé de la route depuis `data/route.json`,
 timeline scrubber, et le petit catamaran qui suit la trace.
+
+## Séance « chef-d'œuvre » (juin 2026) — l'audit et la direction artistique poussée
+
+Retours de Sidney appliqués en profondeur (branche `claude/kind-mccarthy-7rb4md`) :
+
+- **Océan beaucoup plus clair** : palette laiteuse dans `stylize_texture.py`
+  (158-206 de bleu), lavis aquarelle multi-échelles, vaguelettes gravées façon
+  carte marine au grand large ; le shader Carnet n'assombrit plus la mer
+  (bandes aplaties + éclat gouache du soleil sur l'eau).
+- **Relief sculpté en vraie géométrie** : `pipeline/fetch_relief.py` produit
+  `earth_elev_2048.jpg` (SRTM adouci) ; `relief.js` déplace les 512×256
+  sommets du globe (Everest ≈ +4 % du rayon), ressoude les normales de la
+  couture UV, et drape route, étiquettes, bateau et vues aériennes HD.
+- **Carte au trésor** : ronds d'or « tamponnés » plus gros et espacés, X rouge
+  du trésor au large de San Diego, rose des vents sépia dans le Pacifique Sud,
+  serpent de mer (« Ici veillent les dragons ») dans l'Atlantique, bagues d'or
+  qui respirent et grossissent au survol.
+- **La figurine et son sillage** : contours d'encre (coque inversée) façon cel
+  shading, bimini rouge lisible de dessus, et la traîne d'écume en V sur ~12
+  jours de route qui se résorbe au mouillage — le site porte son nom.
+- **Interface pirate** : polices IM Fell English (SC) + EB Garamond embarquées,
+  titre calligraphié au trait d'or, boutons-parchemin au papier découpé main,
+  sceau de cire pour le son, barre à roue qui tourne pendant la Traversée,
+  curseur-voilier sur un chemin de pointillés d'encre, photos du carnet
+  scotchées et lettrines, grain de papier + vignette sur toute la scène.
+- **Confort** : molette = zoom partout (sauf panneaux qui défilent), intro en
+  glissé depuis le large, préchargement des vues aériennes (survol prioritaire
+  + fil de fond), nuages cotonneux à base plate qui s'effacent près de la
+  caméra, `capture.mjs` autodétecte Chromium et gagne les actions
+  `regarde=lat,lon`, `recit`, `photo`.
+
+Captures de contrôle : `node capture.mjs http://localhost:4173/ /tmp/x.png
+6000 "date=2013-06-24"` (traversée Hawaï→Alaska, écume visible) ;
+`"plonge=Fakarava"` (vue HD drapée + carnet parchemin).

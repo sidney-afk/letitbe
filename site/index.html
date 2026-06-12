@@ -5,6 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Le Sillage — cinq ans autour du Pacifique</title>
   <meta name="description" content="Le voyage de la famille Laruel à bord du catamaran Let It Be : 24 500 milles autour du Pacifique, de la Martinique à San Diego par la Nouvelle-Zélande et l'Alaska.">
+  <meta name="theme-color" content="#bfe0f5">
+  <meta property="og:title" content="Le Sillage — cinq ans autour du Pacifique">
+  <meta property="og:description" content="La route du catamaran Let It Be, racontée sur une planète miniature : 24 500 milles, des Caraïbes à l'Alaska.">
+  <meta property="og:type" content="website">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="stylesheet" href="./src/style.css">
 </head>
@@ -13,24 +17,55 @@
 
   <header id="titre">
     <h1>Le Sillage</h1>
+    <svg id="titre-trait" viewBox="0 0 260 18" aria-hidden="true">
+      <path d="M4 10 C 50 3, 86 16, 122 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M138 10 C 174 4, 214 17, 256 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M130 3.5 134.5 10 130 16.5 125.5 10 Z" fill="currentColor"/>
+    </svg>
     <p>Cinq ans autour du Pacifique à bord de <em>Let It Be</em></p>
   </header>
 
   <div id="infobulle" hidden></div>
 
   <nav id="boutons-haut">
-    <button id="son-bouton" title="Ambiance sonore" aria-pressed="false">🔇</button>
-    <button id="mode-bouton">🌍 Mode réaliste</button>
-    <button id="recit-bouton">☰ Embarquer dans le récit</button>
+    <button id="son-bouton" class="sceau" title="Ambiance sonore" aria-pressed="false" aria-label="Ambiance sonore">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M5 9.4v5.2h3.1L12.4 18V6L8.1 9.4Z" fill="currentColor"/>
+        <path class="ondes" d="M15.3 9.3a4.3 4.3 0 0 1 0 5.4M17.7 7.3a7.6 7.6 0 0 1 0 9.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+        <path class="silence" d="M15.6 9.9l4.6 4.2m0-4.2-4.6 4.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <button id="mode-bouton">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="12" cy="12" r="8.4"/>
+        <ellipse cx="12" cy="12" rx="3.6" ry="8.4"/>
+        <path d="M4.4 9.2h15.2M4.4 14.8h15.2"/>
+      </svg>
+      <span>Mode réaliste</span>
+    </button>
+    <button id="recit-bouton">
+      <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
+        <path d="M4 5.6C7 4.1 9.9 4.1 12 5.6c2.1-1.5 5-1.5 8 0v12.8c-3-1.5-5.9-1.5-8 0-2.1-1.5-5-1.5-8 0Z"/>
+        <path d="M12 5.6v12.8"/>
+      </svg>
+      <span>Embarquer dans le récit</span>
+    </button>
   </nav>
   <div id="affleure" aria-hidden="true"></div>
   <aside id="recit-carte" aria-live="polite"></aside>
   <div id="recit-indicateur" aria-hidden="true"></div>
-  <p id="recit-aide" hidden>Le curseur et ⏵ font avancer le voyage — la molette zoome.</p>
+  <p id="recit-aide" hidden>Le curseur et la barre font avancer le voyage — la molette zoome.</p>
 
   <section id="plongee" hidden aria-label="Carnet de bord de l'escale">
     <header id="plongee-entete">
-      <button id="remonter" title="Reprendre la route">⤴ Reprendre la route</button>
+      <button id="remonter" title="Reprendre la route">
+        <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+          <circle cx="12" cy="5.2" r="2"/>
+          <path d="M12 7.2V19M8.6 10h6.8"/>
+          <path d="M5.4 13.2c.6 3.6 3.2 5.8 6.6 5.8s6-2.2 6.6-5.8M5.4 13.2 4 14.8m1.4-1.6 2 1m11.2-1 1.4 1.6m-1.4-1.6-2 1"/>
+        </svg>
+        Reprendre la route
+      </button>
       <h2 id="plongee-nom"></h2>
       <p id="plongee-dates"></p>
     </header>
@@ -45,7 +80,19 @@
   </div>
 
   <footer id="timeline">
-    <button id="lecture" title="Larguer les amarres">⏵</button>
+    <button id="lecture" title="Larguer les amarres" aria-label="Larguer les amarres">
+      <svg class="barre-roue" viewBox="0 0 24 24" aria-hidden="true">
+        <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <circle cx="12" cy="12" r="6.1"/>
+          <path d="M12 5.9V2.4M12 18.1v3.5M5.9 12H2.4M18.1 12h3.5M7.7 7.7 5.2 5.2M16.3 16.3l2.5 2.5M16.3 7.7l2.5-2.5M7.7 16.3l-2.5 2.5"/>
+        </g>
+        <path class="glyphe-lecture" d="M10.6 9.3 15.3 12l-4.7 2.7Z" fill="currentColor" stroke="none"/>
+        <g class="glyphe-pause" fill="currentColor" stroke="none">
+          <rect x="9.7" y="9.3" width="1.8" height="5.4" rx="0.7"/>
+          <rect x="12.6" y="9.3" width="1.8" height="5.4" rx="0.7"/>
+        </g>
+      </svg>
+    </button>
     <div id="timeline-corps">
       <input id="curseur" type="range" min="0" max="1" step="any" value="0"
              aria-label="Curseur temporel du voyage">
@@ -55,7 +102,13 @@
         <span id="lieu-courant">Martinique, Le Marin</span>
       </div>
     </div>
-    <button id="suivre" title="Suivre le bateau" aria-pressed="true">⌖</button>
+    <button id="suivre" title="Suivre le bateau" aria-label="Suivre le bateau" aria-pressed="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M16.6 7.4 13.3 13.3 7.4 16.6l3.3-5.9Z" fill="currentColor"/>
+        <circle cx="12" cy="12" r="1.1" fill="#fffbef"/>
+      </svg>
+    </button>
   </footer>
 
   <script type="module" src="./src/main.js"></script>
