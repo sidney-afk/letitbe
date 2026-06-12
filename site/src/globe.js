@@ -1,5 +1,7 @@
-// La Terre : jour/nuit ERA-photoréaliste (Blue Marble + lumières nocturnes),
-// reflet du soleil sur l'océan, nuages dérivants, halo atmosphérique.
+// La Terre miniature : en mode Carnet, une figurine peinte à la main —
+// relief sculpté en vraie géométrie (montagnes en volume), cel shading aux
+// ombres bleutées, océan laiteux qui scintille doucement. En mode réaliste,
+// jour/nuit Blue Marble + lumières nocturnes et halo atmosphérique.
 
 import * as THREE from 'three';
 import { RAYON } from './geo.js';
@@ -13,7 +15,24 @@ function charge(url, espace = THREE.SRGBColorSpace) {
   return t;
 }
 
-export function creerGlobe() {
+// ressoude les normales le long du méridien de la couture UV (les sommets
+// y sont dupliqués : sans cela, un trait d'ombre coupe le Pacifique)
+function soudeCouture(geo, segL, segH) {
+  const n = geo.attributes.normal;
+  const colonnes = segL + 1;
+  const v = new THREE.Vector3();
+  for (let rang = 0; rang <= segH; rang++) {
+    const a = rang * colonnes;
+    const b = a + segL;
+    v.set(n.getX(a) + n.getX(b), n.getY(a) + n.getY(b), n.getZ(a) + n.getZ(b))
+      .normalize();
+    n.setXYZ(a, v.x, v.y, v.z);
+    n.setXYZ(b, v.x, v.y, v.z);
+  }
+  n.needsUpdate = true;
+}
+
+export function creerGlobe(relief) {
   const groupe = new THREE.Group();
 
   const jour = charge('./textures/earth_day_5400.jpg');
@@ -37,11 +56,12 @@ export function creerGlobe() {
 
   // matériau « peint à la main » du mode Carnet : demi-Lambert en bandes
   // douces (pas de face nocturne), ombres bleutées plutôt que noires,
-  // liseré de lumière crème — l'esprit cel shading de la référence.
+  // liseré de lumière crème. Le relief est dans la géométrie : les bandes
+  // de lumière sculptent les chaînes de montagnes.
   const matiereCarnet = new THREE.ShaderMaterial({
     uniforms: {
       carteCarnet: { value: carnet },
-      carteNormales: { value: normales },
+      carteSpec: uniforms.carteSpec,
       dirSoleil: uniforms.dirSoleil,
       meteoLumiere: uniforms.meteoLumiere,
     },
@@ -58,7 +78,7 @@ export function creerGlobe() {
       }`,
     fragmentShader: /* glsl */`
       uniform sampler2D carteCarnet;
-      uniform sampler2D carteNormales;
+      uniform sampler2D carteSpec;
       uniform vec3 dirSoleil;
       uniform float meteoLumiere;
       varying vec2 vUv;
@@ -67,24 +87,29 @@ export function creerGlobe() {
       void main() {
         vec3 n = normalize(vNormaleM);
         vec3 tex = texture2D(carteCarnet, vUv).rgb;
-        // relief « sculpté » façon diorama : la carte de normales accentuée
-        // (elle est plate sur l'océan, le relief n'apparaît que sur terre)
-        vec3 dn = texture2D(carteNormales, vUv).rgb * 2.0 - 1.0;
-        n = normalize(n + 0.6 * (dn.x * vec3(0.0, 1.0, 0.0)
-                                 + dn.y * cross(n, vec3(0.0, 1.0, 0.0))));
+        float mer = texture2D(carteSpec, vUv).r;
 
         float ndl = dot(n, dirSoleil) * 0.5 + 0.5; // demi-Lambert : pas de nuit
         // trois bandes d'éclairage aux transitions douces, base claire
         float bandes = 0.74
           + 0.13 * smoothstep(0.30, 0.40, ndl)
           + 0.21 * smoothstep(0.55, 0.68, ndl);
+        // l'eau ne prend pas d'ombre dure : elle reste laiteuse et lumineuse
+        bandes = mix(bandes, max(bandes, 0.97), mer);
         vec3 couleur = tex * bandes * 1.32 * vec3(1.0, 0.98, 0.94);
-        // l'ombre est fraîche et bleutée, jamais sombre
-        couleur = mix(couleur * vec3(0.85, 0.91, 1.08), couleur,
-                      smoothstep(0.18, 0.52, ndl));
+        // l'ombre est fraîche et bleutée, jamais sombre — et douce sur la mer
+        float ombre = smoothstep(0.18, 0.52, ndl);
+        couleur = mix(couleur * mix(vec3(0.85, 0.91, 1.08), vec3(0.96, 0.98, 1.04), mer),
+                      couleur, ombre);
+        couleur *= mix(1.0, 1.07, mer); // la mer, toujours un ton plus claire
+
+        // un reflet de soleil très doux sur l'eau, crème, façon gouache
+        vec3 versCam = normalize(cameraPosition - vPosM);
+        vec3 refl = reflect(-dirSoleil, n);
+        float eclat = pow(max(dot(refl, versCam), 0.0), 14.0) * mer;
+        couleur += vec3(1.0, 0.96, 0.84) * eclat * 0.16;
 
         // liseré de lumière crème sur le bord
-        vec3 versCam = normalize(cameraPosition - vPosM);
         float bord = pow(1.0 - max(dot(n, versCam), 0.0), 2.4);
         couleur += vec3(1.0, 0.96, 0.86) * bord * 0.28;
 
@@ -154,12 +179,17 @@ export function creerGlobe() {
         }`,
   });
 
-  const terre = new THREE.Mesh(
-    new THREE.SphereGeometry(RAYON, 128, 64), matierePhoto);
+  // — la sculpture : une sphère dense déplacée par la carte d'élévation —
+  const SEG_L = 512, SEG_H = 256;
+  const geoTerre = new THREE.SphereGeometry(RAYON, SEG_L, SEG_H);
+  relief.drape(geoTerre, 0);
+  soudeCouture(geoTerre, SEG_L, SEG_H);
+  const terre = new THREE.Mesh(geoTerre, matierePhoto);
   groupe.add(terre);
 
+  // au-dessus des plus hauts sommets, pour le mode réaliste
   const meshNuages = new THREE.Mesh(
-    new THREE.SphereGeometry(RAYON * 1.0045, 96, 48),
+    new THREE.SphereGeometry(RAYON * 1.03, 96, 48),
     new THREE.ShaderMaterial({
       transparent: true,
       depthWrite: false,
@@ -195,7 +225,7 @@ export function creerGlobe() {
 
   // halo atmosphérique vu de l'extérieur
   const halo = new THREE.Mesh(
-    new THREE.SphereGeometry(RAYON * 1.045, 96, 48),
+    new THREE.SphereGeometry(RAYON * 1.06, 96, 48),
     new THREE.ShaderMaterial({
       side: THREE.BackSide,
       transparent: true,

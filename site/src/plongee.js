@@ -16,7 +16,7 @@ const formatLong = new Intl.DateTimeFormat('fr-FR', {
 const lisse = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 export function creerPlongee({ camera, controls, timeline, regleSuivi,
-  mouillagesParCle, scene, vuesAeriennes }) {
+  mouillagesParCle, scene, vuesAeriennes, relief }) {
   const panneau = document.getElementById('plongee');
   const titre = document.getElementById('plongee-nom');
   const sousTitre = document.getElementById('plongee-dates');
@@ -43,11 +43,12 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     texture.colorSpace = THREE.SRGBColorSpace;
     texture.anisotropy = 8;
     const geo = new THREE.SphereGeometry(
-      1.0012, 64, 64,
+      1, 64, 64,
       THREE.MathUtils.degToRad(vue.lonMin + 180),
       THREE.MathUtils.degToRad(vue.lonMax - vue.lonMin),
       THREE.MathUtils.degToRad(90 - vue.latMax),
       THREE.MathUtils.degToRad(vue.latMax - vue.latMin));
+    relief.drape(geo, 0.0012); // l'image épouse le terrain sculpté
     // bord en fondu : la vue HD se dissout dans le globe, pas de carré dur
     const materiau = new THREE.ShaderMaterial({
       transparent: true,
@@ -208,7 +209,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     panneau.hidden = true;
     const complet = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`) ?? escale;
     timeline.vaA(new Date(escale.date_arrivee + 'T12:00:00Z').getTime(), true);
-    controls.minDistance = 1.012;
+    controls.minDistance = 1.014;
     montreVueAerienne(complet);
     lanceVol(latLonVers3D(complet.lat, complet.lon, 1), DISTANCE_PLONGEE, () => {
       rempli(complet);

@@ -54,7 +54,7 @@ function spriteTexte(texte, important) {
   return { texture, ratio: largeur / 220 };
 }
 
-export function creerEtiquettes() {
+export function creerEtiquettes(relief) {
   const groupe = new THREE.Group();
   const sprites = [];
 
@@ -65,7 +65,10 @@ export function creerEtiquettes() {
       transparent: true,
       depthWrite: false,
     }));
-    sprite.position.copy(latLonVers3D(lat, lon, 1.012));
+    // posée au-dessus du terrain : les montagnes ne l'avalent pas
+    const p = latLonVers3D(lat, lon, 1);
+    sprite.position.copy(p).multiplyScalar(
+      Math.max(1.012, relief.altitude(p, 0.007)));
     sprites.push({ sprite, ratio, important });
     groupe.add(sprite);
   }

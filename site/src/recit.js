@@ -138,7 +138,7 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
   function entre() {
     actif = true;
     document.body.classList.add('recit-actif');
-    bouton.textContent = '✕ Quitter le récit';
+    bouton.querySelector('span').textContent = 'Quitter le récit';
     chapitreAffiche = null;
     regleSuivi(true);
     applique(timeline.t);
@@ -149,7 +149,7 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
   function sort() {
     actif = false;
     document.body.classList.remove('recit-actif');
-    bouton.textContent = '☰ Embarquer dans le récit';
+    bouton.querySelector('span').textContent = 'Embarquer dans le récit';
     carte.classList.remove('visible');
     chapitreAffiche = null;
     aide.hidden = true;

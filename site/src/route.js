@@ -1,19 +1,20 @@
-// Le sillage façon carte au trésor : un chemin de gros pointillés ronds —
-// or pour ce qui est vécu, crème pour ce qui attend — et des mouillages
-// marqués de bagues d'or bien visibles. Les proportions sont volontairement
-// fausses : c'est le trajet qui compte, pas la géographie.
+// Le sillage façon carte au trésor : un chemin de gros ronds d'or cerclés
+// d'encre — vécu en or, à venir en crème —, des mouillages marqués de
+// bagues d'or qui respirent, et un X rouge sang à l'arrivée : le trésor.
+// Les proportions sont volontairement fausses : c'est le trajet qui compte.
+// Le chemin est drapé sur le relief : il escalade les côtes montagneuses.
 
 import * as THREE from 'three';
 import { RAYON, slerpSurface, latLonVers3D } from './geo.js';
 
 const ALTITUDE = RAYON * 1.0022;
-const PAS_RAD = THREE.MathUtils.degToRad(0.22); // un rond tous les ~24 km
+const PAS_RAD = THREE.MathUtils.degToRad(0.52); // un rond tous les ~58 km
 
 /**
  * Échantillonne la chronologie en un chapelet de points réguliers et
  * horodatés : la coupe au temps courant est un simple drawRange.
  */
-function echantillonne(voyage) {
+function echantillonne(voyage, relief) {
   const points = [];
   const temps = [];
   for (const s of voyage.segments) {
@@ -21,7 +22,8 @@ function echantillonne(voyage) {
     const n = Math.max(1, Math.ceil(omega / PAS_RAD));
     for (let k = 0; k <= n; k++) {
       const f = k / n;
-      const p = slerpSurface(s.p0, s.p1, f, ALTITUDE);
+      const p = slerpSurface(s.p0, s.p1, f, 1);
+      p.multiplyScalar(Math.max(ALTITUDE, relief.altitude(p, 0.0035)));
       const dernier = points[points.length - 1];
       if (dernier && dernier.distanceToSquared(p) < 1e-10) {
         temps[temps.length - 1] = s.t0 + f * (s.t1 - s.t0);
@@ -34,12 +36,13 @@ function echantillonne(voyage) {
   return { points, temps };
 }
 
-function materiauPointilles(couleur, taillePx, opacite) {
+function materiauPointilles(couleur, bordure, taillePx, opacite) {
   return new THREE.ShaderMaterial({
     transparent: true,
     depthWrite: false,
     uniforms: {
       couleur: { value: new THREE.Color(couleur) },
+      bordure: { value: new THREE.Color(bordure) },
       taille: { value: taillePx * Math.min(devicePixelRatio, 2) },
       opacite: { value: opacite },
     },
@@ -51,26 +54,54 @@ function materiauPointilles(couleur, taillePx, opacite) {
       }`,
     fragmentShader: /* glsl */`
       uniform vec3 couleur;
+      uniform vec3 bordure;
       uniform float opacite;
       void main() {
         float d = length(gl_PointCoord - 0.5);
-        float a = smoothstep(0.5, 0.32, d); // rond doux, bord fondu
+        float a = smoothstep(0.5, 0.42, d); // rond doux, bord fondu
         if (a < 0.01) discard;
-        gl_FragColor = vec4(couleur, a * opacite);
+        // cœur plein, fin cerne à peine plus sombre : tamponné, jamais noir
+        // (les ronds se chevauchent de loin : un cerne foncé ferait corde)
+        vec3 c = mix(bordure, couleur, smoothstep(0.44, 0.34, d));
+        gl_FragColor = vec4(c, a * opacite);
       }`,
   });
 }
 
-export function creerRoute(voyage, routeData) {
+// le X du trésor, tracé à la main (deux croisillons irréguliers)
+function textureX() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const ctx = c.getContext('2d');
+  ctx.lineCap = 'round';
+  ctx.strokeStyle = '#a3252b';
+  ctx.lineWidth = 30;
+  const trait = (x0, y0, x1, y1, devie) => {
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.quadraticCurveTo((x0 + x1) / 2 + devie, (y0 + y1) / 2 - devie, x1, y1);
+    ctx.stroke();
+  };
+  trait(58, 64, 198, 196, 9);
+  trait(196, 58, 60, 198, -7);
+  ctx.globalAlpha = 0.5;
+  ctx.lineWidth = 12;
+  trait(62, 70, 194, 192, 12);
+  const texture = new THREE.CanvasTexture(c);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  return texture;
+}
+
+export function creerRoute(voyage, routeData, relief) {
   const groupe = new THREE.Group();
-  const { points, temps } = echantillonne(voyage);
+  const { points, temps } = echantillonne(voyage, relief);
   const positions = new Float32Array(points.length * 3);
   points.forEach((p, i) => positions.set([p.x, p.y, p.z], i * 3));
   const geoPoints = new THREE.BufferGeometry();
   geoPoints.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
-  const matSillage = materiauPointilles(0xf2a035, 9, 0.95);
-  const matFutur = materiauPointilles(0xfdf8ec, 5.5, 0.65);
+  const matSillage = materiauPointilles(0xf2a035, 0xcf831f, 14, 0.96);
+  const matFutur = materiauPointilles(0xfdf8ec, 0xd9c08e, 8, 0.72);
 
   const sillage = new THREE.Points(geoPoints, matSillage);
   const futur = new THREE.Points(geoPoints.clone(), matFutur);
@@ -87,27 +118,49 @@ export function creerRoute(voyage, routeData) {
     transparent: true, opacity: 0, depthWrite: false,
   });
   const anneaux = new THREE.InstancedMesh(
-    new THREE.TorusGeometry(1, 0.26, 8, 28), matAnneau, escales.length);
+    new THREE.TorusGeometry(1, 0.27, 8, 28), matAnneau, escales.length);
   const coeurs = new THREE.InstancedMesh(
-    new THREE.SphereGeometry(0.58, 12, 10), matCoeur, escales.length);
+    new THREE.SphereGeometry(0.56, 12, 10), matCoeur, escales.length);
   const cibles = new THREE.InstancedMesh(
     new THREE.SphereGeometry(2.6, 8, 6), matCible, escales.length);
   anneaux.renderOrder = 3;
   coeurs.renderOrder = 3;
-  const positionsPerles = escales.map(e => latLonVers3D(e.lat, e.lon, ALTITUDE));
+  const positionsPerles = escales.map(e => {
+    const p = latLonVers3D(e.lat, e.lon, 1);
+    return p.multiplyScalar(Math.max(ALTITUDE, relief.altitude(p, 0.0035)));
+  });
   groupe.add(anneaux, coeurs, cibles);
+
+  // — X marque l'endroit : la fin du voyage, là où dort le trésor —
+  // un poil au large du dernier mouillage, pour que la figurine amarrée
+  // ne le recouvre pas
+  const arrivee = routeData[routeData.length - 1];
+  const croix = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: textureX(),
+    transparent: true,
+    depthWrite: false,
+  }));
+  croix.position.copy(
+    latLonVers3D(arrivee.lat - 3.4, arrivee.lon - 4.6, RAYON * 1.004));
+  croix.renderOrder = 3;
+  groupe.add(croix);
+
+  let indexSurvol = -1;
 
   const m = new THREE.Matrix4();
   const q = new THREE.Quaternion();
   const versCamera = new THREE.Vector3();
   const echelle = new THREE.Vector3();
   const Z = new THREE.Vector3(0, 0, 1);
-  function orientePerles(camera) {
-    // ~16 px à l'écran quelle que soit la distance, anneaux face caméra
+  function orientePerles(camera, tempsS = 0) {
+    // ~24 px à l'écran quelle que soit la distance, anneaux face caméra,
+    // une respiration lente : la carte est vivante
     const d = camera.position.length();
-    const s = THREE.MathUtils.clamp((d - 1) * 0.0062, 0.0004, 0.016);
-    echelle.setScalar(s);
+    const s = THREE.MathUtils.clamp((d - 1) * 0.0085, 0.0005, 0.022);
     positionsPerles.forEach((p, i) => {
+      const vie = 1 + 0.06 * Math.sin(tempsS * 1.8 + i * 1.7);
+      const survole = i === indexSurvol ? 1.35 : 1;
+      echelle.setScalar(s * vie * survole);
       versCamera.copy(camera.position).sub(p).normalize();
       q.setFromUnitVectors(Z, versCamera);
       m.compose(p, q, echelle);
@@ -118,6 +171,8 @@ export function creerRoute(voyage, routeData) {
     anneaux.instanceMatrix.needsUpdate = true;
     coeurs.instanceMatrix.needsUpdate = true;
     cibles.instanceMatrix.needsUpdate = true;
+    const sx = THREE.MathUtils.clamp((d - 1) * 0.030, 0.002, 0.075);
+    croix.scale.setScalar(sx);
   }
 
   function metAJourTemps(t) {
@@ -135,17 +190,22 @@ export function creerRoute(voyage, routeData) {
   function regleMode(mode) {
     if (mode === 'carnet') {
       matSillage.uniforms.couleur.value.set(0xf2a035);
+      matSillage.uniforms.bordure.value.set(0xcf831f);
       matFutur.uniforms.couleur.value.set(0xfdf8ec);
       matAnneau.color.set(0xc8922e);
+      croix.material.opacity = 1;
     } else {
       matSillage.uniforms.couleur.value.set(0xeec97e);
+      matSillage.uniforms.bordure.value.set(0x6b5524);
       matFutur.uniforms.couleur.value.set(0x9fb7cc);
       matAnneau.color.set(0xeec97e);
+      croix.material.opacity = 0.85;
     }
   }
 
   return {
     groupe, metAJourTemps, surResize, regleMode, orientePerles,
     cibles, escales,
+    regleSurvol(i) { indexSurvol = i; },
   };
 }

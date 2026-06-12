@@ -1,10 +1,55 @@
 // Let It Be en miniature : catamaran toon inspiré des photos du vrai bateau
 // (Fountaine-Pajot blanc à liserés rouges, grand-voile à corne, bimini).
 // Échelle volontairement très exagérée — Sidney préfère le voir de loin.
-// Pas de gîte : c'est un cata.
+// Pas de gîte : c'est un cata. Derrière lui, son sillage d'écume — le site
+// porte son nom.
 
 import * as THREE from 'three';
 import { RAYON } from './geo.js';
+
+const ECUME_N = 80;               // perles d'écume dans la traîne
+// la traîne couvre ~12 jours de route : généreuse en traversée (la
+// figurine est énorme, il lui faut un vrai panache), nulle au mouillage
+const ECUME_FENETRE_MS = 12 * 86400e3;
+
+function creerEcume() {
+  const positions = new Float32Array(ECUME_N * 3);
+  const ages = new Float32Array(ECUME_N);
+  for (let i = 0; i < ECUME_N; i++) ages[i] = i / (ECUME_N - 1);
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geo.setAttribute('age', new THREE.BufferAttribute(ages, 1));
+  const mat = new THREE.ShaderMaterial({
+    transparent: true,
+    depthWrite: false,
+    uniforms: {
+      taille: { value: 15 * Math.min(devicePixelRatio, 2) },
+    },
+    vertexShader: /* glsl */`
+      uniform float taille;
+      attribute float age;
+      varying float vAge;
+      void main() {
+        vAge = age;
+        gl_PointSize = taille * (1.0 - age * 0.75);
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }`,
+    fragmentShader: /* glsl */`
+      varying float vAge;
+      void main() {
+        float d = length(gl_PointCoord - 0.5);
+        float a = smoothstep(0.5, 0.22, d) * (1.0 - vAge) * 0.85;
+        if (a < 0.01) discard;
+        gl_FragColor = vec4(vec3(1.0, 1.0, 0.99), a);
+      }`,
+  });
+  const points = new THREE.Points(geo, mat);
+  points.renderOrder = 3;
+  // les positions vivent au gré de la timeline : pas de culling sur la
+  // bounding sphere initiale (toute à l'origine, donc toujours hors champ)
+  points.frustumCulled = false;
+  return points;
+}
 
 function matiereToon(couleur) {
   const degrade = new Uint8Array([155, 208, 255]);
@@ -15,6 +60,26 @@ function matiereToon(couleur) {
     gradientMap,
     side: THREE.DoubleSide,
   });
+}
+
+// contour d'encre façon cel shading : le double « coque inversée » du mesh,
+// gonflé le long des normales — la figurine se découpe sur l'océan clair
+const matEncre = new THREE.MeshBasicMaterial({ color: 0x33281a, side: THREE.BackSide });
+function avecContour(mesh, epaisseur = 0.02) {
+  const geo = mesh.geometry.clone();
+  const pos = geo.attributes.position;
+  const nor = geo.attributes.normal;
+  for (let i = 0; i < pos.count; i++) {
+    pos.setXYZ(i,
+      pos.getX(i) + nor.getX(i) * epaisseur,
+      pos.getY(i) + nor.getY(i) * epaisseur,
+      pos.getZ(i) + nor.getZ(i) * epaisseur);
+  }
+  const contour = new THREE.Mesh(geo, matEncre);
+  contour.position.copy(mesh.position);
+  contour.rotation.copy(mesh.rotation);
+  contour.scale.copy(mesh.scale);
+  return contour;
 }
 
 export function creerBateau() {
@@ -33,7 +98,7 @@ export function creerBateau() {
     const coque = new THREE.Mesh(geoCoque, blanc);
     coque.position.set(cote * 0.28, 0.05, 0);
     coque.scale.y = 0.8;
-    bateau.add(coque);
+    bateau.add(coque, avecContour(coque));
 
     // double liseré rouge du vrai Let It Be
     for (const [h, ep] of [[0.105, 0.022], [0.065, 0.012]]) {
@@ -49,19 +114,19 @@ export function creerBateau() {
   // — nacelle pleine largeur et rouf vitré —
   const nacelle = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.08, 0.55), blanc);
   nacelle.position.set(0, 0.14, -0.02);
-  bateau.add(nacelle);
+  bateau.add(nacelle, avecContour(nacelle));
   const rouf = new THREE.Mesh(new THREE.SphereGeometry(0.21, 16, 12), blanc);
   rouf.position.set(0, 0.17, 0.03);
   rouf.scale.set(1.25, 0.6, 1.05);
-  bateau.add(rouf);
+  bateau.add(rouf, avecContour(rouf));
   const baie = new THREE.Mesh(new THREE.SphereGeometry(0.205, 16, 12), vitre);
   baie.position.set(0, 0.175, 0.045);
   baie.scale.set(1.18, 0.5, 0.98);
   bateau.add(baie);
-  // bimini à l'arrière
-  const bimini = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.025, 0.22), creme);
+  // bimini à l'arrière — rouge : vu de dessus, c'est lui qui signe le bateau
+  const bimini = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.025, 0.22), rouge);
   bimini.position.set(0, 0.34, -0.28);
-  bateau.add(bimini);
+  bateau.add(bimini, avecContour(bimini, 0.012));
 
   // — gréement —
   const mat = new THREE.Mesh(
@@ -81,7 +146,7 @@ export function creerBateau() {
     new THREE.Vector3(0, 1.36, 0.07),   // tête
     new THREE.Vector3(0, 1.22, -0.26),  // la corne
   ], 0.085), creme);
-  bateau.add(grandVoile);
+  bateau.add(grandVoile, avecContour(grandVoile, 0.013));
   // liseré rouge sur la chute, clin d'œil aux lignes du bateau
   const chute = new THREE.Mesh(
     new THREE.CylinderGeometry(0.008, 0.008, 1.08, 6), rouge);
@@ -95,7 +160,7 @@ export function creerBateau() {
     new THREE.Vector3(0, 1.3, 0.08),
     new THREE.Vector3(0, 0.16, 0.1),
   ], -0.07), creme);
-  bateau.add(genois);
+  bateau.add(genois, avecContour(genois, 0.013));
 
   // — la clef de sol du tatoo, stylisée en spirale rouge sur la coque —
   const clef = new THREE.Mesh(
@@ -116,15 +181,34 @@ export function creerBateau() {
 
   const conteneur = new THREE.Group();
   conteneur.add(bateau);
+  const ecume = creerEcume();
 
   const haut = new THREE.Vector3();
   const avant = new THREE.Vector3();
   const matrice = new THREE.Matrix4();
+  const perle = new THREE.Vector3();
+  const travers = new THREE.Vector3();
   let capPrecedent = new THREE.Vector3(1, 0, 0);
 
   function positionne(voyage, t) {
     const p = voyage.position(t, RAYON * 1.0025);
     conteneur.position.copy(p);
+
+    // la traîne d'écume : un V qui s'évase derrière le bateau le long du
+    // chemin des derniers jours — au mouillage il se résorbe de lui-même
+    const pos = ecume.geometry.attributes.position;
+    for (let i = 0; i < ECUME_N; i++) {
+      const age = i / (ECUME_N - 1);
+      perle.copy(voyage.position(t - age * ECUME_FENETRE_MS, RAYON * 1.0024));
+      // les perles alternent de bord : les deux bras du V,
+      // avec un léger frisson pour casser la géométrie
+      travers.crossVectors(perle, capPrecedent).normalize();
+      const bord = (i % 2) * 2 - 1;
+      perle.addScaledVector(travers,
+        bord * (0.004 + age * 0.026) * (1 + 0.25 * Math.sin(i * 12.9898)));
+      pos.setXYZ(i, perle.x, perle.y, perle.z);
+    }
+    pos.needsUpdate = true;
 
     haut.copy(p).normalize();
     const apres = voyage.position(t + 36e5, RAYON * 1.0025);
@@ -151,7 +235,7 @@ export function creerBateau() {
 
     const d = camera.position.length();
     // une vraie miniature : énorme, toujours lisible au-dessus du globe
-    const s = THREE.MathUtils.clamp((d - 1) * 0.075, 0.002, 0.3);
+    const s = THREE.MathUtils.clamp((d - 1) * 0.088, 0.002, 0.36);
     bateau.scale.setScalar(s);
 
     // de loin, la figurine pivote pour se montrer de profil (silhouette
@@ -165,7 +249,7 @@ export function creerBateau() {
     bateau.rotation.y = beta * profil;
   }
 
-  return { conteneur, positionne, anime };
+  return { conteneur, ecume, positionne, anime };
 }
 
 // voile bombée : triangle ou quadrilatère dont le centre est gonflé
