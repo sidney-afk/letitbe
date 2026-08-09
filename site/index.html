@@ -13,9 +13,38 @@
   <link rel="stylesheet" href="./src/style.css">
 </head>
 <body>
-  <canvas id="scene"></canvas>
+  <main id="experience-principale">
+    <p id="scene-description" class="sr-only">
+      Globe illustré retraçant le voyage de Let It Be. Pour ouvrir une escale au
+      clavier, utilisez le menu Explorer les escales.
+    </p>
+    <canvas id="scene" role="img" aria-label="Carte du voyage de Let It Be" aria-describedby="scene-description"></canvas>
 
-  <header id="titre">
+  <section id="fallback-2d" data-scene-safe-zone hidden tabindex="0"
+           aria-labelledby="fallback-titre" aria-describedby="fallback-message">
+    <header class="fallback-entete">
+      <p class="fallback-surtitre">Le Sillage</p>
+      <h2 id="fallback-titre">Le voyage, en carte</h2>
+      <p id="fallback-message">
+        La planète en trois dimensions n'est pas disponible sur cet appareil.
+        Le voyage reste accessible sous la forme d'une carte illustrée et de
+        la liste chronologique des escales.
+      </p>
+    </header>
+    <div id="fallback-carte">
+      <svg id="fallback-trace" viewBox="0 0 1000 500" role="img"
+           aria-label="Tracé simplifié du voyage de Let It Be"
+           preserveAspectRatio="xMidYMid meet" focusable="false">
+        <title>Tracé simplifié du voyage de Let It Be</title>
+      </svg>
+    </div>
+    <section class="fallback-escales" aria-labelledby="fallback-escales-titre">
+      <h3 id="fallback-escales-titre">Les escales du voyage</h3>
+      <ol id="fallback-liste" tabindex="0"></ol>
+    </section>
+  </section>
+
+  <header id="titre" data-scene-safe-zone>
     <h1>Le Sillage</h1>
     <svg id="titre-trait" viewBox="0 0 260 18" aria-hidden="true">
       <path d="M4 10 C 50 3, 86 16, 122 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
@@ -25,17 +54,17 @@
     <p>Cinq ans autour du Pacifique à bord de <em>Let It Be</em></p>
   </header>
 
-  <div id="infobulle" hidden></div>
+  <div id="infobulle" role="tooltip" data-scene-safe-zone hidden></div>
 
-  <nav id="boutons-haut">
-    <button id="son-bouton" class="sceau" title="Ambiance sonore" aria-pressed="false" aria-label="Ambiance sonore">
+  <nav id="boutons-haut" aria-label="Options de la carte" data-scene-safe-zone>
+    <button type="button" id="son-bouton" class="sceau" title="Ambiance sonore" aria-pressed="false" aria-label="Ambiance sonore">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <path d="M5 9.4v5.2h3.1L12.4 18V6L8.1 9.4Z" fill="currentColor"/>
         <path class="ondes" d="M15.3 9.3a4.3 4.3 0 0 1 0 5.4M17.7 7.3a7.6 7.6 0 0 1 0 9.4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
         <path class="silence" d="M15.6 9.9l4.6 4.2m0-4.2-4.6 4.2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/>
       </svg>
     </button>
-    <button id="mode-bouton">
+    <button type="button" id="mode-bouton" title="Changer l'apparence du globe" aria-label="Changer l'apparence du globe" aria-controls="scene">
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5">
         <circle cx="12" cy="12" r="8.4"/>
         <ellipse cx="12" cy="12" rx="3.6" ry="8.4"/>
@@ -43,7 +72,7 @@
       </svg>
       <span>Mode réaliste</span>
     </button>
-    <button id="recit-bouton">
+    <button type="button" id="recit-bouton" title="Embarquer dans le récit" aria-label="Embarquer dans le récit" aria-controls="recit-carte">
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round">
         <path d="M4 5.6C7 4.1 9.9 4.1 12 5.6c2.1-1.5 5-1.5 8 0v12.8c-3-1.5-5.9-1.5-8 0-2.1-1.5-5-1.5-8 0Z"/>
         <path d="M12 5.6v12.8"/>
@@ -51,14 +80,27 @@
       <span>Embarquer dans le récit</span>
     </button>
   </nav>
-  <div id="affleure" aria-hidden="true"></div>
-  <aside id="recit-carte" aria-live="polite"></aside>
+  <div id="affleure" aria-hidden="true" data-scene-safe-zone></div>
+  <aside id="recit-carte" aria-live="polite" data-scene-safe-zone></aside>
   <div id="recit-indicateur" aria-hidden="true"></div>
-  <p id="recit-aide" hidden>Le curseur et la barre font avancer le voyage — la molette zoome.</p>
+  <p id="recit-aide" data-scene-safe-zone hidden>Le curseur et la barre font avancer le voyage — la molette zoome.</p>
 
-  <section id="plongee" hidden aria-label="Carnet de bord de l'escale">
+  <details id="navigation-escales" data-scene-safe-zone>
+    <summary>Explorer les escales</summary>
+    <div class="navigation-escales-corps">
+      <label for="escales-select">Choisir une escale</label>
+      <select id="escales-select" name="escale">
+        <option value="">Choisir une escale…</option>
+      </select>
+      <button type="button" id="escales-ouvrir" aria-controls="plongee">Ouvrir le carnet</button>
+    </div>
+  </details>
+  </main>
+
+  <section id="plongee" role="dialog" aria-modal="true" data-scene-safe-zone hidden
+           aria-labelledby="plongee-nom" aria-describedby="plongee-dates">
     <header id="plongee-entete">
-      <button id="remonter" title="Reprendre la route">
+      <button type="button" id="remonter" title="Reprendre la route">
         <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
           <circle cx="12" cy="5.2" r="2"/>
           <path d="M12 7.2V19M8.6 10h6.8"/>
@@ -72,15 +114,16 @@
     <div id="plongee-flux"></div>
   </section>
 
-  <div id="lightbox" hidden>
+  <div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie" hidden>
+    <button type="button" id="lightbox-fermer" aria-label="Fermer la photo">×</button>
     <figure>
       <img alt="">
       <figcaption></figcaption>
     </figure>
   </div>
 
-  <footer id="timeline">
-    <button id="lecture" title="Larguer les amarres" aria-label="Larguer les amarres">
+  <footer id="timeline" aria-label="Chronologie du voyage" data-scene-safe-zone>
+    <button type="button" id="lecture" title="Larguer les amarres" aria-label="Lancer la lecture du voyage" aria-pressed="false">
       <svg class="barre-roue" viewBox="0 0 24 24" aria-hidden="true">
         <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
           <circle cx="12" cy="12" r="6.1"/>
@@ -102,7 +145,7 @@
         <span id="lieu-courant">Martinique, Le Marin</span>
       </div>
     </div>
-    <button id="suivre" title="Suivre le bateau" aria-label="Suivre le bateau" aria-pressed="true">
+    <button type="button" id="suivre" title="Suivre le bateau" aria-label="Suivre le bateau" aria-pressed="true">
       <svg viewBox="0 0 24 24" aria-hidden="true">
         <circle cx="12" cy="12" r="8.6" fill="none" stroke="currentColor" stroke-width="1.5"/>
         <path d="M16.6 7.4 13.3 13.3 7.4 16.6l3.3-5.9Z" fill="currentColor"/>

@@ -23,8 +23,119 @@ import { soleilEtCiel } from './sun.js';
 import { chargeRelief, reliefPlat } from './relief.js';
 
 const canvas = document.getElementById('scene');
+const mouvementReduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function webglDisponible() {
+  if (new URLSearchParams(location.search).has('force-fallback')) return false;
+  try {
+    const test = document.createElement('canvas');
+    return Boolean(test.getContext('webgl2') || test.getContext('webgl'));
+  } catch {
+    return false;
+  }
+}
+
+async function activeFallback2D() {
+  const fallback = document.getElementById('fallback-2d');
+  const trace = document.getElementById('fallback-trace');
+  const liste = document.getElementById('fallback-liste');
+  const navigation = document.getElementById('navigation-escales');
+  const select = document.getElementById('escales-select');
+  const ouvrir = document.getElementById('escales-ouvrir');
+  document.body.classList.add('fallback-actif', 'pret');
+  if (fallback) fallback.hidden = false;
+
+  let routeData = [];
+  try {
+    const reponse = await fetch('./data/route.json');
+    if (!reponse.ok) throw new Error(`HTTP ${reponse.status}`);
+    routeData = await reponse.json();
+  } catch {
+    fallback?.classList.add('fallback-donnees-indisponibles');
+  }
+
+  const escales = routeData.filter(e => e.type !== 'traversee' && e.date_arrivee);
+  if (trace && routeData.length) {
+    trace.setAttribute('viewBox', '0 0 1000 500');
+    const segments = [];
+    let segment = [];
+    let dernierX = null;
+    for (const point of routeData) {
+      if (!Number.isFinite(point.lat) || !Number.isFinite(point.lon)) continue;
+      const x = (point.lon + 180) / 360 * 1000;
+      const y = (90 - point.lat) / 180 * 500;
+      if (dernierX !== null && Math.abs(x - dernierX) > 450) {
+        if (segment.length > 1) segments.push(segment);
+        segment = [];
+      }
+      segment.push(`${x.toFixed(1)},${y.toFixed(1)}`);
+      dernierX = x;
+    }
+    if (segment.length > 1) segments.push(segment);
+    for (const points of segments) {
+      const ligne = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+      ligne.setAttribute('points', points.join(' '));
+      ligne.setAttribute('class', 'fallback-route-ligne');
+      trace.append(ligne);
+    }
+  }
+
+  const options = document.createDocumentFragment();
+  const items = document.createDocumentFragment();
+  if (navigation && liste) liste.before(navigation);
+  const formatDateFallback = new Intl.DateTimeFormat('fr-FR', {
+    day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',
+  });
+  escales.forEach((escale, index) => {
+    const date = formatDateFallback.format(new Date(`${escale.date_arrivee}T12:00:00Z`));
+    const option = document.createElement('option');
+    option.value = String(index);
+    option.textContent = `${escale.nom} — ${date}`;
+    options.append(option);
+    const item = document.createElement('li');
+    item.id = `fallback-escale-${index}`;
+    item.tabIndex = -1;
+    const nom = document.createElement('strong');
+    nom.textContent = escale.nom;
+    const temps = document.createElement('time');
+    temps.dateTime = escale.date_arrivee;
+    temps.textContent = date;
+    item.append(nom, temps);
+    items.append(item);
+  });
+  select?.replaceChildren(options);
+  liste?.replaceChildren(items);
+  if (ouvrir && select) {
+    ouvrir.textContent = 'Afficher sur le carnet';
+    ouvrir.addEventListener('click', () => {
+      const item = document.getElementById(`fallback-escale-${select.value}`);
+      item?.scrollIntoView({ block: 'center', behavior: mouvementReduit ? 'auto' : 'smooth' });
+      item?.focus({ preventScroll: true });
+    });
+  }
+
+  window.__sillage = {
+    fallback: true,
+    route: { escales },
+    etatComposition() {
+      return {
+        fallback: true,
+        viewport: { largeur: innerWidth, hauteur: innerHeight, dpr: devicePixelRatio },
+        escales: escales.length,
+      };
+    },
+  };
+}
+
+if (!webglDisponible()) {
+  await activeFallback2D();
+} else {
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
-renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+function ratioPixelsCible() {
+  const compact = innerWidth < 700 || innerHeight < 520;
+  return Math.min(devicePixelRatio, compact ? 1.5 : 2);
+}
+renderer.setPixelRatio(ratioPixelsCible());
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 1.1;
 
@@ -85,6 +196,9 @@ function regleMode(nouveau) {
   soleilLampe.color.set(carnetActif ? 0xfff0c8 : 0xfff3df);
   modeBouton.querySelector('span').textContent =
     carnetActif ? 'Mode réaliste' : 'Mode carnet';
+  const actionMode = carnetActif ? 'Passer au mode réaliste' : 'Passer au mode carnet';
+  modeBouton.setAttribute('aria-label', actionMode);
+  modeBouton.title = actionMode;
 }
 modeBouton.addEventListener('click', () => {
   regleMode(mode === 'carnet' ? 'photo' : 'carnet');
@@ -108,12 +222,39 @@ scene.add(bateau.conteneur, bateau.ecume);
 
 const timeline = creerTimeline(voyage);
 
+// Frame the globe inside the space left by the title, controls and timeline.
+// A portrait phone therefore sees a composed miniature rather than a desktop
+// camera cropped to a narrow strip.
+function distanceAccueilPourViewport() {
+  const largeur = Math.max(320, innerWidth);
+  const hauteur = Math.max(320, innerHeight);
+  const compact = largeur < 700 || hauteur < 520;
+  const paysageCompact = hauteur < 520 && largeur > hauteur;
+  const reserveHaut = paysageCompact ? 48 : compact ? 72 : 92;
+  const reserveBas = paysageCompact ? 78 : compact ? 116 : 126;
+  const largeurUtile = Math.max(220, largeur - (compact ? 28 : 56));
+  const hauteurUtile = Math.max(180, hauteur - reserveHaut - reserveBas);
+  const demiVertical = THREE.MathUtils.degToRad(camera.fov * 0.5);
+  const angleVertical = Math.atan(Math.tan(demiVertical) * hauteurUtile / hauteur);
+  const angleHorizontal = Math.atan(Math.tan(demiVertical) * largeurUtile / hauteur);
+  const angleLimitant = Math.max(THREE.MathUtils.degToRad(7.5),
+    Math.min(angleVertical, angleHorizontal) * 0.94);
+  return THREE.MathUtils.clamp(1.08 / Math.sin(angleLimitant), 3.55, 8.25);
+}
+
+function distanceTraverseePourViewport() {
+  const compact = innerWidth < 700 || innerHeight < 520;
+  return Math.max(2.5, distanceAccueilPourViewport() * (compact ? 0.74 : 0.62));
+}
+
 // caméra de départ : loin au large, l'intro glisse vers la Martinique
-const DISTANCE_ACCUEIL = 3.4;
+let derniereDistanceAccueil = distanceAccueilPourViewport();
 camera.position.copy(voyage.position(voyage.debut)).normalize()
-  .multiplyScalar(7.5);
+  .multiplyScalar(mouvementReduit
+    ? distanceAccueilPourViewport()
+    : Math.max(8.5, distanceAccueilPourViewport() + 2.2));
 camera.lookAt(0, 0, 0);
-let intro = 0; // 0 → 1 : l'approche du début
+let intro = mouvementReduit ? 1 : 0; // 0 → 1 : l'approche du début
 
 // — suivi du bateau : « collant » —
 // Le bouton ⌖ est la seule vraie bascule. Faire tourner le globe à la main
@@ -125,8 +266,12 @@ function regleSuivi(actif) {
   suivre = actif;
   suiviEnPause = false;
   boutonSuivre.setAttribute('aria-pressed', String(actif));
+  const action = actif ? 'Arrêter de suivre le bateau' : 'Suivre le bateau';
+  boutonSuivre.setAttribute('aria-label', action);
+  boutonSuivre.title = action;
 }
 boutonSuivre.addEventListener('click', () => regleSuivi(!suivre));
+regleSuivi(true);
 controls.addEventListener('start', () => { suiviEnPause = true; intro = 1; });
 
 function suitLeBateau(force = 1) {
@@ -161,12 +306,35 @@ const plongee = creerPlongee({
 const recit = creerRecit({ timeline, regleSuivi, voyage });
 creerTraversee({ timeline, voyage, mouillagesParCle });
 
+// The canvas is not the only way into the voyage: this native navigator gives
+// keyboard and assistive-technology users direct access to every anchorage.
+const selectEscales = document.getElementById('escales-select');
+const boutonOuvrirEscale = document.getElementById('escales-ouvrir');
+if (selectEscales && boutonOuvrirEscale) {
+  const fragment = document.createDocumentFragment();
+  route.escales.forEach((escale, index) => {
+    const option = document.createElement('option');
+    option.value = String(index);
+    const annee = escale.date_arrivee ? new Date(`${escale.date_arrivee}T12:00:00Z`).getUTCFullYear() : '';
+    option.textContent = `${escale.nom}${annee ? ` — ${annee}` : ''}`;
+    fragment.append(option);
+  });
+  selectEscales.replaceChildren(fragment);
+  boutonOuvrirEscale.addEventListener('click', () => {
+    const escale = route.escales[Number(selectEscales.value)];
+    if (!escale?.date_arrivee) return;
+    if (recit.actif) recit.sort();
+    plongee.vers(escale);
+  });
+}
+
 const ocean = creerOcean();
 const sonBouton = document.getElementById('son-bouton');
 sonBouton.addEventListener('click', () => {
   const actif = ocean.bascule();
   sonBouton.classList.toggle('actif', actif);
   sonBouton.setAttribute('aria-pressed', String(actif));
+  sonBouton.setAttribute('aria-label', actif ? 'Couper l’ambiance sonore' : 'Activer l’ambiance sonore');
 });
 
 // — préchargement des vues aériennes HD (l'idée de Sidney : tous les
@@ -184,28 +352,76 @@ function prechargeVue(url) {
 let filPrechargement = 0;
 function prechargeAuRepos(delai) {
   setTimeout(() => {
+    // Playback and active reading get every frame and network slot. Aerial
+    // imagery resumes only when the visitor is idle on the globe.
+    if (timeline.enLecture || document.hidden || recit.actif || plongee.ouverte) {
+      prechargeAuRepos(1600);
+      return;
+    }
     while (filPrechargement < aPrecharger.length
       && dejaChargees.has(aPrecharger[filPrechargement])) filPrechargement++;
     if (filPrechargement >= aPrecharger.length) return;
-    prechargeVue(aPrecharger[filPrechargement++]);
-    prechargeAuRepos(420); // ~un fichier toutes les 0,4 s : invisible
+    const charge = () => {
+      prechargeVue(aPrecharger[filPrechargement++]);
+      prechargeAuRepos(1600);
+    };
+    if ('requestIdleCallback' in window) requestIdleCallback(charge, { timeout: 2400 });
+    else setTimeout(charge, 250);
   }, delai);
 }
-prechargeAuRepos(6000); // on laisse d'abord la scène se charger
+prechargeAuRepos(9000); // on laisse d'abord la scène et l'interaction se charger
 
 // — infobulle des mouillages —
 const infobulle = document.getElementById('infobulle');
 const raycaster = new THREE.Raycaster();
 const pointeur = new THREE.Vector2(-2, -2);
 let escaleSurvolee = null;
+let positionPointeur = { x: 0, y: 0 };
+let debutGeste = null;
+let clicDeplace = false;
+
+function positionneInfobulle(x, y) {
+  const marge = 10;
+  const rect = infobulle.getBoundingClientRect();
+  let gauche = x + 14;
+  let haut = y + 10;
+  if (gauche + rect.width > innerWidth - marge) gauche = x - rect.width - 14;
+  if (haut + rect.height > innerHeight - marge) haut = y - rect.height - 10;
+  infobulle.style.left = `${Math.max(marge, gauche)}px`;
+  infobulle.style.top = `${Math.max(marge, haut)}px`;
+}
+
+canvas.addEventListener('pointerdown', (e) => {
+  debutGeste = { id: e.pointerId, x: e.clientX, y: e.clientY };
+  clicDeplace = false;
+});
 
 canvas.addEventListener('pointermove', (e) => {
   pointeur.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
-  infobulle.style.left = `${e.clientX + 14}px`;
-  infobulle.style.top = `${e.clientY + 10}px`;
+  positionPointeur = { x: e.clientX, y: e.clientY };
+  if (debutGeste?.id === e.pointerId
+    && Math.hypot(e.clientX - debutGeste.x, e.clientY - debutGeste.y) > 7) {
+    clicDeplace = true;
+  }
+  if (!infobulle.hidden) positionneInfobulle(e.clientX, e.clientY);
+});
+
+canvas.addEventListener('pointercancel', () => { debutGeste = null; });
+canvas.addEventListener('pointerleave', () => {
+  debutGeste = null;
+  pointeur.set(-2, -2);
+  escaleSurvolee = null;
+  route.regleSurvol(-1);
+  infobulle.hidden = true;
+  canvas.style.cursor = '';
 });
 
 canvas.addEventListener('click', (e) => {
+  debutGeste = null;
+  if (clicDeplace) {
+    clicDeplace = false;
+    return;
+  }
   pointeur.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
   chercheSurvol(); // le survol throttlé peut être périmé au moment du clic
   if (escaleSurvolee?.date_arrivee) {
@@ -222,7 +438,7 @@ const formatCourt = new Intl.DateTimeFormat('fr-FR', {
 function chercheSurvol() {
   raycaster.setFromCamera(pointeur, camera);
   const hits = raycaster.intersectObject(route.cibles);
-  const hit = hits.find(h => h.instanceId !== undefined);
+  const hit = hits.find(h => h.instanceId !== undefined && route.estVisible(h.instanceId));
   escaleSurvolee = hit ? route.escales[hit.instanceId] : null;
   route.regleSurvol(hit ? hit.instanceId : -1);
   if (escaleSurvolee) {
@@ -235,6 +451,7 @@ function chercheSurvol() {
       : formatCourt.format(new Date(e.date_arrivee));
     infobulle.innerHTML = `${e.nom}<span class="dates">${dates} · ${e.log_nm} nm au log</span>`;
     infobulle.hidden = false;
+    positionneInfobulle(positionPointeur.x, positionPointeur.y);
     canvas.style.cursor = 'pointer';
   } else {
     infobulle.hidden = true;
@@ -258,24 +475,74 @@ addEventListener('wheel', (e) => {
 // — boucle de rendu —
 function redimensionne() {
   const w = innerWidth, h = innerHeight;
+  const distanceAvant = camera.position.length();
+  renderer.setPixelRatio(ratioPixelsCible());
   renderer.setSize(w, h, false);
   camera.aspect = w / h;
   camera.updateProjectionMatrix();
   route.surResize(w, h);
+  const nouvelAccueil = distanceAccueilPourViewport();
+  if (intro >= 1 && !timeline.enLecture && !plongee.enVol && !plongee.ouverte
+    && Math.abs(distanceAvant - derniereDistanceAccueil) < 0.65) {
+    camera.position.setLength(nouvelAccueil);
+  }
+  derniereDistanceAccueil = nouvelAccueil;
 }
 addEventListener('resize', redimensionne);
 redimensionne();
 
+const boiteBateau = new THREE.Box3();
+const coinBateau = new THREE.Vector3();
+function rectangleEcranBateau() {
+  bateau.conteneur.updateWorldMatrix(true, true);
+  boiteBateau.setFromObject(bateau.conteneur, true);
+  let gauche = Infinity, droite = -Infinity, haut = Infinity, bas = -Infinity;
+  for (const x of [boiteBateau.min.x, boiteBateau.max.x]) {
+    for (const y of [boiteBateau.min.y, boiteBateau.max.y]) {
+      for (const z of [boiteBateau.min.z, boiteBateau.max.z]) {
+        coinBateau.set(x, y, z).project(camera);
+        const px = (coinBateau.x * 0.5 + 0.5) * innerWidth;
+        const py = (-coinBateau.y * 0.5 + 0.5) * innerHeight;
+        gauche = Math.min(gauche, px);
+        droite = Math.max(droite, px);
+        haut = Math.min(haut, py);
+        bas = Math.max(bas, py);
+      }
+    }
+  }
+  return Object.fromEntries(Object.entries({ gauche, droite, haut, bas })
+    .map(([cle, valeur]) => [cle, Number(valeur.toFixed(1))]));
+}
+
 // poignée de débogage (capture.mjs, console)
 window.__sillage = {
   camera, controls, timeline, voyage, bateau, plongee, route, recit, etoiles,
-  sauteIntro() { intro = 1; },
+  etiquettes, coton, renderer,
+  sauteIntro() {
+    intro = 1;
+    const accueil = distanceAccueilPourViewport();
+    if (camera.position.length() > accueil + 0.5) camera.position.setLength(accueil);
+  },
+  etatComposition() {
+    return {
+      viewport: { largeur: innerWidth, hauteur: innerHeight, dpr: devicePixelRatio },
+      camera: { distance: camera.position.length(), accueil: distanceAccueilPourViewport() },
+      chronologie: {
+        instant: timeline.t,
+        libelle: voyage.segmentA(timeline.t).libelle,
+      },
+      bateau: { rectangle: rectangleEcranBateau() },
+      etiquettes: etiquettes.etat(),
+      route: route.etat(),
+      nuages: coton.etat(),
+      rendu: { ...renderer.info.render },
+    };
+  },
 };
 
 const horloge = new THREE.Clock();
 let accumulateurSurvol = 0;
 let lectureAvant = false;
-const DISTANCE_TRAVERSEE = 2.5;
 
 document.body.classList.add('pret'); // l'interface peut entrer en scène
 
@@ -294,7 +561,8 @@ renderer.setAnimationLoop(() => {
   if (intro < 1 && !plongee.enVol && !timeline.enLecture) {
     intro = Math.min(1, intro + dt / 3.2);
     const f = 1 - Math.pow(1 - intro, 3);
-    camera.position.setLength(THREE.MathUtils.lerp(7.5, DISTANCE_ACCUEIL, f));
+    const accueil = distanceAccueilPourViewport();
+    camera.position.setLength(THREE.MathUtils.lerp(Math.max(8.5, accueil + 2.2), accueil, f));
   }
 
   // la rotation s'adoucit quand on est près du sol (sinon chaque
@@ -304,8 +572,10 @@ renderer.setAnimationLoop(() => {
   controls.zoomSpeed = THREE.MathUtils.clamp((distance - 1) / 1.6, 0.25, 1);
 
   if (!plongee.enVol && !plongee.ouverte && intro >= 1) {
-    const cible = recit.actif ? recit.distanceCamera
-      : timeline.enLecture ? DISTANCE_TRAVERSEE : null;
+    const compact = innerWidth < 700 || innerHeight < 520;
+    const minimumRecit = distanceAccueilPourViewport() * (compact ? 0.72 : 0.58);
+    const cible = recit.actif ? Math.max(recit.distanceCamera, minimumRecit)
+      : timeline.enLecture ? distanceTraverseePourViewport() : null;
     if (cible !== null) {
       camera.position.setLength(
         THREE.MathUtils.lerp(distance, cible, Math.min(1, dt * 2)));
@@ -313,10 +583,12 @@ renderer.setAnimationLoop(() => {
   }
 
   globe.anime(dt);
-  coton.anime(dt, horloge.elapsedTime, camera);
-  etiquettes.anime(camera);
-  route.orientePerles(camera, horloge.elapsedTime);
-  bateau.anime(horloge.elapsedTime, camera);
+  coton.anime(dt, mouvementReduit ? 0 : horloge.elapsedTime, camera, !mouvementReduit);
+  bateau.anime(mouvementReduit ? 0 : horloge.elapsedTime, camera);
+  etiquettes.anime(camera, bateau.conteneur.position,
+    voyage.segmentA(timeline.t).libelle, rectangleEcranBateau(), dt);
+  route.orientePerles(camera, mouvementReduit ? 0 : horloge.elapsedTime,
+    etiquettes.etat().etiquettes);
 
   accumulateurSurvol += dt;
   if (accumulateurSurvol > 0.08 && !plongee.enVol) { // raycast décimé
@@ -327,3 +599,4 @@ renderer.setAnimationLoop(() => {
   controls.update();
   renderer.render(scene, camera);
 });
+}

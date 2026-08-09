@@ -25,9 +25,11 @@ export function creerTimeline(voyage) {
     const f = (t - voyage.debut) / duree;
     curseur.value = f;
     curseur.parentElement.style.setProperty('--avancement', `${f * 100}%`);
-    labelDate.textContent = formatDate.format(new Date(t));
+    const dateLisible = formatDate.format(new Date(t));
+    labelDate.textContent = dateLisible;
     const s = voyage.segmentA(t);
     labelLieu.textContent = s.libelle;
+    curseur.setAttribute('aria-valuetext', `${dateLisible} — ${s.libelle}`);
     for (const fn of auditeurs) fn(t);
   }
 
@@ -41,7 +43,10 @@ export function creerTimeline(voyage) {
     enLecture = active ?? !enLecture;
     boutonLecture.classList.toggle('en-lecture', enLecture);
     boutonLecture.title = enLecture ? 'Jeter l’ancre' : 'Larguer les amarres';
-    boutonLecture.setAttribute('aria-label', boutonLecture.title);
+    boutonLecture.setAttribute('aria-label', enLecture
+      ? 'Mettre la lecture du voyage en pause'
+      : 'Lancer la lecture du voyage');
+    boutonLecture.setAttribute('aria-pressed', String(enLecture));
   }
 
   curseur.addEventListener('input', () => {

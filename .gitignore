@@ -7,6 +7,8 @@ __pycache__/
 *.pyc
 node_modules/
 dist/
+site/test-results/
+site/playwright-report/
 # copies générées par « npm run sync-data » depuis ../data
 site/public/data/
 /package-lock.json

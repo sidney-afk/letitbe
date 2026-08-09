@@ -1,27 +1,33 @@
 // Capture d'écran du site pour vérification visuelle (dev uniquement).
 // Usage : node capture.mjs <url> <sortie.png> [attente_ms] [actions]
 //   actions: "play" lance la lecture avant capture
-import { chromium } from 'playwright-core';
-import { globSync } from 'node:fs';
+import { chromium } from '@playwright/test';
+import path from 'node:path';
 
-const [url = 'http://localhost:4173/', sortie = '/tmp/capture.png',
+const [url = 'http://localhost:4173/', sortie = path.resolve('capture.png'),
   attente = '4000', action = ''] = process.argv.slice(2);
 
-// le binaire change de nom/version selon l'environnement : on le cherche
-const candidats = [
-  ...globSync('/opt/pw-browsers/chromium_headless_shell-*/chrome-*/{chrome-headless-shell,headless_shell}'),
-  ...globSync('/opt/pw-browsers/chromium-*/chrome-linux/chrome'),
-];
-if (!candidats.length) throw new Error('aucun Chromium trouvé sous /opt/pw-browsers');
+const viewport = action.match(/viewport=(\d+)x(\d+)/);
+const taille = viewport
+  ? { width: Number(viewport[1]), height: Number(viewport[2]) }
+  : { width: 1440, height: 900 };
 
 const navigateur = await chromium.launch({
-  executablePath: candidats[0],
-  args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--no-sandbox'],
+  args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader'],
 });
-const page = await navigateur.newPage({ viewport: { width: 1440, height: 900 } });
+const page = await navigateur.newPage({
+  viewport: taille,
+  colorScheme: 'light',
+  locale: 'fr-FR',
+  timezoneId: 'UTC',
+  reducedMotion: 'reduce',
+});
 page.on('console', m => console.log('[console]', m.type(), m.text()));
 page.on('pageerror', e => console.log('[pageerror]', e.message));
-await page.goto(url, { waitUntil: 'networkidle' });
+await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 60_000 });
+await page.waitForFunction(() => document.body.classList.contains('pret')
+  && window.__sillage?.camera
+  && window.__sillage?.timeline, null, { timeout: 60_000 });
 
 if (action && !action.includes('intro')) {
   await page.evaluate(() => window.__sillage.sauteIntro?.());
@@ -48,7 +54,7 @@ if (plonge) {
 const regarde = action.match(/regarde=(-?[\d.]+),(-?[\d.]+)/);
 if (regarde) {
   // sinon le suivi du bateau reprend la caméra ({force : l'UI peut animer})
-  await page.click('#suivre', { force: true });
+  await page.evaluate(() => document.getElementById('suivre')?.click());
   await page.evaluate(([lat, lon]) => {
     const { camera } = window.__sillage;
     const d = camera.position.length();
