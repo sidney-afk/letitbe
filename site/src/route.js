@@ -45,18 +45,36 @@ function materiauPointilles(couleur, bordure, taillePx, opacite) {
       bordure: { value: new THREE.Color(bordure) },
       taille: { value: taillePx * Math.min(devicePixelRatio, 2) },
       opacite: { value: opacite },
+      pas: { value: 1 },
+      nombreMasques: { value: 0 },
+      masques: { value: Array.from({ length: 10 }, () => new THREE.Vector4(2, 2, 2, 2)) },
     },
     vertexShader: /* glsl */`
       uniform float taille;
+      uniform float pas;
+      uniform float nombreMasques;
+      uniform vec4 masques[10];
+      attribute float indice;
+      varying float vVisible;
       void main() {
-        gl_PointSize = taille;
+        vVisible = mod(indice, pas) < 0.5 ? 1.0 : 0.0;
         gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        vec2 ndc = gl_Position.xy / gl_Position.w;
+        for (int i = 0; i < 10; i++) {
+          if (float(i) >= nombreMasques) break;
+          vec4 zone = masques[i];
+          if (ndc.x >= zone.x && ndc.x <= zone.y
+              && ndc.y >= zone.z && ndc.y <= zone.w) vVisible = 0.0;
+        }
+        gl_PointSize = vVisible > 0.5 ? taille : 1.0;
       }`,
     fragmentShader: /* glsl */`
       uniform vec3 couleur;
       uniform vec3 bordure;
       uniform float opacite;
+      varying float vVisible;
       void main() {
+        if (vVisible < 0.5) discard;
         float d = length(gl_PointCoord - 0.5);
         float a = smoothstep(0.5, 0.42, d); // rond doux, bord fondu
         if (a < 0.01) discard;
@@ -96,9 +114,12 @@ export function creerRoute(voyage, routeData, relief) {
   const groupe = new THREE.Group();
   const { points, temps } = echantillonne(voyage, relief);
   const positions = new Float32Array(points.length * 3);
+  const indices = new Float32Array(points.length);
   points.forEach((p, i) => positions.set([p.x, p.y, p.z], i * 3));
+  points.forEach((_, i) => { indices[i] = i; });
   const geoPoints = new THREE.BufferGeometry();
   geoPoints.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geoPoints.setAttribute('indice', new THREE.BufferAttribute(indices, 1));
 
   const matSillage = materiauPointilles(0xf2a035, 0xcf831f, 14, 0.96);
   const matFutur = materiauPointilles(0xfdf8ec, 0xd9c08e, 8, 0.72);
@@ -151,21 +172,103 @@ export function creerRoute(voyage, routeData, relief) {
   const q = new THREE.Quaternion();
   const versCamera = new THREE.Vector3();
   const echelle = new THREE.Vector3();
+  const projete = new THREE.Vector3();
+  const dansCamera = new THREE.Vector3();
+  const directionCamera = new THREE.Vector3();
+  const normale = new THREE.Vector3();
   const Z = new THREE.Vector3(0, 0, 1);
-  function orientePerles(camera, tempsS = 0) {
-    // ~24 px à l'écran quelle que soit la distance, anneaux face caméra,
-    // une respiration lente : la carte est vivante
+  const marqueursAffiches = new Uint8Array(escales.length);
+  let dernierEtat = { marqueursVisibles: 0, marqueursTotal: escales.length, pasRoute: 1 };
+  function orientePerles(camera, tempsS = 0, etiquettes = []) {
     const d = camera.position.length();
-    const s = THREE.MathUtils.clamp((d - 1) * 0.0085, 0.0005, 0.022);
+    const largeur = Math.max(1, innerWidth);
+    const hauteur = Math.max(1, innerHeight);
+    const compact = largeur < 700 || hauteur < 520;
+    const recitActif = document.body.classList.contains('recit-actif');
+    const zonesEtiquettes = etiquettes
+      .filter(etiquette => etiquette.affichee && etiquette.rectangle)
+      .map(etiquette => etiquette.rectangle);
+    for (const materiau of [matSillage, matFutur]) {
+      materiau.uniforms.nombreMasques.value = Math.min(10, zonesEtiquettes.length);
+      materiau.uniforms.masques.value.forEach((masque, index) => {
+        const rectangle = zonesEtiquettes[index];
+        if (!rectangle) {
+          masque.set(2, 2, 2, 2);
+          return;
+        }
+        const marge = compact ? 3 : 4;
+        masque.set(
+          (rectangle.gauche - marge) / largeur * 2 - 1,
+          (rectangle.droite + marge) / largeur * 2 - 1,
+          1 - (rectangle.bas + marge) / hauteur * 2,
+          1 - (rectangle.haut - marge) / hauteur * 2,
+        );
+      });
+    }
+    const pasRoute = d > 6 ? 4 : d > 3.1 ? (compact ? 3 : 2) : 1;
+    const ratioPixels = Math.min(devicePixelRatio, compact ? 1.5 : 2);
+    const tailleRoute = (compact ? 6.5 : 8.5) * ratioPixels * (recitActif ? 0.72 : 1);
+    matSillage.uniforms.pas.value = pasRoute;
+    matFutur.uniforms.pas.value = pasRoute;
+    matSillage.uniforms.taille.value = tailleRoute;
+    matFutur.uniforms.taille.value = tailleRoute * 0.78;
+    matSillage.uniforms.opacite.value = (compact ? 0.78 : 0.9) * (recitActif ? 0.58 : 1);
+    matFutur.uniforms.opacite.value = (compact ? 0.48 : 0.62) * (recitActif ? 0.52 : 1);
+
+    directionCamera.copy(camera.position).normalize();
+    const centres = [];
+    const marqueurs = [];
+    const espacement = d < 2 ? 15 : compact ? 25 : 28;
+    let visibles = 0;
     positionsPerles.forEach((p, i) => {
+      projete.copy(p).project(camera);
+      dansCamera.copy(p).applyMatrix4(camera.matrixWorldInverse);
+      const profondeur = Math.max(0.04, -dansCamera.z);
+      const frontal = normale.copy(p).normalize().dot(directionCamera);
+      const seuilHorizon = Math.min(0.9, 1.025 / Math.max(d, 1.05) + 0.02);
+      const x = (projete.x * 0.5 + 0.5) * largeur;
+      const y = (-projete.y * 0.5 + 0.5) * hauteur;
+      const dansChamp = projete.z > -1 && projete.z < 1
+        && x > 8 && x < largeur - 8 && y > 8 && y < hauteur - 8;
+      const groupeExistant = centres.some(c => Math.hypot(c.x - x, c.y - y) < espacement);
+      // Keep a little more room than the QA probe so sub-pixel projection
+      // rounding cannot leave a ring touching the last row of label pixels.
+      const margeEtiquette = compact ? 7 : 9;
+      const sousEtiquette = zonesEtiquettes.some(rectangle =>
+        x >= rectangle.gauche - margeEtiquette
+        && x <= rectangle.droite + margeEtiquette
+        && y >= rectangle.haut - margeEtiquette
+        && y <= rectangle.bas + margeEtiquette);
+      const affiche = frontal > seuilHorizon && dansChamp
+        && !groupeExistant && !sousEtiquette;
+      marqueursAffiches[i] = affiche ? 1 : 0;
+      if (affiche) {
+        centres.push({ x, y });
+        visibles++;
+      }
+      marqueurs.push({
+        index: i,
+        nom: escales[i].nom,
+        date: escales[i].date_arrivee,
+        x: Number(x.toFixed(1)),
+        y: Number(y.toFixed(1)),
+        visible: affiche,
+      });
+
       const vie = 1 + 0.06 * Math.sin(tempsS * 1.8 + i * 1.7);
       const survole = i === indexSurvol ? 1.35 : 1;
-      echelle.setScalar(s * vie * survole);
+      const unitesParPixel = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5))
+        * profondeur / hauteur;
+      const taillePx = (compact ? 11 : 14) * (recitActif ? 0.78 : 1);
+      const s = affiche ? unitesParPixel * taillePx / 2.55 * vie * survole : 0;
+      echelle.setScalar(s);
       versCamera.copy(camera.position).sub(p).normalize();
       q.setFromUnitVectors(Z, versCamera);
       m.compose(p, q, echelle);
       anneaux.setMatrixAt(i, m);
       coeurs.setMatrixAt(i, m);
+      echelle.multiplyScalar(affiche ? 1.2 : 0);
+      m.compose(p, q, echelle);
       cibles.setMatrixAt(i, m);
     });
     anneaux.instanceMatrix.needsUpdate = true;
@@ -173,6 +276,13 @@ export function creerRoute(voyage, routeData, relief) {
     cibles.instanceMatrix.needsUpdate = true;
     const sx = THREE.MathUtils.clamp((d - 1) * 0.030, 0.002, 0.075);
     croix.scale.setScalar(sx);
+    dernierEtat = {
+      marqueursVisibles: visibles,
+      marqueursTotal: escales.length,
+      pasRoute,
+      tailleRoutePx: Number((tailleRoute / ratioPixels).toFixed(1)),
+      marqueurs,
+    };
   }
 
   function metAJourTemps(t) {
@@ -207,5 +317,7 @@ export function creerRoute(voyage, routeData, relief) {
     groupe, metAJourTemps, surResize, regleMode, orientePerles,
     cibles, escales,
     regleSurvol(i) { indexSurvol = i; },
+    estVisible(i) { return marqueursAffiches[i] === 1; },
+    etat() { return { ...dernierEtat }; },
   };
 }

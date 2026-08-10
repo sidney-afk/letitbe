@@ -99,6 +99,14 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
   let actif = false;
   let chapitreAffiche = null;
 
+  function nommeBouton() {
+    const action = actif ? 'Quitter le récit' : 'Embarquer dans le récit';
+    bouton.querySelector('span').textContent = action;
+    bouton.setAttribute('aria-label', action);
+    bouton.setAttribute('aria-expanded', String(actif));
+    bouton.title = action;
+  }
+
   function chapitreA(t) {
     if (t >= voyage.fin - 2 * JOUR_MS) return ['__epilogue__', EPILOGUE];
     const e = voyage.segmentA(t)?.escale;
@@ -138,7 +146,7 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
   function entre() {
     actif = true;
     document.body.classList.add('recit-actif');
-    bouton.querySelector('span').textContent = 'Quitter le récit';
+    nommeBouton();
     chapitreAffiche = null;
     regleSuivi(true);
     applique(timeline.t);
@@ -149,13 +157,20 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
   function sort() {
     actif = false;
     document.body.classList.remove('recit-actif');
-    bouton.querySelector('span').textContent = 'Embarquer dans le récit';
+    nommeBouton();
     carte.classList.remove('visible');
     chapitreAffiche = null;
     aide.hidden = true;
   }
 
   bouton.addEventListener('click', () => (actif ? sort() : entre()));
+  addEventListener('keydown', (e) => {
+    if (!actif || e.key !== 'Escape') return;
+    e.preventDefault();
+    sort();
+    bouton.focus({ preventScroll: true });
+  });
+  nommeBouton();
   timeline.surChangement(applique);
 
   return {

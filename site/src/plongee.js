@@ -5,7 +5,7 @@
 import * as THREE from 'three';
 import { latLonVers3D } from './geo.js';
 
-const DISTANCE_PLONGEE = 1.026;  // ≈ 165 km : la vue aérienne HD emplit l'écran
+const DISTANCE_PLONGEE = 1.014;  // cadrage rapproché : le mouillage reste le sujet face au journal
 const DISTANCE_ORBITE = 3.0;
 const DUREE_VOL_S = 2.6;
 
@@ -25,9 +25,50 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = lightbox.querySelector('img');
   const lightboxLegende = lightbox.querySelector('figcaption');
+  const boutonFermerLightbox = document.getElementById('lightbox-fermer');
 
   let vol = null; // { t, depart:{dir,dist}, arrivee:{dir,dist}, alOuverture }
   let ouverte = false;
+  let focusAvantPlongee = null;
+  let focusAvantLightbox = null;
+
+  const elementsFocusables = conteneur => [...conteneur.querySelectorAll(
+    'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), '
+    + 'textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')]
+    .filter(element => !element.hidden && getComputedStyle(element).display !== 'none');
+
+  function gardeFocus(e, conteneur) {
+    if (e.key !== 'Tab') return;
+    const elements = elementsFocusables(conteneur);
+    if (!elements.length) return;
+    const premier = elements[0];
+    const dernier = elements[elements.length - 1];
+    if (e.shiftKey && document.activeElement === premier) {
+      e.preventDefault();
+      dernier.focus();
+    } else if (!e.shiftKey && document.activeElement === dernier) {
+      e.preventDefault();
+      premier.focus();
+    }
+  }
+
+  function ouvreLightbox(src, legende, declencheur) {
+    focusAvantLightbox = declencheur ?? document.activeElement;
+    lightboxImg.src = src;
+    lightboxImg.alt = legende || 'Photographie du carnet de bord';
+    lightboxLegende.textContent = legende || '';
+    lightbox.hidden = false;
+    requestAnimationFrame(() => boutonFermerLightbox?.focus({ preventScroll: true }));
+  }
+
+  function fermeLightbox() {
+    if (lightbox.hidden) return;
+    lightbox.hidden = true;
+    lightboxImg.removeAttribute('src');
+    const cible = focusAvantLightbox;
+    focusAvantLightbox = null;
+    if (cible?.isConnected) requestAnimationFrame(() => cible.focus({ preventScroll: true }));
+  }
 
   // — vue aérienne haute définition du mouillage (préchargée au build : on
   // connaît d'avance tous les endroits cliquables — idée de Sidney) —
@@ -188,12 +229,13 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
         img.src = `./media/${im.src.replace(/\.[a-z]+$/i, '.webp')}`;
         img.alt = im.legende || a.titre;
         img.addEventListener('error', () => fig.remove());
-        img.addEventListener('click', () => {
-          lightboxImg.src = img.src;
-          lightboxLegende.textContent = im.legende;
-          lightbox.hidden = false;
-        });
-        fig.append(img);
+        const ouvrirImage = document.createElement('button');
+        ouvrirImage.type = 'button';
+        ouvrirImage.className = 'photo-ouvrir';
+        ouvrirImage.setAttribute('aria-label', `Agrandir la photo${im.legende ? ` : ${im.legende}` : ''}`);
+        ouvrirImage.addEventListener('click', () => ouvreLightbox(img.src, im.legende, ouvrirImage));
+        ouvrirImage.append(img);
+        fig.append(ouvrirImage);
         if (im.legende) {
           const cap = document.createElement('figcaption');
           cap.textContent = im.legende;
@@ -206,10 +248,11 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
   }
 
   function vers(escale) {
+    focusAvantPlongee = document.activeElement;
     panneau.hidden = true;
     const complet = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`) ?? escale;
     timeline.vaA(new Date(escale.date_arrivee + 'T12:00:00Z').getTime(), true);
-    controls.minDistance = 1.014;
+    controls.minDistance = 1.012;
     montreVueAerienne(complet);
     lanceVol(latLonVers3D(complet.lat, complet.lon, 1), DISTANCE_PLONGEE, () => {
       rempli(complet);
@@ -217,11 +260,13 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
       document.body.classList.add('plongee-ouverte');
       flux.scrollTop = 0;
       ouverte = true;
+      boutonRemonter.focus({ preventScroll: true });
     });
   }
 
   function remonte() {
     if (vol) return;
+    fermeLightbox();
     panneau.hidden = true;
     document.body.classList.remove('plongee-ouverte');
     ouverte = false;
@@ -229,16 +274,31 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     lanceVol(camera.position.clone().normalize(), DISTANCE_ORBITE, () => {
       controls.minDistance = 1.25;
       regleSuivi(true); // on reprend la route en suivant le bateau
+      const cible = focusAvantPlongee?.isConnected && focusAvantPlongee !== document.body
+        ? focusAvantPlongee : document.querySelector('#navigation-escales summary, #recit-bouton');
+      focusAvantPlongee = null;
+      cible?.focus({ preventScroll: true });
     });
   }
 
   boutonRemonter.addEventListener('click', remonte);
   addEventListener('keydown', (e) => {
-    if (e.key !== 'Escape') return;
-    if (!lightbox.hidden) lightbox.hidden = true;
-    else if (ouverte) remonte();
+    if (!lightbox.hidden) {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        fermeLightbox();
+      } else gardeFocus(e, lightbox);
+      return;
+    }
+    if (ouverte && e.key === 'Escape') {
+      e.preventDefault();
+      remonte();
+    } else if (ouverte) gardeFocus(e, panneau);
   });
-  lightbox.addEventListener('click', () => { lightbox.hidden = true; });
+  boutonFermerLightbox?.addEventListener('click', fermeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) fermeLightbox();
+  });
 
   return {
     vers,

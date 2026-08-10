@@ -1,0 +1,4 @@
+interface:
+  display_name: "Let It Be Polish"
+  short_description: "Evidence-led polish for Le Sillage"
+  default_prompt: "Use $letitbe-polish to audit this Le Sillage state and verify any polish with matching before-and-after evidence."
