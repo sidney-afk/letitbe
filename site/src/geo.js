@@ -82,13 +82,17 @@ export function construireVoyage(route) {
   const debut = seg[0].t0;
   const fin = seg[seg.length - 1].t1;
 
-  function segmentA(t) {
+  function indiceSegment(t) {
     let lo = 0, hi = seg.length - 1;
     while (lo < hi) {
       const mi = (lo + hi + 1) >> 1;
       if (seg[mi].t0 <= t) lo = mi; else hi = mi - 1;
     }
-    return seg[lo];
+    return lo;
+  }
+
+  function segmentA(t) {
+    return seg[indiceSegment(t)];
   }
 
   function position(t, rayon = RAYON) {
@@ -98,5 +102,46 @@ export function construireVoyage(route) {
     return slerpSurface(s.p0, s.p1, f, rayon);
   }
 
-  return { segments: seg, debut, fin, position, segmentA };
+  // Cap stable et déterministe pour le bateau. Aux mouillages, où p0 = p1,
+  // on prend le prochain tronçon qui bouge (ou le dernier connu à l'arrivée)
+  // plutôt que de dépendre du sens de lecture précédent de la timeline.
+  function tangent(t, rayon = RAYON) {
+    t = THREE.MathUtils.clamp(t, debut, fin);
+    const index = indiceSegment(t);
+    const normal = position(t, rayon).normalize();
+    const direction = new THREE.Vector3();
+
+    function capDuSegment(i) {
+      if (i < 0 || i >= seg.length) return false;
+      direction.copy(seg[i].p1).sub(seg[i].p0);
+      direction.addScaledVector(normal, -direction.dot(normal));
+      return direction.lengthSq() > 1e-12;
+    }
+
+    if (!capDuSegment(index)) {
+      for (let i = index + 1; i < seg.length; i++) {
+        if (capDuSegment(i)) break;
+      }
+    }
+    if (direction.lengthSq() <= 1e-12) {
+      for (let i = index - 1; i >= 0; i--) {
+        if (capDuSegment(i)) break;
+      }
+    }
+    if (direction.lengthSq() <= 1e-12) {
+      // Route dégénérée : choisit l'axe monde le moins aligné avec la
+      // normale. Sa projection reste donc strictement tangente, y compris
+      // aux points exacts ±X du globe.
+      const ax = Math.abs(normal.x);
+      const ay = Math.abs(normal.y);
+      const az = Math.abs(normal.z);
+      if (ax <= ay && ax <= az) direction.set(1, 0, 0);
+      else if (ay <= az) direction.set(0, 1, 0);
+      else direction.set(0, 0, 1);
+      direction.addScaledVector(normal, -direction.dot(normal));
+    }
+    return direction.normalize();
+  }
+
+  return { segments: seg, debut, fin, position, tangent, segmentA };
 }

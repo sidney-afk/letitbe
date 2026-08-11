@@ -272,7 +272,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     ouverte = false;
     cacheVueAerienne();
     lanceVol(camera.position.clone().normalize(), DISTANCE_ORBITE, () => {
-      controls.minDistance = 1.25;
+      controls.minDistance = 2.1;
       regleSuivi(true); // on reprend la route en suivant le bateau
       const cible = focusAvantPlongee?.isConnected && focusAvantPlongee !== document.body
         ? focusAvantPlongee : document.querySelector('#navigation-escales summary, #recit-bouton');
