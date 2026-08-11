@@ -11,6 +11,11 @@ const texLoader = new THREE.TextureLoader();
 function charge(url, espace = THREE.SRGBColorSpace) {
   const t = texLoader.load(url);
   t.colorSpace = espace;
+  // Les cartes équirectangulaires rejoignent leurs bords gauche/droit sur le
+  // méridien 180°. Sans répétition horizontale, les deux colonnes de la
+  // géométrie UV lisent chacune un bord « clampé » différent et dessinent une
+  // couture verticale dans le Pacifique.
+  t.wrapS = THREE.RepeatWrapping;
   t.anisotropy = 8;
   return t;
 }
@@ -87,27 +92,30 @@ export function creerGlobe(relief) {
       void main() {
         vec3 n = normalize(vNormaleM);
         vec3 tex = texture2D(carteCarnet, vUv).rgb;
+        // La carte spéculaire est blanche au large et noire sur les terres.
+        // Un seuil doux garde les côtes propres sans faire suivre l'océan au
+        // soleil directionnel.
         float mer = texture2D(carteSpec, vUv).r;
+        float ocean = smoothstep(0.35, 0.70, mer);
 
         float ndl = dot(n, dirSoleil) * 0.5 + 0.5; // demi-Lambert : pas de nuit
-        // trois bandes d'éclairage aux transitions douces, base claire
-        float bandes = 0.74
-          + 0.13 * smoothstep(0.30, 0.40, ndl)
-          + 0.21 * smoothstep(0.55, 0.68, ndl);
-        // l'eau ne prend pas d'ombre dure : elle reste laiteuse et lumineuse
-        bandes = mix(bandes, max(bandes, 0.97), mer);
-        vec3 couleur = tex * bandes * 1.32 * vec3(1.0, 0.98, 0.94);
-        // l'ombre est fraîche et bleutée, jamais sombre — et douce sur la mer
-        float ombre = smoothstep(0.18, 0.52, ndl);
-        couleur = mix(couleur * mix(vec3(0.85, 0.91, 1.08), vec3(0.96, 0.98, 1.04), mer),
-                      couleur, ombre);
-        couleur *= mix(1.0, 1.07, mer); // la mer, toujours un ton plus claire
+        // Une seule rampe de soleil, continue autour de la sphère. Les anciens
+        // paliers de cel shading dessinaient une bande verticale visible dans
+        // le Pacifique lorsque le soleil changeait de longitude.
+        float lumiereDouce = smoothstep(0.0, 1.0, ndl);
+        float eclairageTerre = mix(0.82, 1.10, lumiereDouce);
+        vec3 terre = tex * eclairageTerre * 1.32 * vec3(1.0, 0.98, 0.94);
+        // Les reliefs gardent une ombre fraîche, suivant la même transition
+        // continue que le soleil pour rester sculptés sans paliers visibles.
+        terre *= mix(vec3(0.87, 0.92, 1.07), vec3(1.0), lumiereDouce);
 
-        // un reflet de soleil très doux sur l'eau, crème, façon gouache
+        // L'océan du Carnet est une encre stable : ses lagons, lavis et
+        // vaguelettes viennent déjà de la texture. Ne pas les moduler par le
+        // soleil supprime toute bande longitudinale, même à grande échelle.
+        vec3 eau = tex * 1.38 * vec3(1.0, 0.985, 0.97);
+        vec3 couleur = mix(terre, eau, ocean);
+
         vec3 versCam = normalize(cameraPosition - vPosM);
-        vec3 refl = reflect(-dirSoleil, n);
-        float eclat = pow(max(dot(refl, versCam), 0.0), 14.0) * mer;
-        couleur += vec3(1.0, 0.96, 0.84) * eclat * 0.16;
 
         // liseré de lumière crème sur le bord
         float bord = pow(1.0 - max(dot(n, versCam), 0.0), 2.4);

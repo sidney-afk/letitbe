@@ -1,22 +1,25 @@
-// Le sillage façon carte au trésor : un chemin de gros ronds d'or cerclés
-// d'encre — vécu en or, à venir en crème —, des mouillages marqués de
-// bagues d'or qui respirent, et un X rouge sang à l'arrivée : le trésor.
+// Le sillage façon carte au trésor : un trait d'or continu qui relie les
+// escales, des mouillages marqués de bagues d'or qui respirent, et un X rouge
+// sang à l'arrivée : le trésor.
 // Les proportions sont volontairement fausses : c'est le trajet qui compte.
 // Le chemin est drapé sur le relief : il escalade les côtes montagneuses.
 
 import * as THREE from 'three';
+import { Line2 } from 'three/addons/lines/Line2.js';
+import { LineGeometry } from 'three/addons/lines/LineGeometry.js';
+import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { RAYON, slerpSurface, latLonVers3D } from './geo.js';
 
 const ALTITUDE = RAYON * 1.0022;
-const PAS_RAD = THREE.MathUtils.degToRad(0.52); // un rond tous les ~58 km
+const PAS_RAD = THREE.MathUtils.degToRad(0.52); // un point de contrôle tous les ~58 km
+const GARDE_CROIX = RAYON * 0.009;
 
 /**
- * Échantillonne la chronologie en un chapelet de points réguliers et
- * horodatés : la coupe au temps courant est un simple drawRange.
+ * Échantillonne l'itinéraire en points réguliers. La date reste associée aux
+ * escales et au bateau, tandis que le trait montre un seul voyage lisible.
  */
 function echantillonne(voyage, relief) {
   const points = [];
-  const temps = [];
   for (const s of voyage.segments) {
     const omega = s.p0.angleTo(s.p1);
     const n = Math.max(1, Math.ceil(omega / PAS_RAD));
@@ -26,64 +29,30 @@ function echantillonne(voyage, relief) {
       p.multiplyScalar(Math.max(ALTITUDE, relief.altitude(p, 0.0035)));
       const dernier = points[points.length - 1];
       if (dernier && dernier.distanceToSquared(p) < 1e-10) {
-        temps[temps.length - 1] = s.t0 + f * (s.t1 - s.t0);
         continue;
       }
       points.push(p);
-      temps.push(s.t0 + f * (s.t1 - s.t0));
     }
   }
-  return { points, temps };
+  return { points };
 }
 
-function materiauPointilles(couleur, bordure, taillePx, opacite) {
-  return new THREE.ShaderMaterial({
+function materiauLigne(couleur, epaisseurPx, opacite) {
+  return new LineMaterial({
+    color: couleur,
+    linewidth: epaisseurPx * Math.min(devicePixelRatio, 2),
     transparent: true,
+    opacity: opacite,
     depthWrite: false,
-    uniforms: {
-      couleur: { value: new THREE.Color(couleur) },
-      bordure: { value: new THREE.Color(bordure) },
-      taille: { value: taillePx * Math.min(devicePixelRatio, 2) },
-      opacite: { value: opacite },
-      pas: { value: 1 },
-      nombreMasques: { value: 0 },
-      masques: { value: Array.from({ length: 10 }, () => new THREE.Vector4(2, 2, 2, 2)) },
-    },
-    vertexShader: /* glsl */`
-      uniform float taille;
-      uniform float pas;
-      uniform float nombreMasques;
-      uniform vec4 masques[10];
-      attribute float indice;
-      varying float vVisible;
-      void main() {
-        vVisible = mod(indice, pas) < 0.5 ? 1.0 : 0.0;
-        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        vec2 ndc = gl_Position.xy / gl_Position.w;
-        for (int i = 0; i < 10; i++) {
-          if (float(i) >= nombreMasques) break;
-          vec4 zone = masques[i];
-          if (ndc.x >= zone.x && ndc.x <= zone.y
-              && ndc.y >= zone.z && ndc.y <= zone.w) vVisible = 0.0;
-        }
-        gl_PointSize = vVisible > 0.5 ? taille : 1.0;
-      }`,
-    fragmentShader: /* glsl */`
-      uniform vec3 couleur;
-      uniform vec3 bordure;
-      uniform float opacite;
-      varying float vVisible;
-      void main() {
-        if (vVisible < 0.5) discard;
-        float d = length(gl_PointCoord - 0.5);
-        float a = smoothstep(0.5, 0.42, d); // rond doux, bord fondu
-        if (a < 0.01) discard;
-        // cœur plein, fin cerne à peine plus sombre : tamponné, jamais noir
-        // (les ronds se chevauchent de loin : un cerne foncé ferait corde)
-        vec3 c = mix(bordure, couleur, smoothstep(0.44, 0.34, d));
-        gl_FragColor = vec4(c, a * opacite);
-      }`,
   });
+}
+
+function creeLigne(positions, materiau) {
+  const geometrie = new LineGeometry();
+  geometrie.setPositions(positions);
+  const ligne = new Line2(geometrie, materiau);
+  ligne.computeLineDistances();
+  return ligne;
 }
 
 // le X du trésor, tracé à la main (deux croisillons irréguliers)
@@ -112,23 +81,17 @@ function textureX() {
 
 export function creerRoute(voyage, routeData, relief) {
   const groupe = new THREE.Group();
-  const { points, temps } = echantillonne(voyage, relief);
+  const { points } = echantillonne(voyage, relief);
   const positions = new Float32Array(points.length * 3);
-  const indices = new Float32Array(points.length);
   points.forEach((p, i) => positions.set([p.x, p.y, p.z], i * 3));
-  points.forEach((_, i) => { indices[i] = i; });
-  const geoPoints = new THREE.BufferGeometry();
-  geoPoints.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-  geoPoints.setAttribute('indice', new THREE.BufferAttribute(indices, 1));
 
-  const matSillage = materiauPointilles(0xf2a035, 0xcf831f, 14, 0.96);
-  const matFutur = materiauPointilles(0xfdf8ec, 0xd9c08e, 8, 0.72);
-
-  const sillage = new THREE.Points(geoPoints, matSillage);
-  const futur = new THREE.Points(geoPoints.clone(), matFutur);
-  sillage.renderOrder = 2;
-  futur.renderOrder = 1;
-  groupe.add(sillage, futur);
+  // Une seule trajectoire, épaisse et continue : aucune réplique pâle ne
+  // vient concurrencer la lecture de la route quand le globe tourne.
+  const matItineraire = materiauLigne(0xf2a035, 2.35, 0.9);
+  const itineraire = creeLigne(positions, matItineraire);
+  itineraire.name = 'route-itineraire';
+  itineraire.renderOrder = 2;
+  groupe.add(itineraire);
 
   // mouillages : bagues d'or à cœur crème, imposantes (carte au trésor),
   // avec une cible de clic invisible encore plus large
@@ -156,13 +119,18 @@ export function creerRoute(voyage, routeData, relief) {
   // un poil au large du dernier mouillage, pour que la figurine amarrée
   // ne le recouvre pas
   const arrivee = routeData[routeData.length - 1];
-  const croix = new THREE.Sprite(new THREE.SpriteMaterial({
+  const croix = new THREE.Mesh(new THREE.PlaneGeometry(1, 1), new THREE.MeshBasicMaterial({
     map: textureX(),
     transparent: true,
     depthWrite: false,
   }));
-  croix.position.copy(
-    latLonVers3D(arrivee.lat - 3.4, arrivee.lon - 4.6, RAYON * 1.004));
+  const directionCroix = latLonVers3D(arrivee.lat - 3.4, arrivee.lon - 4.6, 1);
+  const rayonCroix = Math.max(ALTITUDE, relief.altitude(directionCroix, 0.0035)) + GARDE_CROIX;
+  croix.position.copy(directionCroix).multiplyScalar(rayonCroix);
+  croix.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), directionCroix);
+  croix.name = 'route-destination-marker';
+  croix.userData.surfaceRadius = rayonCroix;
+  croix.userData.surfaceDirection = directionCroix.clone();
   croix.renderOrder = 3;
   groupe.add(croix);
 
@@ -188,32 +156,10 @@ export function creerRoute(voyage, routeData, relief) {
     const zonesEtiquettes = etiquettes
       .filter(etiquette => etiquette.affichee && etiquette.rectangle)
       .map(etiquette => etiquette.rectangle);
-    for (const materiau of [matSillage, matFutur]) {
-      materiau.uniforms.nombreMasques.value = Math.min(10, zonesEtiquettes.length);
-      materiau.uniforms.masques.value.forEach((masque, index) => {
-        const rectangle = zonesEtiquettes[index];
-        if (!rectangle) {
-          masque.set(2, 2, 2, 2);
-          return;
-        }
-        const marge = compact ? 3 : 4;
-        masque.set(
-          (rectangle.gauche - marge) / largeur * 2 - 1,
-          (rectangle.droite + marge) / largeur * 2 - 1,
-          1 - (rectangle.bas + marge) / hauteur * 2,
-          1 - (rectangle.haut - marge) / hauteur * 2,
-        );
-      });
-    }
-    const pasRoute = d > 6 ? 4 : d > 3.1 ? (compact ? 3 : 2) : 1;
     const ratioPixels = Math.min(devicePixelRatio, compact ? 1.5 : 2);
-    const tailleRoute = (compact ? 6.5 : 8.5) * ratioPixels * (recitActif ? 0.72 : 1);
-    matSillage.uniforms.pas.value = pasRoute;
-    matFutur.uniforms.pas.value = pasRoute;
-    matSillage.uniforms.taille.value = tailleRoute;
-    matFutur.uniforms.taille.value = tailleRoute * 0.78;
-    matSillage.uniforms.opacite.value = (compact ? 0.78 : 0.9) * (recitActif ? 0.58 : 1);
-    matFutur.uniforms.opacite.value = (compact ? 0.48 : 0.62) * (recitActif ? 0.52 : 1);
+    const epaisseurRoute = (compact ? 1.85 : 2.35) * ratioPixels * (recitActif ? 0.78 : 1);
+    matItineraire.linewidth = epaisseurRoute;
+    matItineraire.opacity = (compact ? 0.78 : 0.9) * (recitActif ? 0.58 : 1);
 
     directionCamera.copy(camera.position).normalize();
     const centres = [];
@@ -274,40 +220,53 @@ export function creerRoute(voyage, routeData, relief) {
     anneaux.instanceMatrix.needsUpdate = true;
     coeurs.instanceMatrix.needsUpdate = true;
     cibles.instanceMatrix.needsUpdate = true;
-    const sx = THREE.MathUtils.clamp((d - 1) * 0.030, 0.002, 0.075);
-    croix.scale.setScalar(sx);
+
+    // Le X est une petite décalcomanie tangentielle posée au-dessus du relief,
+    // puis disparaît un peu avant la silhouette du globe. Il reste donc bien
+    // ancré en 3D sans être découpé par l'horizon.
+    dansCamera.copy(croix.position).applyMatrix4(camera.matrixWorldInverse);
+    const profondeurCroix = Math.max(0.04, -dansCamera.z);
+    const tailleCroixPx = (compact ? 21 : 25) * (recitActif ? 0.8 : 1);
+    const unitesParPixelCroix = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5))
+      * profondeurCroix / hauteur;
+    const echelleCroix = unitesParPixelCroix * tailleCroixPx;
+    croix.scale.setScalar(echelleCroix);
+    normale.copy(croix.position).normalize();
+    const frontalCroix = normale.dot(directionCamera);
+    // Le seuil tient compte du rayon réel de ce point du relief, pas du
+    // rayon abstrait de la sphère : une côte haute ne peut donc pas couper
+    // le marqueur un peu avant son horizon.
+    const seuilHorizonCroix = Math.min(0.96,
+      (rayonCroix + GARDE_CROIX) / Math.max(d, rayonCroix + 0.001) + 0.028);
+    const margeHorizonCroix = Math.asin(Math.min(0.14, echelleCroix * 0.72 / rayonCroix));
+    projete.copy(croix.position).project(camera);
+    const xCroix = (projete.x * 0.5 + 0.5) * largeur;
+    const yCroix = (-projete.y * 0.5 + 0.5) * hauteur;
+    const margeEcranCroix = tailleCroixPx * 0.7;
+    const croixDansChamp = projete.z > -1 && projete.z < 1
+      && xCroix > margeEcranCroix && xCroix < largeur - margeEcranCroix
+      && yCroix > margeEcranCroix && yCroix < hauteur - margeEcranCroix;
+    croix.visible = frontalCroix > seuilHorizonCroix + margeHorizonCroix && croixDansChamp;
     dernierEtat = {
       marqueursVisibles: visibles,
       marqueursTotal: escales.length,
-      pasRoute,
-      tailleRoutePx: Number((tailleRoute / ratioPixels).toFixed(1)),
+      pasRoute: 1,
+      tailleRoutePx: Number((epaisseurRoute / ratioPixels).toFixed(1)),
       marqueurs,
     };
   }
 
-  function metAJourTemps(t) {
-    let lo = 0, hi = temps.length - 1;
-    while (lo < hi) {
-      const mi = (lo + hi + 1) >> 1;
-      if (temps[mi] <= t) lo = mi; else hi = mi - 1;
-    }
-    sillage.geometry.setDrawRange(0, Math.max(1, lo + 1));
-    futur.geometry.setDrawRange(lo + 1, temps.length - lo - 1);
-  }
+  function metAJourTemps() { /* le trait complet reste le repère temporel stable */ }
 
   function surResize() { /* tailles en pixels : rien à faire */ }
 
   function regleMode(mode) {
     if (mode === 'carnet') {
-      matSillage.uniforms.couleur.value.set(0xf2a035);
-      matSillage.uniforms.bordure.value.set(0xcf831f);
-      matFutur.uniforms.couleur.value.set(0xfdf8ec);
+      matItineraire.color.set(0xf2a035);
       matAnneau.color.set(0xc8922e);
       croix.material.opacity = 1;
     } else {
-      matSillage.uniforms.couleur.value.set(0xeec97e);
-      matSillage.uniforms.bordure.value.set(0x6b5524);
-      matFutur.uniforms.couleur.value.set(0x9fb7cc);
+      matItineraire.color.set(0xeec97e);
       matAnneau.color.set(0xeec97e);
       croix.material.opacity = 0.85;
     }

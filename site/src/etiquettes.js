@@ -29,6 +29,11 @@ const LIEUX = [
   ['Costa Rica', 10.5, -84.8, 0],
 ];
 
+// Screen-space height used by the former secondary (Costa Rica) label.  Every
+// place name uses this same value: importance decides whether a label earns a
+// slot, never how large its lettering becomes.
+const HAUTEUR_ETIQUETTE_PX = 34;
+
 const SELECTEURS_ZONES = [
   '[data-scene-safe-zone]',
   '#titre',
@@ -39,10 +44,10 @@ const SELECTEURS_ZONES = [
   '#lightbox',
 ].join(',');
 
-function spriteTexte(texte, important) {
+function spriteTexte(texte) {
   const c = document.createElement('canvas');
   const ctx = c.getContext('2d');
-  const police = `italic 600 ${important ? 150 : 122}px Iowan Old Style, Palatino, Georgia, serif`;
+  const police = 'italic 600 122px Iowan Old Style, Palatino, Georgia, serif';
   ctx.font = police;
   const largeur = Math.ceil(ctx.measureText(texte).width) + 110;
   c.width = largeur;
@@ -106,7 +111,7 @@ export function creerEtiquettes(relief) {
   let dernierEtat = [];
 
   for (const [nom, lat, lon, important] of LIEUX) {
-    const { texture, ratio } = spriteTexte(nom, important);
+    const { texture, ratio } = spriteTexte(nom);
     const materiau = new THREE.SpriteMaterial({
       map: texture,
       transparent: true,
@@ -211,12 +216,10 @@ export function creerEtiquettes(relief) {
       projete.copy(sprite.position).project(camera);
       dansCamera.copy(sprite.position).applyMatrix4(camera.matrixWorldInverse);
       const profondeur = Math.max(0.04, -dansCamera.z);
-      const tresLoin = d > 5;
-      const basePx = compact
-        ? (important ? (tresLoin ? 30 : 37) : (tresLoin ? 22 : 27))
-        : (important ? 48 : 34);
-      const rapprochement = THREE.MathUtils.clamp((2.3 - d) / 1.0, 0, 1);
-      const hauteurPx = basePx * (1 - rapprochement * 0.12) * (recitActif ? 0.84 : 1);
+      // Labels are billboarded, so a fixed pixel height keeps their lettering
+      // steady while zooming or orbiting.  The collision pass below still
+      // decides which labels safely fit on screen.
+      const hauteurPx = HAUTEUR_ETIQUETTE_PX;
       // The current label sits above the boat, not through its sail. Other
       // labels only need enough room for their anchorage ring.
       const espaceAncrage = positionCourante ? 48
