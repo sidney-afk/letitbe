@@ -36,7 +36,7 @@ const scenarios = [
     name: 'portrait-390-zoom-proche-stress',
     viewport: { width: 390, height: 844 },
     date: '2010-05-21',
-    camera: { lat: -15, lon: -149, distance: 1.5 },
+    camera: { lat: -15, lon: -149, distance: 2.1 },
   },
   {
     name: 'portrait-390-fallback-2d',

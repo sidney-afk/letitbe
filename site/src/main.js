@@ -145,7 +145,9 @@ const camera = new THREE.PerspectiveCamera(38, 1, 0.01, 200);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 controls.dampingFactor = 0.06;
-controls.minDistance = 1.25;
+// Le globe conserve une distance minimale lisible pour le catamaran fixe.
+// La plongée abaisse temporairement cette limite pour son propre plan rapproché.
+controls.minDistance = 2.1;
 controls.maxDistance = 12;
 controls.rotateSpeed = 0.55;
 controls.enablePan = false;
@@ -194,6 +196,7 @@ function regleMode(nouveau) {
   hemisphere.intensity = carnetActif ? 1.6 : 1.1;
   soleilLampe.intensity = carnetActif ? 1.6 : 2.2;
   soleilLampe.color.set(carnetActif ? 0xfff0c8 : 0xfff3df);
+  bateau?.regleMode?.(mode);
   modeBouton.querySelector('span').textContent =
     carnetActif ? 'Mode réaliste' : 'Mode carnet';
   const actionMode = carnetActif ? 'Passer au mode réaliste' : 'Passer au mode carnet';
@@ -217,7 +220,7 @@ const mouillagesParCle = new Map(
 const route = creerRoute(voyage, routeData, relief);
 scene.add(route.groupe);
 
-const bateau = creerBateau();
+const bateau = await creerBateau();
 scene.add(bateau.conteneur, bateau.ecume);
 
 const timeline = creerTimeline(voyage);
@@ -531,7 +534,7 @@ window.__sillage = {
         instant: timeline.t,
         libelle: voyage.segmentA(timeline.t).libelle,
       },
-      bateau: { rectangle: rectangleEcranBateau() },
+      bateau: { rectangle: rectangleEcranBateau(), ...bateau.etat() },
       etiquettes: etiquettes.etat(),
       route: route.etat(),
       nuages: coton.etat(),

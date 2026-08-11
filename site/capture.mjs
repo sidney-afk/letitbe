@@ -38,8 +38,8 @@ if (action.includes('photo')) await page.click('#mode-bouton', { force: true });
 const zoom = action.match(/zoom=([\d.]+)/);
 if (zoom) {
   await page.evaluate((d) => {
-    const { camera } = window.__sillage;
-    camera.position.setLength(d);
+    const { camera, controls } = window.__sillage;
+    camera.position.setLength(Math.min(controls.maxDistance, Math.max(controls.minDistance, d)));
   }, Number(zoom[1]));
 }
 const plonge = action.match(/plonge=([^|]+)/);
@@ -78,6 +78,77 @@ if (action.includes('mi-parcours')) {
     const c = document.getElementById('curseur');
     c.value = 0.42;
     c.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+}
+
+// Détail d'inspection : une vue locale en biais rend visible l'assise des
+// deux coques. L'interface est masquée uniquement dans cette capture, jamais
+// dans le site, afin de ne pas cacher le bas du bateau derrière la timeline.
+if (action.includes('waterline')) {
+  await page.evaluate(async () => {
+    const api = window.__sillage;
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    const bateau = api.bateau.conteneur.position.clone();
+    const verticale = bateau.clone().normalize();
+    const cap = api.voyage.tangent(api.timeline.t);
+    const tribord = verticale.clone().cross(cap).normalize();
+    const oeil = bateau.clone()
+      .addScaledVector(verticale, 0.72)
+      .addScaledVector(cap, -0.34)
+      .addScaledVector(tribord, 0.25);
+    api.camera.position.copy(oeil);
+    api.camera.lookAt(bateau.clone().addScaledVector(verticale, 0.12));
+    api.controls.minDistance = 0.4;
+    api.controls.target.copy(bateau);
+    api.controls.update();
+    api.etiquettes.groupe.visible = false;
+    api.route.groupe.visible = false;
+    document.querySelectorAll('#titre, #boutons-haut, #timeline, #navigation-escales, #explorer')
+      .forEach(element => { element.style.visibility = 'hidden'; });
+  });
+}
+
+// Vue de maquette : inspection ponctuelle en profil trois-quarts. Elle ne
+// change jamais la caméra du site ; elle sert uniquement à vérifier que le
+// volume, le mât et les deux coques restent cohérents hors de la vue zénithale.
+if (action.includes('boat-profile')) {
+  await page.evaluate(async () => {
+    const api = window.__sillage;
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    const bateau = api.bateau.conteneur.position.clone();
+    const verticale = bateau.clone().normalize();
+    const cap = api.voyage.tangent(api.timeline.t);
+    const tribord = verticale.clone().cross(cap).normalize();
+    const oeil = bateau.clone()
+      .addScaledVector(verticale, 0.31)
+      .addScaledVector(cap, -0.67)
+      .addScaledVector(tribord, 0.42);
+    // Garde le haut local du bateau vers le haut de l'image d'inspection.
+    // OrbitControls utilise normalement l'axe monde pour l'interface, mais
+    // cette vue de maquette doit surtout permettre de lire le mât et le rouf.
+    api.camera.up.copy(verticale);
+    api.camera.position.copy(oeil);
+    api.camera.lookAt(bateau.clone().addScaledVector(verticale, 0.20));
+    api.controls.minDistance = 0.4;
+    api.controls.target.copy(bateau);
+    api.controls.update();
+    api.etiquettes.groupe.visible = false;
+    api.route.groupe.visible = false;
+    document.querySelectorAll('#titre, #boutons-haut, #timeline, #navigation-escales, #explorer')
+      .forEach(element => { element.style.visibility = 'hidden'; });
+  });
+}
+
+// Pour une simple image de contrÃ´le, on fige le rendu une fois l'Ã©tat
+// installÃ©. Cela Ã©vite de laisser WebGL tourner Ã  plein rÃ©gime pendant
+// l'attente de capture sur les machines sans accÃ©lÃ©ration graphique.
+if (action.includes('immobile')) {
+  await page.evaluate(async () => {
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    await new Promise(resolve => requestAnimationFrame(resolve));
+    window.__sillage?.renderer?.setAnimationLoop(null);
   });
 }
 
