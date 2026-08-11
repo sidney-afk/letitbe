@@ -92,30 +92,36 @@ export function creerGlobe(relief) {
       void main() {
         vec3 n = normalize(vNormaleM);
         // Le lavis du JPG Carnet n'est pas périodique : ses deux bords du
-        // Pacifique n'ont pas exactement la même teinte. La sphère duplique
-        // ces UV à ±180°, donc on fond les deux côtés dans une petite bande
-        // océanique plutôt que de laisser une couture de longitude.
-        const float LARGEUR_COUTURE = 0.075;
+        // Pacifique n'ont pas exactement la même teinte. La sphère joint ces
+        // UV à ±180° : on fond seulement leurs couleurs de bord dans une très
+        // petite bande océanique, sans refléter la géographie voisine.
+        const float LARGEUR_COUTURE = 0.010;
         const float EPSILON_COUTURE = 0.0005;
         float uLocal = clamp(vUv.x, EPSILON_COUTURE, 1.0 - EPSILON_COUTURE);
         vec2 uvLocal = vec2(uLocal, vUv.y);
-        vec2 uvMiroir = vec2(1.0 - uLocal, vUv.y);
         float merLocal = texture2D(carteSpec, uvLocal).r;
-        float merMiroir = texture2D(carteSpec, uvMiroir).r;
+        float merBordGauche = texture2D(carteSpec,
+          vec2(EPSILON_COUTURE, vUv.y)).r;
+        float merBordDroit = texture2D(carteSpec,
+          vec2(1.0 - EPSILON_COUTURE, vUv.y)).r;
         float oceanLocal = smoothstep(0.35, 0.70, merLocal);
-        float oceanMiroir = smoothstep(0.35, 0.70, merMiroir);
+        float oceanBords = min(smoothstep(0.35, 0.70, merBordGauche),
+                               smoothstep(0.35, 0.70, merBordDroit));
         float proximiteCouture = 1.0 - smoothstep(0.0, LARGEUR_COUTURE,
                                                    min(vUv.x, 1.0 - vUv.x));
-        // On ne mélange que si les deux moitiés sont de l'océan : les terres
-        // et les côtes du Pacifique restent nettes.
-        float fonduCouture = proximiteCouture * min(oceanLocal, oceanMiroir);
-        vec3 tex = mix(texture2D(carteCarnet, uvLocal).rgb,
-                       texture2D(carteCarnet, uvMiroir).rgb,
-                       0.5 * fonduCouture);
+        // On ne mélange que si le pixel local et les deux bords sont océans :
+        // les terres et les côtes du Pacifique restent nettes et uniques.
+        float fonduCouture = proximiteCouture * min(oceanLocal, oceanBords);
+        vec3 couleurBord = mix(
+          texture2D(carteCarnet, vec2(EPSILON_COUTURE, vUv.y)).rgb,
+          texture2D(carteCarnet, vec2(1.0 - EPSILON_COUTURE, vUv.y)).rgb,
+          0.5);
+        vec3 tex = mix(texture2D(carteCarnet, uvLocal).rgb, couleurBord,
+                       fonduCouture);
         // La carte spéculaire est blanche au large et noire sur les terres.
-        // On raccorde également son échantillon pour que le masque ne recrée
-        // pas une ligne invisible au même méridien.
-        float mer = mix(merLocal, merMiroir, 0.5 * fonduCouture);
+        // Son masque reste local pour qu'aucun détail géographique ne soit
+        // importé depuis l'autre bord de la carte.
+        float mer = merLocal;
         float ocean = smoothstep(0.35, 0.70, mer);
 
         float ndl = dot(n, dirSoleil) * 0.5 + 0.5; // demi-Lambert : pas de nuit

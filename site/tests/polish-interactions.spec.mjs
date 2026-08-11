@@ -35,7 +35,8 @@ test('le parcours clavier ouvre une escale, la referme et restitue le focus', as
   await expect.poll(() => page.evaluate(() => ({
     bateau: window.__sillage.bateau.conteneur.visible,
     ecume: window.__sillage.bateau.ecume.visible,
-  }))).toEqual({ bateau: false, ecume: false });
+    route: window.__sillage.route.groupe.visible,
+  }))).toEqual({ bateau: false, ecume: false, route: false });
   await page.evaluate(() => window.__sillage.plongee.metAJour(10));
 
   await expect(page.locator('#plongee')).toBeVisible();
@@ -46,8 +47,36 @@ test('le parcours clavier ouvre une escale, la referme et restitue le focus', as
   await expect.poll(() => page.evaluate(() => ({
     bateau: window.__sillage.bateau.conteneur.visible,
     ecume: window.__sillage.bateau.ecume.visible,
-  }))).toEqual({ bateau: true, ecume: true });
+    route: window.__sillage.route.groupe.visible,
+  }))).toEqual({ bateau: true, ecume: true, route: true });
   await expect(ouvrir).toBeFocused();
+});
+
+test('la rotation est fortement amortie pendant une plongée puis revient à la carte', async ({ page }) => {
+  await ouvreExperience(page, { width: 1366, height: 768 });
+  const vitesseCarte = await page.evaluate(() => window.__sillage.controls.rotateSpeed);
+
+  await page.evaluate(async () => {
+    const { plongee, route } = window.__sillage;
+    const escale = route.escales.find(item => item.nom === 'Marquises - Nuku Hiva');
+    if (!escale) throw new Error('Escale de test introuvable');
+    plongee.vers(escale);
+    plongee.metAJour(10);
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  });
+
+  const vitessePlongee = await page.evaluate(() => window.__sillage.controls.rotateSpeed);
+  expect(vitessePlongee).toBeLessThan(vitesseCarte * 0.05);
+
+  await page.evaluate(async () => {
+    const { plongee } = window.__sillage;
+    plongee.remonte();
+    plongee.metAJour(10);
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  });
+
+  const vitesseRetour = await page.evaluate(() => window.__sillage.controls.rotateSpeed);
+  expect(vitesseRetour).toBeGreaterThan(vitessePlongee * 10);
 });
 
 test('la maquette importée est exactement à la moitié de son ancienne échelle fixe', async ({ page }) => {
