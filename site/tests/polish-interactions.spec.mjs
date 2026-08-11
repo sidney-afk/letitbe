@@ -32,6 +32,10 @@ test('le parcours clavier ouvre une escale, la referme et restitue le focus', as
   const ouvrir = page.locator('#escales-ouvrir');
   await ouvrir.focus();
   await page.keyboard.press('Enter');
+  await expect.poll(() => page.evaluate(() => ({
+    bateau: window.__sillage.bateau.conteneur.visible,
+    ecume: window.__sillage.bateau.ecume.visible,
+  }))).toEqual({ bateau: false, ecume: false });
   await page.evaluate(() => window.__sillage.plongee.metAJour(10));
 
   await expect(page.locator('#plongee')).toBeVisible();
@@ -39,7 +43,20 @@ test('le parcours clavier ouvre une escale, la referme et restitue le focus', as
   await page.keyboard.press('Escape');
   await expect(page.locator('#plongee')).toBeHidden();
   await page.evaluate(() => window.__sillage.plongee.metAJour(10));
+  await expect.poll(() => page.evaluate(() => ({
+    bateau: window.__sillage.bateau.conteneur.visible,
+    ecume: window.__sillage.bateau.ecume.visible,
+  }))).toEqual({ bateau: true, ecume: true });
   await expect(ouvrir).toBeFocused();
+});
+
+test('la maquette importée est exactement à la moitié de son ancienne échelle fixe', async ({ page }) => {
+  await ouvreExperience(page, { width: 1366, height: 768 });
+  const bateau = await page.evaluate(() => window.__sillage.bateau.etat());
+  expect(bateau.maquette).toBe('gltf');
+  expect(bateau.facteurEchelleAsset).toBe(0.5);
+  expect(bateau.echelle).toBeCloseTo(0.06, 8);
+  expect(bateau.coqueBasMonde).toBeCloseTo(1.00007, 5);
 });
 
 test('les commandes annoncent leur état et le récit se quitte avec Échap', async ({ page }) => {

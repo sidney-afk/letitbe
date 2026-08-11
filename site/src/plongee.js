@@ -16,7 +16,7 @@ const formatLong = new Intl.DateTimeFormat('fr-FR', {
 const lisse = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 export function creerPlongee({ camera, controls, timeline, regleSuivi,
-  mouillagesParCle, scene, vuesAeriennes, relief }) {
+  regleVisibiliteBateau = () => {}, mouillagesParCle, scene, vuesAeriennes, relief }) {
   const panneau = document.getElementById('plongee');
   const titre = document.getElementById('plongee-nom');
   const sousTitre = document.getElementById('plongee-dates');
@@ -248,6 +248,10 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
   }
 
   function vers(escale) {
+    // La maquette et son sillage ne font pas partie de la vue rapprochée de
+    // l'escale : on les cache avant même le premier frame du vol pour éviter
+    // qu'ils deviennent gigantesques au-dessus de l'île.
+    regleVisibiliteBateau(false);
     focusAvantPlongee = document.activeElement;
     panneau.hidden = true;
     const complet = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`) ?? escale;
@@ -274,6 +278,9 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     lanceVol(camera.position.clone().normalize(), DISTANCE_ORBITE, () => {
       controls.minDistance = 2.1;
       regleSuivi(true); // on reprend la route en suivant le bateau
+      // Le retour est terminé : la maquette et son sillage reprennent
+      // ensemble leur place sur la carte générale.
+      regleVisibiliteBateau(true);
       const cible = focusAvantPlongee?.isConnected && focusAvantPlongee !== document.body
         ? focusAvantPlongee : document.querySelector('#navigation-escales summary, #recit-bouton');
       focusAvantPlongee = null;

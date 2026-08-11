@@ -13,6 +13,9 @@ import { RAYON, slerpSurface, latLonVers3D } from './geo.js';
 const ALTITUDE = RAYON * 1.0022;
 const PAS_RAD = THREE.MathUtils.degToRad(0.52); // un point de contrôle tous les ~58 km
 const GARDE_CROIX = RAYON * 0.009;
+const GARDE_CHEVRON = RAYON * 0.007;
+const PAS_CHEVRON_RAD = THREE.MathUtils.degToRad(26);
+const DECALAGE_CHEVRON_RAD = THREE.MathUtils.degToRad(13);
 
 /**
  * Échantillonne l'itinéraire en points réguliers. La date reste associée aux
@@ -55,6 +58,53 @@ function creeLigne(positions, materiau) {
   return ligne;
 }
 
+function geometrieChevron() {
+  // Un V plein très fin, plus proche d'un repère de carte que d'une flèche UI.
+  // L'axe +Y est le sens de progression et +Z regarde vers l'extérieur du globe.
+  const geometrie = new THREE.BufferGeometry();
+  geometrie.setAttribute('position', new THREE.Float32BufferAttribute([
+    0, 0.56, 0, // pointe extérieure
+    -0.58, -0.52, 0,
+    -0.38, -0.62, 0,
+    0, 0.05, 0, // pointe intérieure
+    0.38, -0.62, 0,
+    0.58, -0.52, 0,
+  ], 3));
+  // Deux rubans, gauche et droit : ni disque ni triangle massif.
+  geometrie.setIndex([0, 1, 2, 0, 2, 3, 0, 3, 4, 0, 4, 5]);
+  geometrie.computeVertexNormals();
+  return geometrie;
+}
+
+function echantillonneChevrons(points) {
+  const chevrons = [];
+  let parcouru = 0;
+  let prochain = DECALAGE_CHEVRON_RAD;
+  for (let i = 0; i < points.length - 1; i++) {
+    const depart = points[i];
+    const arrivee = points[i + 1];
+    const angle = depart.angleTo(arrivee);
+    if (angle < 1e-6) continue;
+    const finSegment = parcouru + angle;
+    while (prochain < finSegment) {
+      const f = (prochain - parcouru) / angle;
+      const normale = slerpSurface(depart, arrivee, f, 1);
+      const rayon = THREE.MathUtils.lerp(depart.length(), arrivee.length(), f) + GARDE_CHEVRON;
+      const tangente = arrivee.clone().sub(depart).projectOnPlane(normale);
+      if (tangente.lengthSq() > 1e-10) {
+        chevrons.push({
+          position: normale.clone().multiplyScalar(rayon),
+          normale,
+          tangente: tangente.normalize(),
+        });
+      }
+      prochain += PAS_CHEVRON_RAD;
+    }
+    parcouru = finSegment;
+  }
+  return chevrons;
+}
+
 // le X du trésor, tracé à la main (deux croisillons irréguliers)
 function textureX() {
   const c = document.createElement('canvas');
@@ -92,6 +142,31 @@ export function creerRoute(voyage, routeData, relief) {
   itineraire.name = 'route-itineraire';
   itineraire.renderOrder = 2;
   groupe.add(itineraire);
+
+  // Quelques chevrons seulement suffisent à révéler le sens du voyage. Ils
+  // sont des instances tangentiellement posées sur la même route, jamais une
+  // deuxième ligne ni une chaîne d'ornements.
+  const directions = echantillonneChevrons(points);
+  const matChevrons = new THREE.MeshBasicMaterial({
+    color: 0xaf6815,
+    transparent: true,
+    opacity: 0.88,
+    depthWrite: false,
+  });
+  const chevrons = new THREE.InstancedMesh(
+    geometrieChevron(), matChevrons, Math.max(1, directions.length));
+  chevrons.name = 'route-direction-cues';
+  chevrons.renderOrder = 2.5;
+  chevrons.frustumCulled = false;
+  chevrons.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+  chevrons.userData.total = directions.length;
+  chevrons.userData.ancres = directions.map(({ position }) => position.clone());
+  chevrons.userData.tangentes = directions.map(({ tangente }) => tangente.clone());
+  chevrons.userData.normales = directions.map(({ normale }) => normale.clone());
+  const matriceVide = new THREE.Matrix4().makeScale(0, 0, 0);
+  for (let i = 0; i < chevrons.count; i++) chevrons.setMatrixAt(i, matriceVide);
+  chevrons.instanceMatrix.needsUpdate = true;
+  groupe.add(chevrons);
 
   // mouillages : bagues d'or à cœur crème, imposantes (carte au trésor),
   // avec une cible de clic invisible encore plus large
@@ -138,15 +213,25 @@ export function creerRoute(voyage, routeData, relief) {
 
   const m = new THREE.Matrix4();
   const q = new THREE.Quaternion();
+  const matriceChevron = new THREE.Matrix4();
+  const quaternionChevron = new THREE.Quaternion();
   const versCamera = new THREE.Vector3();
   const echelle = new THREE.Vector3();
+  const echelleChevron = new THREE.Vector3();
+  const axeChevron = new THREE.Vector3();
   const projete = new THREE.Vector3();
   const dansCamera = new THREE.Vector3();
   const directionCamera = new THREE.Vector3();
   const normale = new THREE.Vector3();
   const Z = new THREE.Vector3(0, 0, 1);
   const marqueursAffiches = new Uint8Array(escales.length);
-  let dernierEtat = { marqueursVisibles: 0, marqueursTotal: escales.length, pasRoute: 1 };
+  let dernierEtat = {
+    marqueursVisibles: 0,
+    marqueursTotal: escales.length,
+    chevronsVisibles: 0,
+    chevronsTotal: directions.length,
+    pasRoute: 1,
+  };
   function orientePerles(camera, tempsS = 0, etiquettes = []) {
     const d = camera.position.length();
     const largeur = Math.max(1, innerWidth);
@@ -160,6 +245,7 @@ export function creerRoute(voyage, routeData, relief) {
     const epaisseurRoute = (compact ? 1.85 : 2.35) * ratioPixels * (recitActif ? 0.78 : 1);
     matItineraire.linewidth = epaisseurRoute;
     matItineraire.opacity = (compact ? 0.78 : 0.9) * (recitActif ? 0.58 : 1);
+    matChevrons.opacity = (compact ? 0.76 : 0.88) * (recitActif ? 0.58 : 1);
 
     directionCamera.copy(camera.position).normalize();
     const centres = [];
@@ -221,6 +307,59 @@ export function creerRoute(voyage, routeData, relief) {
     coeurs.instanceMatrix.needsUpdate = true;
     cibles.instanceMatrix.needsUpdate = true;
 
+    // Les chevrons suivent la tangente de l'itinéraire, gardent un gabarit
+    // écran constant, évitent les anneaux/étiquettes et se retirent avant le
+    // limbe. Leur petit nombre donne le sens de marche sans refaire un motif.
+    const centresChevrons = [];
+    const tailleChevronPx = (compact ? 7.5 : 9.5) * (recitActif ? 0.78 : 1);
+    const maximumChevrons = recitActif ? (compact ? 2 : 3) : compact ? 3 : 5;
+    let chevronsVisibles = 0;
+    directions.forEach((chevron, i) => {
+      projete.copy(chevron.position).project(camera);
+      dansCamera.copy(chevron.position).applyMatrix4(camera.matrixWorldInverse);
+      const profondeurChevron = Math.max(0.04, -dansCamera.z);
+      const unitesParPixelChevron = 2 * Math.tan(THREE.MathUtils.degToRad(camera.fov * 0.5))
+        * profondeurChevron / hauteur;
+      const echelleChevronCourante = unitesParPixelChevron * tailleChevronPx;
+      const x = (projete.x * 0.5 + 0.5) * largeur;
+      const y = (-projete.y * 0.5 + 0.5) * hauteur;
+      const rayonChevron = chevron.position.length();
+      const frontalChevron = chevron.normale.dot(directionCamera);
+      const seuilHorizonChevron = Math.min(0.92,
+        (rayonChevron + GARDE_CHEVRON) / Math.max(d, rayonChevron + 0.001) + 0.032);
+      const margeHorizonChevron = Math.asin(Math.min(0.12,
+        echelleChevronCourante * 0.82 / rayonChevron));
+      const margeEcranChevron = tailleChevronPx * 0.75;
+      const dansChampChevron = projete.z > -1 && projete.z < 1
+        && x > margeEcranChevron && x < largeur - margeEcranChevron
+        && y > margeEcranChevron && y < hauteur - margeEcranChevron;
+      const presDunAnneau = centres.some(centre => Math.hypot(centre.x - x, centre.y - y)
+        < (compact ? 18 : 22));
+      const sousEtiquetteChevron = zonesEtiquettes.some(rectangle =>
+        x >= rectangle.gauche - margeEcranChevron
+        && x <= rectangle.droite + margeEcranChevron
+        && y >= rectangle.haut - margeEcranChevron
+        && y <= rectangle.bas + margeEcranChevron);
+      const tropProche = centresChevrons.some(centre => Math.hypot(centre.x - x, centre.y - y)
+        < (compact ? 28 : 36));
+      const afficheChevron = chevronsVisibles < maximumChevrons
+        && frontalChevron > seuilHorizonChevron + margeHorizonChevron
+        && dansChampChevron && !presDunAnneau && !sousEtiquetteChevron && !tropProche;
+      if (afficheChevron) {
+        centresChevrons.push({ x, y });
+        chevronsVisibles++;
+      }
+      axeChevron.crossVectors(chevron.tangente, chevron.normale).normalize();
+      matriceChevron.makeBasis(axeChevron, chevron.tangente, chevron.normale);
+      quaternionChevron.setFromRotationMatrix(matriceChevron);
+      echelleChevron.setScalar(afficheChevron ? echelleChevronCourante : 0);
+      matriceChevron.compose(chevron.position, quaternionChevron, echelleChevron);
+      chevrons.setMatrixAt(i, matriceChevron);
+    });
+    for (let i = directions.length; i < chevrons.count; i++) chevrons.setMatrixAt(i, matriceVide);
+    chevrons.instanceMatrix.needsUpdate = true;
+    chevrons.userData.visibles = chevronsVisibles;
+
     // Le X est une petite décalcomanie tangentielle posée au-dessus du relief,
     // puis disparaît un peu avant la silhouette du globe. Il reste donc bien
     // ancré en 3D sans être découpé par l'horizon.
@@ -250,6 +389,8 @@ export function creerRoute(voyage, routeData, relief) {
     dernierEtat = {
       marqueursVisibles: visibles,
       marqueursTotal: escales.length,
+      chevronsVisibles,
+      chevronsTotal: directions.length,
       pasRoute: 1,
       tailleRoutePx: Number((epaisseurRoute / ratioPixels).toFixed(1)),
       marqueurs,
@@ -263,10 +404,12 @@ export function creerRoute(voyage, routeData, relief) {
   function regleMode(mode) {
     if (mode === 'carnet') {
       matItineraire.color.set(0xf2a035);
+      matChevrons.color.set(0xaf6815);
       matAnneau.color.set(0xc8922e);
       croix.material.opacity = 1;
     } else {
       matItineraire.color.set(0xeec97e);
+      matChevrons.color.set(0xb78945);
       matAnneau.color.set(0xeec97e);
       croix.material.opacity = 0.85;
     }
