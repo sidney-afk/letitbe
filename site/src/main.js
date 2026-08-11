@@ -304,7 +304,7 @@ applique(timeline.t);
 
 const plongee = creerPlongee({
   camera, controls, timeline, regleSuivi, mouillagesParCle, scene,
-  vuesAeriennes, relief,
+  vuesAeriennes, relief, regleVisibiliteBateau: bateau.regleVisibilite,
 });
 const recit = creerRecit({ timeline, regleSuivi, voyage });
 creerTraversee({ timeline, voyage, mouillagesParCle });

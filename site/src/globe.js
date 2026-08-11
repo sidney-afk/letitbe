@@ -91,11 +91,31 @@ export function creerGlobe(relief) {
       varying vec3 vPosM;
       void main() {
         vec3 n = normalize(vNormaleM);
-        vec3 tex = texture2D(carteCarnet, vUv).rgb;
+        // Le lavis du JPG Carnet n'est pas périodique : ses deux bords du
+        // Pacifique n'ont pas exactement la même teinte. La sphère duplique
+        // ces UV à ±180°, donc on fond les deux côtés dans une petite bande
+        // océanique plutôt que de laisser une couture de longitude.
+        const float LARGEUR_COUTURE = 0.075;
+        const float EPSILON_COUTURE = 0.0005;
+        float uLocal = clamp(vUv.x, EPSILON_COUTURE, 1.0 - EPSILON_COUTURE);
+        vec2 uvLocal = vec2(uLocal, vUv.y);
+        vec2 uvMiroir = vec2(1.0 - uLocal, vUv.y);
+        float merLocal = texture2D(carteSpec, uvLocal).r;
+        float merMiroir = texture2D(carteSpec, uvMiroir).r;
+        float oceanLocal = smoothstep(0.35, 0.70, merLocal);
+        float oceanMiroir = smoothstep(0.35, 0.70, merMiroir);
+        float proximiteCouture = 1.0 - smoothstep(0.0, LARGEUR_COUTURE,
+                                                   min(vUv.x, 1.0 - vUv.x));
+        // On ne mélange que si les deux moitiés sont de l'océan : les terres
+        // et les côtes du Pacifique restent nettes.
+        float fonduCouture = proximiteCouture * min(oceanLocal, oceanMiroir);
+        vec3 tex = mix(texture2D(carteCarnet, uvLocal).rgb,
+                       texture2D(carteCarnet, uvMiroir).rgb,
+                       0.5 * fonduCouture);
         // La carte spéculaire est blanche au large et noire sur les terres.
-        // Un seuil doux garde les côtes propres sans faire suivre l'océan au
-        // soleil directionnel.
-        float mer = texture2D(carteSpec, vUv).r;
+        // On raccorde également son échantillon pour que le masque ne recrée
+        // pas une ligne invisible au même méridien.
+        float mer = mix(merLocal, merMiroir, 0.5 * fonduCouture);
         float ocean = smoothstep(0.35, 0.70, mer);
 
         float ndl = dot(n, dirSoleil) * 0.5 + 0.5; // demi-Lambert : pas de nuit

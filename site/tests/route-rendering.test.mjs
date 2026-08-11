@@ -51,9 +51,12 @@ test('la route est un seul itinéraire continu, quel que soit le temps', () => {
   const relief = { altitude: () => 1.04 };
   const route = creerRoute(voyage, routeData, relief);
   const itineraire = route.groupe.getObjectByName('route-itineraire');
+  const chevrons = route.groupe.getObjectByName('route-direction-cues');
 
   assert.ok(itineraire.isLine2);
   assert.ok(itineraire.material.isLineMaterial);
+  assert.ok(chevrons.isInstancedMesh);
+  assert.ok(chevrons.userData.total > 0);
   assert.equal(route.groupe.children.some(objet => objet.isPoints), false);
   assert.equal(route.groupe.children.filter(objet => objet.isLine2).length, 1);
   assert.equal(route.groupe.getObjectByName('route-a-venir'), undefined);
@@ -67,6 +70,27 @@ test('la route est un seul itinéraire continu, quel que soit le temps', () => {
 
   route.metAJourTemps(200);
   assert.equal(itineraire.geometry.instanceCount, segments);
+
+  const cameraDevantChevron = cameraFaceAu(chevrons.userData.ancres[0]);
+  route.orientePerles(cameraDevantChevron);
+  assert.ok(chevrons.userData.visibles > 0);
+  assert.equal(route.etat().chevronsVisibles, chevrons.userData.visibles);
+  const matriceChevron = new THREE.Matrix4();
+  const positionChevron = new THREE.Vector3();
+  const rotationChevron = new THREE.Quaternion();
+  const echelleChevron = new THREE.Vector3();
+  chevrons.getMatrixAt(0, matriceChevron);
+  matriceChevron.decompose(positionChevron, rotationChevron, echelleChevron);
+  assert.ok(echelleChevron.x > 0);
+  assert.ok(new THREE.Vector3(0, 1, 0).applyQuaternion(rotationChevron)
+    .angleTo(chevrons.userData.tangentes[0]) < 1e-8);
+  assert.ok(new THREE.Vector3(0, 0, 1).applyQuaternion(rotationChevron)
+    .angleTo(chevrons.userData.normales[0]) < 1e-8);
+
+  const cameraDerriereChevron = cameraFaceAu(chevrons.userData.ancres[0], -2.6);
+  route.orientePerles(cameraDerriereChevron);
+  chevrons.getMatrixAt(0, matriceChevron);
+  assert.equal(matriceChevron.getMaxScaleOnAxis(), 0);
 });
 
 test('le X final est ancré au relief et disparaît avant son horizon', () => {

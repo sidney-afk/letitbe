@@ -20,6 +20,11 @@ const LARGEUR_MODELE = 0.80;
 // avec la caméra.
 // Smaller than the earlier figurine, but still deliberate at globe distance.
 const ECHELLE_MODELE = 0.120;
+// L'asset GLB importé est volontairement deux fois plus petit que la
+// miniature procédurale de secours. Le facteur local laisse le root de route
+// intact : son ancrage, son cap et la pose sur l'eau restent donc identiques.
+const FACTEUR_ECHELLE_ASSET = 0.5;
+const ECHELLE_ASSET = ECHELLE_MODELE * FACTEUR_ECHELLE_ASSET;
 // La garde est mesurée depuis le point le plus bas de la vraie géométrie
 // (contour compris), pas depuis l'origine du modèle. Cela conserve les deux
 // coques posées sur l'océan si la silhouette évolue.
@@ -627,6 +632,14 @@ function creerBateauProcedural() {
     // ni gîte/tangage automatique. La route est l'unique source d'orientation.
   }
 
+  function regleVisibilite(affiche) {
+    const visible = Boolean(affiche);
+    // Le sillage est une scène séparée du modèle : les deux doivent toujours
+    // disparaître et revenir ensemble pendant la plongée d'une escale.
+    conteneur.visible = visible;
+    ecume.visible = visible;
+  }
+
   function etat() {
     tribordRapporte.set(1, 0, 0).applyQuaternion(conteneur.quaternion).normalize();
     capRapporte.set(0, 0, 1).applyQuaternion(conteneur.quaternion).normalize();
@@ -644,10 +657,12 @@ function creerBateauProcedural() {
       cap: { x: capRapporte.x, y: capRapporte.y, z: capRapporte.z },
       verticale: { x: hautRapporte.x, y: hautRapporte.y, z: hautRapporte.z },
       rotationLocale: { x: modele.rotation.x, y: modele.rotation.y, z: modele.rotation.z },
+      visible: conteneur.visible,
+      ecumeVisible: ecume.visible,
     };
   }
 
-  return { conteneur, ecume, positionne, anime, etat };
+  return { conteneur, ecume, positionne, anime, regleVisibilite, etat };
 }
 
 // The supplied GLB is a coherent, textured catamaran rather than a collection
@@ -681,6 +696,9 @@ async function chargeMaquetteCatamaran() {
   const gltf = await new GLTFLoader().loadAsync(url);
   const maquette = gltf.scene;
   maquette.name = 'let-it-be-catamaran-asset';
+  // Le modèle importé, et lui seul, passe exactement à la moitié de sa taille
+  // précédente. Les mesures de coque plus bas incluent déjà cette échelle.
+  maquette.scale.setScalar(FACTEUR_ECHELLE_ASSET);
   const materiauxEclaires = new Set();
 
   // Recentre l'empreinte horizontale et pose le minimum mesurÃ© juste sous
@@ -755,9 +773,10 @@ export async function creerBateau() {
     };
     bateau.etat = () => ({
       ...etatProcedural(),
-      echelle: ECHELLE_MODELE,
-      longueur: LONGUEUR_ASSET * ECHELLE_MODELE,
-      largeur: LARGEUR_ASSET * ECHELLE_MODELE,
+      echelle: ECHELLE_ASSET,
+      facteurEchelleAsset: FACTEUR_ECHELLE_ASSET,
+      longueur: LONGUEUR_ASSET * ECHELLE_ASSET,
+      largeur: LARGEUR_ASSET * ECHELLE_ASSET,
       surfaceEau: rayonAncrage / RAYON,
       ecartSurface: bateau.conteneur.position.length() - RAYON,
       coqueBasLocale,
