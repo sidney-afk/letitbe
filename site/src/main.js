@@ -24,6 +24,11 @@ import { chargeRelief, reliefPlat } from './relief.js';
 
 const canvas = document.getElementById('scene');
 const mouvementReduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const VITESSE_ROTATION_CARTE = 0.55;
+// À quelques mètres du sol, un même angle couvre une grande partie de l'île.
+// Cette réduction s'applique uniquement une fois le carnet d'escale ouvert;
+// le globe général garde donc exactement sa réponse habituelle.
+const FACTEUR_ROTATION_PLONGEE = 0.20;
 
 function webglDisponible() {
   if (new URLSearchParams(location.search).has('force-fallback')) return false;
@@ -149,7 +154,7 @@ controls.dampingFactor = 0.06;
 // La plongée abaisse temporairement cette limite pour son propre plan rapproché.
 controls.minDistance = 2.1;
 controls.maxDistance = 12;
-controls.rotateSpeed = 0.55;
+controls.rotateSpeed = VITESSE_ROTATION_CARTE;
 controls.enablePan = false;
 
 // lumières pour les matériaux du bateau et des nuages (la Terre a ses shaders)
@@ -207,10 +212,9 @@ modeBouton.addEventListener('click', () => {
   regleMode(mode === 'carnet' ? 'photo' : 'carnet');
 });
 
-const [routeData, mouillagesData, vuesAeriennes, meteo] = await Promise.all([
+const [routeData, mouillagesData, meteo] = await Promise.all([
   fetch('./data/route.json').then(r => r.json()),
   fetch('./data/mouillages.json').then(r => r.json()),
-  fetch('./data/vues_aeriennes.json').then(r => r.json()),
   creerMeteo(),
 ]);
 const voyage = construireVoyage(routeData);
@@ -304,7 +308,8 @@ applique(timeline.t);
 
 const plongee = creerPlongee({
   camera, controls, timeline, regleSuivi, mouillagesParCle, scene,
-  vuesAeriennes, relief, regleVisibiliteBateau: bateau.regleVisibilite,
+  relief, regleVisibiliteBateau: bateau.regleVisibilite,
+  regleVisibiliteRoute: affiche => { route.groupe.visible = Boolean(affiche); },
 });
 const recit = creerRecit({ timeline, regleSuivi, voyage });
 creerTraversee({ timeline, voyage, mouillagesParCle });
@@ -339,40 +344,6 @@ sonBouton.addEventListener('click', () => {
   sonBouton.setAttribute('aria-pressed', String(actif));
   sonBouton.setAttribute('aria-label', actif ? 'Couper l’ambiance sonore' : 'Activer l’ambiance sonore');
 });
-
-// — préchargement des vues aériennes HD (l'idée de Sidney : tous les
-// endroits cliquables sont connus d'avance) : un fil discret en tâche de
-// fond, et la vue survolée passe en tête de file —
-const aPrecharger = Object.values(vuesAeriennes).map(v => `./${v.fichier}`);
-const dejaChargees = new Set();
-function prechargeVue(url) {
-  if (!url || dejaChargees.has(url)) return;
-  dejaChargees.add(url);
-  const img = new Image();
-  img.decoding = 'async';
-  img.src = url;
-}
-let filPrechargement = 0;
-function prechargeAuRepos(delai) {
-  setTimeout(() => {
-    // Playback and active reading get every frame and network slot. Aerial
-    // imagery resumes only when the visitor is idle on the globe.
-    if (timeline.enLecture || document.hidden || recit.actif || plongee.ouverte) {
-      prechargeAuRepos(1600);
-      return;
-    }
-    while (filPrechargement < aPrecharger.length
-      && dejaChargees.has(aPrecharger[filPrechargement])) filPrechargement++;
-    if (filPrechargement >= aPrecharger.length) return;
-    const charge = () => {
-      prechargeVue(aPrecharger[filPrechargement++]);
-      prechargeAuRepos(1600);
-    };
-    if ('requestIdleCallback' in window) requestIdleCallback(charge, { timeout: 2400 });
-    else setTimeout(charge, 250);
-  }, delai);
-}
-prechargeAuRepos(9000); // on laisse d'abord la scène et l'interaction se charger
 
 // — infobulle des mouillages —
 const infobulle = document.getElementById('infobulle');
@@ -446,9 +417,6 @@ function chercheSurvol() {
   route.regleSurvol(hit ? hit.instanceId : -1);
   if (escaleSurvolee) {
     const e = escaleSurvolee;
-    // la vue aérienne de ce mouillage d'abord : le clic sera instantané
-    const vue = vuesAeriennes[`${e.nom}|${e.date_arrivee}`];
-    if (vue) prechargeVue(`./${vue.fichier}`);
     const dates = e.date_depart && e.date_depart !== e.date_arrivee
       ? `${formatCourt.format(new Date(e.date_arrivee))} → ${formatCourt.format(new Date(e.date_depart))}`
       : formatCourt.format(new Date(e.date_arrivee));
@@ -571,7 +539,14 @@ renderer.setAnimationLoop(() => {
   // la rotation s'adoucit quand on est près du sol (sinon chaque
   // mouvement de souris est démesuré en zoom fort)
   const distance = camera.position.length();
-  controls.rotateSpeed = 0.55 * THREE.MathUtils.clamp((distance - 1) / 2.4, 0.05, 1);
+  const vitesseProche = VITESSE_ROTATION_CARTE
+    * THREE.MathUtils.clamp((distance - 1) / 2.4, 0.05, 1);
+  // À la plongée, l'inertie reste la même mais chaque glissement fait environ
+  // 80 % moins tourner le globe. Le retour à la carte rétablit aussitôt la
+  // vitesse calculée ci-dessus, pendant que les contrôles sont encore bloqués
+  // par le vol de remontée.
+  controls.rotateSpeed = vitesseProche
+    * (plongee.ouverte ? FACTEUR_ROTATION_PLONGEE : 1);
   controls.zoomSpeed = THREE.MathUtils.clamp((distance - 1) / 1.6, 0.25, 1);
 
   if (!plongee.enVol && !plongee.ouverte && intro >= 1) {

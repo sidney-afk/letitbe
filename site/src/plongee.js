@@ -5,7 +5,12 @@
 import * as THREE from 'three';
 import { latLonVers3D } from './geo.js';
 
-const DISTANCE_PLONGEE = 1.014;  // cadrage rapproché : le mouillage reste le sujet face au journal
+// A distance of 1.014 put the camera only a few millimetres above the
+// miniature. That magnified both the base map and a one-degree aerial tile
+// until their pixels became the subject of the view. This is still an island
+// close-up, but leaves enough breathing room for the place to read as part of
+// the globe rather than as a stretched map tile.
+const DISTANCE_PLONGEE = 1.25;
 const DISTANCE_ORBITE = 3.0;
 const DUREE_VOL_S = 2.6;
 
@@ -16,7 +21,8 @@ const formatLong = new Intl.DateTimeFormat('fr-FR', {
 const lisse = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 export function creerPlongee({ camera, controls, timeline, regleSuivi,
-  regleVisibiliteBateau = () => {}, mouillagesParCle, scene, vuesAeriennes, relief }) {
+  regleVisibiliteBateau = () => {}, regleVisibiliteRoute = () => {},
+  mouillagesParCle, scene, relief }) {
   const panneau = document.getElementById('plongee');
   const titre = document.getElementById('plongee-nom');
   const sousTitre = document.getElementById('plongee-dates');
@@ -70,82 +76,70 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     if (cible?.isConnected) requestAnimationFrame(() => cible.focus({ preventScroll: true }));
   }
 
-  // — vue aérienne haute définition du mouillage (préchargée au build : on
-  // connaît d'avance tous les endroits cliquables — idée de Sidney) —
-  const chargeurTexture = new THREE.TextureLoader();
-  let patchAerien = null;
-  let opaciteCible = 0;
+  let repereEscale = null;
 
-  function montreVueAerienne(escale) {
-    const vue = vuesAeriennes[`${escale.nom}|${escale.date_arrivee}`];
-    if (!vue) return;
-    cacheVueAerienne();
-    const texture = chargeurTexture.load(`./${vue.fichier}`);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    texture.anisotropy = 8;
-    const geo = new THREE.SphereGeometry(
-      1, 64, 64,
-      THREE.MathUtils.degToRad(vue.lonMin + 180),
-      THREE.MathUtils.degToRad(vue.lonMax - vue.lonMin),
-      THREE.MathUtils.degToRad(90 - vue.latMax),
-      THREE.MathUtils.degToRad(vue.latMax - vue.latMin));
-    relief.drape(geo, 0.0012); // l'image épouse le terrain sculpté
-    // bord en fondu : la vue HD se dissout dans le globe, pas de carré dur
-    const materiau = new THREE.ShaderMaterial({
-      transparent: true,
-      depthWrite: false,
-      uniforms: {
-        carte: { value: texture },
-        opacite: { value: 0 },
-      },
-      vertexShader: /* glsl */`
-        varying vec2 vUv;
-        void main() {
-          vUv = uv;
-          gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-        }`,
-      fragmentShader: /* glsl */`
-        uniform sampler2D carte;
-        uniform float opacite;
-        varying vec2 vUv;
-        void main() {
-          vec2 bord = smoothstep(0.0, 0.12, vUv) * smoothstep(1.0, 0.88, vUv);
-          vec3 tex = texture2D(carte, vUv).rgb;
-          // l'océan profond de l'imagerie satellite est presque noir :
-          // on le fond dans le bleu du monde carnet, les terres, lagons
-          // et récifs gardent leur vraie image (éclaircie pour l'ambiance)
-          float clarte = max(max(tex.r, tex.g), tex.b);
-          float terre = smoothstep(0.06, 0.22, clarte);
-          vec3 bleuCarnet = vec3(0.46, 0.69, 0.86);
-          vec3 image = pow(tex, vec3(0.88)) * 1.18;
-          vec3 couleur = mix(bleuCarnet, image, terre);
-          gl_FragColor = vec4(couleur, opacite * bord.x * bord.y);
-        }`,
+  function cacheRepereEscale() {
+    if (!repereEscale) return;
+    scene.remove(repereEscale);
+    repereEscale.traverse(element => {
+      element.geometry?.dispose();
+      const materiaux = Array.isArray(element.material) ? element.material : [element.material];
+      materiaux.filter(Boolean).forEach(materiau => materiau.dispose());
     });
-    patchAerien = new THREE.Mesh(geo, materiau);
-    patchAerien.renderOrder = 1;
-    scene.add(patchAerien);
-    opaciteCible = 1;
+    repereEscale = null;
   }
 
-  function cacheVueAerienne() {
-    if (!patchAerien) return;
-    const ancien = patchAerien;
-    patchAerien = null;
-    opaciteCible = 0;
-    // petit fondu de sortie autonome puis nettoyage
-    const fondu = () => {
-      ancien.material.uniforms.opacite.value -= 0.06;
-      if (ancien.material.uniforms.opacite.value <= 0) {
-        scene.remove(ancien);
-        ancien.geometry.dispose();
-        ancien.material.uniforms.carte.value.dispose();
-        ancien.material.dispose();
-      } else {
-        requestAnimationFrame(fondu);
-      }
-    };
-    fondu();
+  function montreRepereEscale(escale) {
+    cacheRepereEscale();
+    const direction = latLonVers3D(escale.lat, escale.lon, 1);
+    const repere = new THREE.Group();
+    repere.position.copy(direction).multiplyScalar(relief.altitude(direction, 0.006));
+    repere.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), direction);
+
+    // The selected place stays in the Carnet language: a soft lagoon glow,
+    // a precise gold ring, and no pasted satellite rectangle.
+    const halo = new THREE.Mesh(new THREE.CircleGeometry(0.016, 48),
+      new THREE.ShaderMaterial({
+        transparent: true,
+        depthWrite: false,
+        side: THREE.DoubleSide,
+        uniforms: { couleur: { value: new THREE.Color(0x8ce7ee) } },
+        vertexShader: /* glsl */`
+          varying vec2 vUv;
+          void main() {
+            vUv = uv;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }`,
+        fragmentShader: /* glsl */`
+          uniform vec3 couleur;
+          varying vec2 vUv;
+          void main() {
+            float r = length((vUv - 0.5) * 2.0);
+            float brume = 1.0 - smoothstep(0.12, 1.0, r);
+            float liseret = smoothstep(0.60, 0.74, r)
+              * (1.0 - smoothstep(0.82, 0.96, r));
+            gl_FragColor = vec4(couleur, brume * 0.14 + liseret * 0.20);
+          }`,
+      }));
+    halo.renderOrder = 4;
+
+    const anneau = new THREE.Mesh(new THREE.RingGeometry(0.0064, 0.0076, 48),
+      new THREE.MeshBasicMaterial({
+        color: 0xd4a142, transparent: true, opacity: 0.94,
+        depthWrite: false, side: THREE.DoubleSide,
+      }));
+    anneau.renderOrder = 5;
+
+    const coeur = new THREE.Mesh(new THREE.CircleGeometry(0.00215, 24),
+      new THREE.MeshBasicMaterial({
+        color: 0xfff4cf, transparent: true, opacity: 0.96,
+        depthWrite: false, side: THREE.DoubleSide,
+      }));
+    coeur.renderOrder = 6;
+
+    repere.add(halo, anneau, coeur);
+    scene.add(repere);
+    repereEscale = repere;
   }
 
   function lanceVol(versDir, versDist, alArrivee) {
@@ -161,10 +155,6 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
   }
 
   function metAJour(dt) {
-    if (patchAerien) {
-      const u = patchAerien.material.uniforms.opacite;
-      if (u.value < opaciteCible) u.value = Math.min(opaciteCible, u.value + dt * 0.9);
-    }
     if (!vol) return;
     vol.t = Math.min(1, vol.t + dt / DUREE_VOL_S);
     const f = lisse(vol.t);
@@ -185,10 +175,8 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     const d1 = formatLong.format(new Date(escale.date_arrivee + 'T12:00:00Z'));
     const d2 = escale.date_depart && escale.date_depart !== escale.date_arrivee
       ? formatLong.format(new Date(escale.date_depart + 'T12:00:00Z')) : null;
-    const credit = vuesAeriennes[`${escale.nom}|${escale.date_arrivee}`]
-      ? ' · vue aérienne © Esri, Maxar' : '';
     sousTitre.textContent =
-      `${d2 ? `du ${d1} au ${d2}` : d1} · ${escale.log_nm.toLocaleString('fr-FR')} milles au log${credit}`;
+      `${d2 ? `du ${d1} au ${d2}` : d1} · ${escale.log_nm.toLocaleString('fr-FR')} milles au log`;
 
     flux.replaceChildren();
     const articles = escale.articles ?? [];
@@ -252,12 +240,16 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     // l'escale : on les cache avant même le premier frame du vol pour éviter
     // qu'ils deviennent gigantesques au-dessus de l'île.
     regleVisibiliteBateau(false);
+    // The itinerary is useful on the overview, but it is visual noise when a
+    // visitor has deliberately entered one place. Hide it before the flight
+    // begins so no bright line cuts across the selected island.
+    regleVisibiliteRoute(false);
     focusAvantPlongee = document.activeElement;
     panneau.hidden = true;
     const complet = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`) ?? escale;
     timeline.vaA(new Date(escale.date_arrivee + 'T12:00:00Z').getTime(), true);
-    controls.minDistance = 1.012;
-    montreVueAerienne(complet);
+    controls.minDistance = DISTANCE_PLONGEE - 0.003;
+    montreRepereEscale(complet);
     lanceVol(latLonVers3D(complet.lat, complet.lon, 1), DISTANCE_PLONGEE, () => {
       rempli(complet);
       panneau.hidden = false;
@@ -274,13 +266,14 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     panneau.hidden = true;
     document.body.classList.remove('plongee-ouverte');
     ouverte = false;
-    cacheVueAerienne();
+    cacheRepereEscale();
     lanceVol(camera.position.clone().normalize(), DISTANCE_ORBITE, () => {
       controls.minDistance = 2.1;
       regleSuivi(true); // on reprend la route en suivant le bateau
       // Le retour est terminé : la maquette et son sillage reprennent
       // ensemble leur place sur la carte générale.
       regleVisibiliteBateau(true);
+      regleVisibiliteRoute(true);
       const cible = focusAvantPlongee?.isConnected && focusAvantPlongee !== document.body
         ? focusAvantPlongee : document.querySelector('#navigation-escales summary, #recit-bouton');
       focusAvantPlongee = null;
