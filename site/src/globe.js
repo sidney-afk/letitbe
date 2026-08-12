@@ -8,6 +8,88 @@ import { RAYON } from './geo.js';
 
 const texLoader = new THREE.TextureLoader();
 
+function textureNeutre() {
+  const texture = new THREE.DataTexture(new Uint8Array([0, 0, 0, 255]), 1, 1);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.needsUpdate = true;
+  return texture;
+}
+
+function mercatorY(latitude) {
+  const lat = THREE.MathUtils.degToRad(THREE.MathUtils.clamp(latitude, -85, 85));
+  return (1 - Math.log(Math.tan(Math.PI / 4 + lat / 2)) / Math.PI) / 2;
+}
+
+function borneDetail(vue) {
+  if (!vue || !Number.isFinite(vue.lonMin) || !Number.isFinite(vue.lonMax)
+    || !Number.isFinite(vue.latMin) || !Number.isFinite(vue.latMax)) return null;
+  let etendueLon = vue.lonMax - vue.lonMin;
+  if (etendueLon <= 0) etendueLon += 360;
+  const centreLon = vue.lonMin + etendueLon / 2;
+  const hautMercator = mercatorY(vue.latMax);
+  const basMercator = mercatorY(vue.latMin);
+  return {
+    centreU: THREE.MathUtils.euclideanModulo((centreLon + 180) / 360, 1),
+    etendueU: etendueLon / 360,
+    centreMercator: (hautMercator + basMercator) / 2,
+    etendueMercator: Math.abs(basMercator - hautMercator),
+  };
+}
+
+// Le détail local est échantillonné dans le matériau du globe, pas dessiné
+// comme une seconde carte au-dessus de lui. Cela conserve l'ancrage 3D et
+// supprime les bords de tuile, même pendant une rotation.
+const GLSL_DETAIL_ILE = /* glsl */`
+  uniform sampler2D carteDetail;
+  uniform float detailActif;
+  uniform float detailOpacite;
+  uniform float detailCentreU;
+  uniform float detailEtendueU;
+  uniform float detailCentreMercator;
+  uniform float detailEtendueMercator;
+
+  float mercatorDetail(float latitude) {
+    return (1.0 - log(tan(0.78539816339 + latitude * 0.5)) / 3.14159265359) * 0.5;
+  }
+
+  float deltaCyclique(float valeur) {
+    return valeur - floor(valeur + 0.5);
+  }
+
+  vec3 melangeDetailIle(vec3 fond, vec2 uv, vec3 positionMonde) {
+    if (detailActif < 0.5 || detailOpacite <= 0.001) return fond;
+
+    float latitude = asin(clamp(normalize(positionMonde).y, -0.999999, 0.999999));
+    float u = deltaCyclique(uv.x - detailCentreU) / max(detailEtendueU, 0.00001) + 0.5;
+    float v = (mercatorDetail(latitude) - detailCentreMercator)
+      / max(detailEtendueMercator, 0.00001) + 0.5;
+    vec2 detailUV = vec2(u, v);
+
+    // La zone centrale est entièrement détaillée ; le raccord se fait loin de
+    // la caméra dans une large marge. Il ne peut donc pas lire comme un carré.
+    float bordU = smoothstep(0.0, 0.06, u) * (1.0 - smoothstep(0.94, 1.0, u));
+    float bordV = smoothstep(0.0, 0.06, v) * (1.0 - smoothstep(0.94, 1.0, v));
+    float raccord = bordU * bordV * detailOpacite;
+    if (raccord <= 0.001) return fond;
+
+    vec3 brut = texture2D(carteDetail, clamp(detailUV, 0.0, 1.0)).rgb;
+    // The asset is a fixed reflectance rendering produced from Sentinel's
+    // raw red/green/blue bands. Preserve its real reef, shoreline, and water
+    // colours rather than applying an illustrated-map recolour in the shader.
+    return mix(fond, brut, raccord);
+  }
+`;
+
+function attendImage(url) {
+  return new Promise((resolve, reject) => {
+    const image = new Image();
+    image.decoding = 'async';
+    image.onload = () => resolve(image);
+    image.onerror = () => reject(new Error(`Image locale indisponible : ${url}`));
+    image.src = url;
+  });
+}
+
 function charge(url, espace = THREE.SRGBColorSpace) {
   const t = texLoader.load(url);
   t.colorSpace = espace;
@@ -53,9 +135,24 @@ export function creerGlobe(relief) {
     carteNuit: { value: nuit },
     carteSpec: { value: spec },
     carteNormales: { value: normales },
+    // Une seule texture locale est injectée dans le matériau du globe à la
+    // fois. Ainsi, une escale détaillée reste collée à la sphère au lieu de
+    // devenir un second carré posé au-dessus de la carte.
+    carteDetail: { value: textureNeutre() },
+    detailActif: { value: 0 },
+    detailOpacite: { value: 0 },
+    detailCentreU: { value: 0.5 },
+    detailEtendueU: { value: 1 },
+    detailCentreMercator: { value: 0.5 },
+    detailEtendueMercator: { value: 1 },
     dirSoleil: { value: new THREE.Vector3(1, 0, 0) },
     meteoLumiere: { value: 1 },  // grisaille du jour (météo vécue)
   };
+  const textureDetailNeutre = uniforms.carteDetail.value;
+  let textureDetail = null;
+  let demandeDetail = 0;
+  let cibleDetail = 0;
+  let fichierDetail = null;
   const meteoNuages = { value: 1 };
   const cibleMeteo = { nuages: 1, lumiere: 1 };
 
@@ -67,6 +164,13 @@ export function creerGlobe(relief) {
     uniforms: {
       carteCarnet: { value: carnet },
       carteSpec: uniforms.carteSpec,
+      carteDetail: uniforms.carteDetail,
+      detailActif: uniforms.detailActif,
+      detailOpacite: uniforms.detailOpacite,
+      detailCentreU: uniforms.detailCentreU,
+      detailEtendueU: uniforms.detailEtendueU,
+      detailCentreMercator: uniforms.detailCentreMercator,
+      detailEtendueMercator: uniforms.detailEtendueMercator,
       dirSoleil: uniforms.dirSoleil,
       meteoLumiere: uniforms.meteoLumiere,
     },
@@ -89,6 +193,7 @@ export function creerGlobe(relief) {
       varying vec2 vUv;
       varying vec3 vNormaleM;
       varying vec3 vPosM;
+      ${GLSL_DETAIL_ILE}
       void main() {
         vec3 n = normalize(vNormaleM);
         // Le lavis du JPG Carnet n'est pas périodique : ses deux bords du
@@ -140,6 +245,7 @@ export function creerGlobe(relief) {
         // soleil supprime toute bande longitudinale, même à grande échelle.
         vec3 eau = tex * 1.38 * vec3(1.0, 0.985, 0.97);
         vec3 couleur = mix(terre, eau, ocean);
+        couleur = melangeDetailIle(couleur, vUv, vPosM);
 
         vec3 versCam = normalize(cameraPosition - vPosM);
 
@@ -175,6 +281,7 @@ export function creerGlobe(relief) {
         varying vec2 vUv;
         varying vec3 vNormaleM;
         varying vec3 vPosM;
+        ${GLSL_DETAIL_ILE}
 
         void main() {
           vec3 n = normalize(vNormaleM);
@@ -202,6 +309,7 @@ export function creerGlobe(relief) {
                      + cJour * 0.06;
 
           vec3 couleur = mix(cNuit, cJour, jourMix);
+          couleur = melangeDetailIle(couleur, vUv, vPosM);
 
           // teinte atmosphérique sur le limbe
           float fresnel = pow(1.0 - max(dot(n, versCam), 0.0), 2.6);
@@ -291,6 +399,75 @@ export function creerGlobe(relief) {
   );
   groupe.add(halo);
 
+  function appliqueBorneDetail(borne) {
+    if (!borne) return false;
+    uniforms.detailCentreU.value = borne.centreU;
+    uniforms.detailEtendueU.value = borne.etendueU;
+    uniforms.detailCentreMercator.value = borne.centreMercator;
+    uniforms.detailEtendueMercator.value = borne.etendueMercator;
+    return true;
+  }
+
+  function libereTextureDetail() {
+    if (!textureDetail) return;
+    textureDetail.dispose();
+    textureDetail = null;
+    uniforms.carteDetail.value = textureDetailNeutre;
+    fichierDetail = null;
+  }
+
+  // L'imagerie locale est volontairement chargée dans le shader de la Terre :
+  // ni géométrie rapportée ni vignette n'ont alors de bord, de profondeur ou
+  // de projection différente de la carte principale.
+  async function montreDetail(vue) {
+    // This is deliberately curated per anchorage rather than guessed from
+    // file size or pixels at runtime: faint atolls can be genuinely useful,
+    // while an otherwise large file can still be only dark open ocean.
+    const borne = borneDetail(vue);
+    if (!vue?.detailPlongee || !borne || !vue.fichier) {
+      cacheDetail();
+      return false;
+    }
+    const demande = ++demandeDetail;
+    cibleDetail = 0;
+    try {
+      const image = await attendImage(`./${vue.fichier}`);
+      if (demande !== demandeDetail) return false;
+      const texture = new THREE.Texture(image);
+      texture.colorSpace = THREE.SRGBColorSpace;
+      // The aerial mosaics are assembled north-to-south (Web-Mercator image
+      // coordinates). Unlike the equirectangular globe JPGs, they must keep
+      // their top row at v=0 for the Mercator lookup above.
+      texture.flipY = false;
+      texture.wrapS = THREE.ClampToEdgeWrapping;
+      texture.wrapT = THREE.ClampToEdgeWrapping;
+      texture.anisotropy = 8;
+      texture.needsUpdate = true;
+      // Do not remap the previous texture while this image is decoding. The
+      // bounds and texture become visible as one atomic detail state.
+      appliqueBorneDetail(borne);
+      libereTextureDetail();
+      textureDetail = texture;
+      uniforms.carteDetail.value = texture;
+      uniforms.detailActif.value = 1;
+      cibleDetail = 1;
+      fichierDetail = vue.fichier;
+      return true;
+    } catch {
+      if (demande === demandeDetail) {
+        uniforms.detailActif.value = 0;
+        cibleDetail = 0;
+        fichierDetail = null;
+      }
+      return false;
+    }
+  }
+
+  function cacheDetail() {
+    demandeDetail += 1;
+    cibleDetail = 0;
+  }
+
   return {
     groupe,
     metAJourSoleil(dir) { uniforms.dirSoleil.value.copy(dir); },
@@ -304,11 +481,27 @@ export function creerGlobe(relief) {
       cibleMeteo.nuages = nuages;
       cibleMeteo.lumiere = lumiere;
     },
+    montreDetail,
+    cacheDetail,
+    etatDetail() {
+      return {
+        actif: Boolean(uniforms.detailActif.value),
+        opacite: uniforms.detailOpacite.value,
+        fichier: fichierDetail,
+      };
+    },
     anime(dt) {
       meshNuages.rotation.y += dt * 0.0035;
       const k = Math.min(1, dt * 1.2); // la météo change en douceur
       meteoNuages.value += (cibleMeteo.nuages - meteoNuages.value) * k;
       uniforms.meteoLumiere.value += (cibleMeteo.lumiere - uniforms.meteoLumiere.value) * k;
+      const kDetail = Math.min(1, dt * 4.5);
+      uniforms.detailOpacite.value += (cibleDetail - uniforms.detailOpacite.value) * kDetail;
+      if (!cibleDetail && uniforms.detailOpacite.value < 0.002) {
+        uniforms.detailOpacite.value = 0;
+        uniforms.detailActif.value = 0;
+        libereTextureDetail();
+      }
     },
   };
 }

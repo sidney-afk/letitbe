@@ -11,7 +11,11 @@ import { latLonVers3D } from './geo.js';
 // close-up, but leaves enough breathing room for the place to read as part of
 // the globe rather than as a stretched map tile.
 const DISTANCE_PLONGEE = 1.25;
+// A geo-registered source image fills this tighter framing without forcing a
+// pasted overlay or magnifying the painted world map into visible pixels.
+const DISTANCE_PLONGEE_DETAIL = 1.02;
 const DISTANCE_ORBITE = 3.0;
+const FOV_PLONGEE_DETAIL = 5;
 const DUREE_VOL_S = 2.6;
 
 const formatLong = new Intl.DateTimeFormat('fr-FR', {
@@ -22,6 +26,7 @@ const lisse = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 export function creerPlongee({ camera, controls, timeline, regleSuivi,
   regleVisibiliteBateau = () => {}, regleVisibiliteRoute = () => {},
+  regleDetailIle = () => false, cacheDetailIle = () => {}, vuesAeriennes = {},
   mouillagesParCle, scene, relief }) {
   const panneau = document.getElementById('plongee');
   const titre = document.getElementById('plongee-nom');
@@ -37,6 +42,12 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
   let ouverte = false;
   let focusAvantPlongee = null;
   let focusAvantLightbox = null;
+  let focaleAvantPlongee = camera.fov;
+  // Loading a local image is asynchronous. A later selection (or a return to
+  // the map) must win over an older request so a delayed image can never
+  // start the wrong flight.
+  let demandePlongee = 0;
+  let chargement = false;
 
   const elementsFocusables = conteneur => [...conteneur.querySelectorAll(
     'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), '
@@ -142,13 +153,15 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     repereEscale = repere;
   }
 
-  function lanceVol(versDir, versDist, alArrivee) {
+  function lanceVol(versDir, versDist, alArrivee, versFov = camera.fov) {
     vol = {
       t: 0,
       departDir: camera.position.clone().normalize(),
       departDist: camera.position.length(),
+      departFov: camera.fov,
       arriveeDir: versDir.clone().normalize(),
       arriveeDist: versDist,
+      arriveeFov: versFov,
       alArrivee,
     };
     controls.enabled = false;
@@ -161,6 +174,8 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     const dir = vol.departDir.clone().lerp(vol.arriveeDir, f).normalize();
     const dist = THREE.MathUtils.lerp(vol.departDist, vol.arriveeDist, f);
     camera.position.copy(dir.multiplyScalar(dist));
+    camera.fov = THREE.MathUtils.lerp(vol.departFov, vol.arriveeFov, f);
+    camera.updateProjectionMatrix();
     camera.lookAt(0, 0, 0);
     if (vol.t >= 1) {
       const fin = vol.alArrivee;
@@ -235,7 +250,9 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     }
   }
 
-  function vers(escale) {
+  async function vers(escale) {
+    const demande = ++demandePlongee;
+    chargement = true;
     // La maquette et son sillage ne font pas partie de la vue rapprochée de
     // l'escale : on les cache avant même le premier frame du vol pour éviter
     // qu'ils deviennent gigantesques au-dessus de l'île.
@@ -244,30 +261,60 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     // visitor has deliberately entered one place. Hide it before the flight
     // begins so no bright line cuts across the selected island.
     regleVisibiliteRoute(false);
+    // Release any earlier close-up before choosing this anchorage. The globe
+    // owns at most one local image and it always remains a real surface map.
+    cacheDetailIle();
     focusAvantPlongee = document.activeElement;
+    focaleAvantPlongee = camera.fov;
     panneau.hidden = true;
     const complet = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`) ?? escale;
+    const vue = vuesAeriennes[`${complet.nom}|${complet.date_arrivee}`];
+    // Only anchorage imagery that has passed a human visual review gets the
+    // cinematic close framing. A file merely existing is not enough: weak
+    // atolls retain the clean illustrated globe and their journal instead of
+    // becoming a blurry ocean close-up.
+    const detailDisponible = Boolean(vue?.detailPlongee && await regleDetailIle(vue));
+    if (demande !== demandePlongee) return;
+    chargement = false;
+    const directionDetail = detailDisponible && Number.isFinite(vue?.focusLat)
+      && Number.isFinite(vue?.focusLon)
+      ? latLonVers3D(vue.focusLat, vue.focusLon, 1) : null;
+    const distanceCible = detailDisponible ? DISTANCE_PLONGEE_DETAIL : DISTANCE_PLONGEE;
+    const focaleCible = detailDisponible ? FOV_PLONGEE_DETAIL : focaleAvantPlongee;
     timeline.vaA(new Date(escale.date_arrivee + 'T12:00:00Z').getTime(), true);
-    controls.minDistance = DISTANCE_PLONGEE - 0.003;
-    montreRepereEscale(complet);
-    lanceVol(latLonVers3D(complet.lat, complet.lon, 1), DISTANCE_PLONGEE, () => {
+    controls.minDistance = distanceCible - 0.003;
+    // The real island image is its own focal point. Keep the gold marker only
+    // for escales without a reliable local source, where it remains useful
+    // rather than covering the shoreline with a large target-like circle.
+    if (detailDisponible) cacheRepereEscale();
+    else montreRepereEscale(complet);
+    lanceVol(directionDetail ?? latLonVers3D(complet.lat, complet.lon, 1), distanceCible, () => {
+      if (demande !== demandePlongee) return;
       rempli(complet);
       panneau.hidden = false;
       document.body.classList.add('plongee-ouverte');
       flux.scrollTop = 0;
       ouverte = true;
       boutonRemonter.focus({ preventScroll: true });
-    });
+    }, focaleCible);
   }
 
   function remonte() {
-    if (vol) return;
+    const demande = ++demandePlongee;
+    chargement = false;
+    // A return requested during the inbound flight replaces that flight. This
+    // keeps a stale arrival from opening the journal after the visitor has
+    // already changed their mind.
+    vol = null;
+    controls.enabled = true;
     fermeLightbox();
     panneau.hidden = true;
     document.body.classList.remove('plongee-ouverte');
     ouverte = false;
     cacheRepereEscale();
+    cacheDetailIle();
     lanceVol(camera.position.clone().normalize(), DISTANCE_ORBITE, () => {
+      if (demande !== demandePlongee) return;
       controls.minDistance = 2.1;
       regleSuivi(true); // on reprend la route en suivant le bateau
       // Le retour est terminé : la maquette et son sillage reprennent
@@ -278,7 +325,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
         ? focusAvantPlongee : document.querySelector('#navigation-escales summary, #recit-bouton');
       focusAvantPlongee = null;
       cible?.focus({ preventScroll: true });
-    });
+    }, focaleAvantPlongee);
   }
 
   boutonRemonter.addEventListener('click', remonte);
@@ -290,7 +337,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
       } else gardeFocus(e, lightbox);
       return;
     }
-    if (ouverte && e.key === 'Escape') {
+    if ((ouverte || chargement || vol) && e.key === 'Escape') {
       e.preventDefault();
       remonte();
     } else if (ouverte) gardeFocus(e, panneau);
@@ -306,5 +353,6 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     metAJour,
     get enVol() { return vol !== null; },
     get ouverte() { return ouverte; },
+    get enChargement() { return chargement; },
   };
 }
