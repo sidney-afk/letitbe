@@ -143,11 +143,11 @@ async function setRepresentativeState(page, scenario) {
   }
 
   if (scenario.plongee) {
-    await page.evaluate((nom) => {
+    await page.evaluate(async (nom) => {
       const { plongee, route } = window.__sillage;
       const escale = route.escales.find(item => item.nom === nom);
       if (!escale) throw new Error(`Escale QA introuvable : ${nom}`);
-      plongee.vers(escale);
+      await plongee.vers(escale);
       // Advance the exposed flight controller directly. Waiting on wall-clock
       // animation makes headless WebGL throttling change the measured state.
       plongee.metAJour(10);

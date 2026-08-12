@@ -1,0 +1,7 @@
+Makogai detail image
+
+Source: Sentinel-2 L2A / Copernicus Sentinel data, scene S2C_60KYF_20260507_0_L2A.
+Contains modified Copernicus Sentinel data 2026.
+The scene was cropped, reprojected, and encoded for Le Sillage.
+Licence: Copernicus Sentinel Data Legal Notice
+https://cds.climate.copernicus.eu/licences/ec-sentinel

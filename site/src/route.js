@@ -238,6 +238,7 @@ export function creerRoute(voyage, routeData, relief) {
     const hauteur = Math.max(1, innerHeight);
     const compact = largeur < 700 || hauteur < 520;
     const recitActif = document.body.classList.contains('recit-actif');
+    const plongeeActive = document.body.classList.contains('plongee-ouverte');
     const zonesEtiquettes = etiquettes
       .filter(etiquette => etiquette.affichee && etiquette.rectangle)
       .map(etiquette => etiquette.rectangle);
@@ -246,6 +247,33 @@ export function creerRoute(voyage, routeData, relief) {
     matItineraire.linewidth = epaisseurRoute;
     matItineraire.opacity = (compact ? 0.78 : 0.9) * (recitActif ? 0.58 : 1);
     matChevrons.opacity = (compact ? 0.76 : 0.88) * (recitActif ? 0.58 : 1);
+
+    // Entering a place hides the itinerary group immediately. Keep it fully
+    // invisible during every following animation frame as well: stale
+    // instanced-mesh matrices must never flash as gold rings over aerial
+    // shoreline imagery.
+    if (plongeeActive || !groupe.visible) {
+      anneaux.visible = false;
+      coeurs.visible = false;
+      cibles.visible = false;
+      chevrons.visible = false;
+      croix.visible = false;
+      dernierEtat = {
+        marqueursVisibles: 0,
+        marqueursTotal: escales.length,
+        chevronsVisibles: 0,
+        chevronsTotal: directions.length,
+        pasRoute: 1,
+        tailleRoutePx: Number((epaisseurRoute / ratioPixels).toFixed(1)),
+        marqueurs: [],
+      };
+      return;
+    }
+    itineraire.visible = true;
+    anneaux.visible = true;
+    coeurs.visible = true;
+    cibles.visible = true;
+    chevrons.visible = true;
 
     directionCamera.copy(camera.position).normalize();
     const centres = [];

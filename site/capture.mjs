@@ -44,11 +44,11 @@ if (zoom) {
 }
 const plonge = action.match(/plonge=([^|]+)/);
 if (plonge) {
-  await page.evaluate((nom) => {
+  await page.evaluate(async (nom) => {
     const { plongee, route } = window.__sillage;
     const escale = route.escales.find(e => e.nom === nom);
     if (!escale) throw new Error(`escale introuvable : ${nom}`);
-    plongee.vers(escale);
+    await plongee.vers(escale);
   }, plonge[1].trim());
 }
 const regarde = action.match(/regarde=(-?[\d.]+),(-?[\d.]+)/);

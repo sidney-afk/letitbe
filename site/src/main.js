@@ -212,9 +212,12 @@ modeBouton.addEventListener('click', () => {
   regleMode(mode === 'carnet' ? 'photo' : 'carnet');
 });
 
-const [routeData, mouillagesData, meteo] = await Promise.all([
+const [routeData, mouillagesData, vuesAeriennes, meteo] = await Promise.all([
   fetch('./data/route.json').then(r => r.json()),
   fetch('./data/mouillages.json').then(r => r.json()),
+  // The close-up imagery is optional: a missing manifest must leave the
+  // journal's clean selected-place fallback intact rather than block launch.
+  fetch('./data/vues_aeriennes.json').then(r => r.ok ? r.json() : {}).catch(() => ({})),
   creerMeteo(),
 ]);
 const voyage = construireVoyage(routeData);
@@ -309,7 +312,16 @@ applique(timeline.t);
 const plongee = creerPlongee({
   camera, controls, timeline, regleSuivi, mouillagesParCle, scene,
   relief, regleVisibiliteBateau: bateau.regleVisibilite,
-  regleVisibiliteRoute: affiche => { route.groupe.visible = Boolean(affiche); },
+  regleVisibiliteRoute: affiche => {
+    route.groupe.visible = Boolean(affiche);
+    if (affiche) return;
+    // Do not rely on the next render loop alone: an island image must never
+    // get one frame of stale route rings while its detail texture arrives.
+    route.orientePerles(camera, 0, []);
+  },
+  vuesAeriennes,
+  regleDetailIle: vue => globe.montreDetail(vue),
+  cacheDetailIle: () => globe.cacheDetail(),
 });
 const recit = creerRecit({ timeline, regleSuivi, voyage });
 creerTraversee({ timeline, voyage, mouillagesParCle });
@@ -332,7 +344,7 @@ if (selectEscales && boutonOuvrirEscale) {
     const escale = route.escales[Number(selectEscales.value)];
     if (!escale?.date_arrivee) return;
     if (recit.actif) recit.sort();
-    plongee.vers(escale);
+    void plongee.vers(escale);
   });
 }
 
@@ -400,8 +412,8 @@ canvas.addEventListener('click', (e) => {
   chercheSurvol(); // le survol throttlé peut être périmé au moment du clic
   if (escaleSurvolee?.date_arrivee) {
     if (recit.actif) recit.sort(); // on quitte le récit pour plonger
-    plongee.vers(escaleSurvolee);
-  } else if (plongee.ouverte) {
+    void plongee.vers(escaleSurvolee);
+  } else if (plongee.ouverte || plongee.enVol || plongee.enChargement) {
     plongee.remonte(); // cliquer ailleurs referme le carnet
   }
 });
@@ -410,6 +422,16 @@ const formatCourt = new Intl.DateTimeFormat('fr-FR', {
   day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC',
 });
 function chercheSurvol() {
+  // Route targets are intentionally absent while a place is loading, flying
+  // in, or open. Raycasting the hidden instanced mesh could otherwise revive
+  // an old tooltip/click target during the async image transition.
+  if (!route.groupe.visible || plongee.enVol || plongee.ouverte || plongee.enChargement) {
+    escaleSurvolee = null;
+    route.regleSurvol(-1);
+    infobulle.hidden = true;
+    canvas.style.cursor = '';
+    return;
+  }
   raycaster.setFromCamera(pointeur, camera);
   const hits = raycaster.intersectObject(route.cibles);
   const hit = hits.find(h => h.instanceId !== undefined && route.estVisible(h.instanceId));
@@ -435,7 +457,7 @@ function chercheSurvol() {
 addEventListener('wheel', (e) => {
   if (e.target === canvas) return; // OrbitControls s'en occupe déjà
   if (e.target.closest?.('#plongee, #recit-carte, #lightbox')) return;
-  if (plongee.enVol) return;
+  if (plongee.enVol || plongee.enChargement) return;
   intro = 1;
   const d = camera.position.length()
     * Math.exp(e.deltaY * (e.deltaMode === 1 ? 0.05 : 0.0013));
@@ -453,7 +475,7 @@ function redimensionne() {
   camera.updateProjectionMatrix();
   route.surResize(w, h);
   const nouvelAccueil = distanceAccueilPourViewport();
-  if (intro >= 1 && !timeline.enLecture && !plongee.enVol && !plongee.ouverte
+  if (intro >= 1 && !timeline.enLecture && !plongee.enVol && !plongee.ouverte && !plongee.enChargement
     && Math.abs(distanceAvant - derniereDistanceAccueil) < 0.65) {
     camera.position.setLength(nouvelAccueil);
   }
@@ -487,7 +509,7 @@ function rectangleEcranBateau() {
 
 // poignée de débogage (capture.mjs, console)
 window.__sillage = {
-  camera, controls, timeline, voyage, bateau, plongee, route, recit, etoiles,
+  camera, controls, timeline, voyage, bateau, plongee, route, recit, etoiles, globe,
   etiquettes, coton, renderer,
   sauteIntro() {
     intro = 1;
@@ -522,7 +544,9 @@ renderer.setAnimationLoop(() => {
 
   timeline.metAJour(dt * 1000);
   plongee.metAJour(dt);
-  if (suivre && !suiviEnPause && !plongee.enVol) suitLeBateau(Math.min(1, dt * 3.5));
+  if (suivre && !suiviEnPause && !plongee.enVol && !plongee.enChargement) {
+    suitLeBateau(Math.min(1, dt * 3.5));
+  }
   if (timeline.enLecture && !lectureAvant) regleSuivi(true); // la Traversée embarque
   lectureAvant = timeline.enLecture;
   document.body.classList.toggle('lecture', timeline.enLecture);

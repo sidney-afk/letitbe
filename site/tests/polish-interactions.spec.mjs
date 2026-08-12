@@ -60,7 +60,7 @@ test('la rotation est fortement amortie pendant une plongée puis revient à la 
     const { plongee, route } = window.__sillage;
     const escale = route.escales.find(item => item.nom === 'Marquises - Nuku Hiva');
     if (!escale) throw new Error('Escale de test introuvable');
-    plongee.vers(escale);
+    await plongee.vers(escale);
     plongee.metAJour(10);
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   });
@@ -77,6 +77,39 @@ test('la rotation est fortement amortie pendant une plongée puis revient à la 
 
   const vitesseRetour = await page.evaluate(() => window.__sillage.controls.rotateSpeed);
   expect(vitesseRetour).toBeGreaterThan(vitessePlongee * 10);
+});
+
+test('une escale riche emploie son imagerie locale sans anneaux, puis la libère au retour', async ({ page }) => {
+  await ouvreExperience(page, { width: 1366, height: 768 });
+
+  await page.evaluate(async () => {
+    const { plongee, route } = window.__sillage;
+    const escale = route.escales.find(item => item.nom === 'Fidji - Makogai');
+    if (!escale) throw new Error('Escale Makogai introuvable');
+    await plongee.vers(escale);
+    plongee.metAJour(10);
+    await new Promise(resolve => setTimeout(resolve, 150));
+  });
+
+  await expect.poll(() => page.evaluate(() => window.__sillage.globe.etatDetail()))
+    .toMatchObject({ actif: true, fichier: 'media/aerien-detail/makogai-sentinel-2026-05-07-detail.webp' });
+  await expect.poll(() => page.evaluate(() => ({
+    routeVisible: window.__sillage.route.groupe.visible,
+    route: window.__sillage.route.etat(),
+    fov: window.__sillage.camera.fov,
+  }))).toMatchObject({
+    routeVisible: false,
+    route: { marqueursVisibles: 0, chevronsVisibles: 0 },
+    fov: 5,
+  });
+
+  await page.evaluate(async () => {
+    const { plongee } = window.__sillage;
+    plongee.remonte();
+    plongee.metAJour(10);
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  });
+  await expect.poll(() => page.evaluate(() => window.__sillage.globe.etatDetail().actif)).toBe(false);
 });
 
 test('la maquette importée est exactement à la moitié de son ancienne échelle fixe', async ({ page }) => {
@@ -141,11 +174,11 @@ test('faire glisser le globe ne déclenche pas une escale, un clic intentionnel 
 
 test('la lightbox piège le focus, se ferme avec Échap et le rend à la photo', async ({ page }) => {
   await ouvreExperience(page, { width: 1366, height: 768 });
-  await page.evaluate(() => {
+  await page.evaluate(async () => {
     const { plongee, route } = window.__sillage;
     const escale = route.escales.find(item => item.nom === 'Marquises - Nuku Hiva');
     if (!escale) throw new Error('Escale de test introuvable');
-    plongee.vers(escale);
+    await plongee.vers(escale);
     plongee.metAJour(10);
   });
   await expect(page.locator('#plongee')).toBeVisible();

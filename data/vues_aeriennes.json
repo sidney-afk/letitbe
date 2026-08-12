@@ -273,11 +273,15 @@
   "latMin": -17.140790393316646
  },
  "Fidji - Makogai|2010-10-03": {
-  "fichier": "media/aerien/41.webp",
-  "lonMin": 178.59375,
-  "lonMax": 179.47265625,
-  "latMax": -16.972741019999017,
-  "latMin": -17.811456088564476
+  "fichier": "media/aerien-detail/makogai-sentinel-2026-05-07-detail.webp",
+  "detailPlongee": true,
+  "lonMin": 178.757404331811,
+  "lonMax": 179.188595668189,
+  "latMax": -17.247196047558,
+  "latMin": -17.658538284963,
+  "focusLat": -17.463,
+  "focusLon": 178.985,
+  "source": "Contains modified Copernicus Sentinel data 2026"
  },
  "Fidji - Naigani|2010-10-05": {
   "fichier": "media/aerien/42.webp",
