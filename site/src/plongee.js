@@ -5,17 +5,16 @@
 import * as THREE from 'three';
 import { latLonVers3D } from './geo.js';
 
-// A distance of 1.014 put the camera only a few millimetres above the
-// miniature. That magnified both the base map and a one-degree aerial tile
-// until their pixels became the subject of the view. This is still an island
-// close-up, but leaves enough breathing room for the place to read as part of
-// the globe rather than as a stretched map tile.
-const DISTANCE_PLONGEE = 1.25;
-// A geo-registered source image fills this tighter framing without forcing a
-// pasted overlay or magnifying the painted world map into visible pixels.
+// A stop without an explicitly reviewed close-up is an arrival in the atlas,
+// not a pretend satellite fly-over. Keep enough of the painted globe in view
+// that coastlines stay graceful instead of exposing the base map's pixels.
+const DISTANCE_PLONGEE = 1.90;
+// A source marked `detailPlongee` has passed the separate imagery gate and
+// earns this tighter, cinematic crop. Existing archive tiles that have not
+// passed that gate retain the calm illustrated selected-place fallback below.
 const DISTANCE_PLONGEE_DETAIL = 1.02;
-const DISTANCE_ORBITE = 3.0;
 const FOV_PLONGEE_DETAIL = 5;
+const DISTANCE_ORBITE = 3.0;
 const DUREE_VOL_S = 2.6;
 
 const formatLong = new Intl.DateTimeFormat('fr-FR', {
@@ -27,12 +26,15 @@ const lisse = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 export function creerPlongee({ camera, controls, timeline, regleSuivi,
   regleVisibiliteBateau = () => {}, regleVisibiliteRoute = () => {},
   regleDetailIle = () => false, cacheDetailIle = () => {}, vuesAeriennes = {},
-  mouillagesParCle, scene, relief }) {
+  herosEscales = {}, mouillagesParCle, scene, relief }) {
   const panneau = document.getElementById('plongee');
   const titre = document.getElementById('plongee-nom');
   const sousTitre = document.getElementById('plongee-dates');
   const flux = document.getElementById('plongee-flux');
   const boutonRemonter = document.getElementById('remonter');
+  const legendeScene = document.getElementById('plongee-scene-caption');
+  const legendeSceneMobile = document.getElementById('plongee-scene-caption-mobile');
+  const legendeSceneA11y = document.getElementById('plongee-scene-caption-a11y');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = lightbox.querySelector('img');
   const lightboxLegende = lightbox.querySelector('figcaption');
@@ -107,50 +109,68 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     repere.position.copy(direction).multiplyScalar(relief.altitude(direction, 0.006));
     repere.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), direction);
 
-    // The selected place stays in the Carnet language: a soft lagoon glow,
-    // a precise gold ring, and no pasted satellite rectangle.
-    const halo = new THREE.Mesh(new THREE.CircleGeometry(0.016, 48),
-      new THREE.ShaderMaterial({
-        transparent: true,
-        depthWrite: false,
-        side: THREE.DoubleSide,
-        uniforms: { couleur: { value: new THREE.Color(0x8ce7ee) } },
-        vertexShader: /* glsl */`
-          varying vec2 vUv;
-          void main() {
-            vUv = uv;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-          }`,
-        fragmentShader: /* glsl */`
-          uniform vec3 couleur;
-          varying vec2 vUv;
-          void main() {
-            float r = length((vUv - 0.5) * 2.0);
-            float brume = 1.0 - smoothstep(0.12, 1.0, r);
-            float liseret = smoothstep(0.60, 0.74, r)
-              * (1.0 - smoothstep(0.82, 0.96, r));
-            gl_FragColor = vec4(couleur, brume * 0.14 + liseret * 0.20);
-          }`,
-      }));
-    halo.renderOrder = 4;
+    // A reviewed detail can stand on its own. The illustrated atlas needs a
+    // modest, surface-bound wayfinder instead: a gold mast and red pennant,
+    // deliberately unlike a loading bullseye or a satellite target.
+    const matOr = new THREE.MeshBasicMaterial({
+      color: 0xc89032, transparent: true, opacity: 0.98,
+      depthWrite: false, side: THREE.DoubleSide,
+    });
+    const matRouge = new THREE.MeshBasicMaterial({
+      color: 0xbb4733, transparent: true, opacity: 0.98,
+      depthWrite: false, side: THREE.DoubleSide,
+    });
+    const matIvoire = new THREE.MeshBasicMaterial({
+      color: 0xfff3cf, transparent: true, opacity: 0.96,
+      depthWrite: false, side: THREE.DoubleSide,
+    });
 
-    const anneau = new THREE.Mesh(new THREE.RingGeometry(0.0064, 0.0076, 48),
-      new THREE.MeshBasicMaterial({
-        color: 0xd4a142, transparent: true, opacity: 0.94,
-        depthWrite: false, side: THREE.DoubleSide,
-      }));
-    anneau.renderOrder = 5;
+    const amarre = new THREE.Mesh(new THREE.CircleGeometry(0.0022, 20), matIvoire);
+    amarre.position.set(-0.0037, -0.0036, 0.0008);
+    amarre.renderOrder = 4;
 
-    const coeur = new THREE.Mesh(new THREE.CircleGeometry(0.00215, 24),
-      new THREE.MeshBasicMaterial({
-        color: 0xfff4cf, transparent: true, opacity: 0.96,
-        depthWrite: false, side: THREE.DoubleSide,
-      }));
-    coeur.renderOrder = 6;
+    const mat = new THREE.Mesh(new THREE.CylinderGeometry(0.00055, 0.00055, 0.014, 8), matOr);
+    // The group has its local Z aligned with the globe normal, so turn the
+    // cylinder from its default Y axis into a truly upright little mast.
+    mat.rotation.x = Math.PI / 2;
+    mat.position.z = 0.007;
+    mat.renderOrder = 5;
 
-    repere.add(halo, anneau, coeur);
+    const formePavillon = new THREE.Shape();
+    formePavillon.moveTo(0, 0.0132);
+    formePavillon.lineTo(0.0102, 0.0095);
+    formePavillon.lineTo(0, 0.0058);
+    formePavillon.closePath();
+    const pavillon = new THREE.Mesh(new THREE.ShapeGeometry(formePavillon), matRouge);
+    pavillon.position.z = 0.0009;
+    pavillon.renderOrder = 6;
+
+    repere.add(amarre, mat, pavillon);
+    repere.userData.type = 'pavillon';
     scene.add(repere);
     repereEscale = repere;
+  }
+
+  function cacheLegendeScene() {
+    for (const legende of [legendeScene, legendeSceneMobile]) {
+      if (!legende) continue;
+      legende.hidden = true;
+      legende.textContent = '';
+    }
+    if (legendeSceneA11y) legendeSceneA11y.textContent = '';
+    document.body.classList.remove('plongee-escale-illustree');
+  }
+
+  function montreLegendeScene(escale) {
+    const date = formatLong.format(new Date(`${escale.date_arrivee}T12:00:00Z`));
+    const texte = `À l’ancre · ${escale.nom} · ${date}`;
+    for (const legende of [legendeScene, legendeSceneMobile]) {
+      if (!legende) continue;
+      legende.textContent = texte;
+      legende.hidden = false;
+    }
+    if (legendeSceneA11y) legendeSceneA11y.textContent = texte;
+    document.body.classList.add('plongee-escale-illustree');
   }
 
   function lanceVol(versDir, versDist, alArrivee, versFov = camera.fov) {
@@ -165,6 +185,19 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
       alArrivee,
     };
     controls.enabled = false;
+  }
+
+  function profilDetail(vue) {
+    // Per-view framing lets a reviewed source keep a narrow reef or a broad
+    // island in the safe portion of its own imagery. This helper is called
+    // only after the source has passed the detail gate.
+    const distance = Number.isFinite(vue?.detailDistance)
+      && vue.detailDistance > 1.001 && vue.detailDistance < DISTANCE_ORBITE
+      ? vue.detailDistance : DISTANCE_PLONGEE_DETAIL;
+    const fov = Number.isFinite(vue?.detailFov)
+      && vue.detailFov >= 3 && vue.detailFov <= 55
+      ? vue.detailFov : FOV_PLONGEE_DETAIL;
+    return { distance, fov };
   }
 
   function metAJour(dt) {
@@ -185,7 +218,37 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     }
   }
 
-  function rempli(escale) {
+  function ajouteHeroCarnet(hero) {
+    if (!hero) return;
+    const figure = document.createElement('figure');
+    figure.className = 'plongee-hero-carnet';
+
+    const etiquette = document.createElement('p');
+    etiquette.className = 'plongee-hero-carnet-etiquette';
+    etiquette.textContent = 'Photographie du carnet';
+    figure.append(etiquette);
+
+    const ouvrirImage = document.createElement('button');
+    ouvrirImage.type = 'button';
+    ouvrirImage.className = 'photo-ouvrir';
+    ouvrirImage.setAttribute('aria-label', `Agrandir la photographie du carnet : ${hero.legende}`);
+
+    const img = document.createElement('img');
+    img.loading = 'eager';
+    img.src = `./${hero.fichier}`;
+    img.alt = hero.alt;
+    img.addEventListener('error', () => figure.remove());
+    ouvrirImage.addEventListener('click', () => ouvreLightbox(img.src, hero.legende, ouvrirImage));
+    ouvrirImage.append(img);
+    figure.append(ouvrirImage);
+
+    const cap = document.createElement('figcaption');
+    cap.textContent = hero.date ? `${hero.legende} · ${hero.date}` : hero.legende;
+    figure.append(cap);
+    flux.append(figure);
+  }
+
+  function rempli(escale, heroCarnet = null) {
     titre.textContent = escale.nom;
     const d1 = formatLong.format(new Date(escale.date_arrivee + 'T12:00:00Z'));
     const d2 = escale.date_depart && escale.date_depart !== escale.date_arrivee
@@ -194,6 +257,11 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
       `${d2 ? `du ${d1} au ${d2}` : d1} · ${escale.log_nm.toLocaleString('fr-FR')} milles au log`;
 
     flux.replaceChildren();
+    // A curated journal photograph makes the two deliberately selected atlas
+    // arrivals tangible, while remaining visibly distinct from map imagery.
+    // It is passed only for the calm fallback state, never for a reviewed
+    // aerial detail such as Makogai.
+    ajouteHeroCarnet(heroCarnet);
     const articles = escale.articles ?? [];
     if (!articles.length) {
       const p = document.createElement('p');
@@ -264,34 +332,41 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     // Release any earlier close-up before choosing this anchorage. The globe
     // owns at most one local image and it always remains a real surface map.
     cacheDetailIle();
+    cacheRepereEscale();
+    cacheLegendeScene();
     focusAvantPlongee = document.activeElement;
     focaleAvantPlongee = camera.fov;
     panneau.hidden = true;
     const complet = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`) ?? escale;
     const vue = vuesAeriennes[`${complet.nom}|${complet.date_arrivee}`];
-    // Only anchorage imagery that has passed a human visual review gets the
-    // cinematic close framing. A file merely existing is not enough: weak
-    // atolls retain the clean illustrated globe and their journal instead of
-    // becoming a blurry ocean close-up.
+    // The clean selected-place state is reserved for a source that has passed
+    // the per-location imagery gate. A merely existing legacy file must not
+    // turn a visit into a blurry satellite rectangle; it keeps the illustrated
+    // globe and the truthful selected-place marker until a reviewed detail is
+    // generated for that stop.
     const detailDisponible = Boolean(vue?.detailPlongee && await regleDetailIle(vue));
     if (demande !== demandePlongee) return;
     chargement = false;
     const directionDetail = detailDisponible && Number.isFinite(vue?.focusLat)
       && Number.isFinite(vue?.focusLon)
       ? latLonVers3D(vue.focusLat, vue.focusLon, 1) : null;
-    const distanceCible = detailDisponible ? DISTANCE_PLONGEE_DETAIL : DISTANCE_PLONGEE;
-    const focaleCible = detailDisponible ? FOV_PLONGEE_DETAIL : focaleAvantPlongee;
+    const profil = detailDisponible ? profilDetail(vue) : null;
+    const distanceCible = profil?.distance ?? DISTANCE_PLONGEE;
+    const focaleCible = profil?.fov ?? focaleAvantPlongee;
     timeline.vaA(new Date(escale.date_arrivee + 'T12:00:00Z').getTime(), true);
     controls.minDistance = distanceCible - 0.003;
-    // The real island image is its own focal point. Keep the gold marker only
+    // The real island image is its own focal point. Keep a small pennant only
     // for escales without a reliable local source, where it remains useful
-    // rather than covering the shoreline with a large target-like circle.
+    // rather than covering the shoreline with a target-like circle.
     if (detailDisponible) cacheRepereEscale();
     else montreRepereEscale(complet);
     lanceVol(directionDetail ?? latLonVers3D(complet.lat, complet.lon, 1), distanceCible, () => {
       if (demande !== demandePlongee) return;
-      rempli(complet);
+      const heroCarnet = detailDisponible
+        ? null : herosEscales[`${complet.nom}|${complet.date_arrivee}`];
+      rempli(complet, heroCarnet);
       panneau.hidden = false;
+      if (!detailDisponible) montreLegendeScene(complet);
       document.body.classList.add('plongee-ouverte');
       flux.scrollTop = 0;
       ouverte = true;
@@ -311,6 +386,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     panneau.hidden = true;
     document.body.classList.remove('plongee-ouverte');
     ouverte = false;
+    cacheLegendeScene();
     cacheRepereEscale();
     cacheDetailIle();
     lanceVol(camera.position.clone().normalize(), DISTANCE_ORBITE, () => {
@@ -354,5 +430,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     get enVol() { return vol !== null; },
     get ouverte() { return ouverte; },
     get enChargement() { return chargement; },
+    get repereVisible() { return repereEscale !== null; },
+    get repereType() { return repereEscale?.userData.type ?? null; },
   };
 }

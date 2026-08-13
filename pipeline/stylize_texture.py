@@ -46,13 +46,23 @@ def telecharge() -> None:
 
 
 def lavis(forme: tuple[int, int], graine: int, echelle: int) -> np.ndarray:
-    """Nuages de bruit doux 0..1 (aquarelle) : du bruit grossier rééchantillonné."""
+    """Nuages de bruit doux 0..1, continus au raccord ±180°.
+
+    Le lavis est une matière colorée, non de la géographie. On répète son
+    petit motif sur trois périodes avant de le rééchantillonner et de garder
+    la période centrale. Le filtre bicubique voit ainsi les mêmes voisins de
+    part et d'autre du bord gauche/droit, sans jamais dupliquer, refléter ou
+    déplacer une côte dans la texture finale.
+    """
     rng = np.random.default_rng(graine)
     petit = rng.random((forme[0] // echelle + 2, forme[1] // echelle + 2),
                        dtype=np.float32)
-    im = Image.fromarray((petit * 255).astype(np.uint8)).resize(
-        (forme[1], forme[0]), Image.BICUBIC)
-    return np.asarray(im, dtype=np.float32) / 255.0
+    repete = np.concatenate([petit, petit, petit], axis=1)
+    im = Image.fromarray((repete * 255).astype(np.uint8)).resize(
+        (forme[1] * 3, forme[0]), Image.BICUBIC)
+    tableau = np.asarray(im, dtype=np.float32)
+    largeur = forme[1]
+    return tableau[:, largeur:largeur * 2] / 255.0
 
 
 def vagues_gravees(ocean_profond: np.ndarray, graine: int = 11) -> Image.Image:

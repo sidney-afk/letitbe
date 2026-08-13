@@ -79,7 +79,7 @@ test('la rotation est fortement amortie pendant une plongée puis revient à la 
   expect(vitesseRetour).toBeGreaterThan(vitessePlongee * 10);
 });
 
-test('une escale riche emploie son imagerie locale sans anneaux, puis la libère au retour', async ({ page }) => {
+test('Makogai without approved detail keeps the calm arrival state with its curated journal hero', async ({ page }) => {
   await ouvreExperience(page, { width: 1366, height: 768 });
 
   await page.evaluate(async () => {
@@ -88,21 +88,34 @@ test('une escale riche emploie son imagerie locale sans anneaux, puis la libère
     if (!escale) throw new Error('Escale Makogai introuvable');
     await plongee.vers(escale);
     plongee.metAJour(10);
-    await new Promise(resolve => setTimeout(resolve, 150));
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   });
 
   await expect.poll(() => page.evaluate(() => window.__sillage.globe.etatDetail()))
-    .toMatchObject({ actif: true, fichier: 'media/aerien-detail/makogai-sentinel-2026-05-07-detail.webp' });
+    .toMatchObject({ actif: false, fichier: null });
   await expect.poll(() => page.evaluate(() => ({
     routeVisible: window.__sillage.route.groupe.visible,
     route: window.__sillage.route.etat(),
     fov: window.__sillage.camera.fov,
+    repereVisible: window.__sillage.plongee.repereVisible,
   }))).toMatchObject({
     routeVisible: false,
     route: { marqueursVisibles: 0, chevronsVisibles: 0 },
-    fov: 5,
+    fov: 38,
+    repereVisible: true,
   });
-
+  await expect.poll(() => page.evaluate(() => window.__sillage.camera.position.length()))
+    .toBeCloseTo(1.90, 5);
+  await expect(page.locator('#plongee-scene-caption')).toBeVisible();
+  await expect(page.locator('#plongee-scene-caption')).toContainText('À l’ancre · Fidji - Makogai');
+  await expect.poll(() => page.evaluate(() => window.__sillage.plongee.repereType))
+    .toBe('pavillon');
+  const hero = page.locator('.plongee-hero-carnet');
+  await expect(hero).toHaveCount(1);
+  await expect(hero.locator('.plongee-hero-carnet-etiquette')).toHaveText('Photographie du carnet');
+  await expect(hero.locator('img')).toHaveAttribute('src', /heros-escales\/makogai-bay\.webp$/);
+  await expect(hero.locator('img')).toHaveAttribute('alt', 'Let It Be, dans la baie de Makogai.');
+  await expect(hero.locator('figcaption')).toHaveText('Let It Be, dans la baie de Makogai.');
   await page.evaluate(async () => {
     const { plongee } = window.__sillage;
     plongee.remonte();
@@ -110,6 +123,66 @@ test('une escale riche emploie son imagerie locale sans anneaux, puis la libère
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   });
   await expect.poll(() => page.evaluate(() => window.__sillage.globe.etatDetail().actif)).toBe(false);
+});
+
+test('unreviewed archive imagery opens the calm illustrated arrival state', async ({ page }) => {
+  await ouvreExperience(page, { width: 1366, height: 768 });
+
+  for (const nom of [
+    'Galapagos',
+    'Nlle Zélande - Opua',
+  ]) {
+    await page.evaluate(async nomEscale => {
+      const { plongee, route } = window.__sillage;
+      const escale = route.escales.find(item => item.nom === nomEscale);
+      if (!escale) throw new Error(`Test anchorage not found: ${nomEscale}`);
+      await plongee.vers(escale);
+      plongee.metAJour(10);
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    }, nom);
+
+    await expect.poll(() => page.evaluate(() => ({
+      detail: window.__sillage.globe.etatDetail(),
+      fov: window.__sillage.camera.fov,
+      distance: window.__sillage.camera.position.length(),
+      routeVisible: window.__sillage.route.groupe.visible,
+      bateauVisible: window.__sillage.bateau.conteneur.visible,
+      ecumeVisible: window.__sillage.bateau.ecume.visible,
+      repereVisible: window.__sillage.plongee.repereVisible,
+      repereType: window.__sillage.plongee.repereType,
+    }))).toMatchObject({
+      detail: { actif: false, fichier: null },
+      fov: 38,
+      routeVisible: false,
+      bateauVisible: false,
+      ecumeVisible: false,
+      repereVisible: true,
+      repereType: 'pavillon',
+    });
+    await expect.poll(() => page.evaluate(() => window.__sillage.camera.position.length()))
+      .toBeCloseTo(1.90, 5);
+    await expect(page.locator('#plongee-scene-caption')).toBeVisible();
+    await expect(page.locator('#plongee-scene-caption')).toContainText(`À l’ancre · ${nom}`);
+    await expect(page.locator('#plongee-scene-caption-a11y')).toContainText(`À l’ancre · ${nom}`);
+    const hero = page.locator('.plongee-hero-carnet');
+    await expect(hero).toHaveCount(1);
+    await expect(hero.locator('.plongee-hero-carnet-etiquette')).toHaveText('Photographie du carnet');
+    await expect(hero.locator('img')).toHaveAttribute('src', new RegExp(
+      nom === 'Galapagos'
+        ? 'Tech/Image/Blog/2009_07_12/iguane\\.webp$'
+        : 'Tech/Blog/NZ/2010-12-10/P5\\.webp$'));
+    await expect(hero.locator('figcaption')).toContainText(nom === 'Galapagos'
+      ? 'Un mâle (ça se voit, non ?)' : 'Plage à l’est du nord.');
+
+    await page.evaluate(async () => {
+      const { plongee } = window.__sillage;
+      plongee.remonte();
+      plongee.metAJour(10);
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    });
+    await expect(page.locator('#plongee-scene-caption')).toBeHidden();
+    await expect(page.locator('#plongee-scene-caption-a11y')).toBeEmpty();
+  }
 });
 
 test('la maquette importée est exactement à la moitié de son ancienne échelle fixe', async ({ page }) => {

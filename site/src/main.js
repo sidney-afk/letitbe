@@ -212,14 +212,84 @@ modeBouton.addEventListener('click', () => {
   regleMode(mode === 'carnet' ? 'photo' : 'carnet');
 });
 
-const [routeData, mouillagesData, vuesAeriennes, meteo] = await Promise.all([
+function estCatalogueObjet(valeur) {
+  return valeur !== null && typeof valeur === 'object' && !Array.isArray(valeur);
+}
+
+async function chargeJsonOptionnel(url) {
+  try {
+    const reponse = await fetch(url);
+    if (!reponse.ok) return {};
+    const donnees = await reponse.json();
+    return estCatalogueObjet(donnees) ? donnees : {};
+  } catch {
+    return {};
+  }
+}
+
+function estVueDetailApprouvee(vue) {
+  return estCatalogueObjet(vue)
+    && vue.approved === true
+    && vue.previewOnly !== true
+    && vue.detailPlongee === true
+    && typeof vue.fichier === 'string'
+    && vue.fichier.trim().length > 0
+    && Number.isFinite(vue.lonMin)
+    && Number.isFinite(vue.lonMax)
+    && Number.isFinite(vue.latMin)
+    && Number.isFinite(vue.latMax);
+}
+
+function fusionneVuesAeriennes(base, generated) {
+  const resultat = Object.create(null);
+  for (const [cle, vue] of Object.entries(base)) resultat[cle] = vue;
+
+  for (const [cle, vue] of Object.entries(generated)) {
+    // The hand-reviewed detailed source always wins.  The generated catalogue
+    // may only replace an old overview tile after a human has approved it.
+    if (base[cle]?.detailPlongee === true || !estVueDetailApprouvee(vue)) continue;
+    resultat[cle] = vue;
+  }
+  return resultat;
+}
+
+function estHeroEscaleCurate(hero) {
+  // This layer is deliberately separate from aerial imagery: a journal photo
+  // is shown only after someone has picked it for this exact stop and supplied
+  // its own archive description.  There is no automatic article-photo choice.
+  return estCatalogueObjet(hero)
+    && hero.curated === true
+    && typeof hero.fichier === 'string'
+    && /^media\/[A-Za-z0-9_./-]+\.webp$/i.test(hero.fichier)
+    && typeof hero.alt === 'string'
+    && hero.alt.trim().length > 0
+    && typeof hero.legende === 'string'
+    && hero.legende.trim().length > 0;
+}
+
+function selectionneHerosEscales(catalogue) {
+  return Object.fromEntries(Object.entries(catalogue)
+    .filter(([, hero]) => estHeroEscaleCurate(hero)));
+}
+
+const [routeData, mouillagesData, vuesAeriennesBase, vuesAeriennesGenerees, herosEscalesBruts, meteo] = await Promise.all([
   fetch('./data/route.json').then(r => r.json()),
   fetch('./data/mouillages.json').then(r => r.json()),
   // The close-up imagery is optional: a missing manifest must leave the
   // journal's clean selected-place fallback intact rather than block launch.
-  fetch('./data/vues_aeriennes.json').then(r => r.ok ? r.json() : {}).catch(() => ({})),
+  chargeJsonOptionnel('./data/vues_aeriennes.json'),
+  // Pipeline output is deliberately inert until a person marks each source as
+  // approved.  This keeps a quality-gated candidate from becoming live just
+  // because it was successfully generated.
+  chargeJsonOptionnel('./data/vues_aeriennes_sentinel.generated.json'),
+  // A small explicitly-curated layer of real voyage photographs can enrich a
+  // calm atlas arrival.  It is never treated as a surface map or inferred
+  // from the article list at runtime.
+  chargeJsonOptionnel('./data/heros_escales.json'),
   creerMeteo(),
 ]);
+const vuesAeriennes = fusionneVuesAeriennes(vuesAeriennesBase, vuesAeriennesGenerees);
+const herosEscales = selectionneHerosEscales(herosEscalesBruts);
 const voyage = construireVoyage(routeData);
 const mouillagesParCle = new Map(
   mouillagesData.map(m => [`${m.nom}|${m.date_arrivee}`, m]));
@@ -320,6 +390,7 @@ const plongee = creerPlongee({
     route.orientePerles(camera, 0, []);
   },
   vuesAeriennes,
+  herosEscales,
   regleDetailIle: vue => globe.montreDetail(vue),
   cacheDetailIle: () => globe.cacheDetail(),
 });

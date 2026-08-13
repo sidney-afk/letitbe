@@ -49,7 +49,20 @@ if (plonge) {
     const escale = route.escales.find(e => e.nom === nom);
     if (!escale) throw new Error(`escale introuvable : ${nom}`);
     await plongee.vers(escale);
+    // `vers()` has loaded the source and scheduled the in-product camera
+    // flight. Complete that deterministic flight before a later `immobile`
+    // action stops the render loop, otherwise a capture records the overview
+    // rather than the selected-place state it claims to inspect.
+    plongee.metAJour(10);
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
   }, plonge[1].trim());
+  // Detail imagery fades in through the same product animation as an ordinary
+  // visit. Do not freeze a candidate screenshot midway through that fade: it
+  // would compare a half-composited globe rather than the settled island view.
+  await page.waitForFunction(() => {
+    const detail = window.__sillage?.globe?.etatDetail?.();
+    return !detail?.actif || detail.opacite >= 0.98;
+  }, null, { timeout: 10_000 });
 }
 const regarde = action.match(/regarde=(-?[\d.]+),(-?[\d.]+)/);
 if (regarde) {
@@ -148,6 +161,12 @@ if (action.includes('immobile')) {
   await page.evaluate(async () => {
     await new Promise(resolve => requestAnimationFrame(resolve));
     await new Promise(resolve => requestAnimationFrame(resolve));
+    // Advance the product's own detail fade to its settled state before
+    // stopping the animation loop. This is intentionally capture-only; the
+    // site still performs the same fade over ordinary frames.
+    const globe = window.__sillage?.globe;
+    for (let i = 0; i < 24 && globe?.etatDetail?.().actif
+      && globe.etatDetail().opacite < 0.98; i++) globe.anime(1 / 12);
     window.__sillage?.renderer?.setAnimationLoop(null);
   });
 }
