@@ -56,10 +56,15 @@ const GLSL_DETAIL_ILE = /* glsl */`
     return valeur - floor(valeur + 0.5);
   }
 
-  vec3 melangeDetailIle(vec3 fond, vec2 uv, vec3 positionMonde) {
+  vec3 melangeDetailIle(vec3 fond, vec2 uv) {
     if (detailActif < 0.5 || detailOpacite <= 0.001) return fond;
 
-    float latitude = asin(clamp(normalize(positionMonde).y, -0.999999, 0.999999));
+    // The local photograph and the base globe use the same sphere UVs.  Read
+    // latitude from that interpolated UV, not from a world-position varying:
+    // near a selected island the latter spans a large, low-poly globe face and
+    // turns a continuous aerial image into visibly faceted/rectangular bands.
+    // Three's SphereGeometry has v=1 at the north pole and v=0 at the south.
+    float latitude = (uv.y - 0.5) * 3.14159265359;
     float u = deltaCyclique(uv.x - detailCentreU) / max(detailEtendueU, 0.00001) + 0.5;
     float v = (mercatorDetail(latitude) - detailCentreMercator)
       / max(detailEtendueMercator, 0.00001) + 0.5;
@@ -73,10 +78,20 @@ const GLSL_DETAIL_ILE = /* glsl */`
     if (raccord <= 0.001) return fond;
 
     vec3 brut = texture2D(carteDetail, clamp(detailUV, 0.0, 1.0)).rgb;
+    // Some old source mosaics contain literal black no-data columns. They do
+    // not describe dark water: their RGB energy is zero. Fade those pixels
+    // back to the globe instead of allowing a hard, square black tile to
+    // become visible. A genuinely dark blue sea retains a blue channel and
+    // therefore remains valid local imagery.
+    float energie = max(max(brut.r, brut.g), brut.b);
+    float bleuissement = max(0.0, brut.b - max(brut.r, brut.g));
+    float noirSansDonnee = 1.0 - smoothstep(0.010, 0.050, energie);
+    float eauFoncee = smoothstep(0.008, 0.035, bleuissement);
+    float validite = 1.0 - noirSansDonnee * (1.0 - eauFoncee);
     // The asset is a fixed reflectance rendering produced from Sentinel's
     // raw red/green/blue bands. Preserve its real reef, shoreline, and water
     // colours rather than applying an illustrated-map recolour in the shader.
-    return mix(fond, brut, raccord);
+    return mix(fond, brut, raccord * validite);
   }
 `;
 
@@ -199,8 +214,10 @@ export function creerGlobe(relief) {
         // Le lavis du JPG Carnet n'est pas périodique : ses deux bords du
         // Pacifique n'ont pas exactement la même teinte. La sphère joint ces
         // UV à ±180° : on fond seulement leurs couleurs de bord dans une très
-        // petite bande océanique, sans refléter la géographie voisine.
-        const float LARGEUR_COUTURE = 0.010;
+        // petite bande océanique, sans refléter la géographie voisine. Cette
+        // largeur est inférieure à 0,0028 U : Makogai (179° E) reste donc
+        // entièrement dans sa propre imagerie, hors du raccord de dateline.
+        const float LARGEUR_COUTURE = 0.0015;
         const float EPSILON_COUTURE = 0.0005;
         float uLocal = clamp(vUv.x, EPSILON_COUTURE, 1.0 - EPSILON_COUTURE);
         vec2 uvLocal = vec2(uLocal, vUv.y);
@@ -245,7 +262,7 @@ export function creerGlobe(relief) {
         // soleil supprime toute bande longitudinale, même à grande échelle.
         vec3 eau = tex * 1.38 * vec3(1.0, 0.985, 0.97);
         vec3 couleur = mix(terre, eau, ocean);
-        couleur = melangeDetailIle(couleur, vUv, vPosM);
+        couleur = melangeDetailIle(couleur, vUv);
 
         vec3 versCam = normalize(cameraPosition - vPosM);
 
@@ -309,7 +326,7 @@ export function creerGlobe(relief) {
                      + cJour * 0.06;
 
           vec3 couleur = mix(cNuit, cJour, jourMix);
-          couleur = melangeDetailIle(couleur, vUv, vPosM);
+          couleur = melangeDetailIle(couleur, vUv);
 
           // teinte atmosphérique sur le limbe
           float fresnel = pow(1.0 - max(dot(n, versCam), 0.0), 2.6);
@@ -420,11 +437,11 @@ export function creerGlobe(relief) {
   // ni géométrie rapportée ni vignette n'ont alors de bord, de profondeur ou
   // de projection différente de la carte principale.
   async function montreDetail(vue) {
-    // This is deliberately curated per anchorage rather than guessed from
-    // file size or pixels at runtime: faint atolls can be genuinely useful,
-    // while an otherwise large file can still be only dark open ocean.
+    // The caller supplies only reviewed, geographically bounded imagery. The
+    // base manifest intentionally remains independent from that quality gate:
+    // a file existing on disk is not evidence that it can survive a close-up.
     const borne = borneDetail(vue);
-    if (!vue?.detailPlongee || !borne || !vue.fichier) {
+    if (!borne || !vue?.fichier) {
       cacheDetail();
       return false;
     }

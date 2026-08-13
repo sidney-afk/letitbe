@@ -333,6 +333,38 @@ body[data-mode="photo"] #titre p { color: rgba(223, 243, 255, .82); }
 body[data-mode="photo"] #titre-trait { color: rgba(232, 200, 122, .75); filter: none; }
 body.plongee-ouverte #titre { opacity: .35; transition: opacity .4s; }
 
+/* Une escale sans vue aérienne approuvée reste une arrivée de carnet : la
+   légende nomme le lieu sans s'imposer au globe, au panneau ou à la timeline. */
+#plongee-scene-caption[hidden], #plongee-scene-caption-mobile[hidden] { display: none; }
+#plongee-scene-caption {
+  position: fixed;
+  left: max(32px, calc(env(safe-area-inset-left) + 18px));
+  right: calc(min(480px, 94vw) + max(32px, calc(env(safe-area-inset-right) + 18px)));
+  bottom: max(144px, calc(env(safe-area-inset-bottom) + 128px));
+  z-index: 4;
+  width: fit-content;
+  max-width: min(31rem, calc(100vw - min(480px, 94vw) - 72px));
+  padding: 7px 12px 7px 15px;
+  border-left: 2px solid rgba(200, 144, 50, .85);
+  border-radius: 0 8px 8px 0;
+  background: linear-gradient(90deg, rgba(255, 251, 238, .76), rgba(255, 251, 238, .18));
+  color: #60481d;
+  font-family: "IM Fell English SC", "EB Garamond", serif;
+  font-size: clamp(.82rem, 1.35vw, .98rem);
+  letter-spacing: .055em;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+  pointer-events: none;
+  text-shadow: 0 1px 5px rgba(255, 252, 242, .95);
+}
+#plongee-scene-caption::before {
+  content: "⚓";
+  margin-right: .45em;
+  color: var(--or);
+  font-size: .9em;
+}
+#plongee-scene-caption-mobile { display: none; }
+
 /* ——— la matière parchemin, partagée ——— */
 #timeline, #recit-carte, #infobulle, #navigation-escales,
 #boutons-haut button, #remonter {
@@ -875,6 +907,23 @@ body.plongee-ouverte #navigation-escales { display: none; }
   font-style: italic;
   font-size: .92rem;
 }
+#plongee-scene-caption-mobile {
+  grid-row: 4;
+  margin-top: 4px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(154, 108, 28, .24);
+  color: #6d5012;
+  font-family: "IM Fell English SC", "EB Garamond", serif;
+  font-size: .82rem;
+  font-style: normal;
+  letter-spacing: .055em;
+  line-height: 1.25;
+}
+#plongee-scene-caption-mobile::before {
+  content: "⚓";
+  margin-right: .45em;
+  color: var(--or);
+}
 #remonter {
   grid-row: 1;
   justify-self: end;
@@ -949,6 +998,28 @@ body.plongee-ouverte #navigation-escales { display: none; }
 }
 #plongee-flux figure:nth-child(odd) { transform: rotate(.5deg); }
 #plongee-flux figure:nth-child(even) { transform: rotate(-.45deg); }
+#plongee-flux .plongee-hero-carnet {
+  margin-top: 20px;
+  padding-top: 24px;
+  border: 1px solid rgba(154, 108, 28, .28);
+  box-shadow: 0 8px 20px rgba(60, 45, 20, .24);
+}
+#plongee-flux .plongee-hero-carnet::before {
+  width: 78px;
+  background: rgba(223, 202, 153, .66);
+}
+.plongee-hero-carnet-etiquette {
+  position: absolute;
+  top: 7px;
+  left: 0;
+  right: 0;
+  color: #8a611c;
+  font-family: "IM Fell English SC", "EB Garamond", serif;
+  font-size: .76rem;
+  font-variant: small-caps;
+  letter-spacing: .09em;
+  text-align: center;
+}
 #plongee-flux figure::before {
   content: "";
   position: absolute;
@@ -1116,6 +1187,7 @@ body[data-mode="photo"] #plongee-flux figure {
   box-shadow: 0 4px 14px rgba(0, 0, 0, .4);
 }
 body[data-mode="photo"] #plongee-flux figure::before { display: none; }
+body[data-mode="photo"] .plongee-hero-carnet-etiquette { color: #e8c87a; }
 body[data-mode="photo"] #recit-carte h2 { color: #e8c87a; }
 body[data-mode="photo"] .recit-texte::first-letter,
 body[data-mode="photo"] .article-texte::first-letter { color: #e8c87a; }
@@ -1126,11 +1198,16 @@ body[data-mode="photo"] #titre-trait { filter: none; }
   /* Le carnet occupe l'essentiel de ces écrans : les commandes de la scène
      restent en retrait plutôt que d'être tronquées derrière le panneau. */
   body.plongee-ouverte #timeline { display: none; }
+  body.plongee-ouverte #plongee-scene-caption {
+    bottom: max(30px, calc(env(safe-area-inset-bottom) + 18px));
+  }
 }
 
 @media (max-width: 760px) {
   #boutons-haut button span { display: none; }
   #boutons-haut button { padding: 10px; }
+  body.plongee-escale-illustree #plongee-scene-caption { display: none; }
+  body.plongee-escale-illustree #plongee-scene-caption-mobile { display: block; }
 }
 
 @media (max-width: 640px) {
