@@ -79,7 +79,7 @@ test('la rotation est fortement amortie pendant une plongée puis revient à la 
   expect(vitesseRetour).toBeGreaterThan(vitessePlongee * 10);
 });
 
-test('Makogai without approved detail keeps the calm arrival state with its curated journal hero', async ({ page }) => {
+test('Makogai restores its rich aerial arrival without a fallback marker or journal hero', async ({ page }) => {
   await ouvreExperience(page, { width: 1366, height: 768 });
 
   await page.evaluate(async () => {
@@ -92,30 +92,30 @@ test('Makogai without approved detail keeps the calm arrival state with its cura
   });
 
   await expect.poll(() => page.evaluate(() => window.__sillage.globe.etatDetail()))
-    .toMatchObject({ actif: false, fichier: null });
+    .toMatchObject({
+      actif: true,
+      fichier: 'media/aerien-detail/makogai-sentinel-2026-05-07-detail-v2.webp',
+    });
   await expect.poll(() => page.evaluate(() => ({
     routeVisible: window.__sillage.route.groupe.visible,
     route: window.__sillage.route.etat(),
     fov: window.__sillage.camera.fov,
     repereVisible: window.__sillage.plongee.repereVisible,
+    bateauVisible: window.__sillage.bateau.conteneur.visible,
+    ecumeVisible: window.__sillage.bateau.ecume.visible,
   }))).toMatchObject({
     routeVisible: false,
     route: { marqueursVisibles: 0, chevronsVisibles: 0 },
-    fov: 38,
-    repereVisible: true,
+    fov: 3.5,
+    repereVisible: false,
+    bateauVisible: false,
+    ecumeVisible: false,
   });
   await expect.poll(() => page.evaluate(() => window.__sillage.camera.position.length()))
-    .toBeCloseTo(1.90, 5);
-  await expect(page.locator('#plongee-scene-caption')).toBeVisible();
-  await expect(page.locator('#plongee-scene-caption')).toContainText('À l’ancre · Fidji - Makogai');
-  await expect.poll(() => page.evaluate(() => window.__sillage.plongee.repereType))
-    .toBe('pavillon');
-  const hero = page.locator('.plongee-hero-carnet');
-  await expect(hero).toHaveCount(1);
-  await expect(hero.locator('.plongee-hero-carnet-etiquette')).toHaveText('Photographie du carnet');
-  await expect(hero.locator('img')).toHaveAttribute('src', /heros-escales\/makogai-bay\.webp$/);
-  await expect(hero.locator('img')).toHaveAttribute('alt', 'Let It Be, dans la baie de Makogai.');
-  await expect(hero.locator('figcaption')).toHaveText('Let It Be, dans la baie de Makogai.');
+    .toBeCloseTo(1.02, 5);
+  await expect(page.locator('#plongee-scene-caption')).toBeHidden();
+  await expect.poll(() => page.evaluate(() => window.__sillage.plongee.repereType)).toBeNull();
+  await expect(page.locator('.plongee-hero-carnet')).toHaveCount(0);
   await page.evaluate(async () => {
     const { plongee } = window.__sillage;
     plongee.remonte();
