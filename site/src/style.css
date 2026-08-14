@@ -76,6 +76,32 @@ body { user-select: none; -webkit-user-select: none; }
 }
 #scene:active { cursor: grabbing; }
 
+/* A reviewed aerial crop deliberately has no usable low-resolution middle
+   ground between its close frame and the illustrated world map. This wash is
+   a short, screen-wide piece of the existing painted sea (not another map or
+   a photographic tile): it covers the one atomic camera jump between those
+   two honest scales. It sits above WebGL but below every control, so neither
+   focus nor the travel controls are interrupted. */
+#raccord-lod {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  opacity: var(--raccord-lod-opacite, 0);
+  background:
+    var(--grain),
+    radial-gradient(ellipse 54% 42% at 49% 48%, rgba(247, 255, 250, .96), rgba(183, 239, 241, .92) 33%, rgba(91, 191, 220, .92) 68%, transparent 100%),
+    radial-gradient(ellipse 84% 70% at 52% 50%, rgba(137, 221, 235, .92), rgba(71, 166, 211, .97));
+  background-blend-mode: soft-light, screen, normal;
+  will-change: opacity;
+}
+body[data-mode="photo"] #raccord-lod {
+  background:
+    radial-gradient(ellipse 55% 44% at 50% 49%, rgba(126, 207, 224, .9), rgba(27, 101, 151, .92) 58%, transparent 100%),
+    linear-gradient(145deg, rgba(18, 73, 118, .98), rgba(7, 27, 61, .98));
+  background-blend-mode: screen, normal;
+}
+
 /* ——— repli sans WebGL : le même voyage sur une carte de carnet ——— */
 #fallback-2d { display: none; }
 body.fallback-actif #fallback-2d {

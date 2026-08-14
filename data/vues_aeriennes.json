@@ -275,6 +275,7 @@
  "Fidji - Makogai|2010-10-03": {
   "fichier": "media/aerien-detail/makogai-sentinel-2026-05-07-detail-v2.webp",
   "detailPlongee": true,
+  "detailDistance": 1.02,
   "detailFov": 3.5,
   "lonMin": 178.8854142597982,
   "lonMax": 179.188595668189,
@@ -439,11 +440,21 @@
   "latMin": -18.47960905583197
  },
  "Nlle Zélande - Opua|2010-12-08": {
-  "fichier": "media/aerien/65.webp",
-  "lonMin": 173.671875,
-  "lonMax": 174.55078125,
-  "latMax": -34.885930940753155,
-  "latMin": -35.6037187406973
+  "fichier": "media/aerien-detail/opua-linz-120064-context-z15-2048.webp",
+  "detailPlongee": true,
+  "detailDistance": 1.012,
+  "detailFov": 3.4,
+  "detailRevealDistance": 1.012,
+  "detailRevealFov": 3.4,
+  "detailHideDistance": 1.013,
+  "detailHideFov": 3.45,
+  "lonMin": 174.0660524368286,
+  "lonMax": 174.1759157180786,
+  "latMax": -35.26513867335179,
+  "latMin": -35.354791165859424,
+  "focusLat": -35.31,
+  "focusLon": 174.121,
+  "source": "Sourced from the LINZ Data Service (layer 120064) and licensed by NIWA for re-use under CC BY 4.0."
  },
  "Nlle Zélande - Whangarei|2010-12-16": {
   "fichier": "media/aerien/66.webp",

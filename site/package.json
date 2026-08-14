@@ -16,6 +16,7 @@
     "test:qa:headed": "playwright test --headed",
     "test:qa:smoke": "playwright test --config playwright.smoke.config.mjs",
     "test:qa:performance": "playwright test tests/polish-performance.spec.mjs",
+    "test:arrival": "node --test tests/arrival-profiles.test.mjs",
     "test:qa:install": "playwright install chromium",
     "test:qa:install-all": "playwright install chromium firefox webkit",
     "test:qa:report": "playwright show-report tests/.artifacts/html"

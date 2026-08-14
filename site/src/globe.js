@@ -70,11 +70,15 @@ const GLSL_DETAIL_ILE = /* glsl */`
       / max(detailEtendueMercator, 0.00001) + 0.5;
     vec2 detailUV = vec2(u, v);
 
-    // La zone centrale est entièrement détaillée ; le raccord se fait loin de
-    // la caméra dans une large marge. Il ne peut donc pas lire comme un carré.
-    float bordU = smoothstep(0.0, 0.06, u) * (1.0 - smoothstep(0.94, 1.0, u));
-    float bordV = smoothstep(0.0, 0.06, v) * (1.0 - smoothstep(0.94, 1.0, v));
-    float raccord = bordU * bordV * detailOpacite;
+    // This is deliberately only a narrow sampling safety margin, not a broad
+    // geographic feather.  A wide rectangle can become visible while the
+    // camera is still outside an island image.  The flight now keeps the
+    // source invisible until its outer edge is off-screen; this mask merely
+    // prevents clamp/no-data pixels at the literal source border from leaking
+    // into that close framing.
+    float distanceBord = min(min(u, 1.0 - u), min(v, 1.0 - v));
+    float securiteBord = smoothstep(0.001, 0.014, distanceBord);
+    float raccord = securiteBord * detailOpacite;
     if (raccord <= 0.001) return fond;
 
     vec3 brut = texture2D(carteDetail, clamp(detailUV, 0.0, 1.0)).rgb;
@@ -167,6 +171,11 @@ export function creerGlobe(relief) {
   let textureDetail = null;
   let demandeDetail = 0;
   let cibleDetail = 0;
+  // A prepared image stays resident while its selected place is open so a
+  // visitor can zoom out and back in without refetching it.  Visibility is a
+  // separate camera-driven state; preparation alone must never reveal a raw
+  // rectangular source over the overview globe.
+  let detailPret = false;
   let fichierDetail = null;
   const meteoNuages = { value: 1 };
   const cibleMeteo = { nuages: 1, lumiere: 1 };
@@ -436,7 +445,18 @@ export function creerGlobe(relief) {
   // L'imagerie locale est volontairement chargée dans le shader de la Terre :
   // ni géométrie rapportée ni vignette n'ont alors de bord, de profondeur ou
   // de projection différente de la carte principale.
-  async function montreDetail(vue) {
+  function regleVisibiliteDetail(affiche, immediat = false) {
+    if (!detailPret || !textureDetail) return false;
+    cibleDetail = affiche ? 1 : 0;
+    // The LOD wash can cover an atomic camera snap.  In that one case, do not
+    // let a slow texture alpha reveal the magnified atlas underneath the wash
+    // as it clears; both the camera and the local imagery must be complete
+    // before the viewer sees the next frame.
+    if (immediat) uniforms.detailOpacite.value = cibleDetail;
+    return true;
+  }
+
+  async function prepareDetail(vue) {
     // The caller supplies only reviewed, geographically bounded imagery. The
     // base manifest intentionally remains independent from that quality gate:
     // a file existing on disk is not evidence that it can survive a close-up.
@@ -446,7 +466,12 @@ export function creerGlobe(relief) {
       return false;
     }
     const demande = ++demandeDetail;
+    detailPret = false;
     cibleDetail = 0;
+    // Do not let a just-replaced image inherit the previous stop's fade.
+    // It must remain fully invisible until the dive controller judges the
+    // camera framing safe for its real imagery.
+    uniforms.detailOpacite.value = 0;
     try {
       const image = await attendImage(`./${vue.fichier}`);
       if (demande !== demandeDetail) return false;
@@ -467,12 +492,18 @@ export function creerGlobe(relief) {
       textureDetail = texture;
       uniforms.carteDetail.value = texture;
       uniforms.detailActif.value = 1;
-      cibleDetail = 1;
+      detailPret = true;
+      cibleDetail = 0;
       fichierDetail = vue.fichier;
-      return true;
+      return {
+        pret: true,
+        regleVisibilite: regleVisibiliteDetail,
+      };
     } catch {
       if (demande === demandeDetail) {
         uniforms.detailActif.value = 0;
+        uniforms.detailOpacite.value = 0;
+        detailPret = false;
         cibleDetail = 0;
         fichierDetail = null;
       }
@@ -482,7 +513,13 @@ export function creerGlobe(relief) {
 
   function cacheDetail() {
     demandeDetail += 1;
+    detailPret = false;
     cibleDetail = 0;
+    if (uniforms.detailOpacite.value <= 0.002) {
+      uniforms.detailOpacite.value = 0;
+      uniforms.detailActif.value = 0;
+      libereTextureDetail();
+    }
   }
 
   return {
@@ -498,11 +535,17 @@ export function creerGlobe(relief) {
       cibleMeteo.nuages = nuages;
       cibleMeteo.lumiere = lumiere;
     },
-    montreDetail,
+    // `montreDetail` remains the public entry point used by the app, but it
+    // now prepares a source rather than revealing it.  The returned command
+    // is intentionally tiny: the dive controller only needs to toggle its
+    // visibility once the camera is safely inside the source framing.
+    montreDetail: prepareDetail,
     cacheDetail,
     etatDetail() {
       return {
         actif: Boolean(uniforms.detailActif.value),
+        pret: Boolean(detailPret && textureDetail),
+        visible: Boolean(cibleDetail || uniforms.detailOpacite.value > 0.002),
         opacite: uniforms.detailOpacite.value,
         fichier: fichierDetail,
       };
@@ -512,9 +555,15 @@ export function creerGlobe(relief) {
       const k = Math.min(1, dt * 1.2); // la météo change en douceur
       meteoNuages.value += (cibleMeteo.nuages - meteoNuages.value) * k;
       uniforms.meteoLumiere.value += (cibleMeteo.lumiere - uniforms.meteoLumiere.value) * k;
-      const kDetail = Math.min(1, dt * 4.5);
+      // Reveal only after the crop already fills the frame, then let it take
+      // roughly a second to arrive. This reads as an atmospheric handoff from
+      // the painted atlas to the real aerial view instead of a sudden colour
+      // swap. On the way out it clears much faster so a crop edge can never
+      // catch up with the camera.
+      const vitesseDetail = cibleDetail > uniforms.detailOpacite.value ? 2.6 : 12;
+      const kDetail = Math.min(1, dt * vitesseDetail);
       uniforms.detailOpacite.value += (cibleDetail - uniforms.detailOpacite.value) * kDetail;
-      if (!cibleDetail && uniforms.detailOpacite.value < 0.002) {
+      if (!cibleDetail && !detailPret && uniforms.detailOpacite.value < 0.002) {
         uniforms.detailOpacite.value = 0;
         uniforms.detailActif.value = 0;
         libereTextureDetail();
