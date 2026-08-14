@@ -5,3 +5,14 @@ Contains modified Copernicus Sentinel data 2026.
 The scene was cropped, reprojected, and encoded for Le Sillage.
 Licence: Copernicus Sentinel Data Legal Notice
 https://cds.climate.copernicus.eu/licences/ec-sentinel
+
+Opua detail image
+
+Source: LINZ Data Service, layer 120064 — Northland 0.3m Rural Aerial Photos
+(2023–2025), licensed by the National Institute of Water and Atmospheric
+Research Limited (NIWA) under Creative Commons Attribution 4.0 International.
+The source window was reprojected, cropped, and encoded for Le Sillage.
+Attribution: Sourced from the LINZ Data Service
+(https://data.linz.govt.nz/layer/120064-northland-03m-rural-aerial-photos-2023-2025/)
+and licensed by NIWA for re-use under CC BY 4.0.
+Licence: https://data.linz.govt.nz/license/attribution-4-0-international/

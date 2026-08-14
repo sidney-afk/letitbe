@@ -94,6 +94,8 @@ test('Makogai restores its rich aerial arrival without a fallback marker or jour
   await expect.poll(() => page.evaluate(() => window.__sillage.globe.etatDetail()))
     .toMatchObject({
       actif: true,
+      pret: true,
+      visible: true,
       fichier: 'media/aerien-detail/makogai-sentinel-2026-05-07-detail-v2.webp',
     });
   await expect.poll(() => page.evaluate(() => ({
@@ -125,13 +127,193 @@ test('Makogai restores its rich aerial arrival without a fallback marker or jour
   await expect.poll(() => page.evaluate(() => window.__sillage.globe.etatDetail().actif)).toBe(false);
 });
 
-test('unreviewed archive imagery opens the calm illustrated arrival state', async ({ page }) => {
+test('Opua uses its reviewed LINZ aerial arrival and hides before its crop edge', async ({ page }) => {
   await ouvreExperience(page, { width: 1366, height: 768 });
 
-  for (const nom of [
-    'Galapagos',
-    'Nlle Zélande - Opua',
-  ]) {
+  await page.evaluate(async () => {
+    const { plongee, route } = window.__sillage;
+    const escale = route.escales.find(item => item.nom === 'Nlle Zélande - Opua');
+    if (!escale) throw new Error('Escale Opua introuvable');
+    await plongee.vers(escale);
+    plongee.metAJour(10);
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  });
+
+  await expect.poll(() => page.evaluate(() => window.__sillage.globe.etatDetail()))
+    .toMatchObject({
+      actif: true,
+      pret: true,
+      visible: true,
+      fichier: 'media/aerien-detail/opua-linz-120064-context-z15-2048.webp',
+    });
+  await expect.poll(() => page.evaluate(() => ({
+    fov: window.__sillage.camera.fov,
+    repereVisible: window.__sillage.plongee.repereVisible,
+    routeVisible: window.__sillage.route.groupe.visible,
+    bateauVisible: window.__sillage.bateau.conteneur.visible,
+  }))).toMatchObject({
+    fov: 3.4,
+    repereVisible: false,
+    routeVisible: false,
+    bateauVisible: false,
+  });
+  await expect.poll(() => page.evaluate(() => window.__sillage.camera.position.length()))
+    .toBeCloseTo(1.012, 5);
+  await expect(page.locator('#plongee-scene-caption')).toBeHidden();
+  await expect(page.locator('.plongee-hero-carnet')).toHaveCount(0);
+
+  const detailHorsCadre = await page.evaluate(() => {
+    const { camera, plongee, globe } = window.__sillage;
+    camera.position.setLength(1.014);
+    camera.fov = 3.46;
+    camera.updateProjectionMatrix();
+    plongee.metAJour(0);
+    globe.anime(1);
+    return globe.etatDetail();
+  });
+  expect(detailHorsCadre).toMatchObject({ pret: true, visible: false, opacite: 0 });
+});
+
+test('aerial imagery stays hidden during the dive and before its edge can re-enter', async ({ page }) => {
+  await ouvreExperience(page, { width: 1366, height: 768 });
+
+  const etatAvantArrivee = await page.evaluate(async () => {
+    const { plongee, route, globe } = window.__sillage;
+    const escale = route.escales.find(item => item.nom === 'Fidji - Makogai');
+    if (!escale) throw new Error('Escale Makogai introuvable');
+    await plongee.vers(escale);
+    return {
+      detail: globe.etatDetail(),
+      enVol: plongee.enVol,
+    };
+  });
+  expect(etatAvantArrivee).toMatchObject({
+    detail: { actif: true, pret: true, visible: false, opacite: 0 },
+    enVol: true,
+  });
+
+  const etatMilieuVol = await page.evaluate(() => {
+    const { plongee, globe } = window.__sillage;
+    plongee.metAJour(1.3);
+    globe.anime(1);
+    return globe.etatDetail();
+  });
+  expect(etatMilieuVol).toMatchObject({ pret: true, visible: false, opacite: 0 });
+
+  await page.evaluate(() => {
+    const { plongee, globe } = window.__sillage;
+    plongee.metAJour(10);
+    globe.anime(1);
+  });
+  await expect.poll(() => page.evaluate(() => window.__sillage.globe.etatDetail()))
+    .toMatchObject({ pret: true, visible: true, opacite: 1 });
+
+  const etatZoomSortant = await page.evaluate(() => {
+    const { camera, plongee, globe } = window.__sillage;
+    camera.position.setLength(1.04);
+    camera.fov = 4.2;
+    camera.updateProjectionMatrix();
+    plongee.metAJour(0);
+    globe.anime(1);
+    return globe.etatDetail();
+  });
+  expect(etatZoomSortant).toMatchObject({
+    actif: true,
+    pret: true,
+    visible: false,
+    opacite: 0,
+    fichier: 'media/aerien-detail/makogai-sentinel-2026-05-07-detail-v2.webp',
+  });
+
+  await page.evaluate(() => {
+    const { camera, plongee, globe } = window.__sillage;
+    camera.position.setLength(1.02);
+    camera.fov = 3.5;
+    camera.updateProjectionMatrix();
+    plongee.metAJour(0);
+    globe.anime(1);
+  });
+  await expect.poll(() => page.evaluate(() => window.__sillage.globe.etatDetail()))
+    .toMatchObject({ pret: true, visible: true, opacite: 1 });
+});
+
+test('a reviewed aerial switches scales only while the sea wash fully covers the canvas', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await ouvreExperience(page, { width: 1366, height: 768 });
+
+  await page.evaluate(async () => {
+    const { plongee, route, globe, controls } = window.__sillage;
+    const escale = route.escales.find(item => item.nom === 'Fidji - Makogai');
+    if (!escale) throw new Error('Escale Makogai introuvable');
+    await plongee.vers(escale);
+    // The ordinary overview rotation has finished; the scale handoff has
+    // started but is still transparent, so the camera must remain atlas-safe.
+    plongee.metAJour(2.6);
+    globe.anime(2.6);
+    // The app calls this every frame even while controls are disabled. Keep
+    // the exact renderer-time behavior in the test: a close-crop cap must
+    // not pull this overview leg back down before the sea wash takes over.
+    controls.update();
+  });
+
+  const avantSaut = await page.evaluate(() => ({
+    distance: window.__sillage.camera.position.length(),
+    fov: window.__sillage.camera.fov,
+    maxDistance: window.__sillage.controls.maxDistance,
+    detail: window.__sillage.globe.etatDetail(),
+    washHidden: document.getElementById('raccord-lod').hidden,
+  }));
+  expect(avantSaut).toMatchObject({
+    detail: { pret: true, visible: false, opacite: 0 },
+    washHidden: false,
+  });
+  expect(avantSaut.distance).toBeCloseTo(3, 5);
+  expect(avantSaut.maxDistance).toBeGreaterThan(3);
+
+  const pendantSaut = await page.evaluate(() => {
+    const { plongee, globe, camera } = window.__sillage;
+    plongee.metAJour(.17);
+    globe.anime(.17);
+    return {
+      distance: camera.position.length(),
+      fov: camera.fov,
+      detail: globe.etatDetail(),
+      wash: document.getElementById('raccord-lod').style
+        .getPropertyValue('--raccord-lod-opacite'),
+    };
+  });
+  expect(pendantSaut).toMatchObject({
+    fov: 3.5,
+    detail: { pret: true, visible: true, opacite: 1 },
+    wash: '1',
+  });
+  expect(pendantSaut.distance).toBeCloseTo(1.02, 5);
+
+  const retourSousLavage = await page.evaluate(() => {
+    const { plongee, globe, camera } = window.__sillage;
+    plongee.remonte();
+    plongee.metAJour(.17);
+    globe.anime(.17);
+    return {
+      distance: camera.position.length(),
+      fov: camera.fov,
+      detail: globe.etatDetail(),
+      wash: document.getElementById('raccord-lod').style
+        .getPropertyValue('--raccord-lod-opacite'),
+    };
+  });
+  expect(retourSousLavage).toMatchObject({
+    detail: { pret: true, visible: false, opacite: 0 },
+    wash: '1',
+  });
+  expect(retourSousLavage.distance).toBeCloseTo(3, 5);
+  expect(retourSousLavage.fov).toBeCloseTo(38, 5);
+});
+
+test('unreviewed archive imagery opens the clear regional arrival state', async ({ page }) => {
+  await ouvreExperience(page, { width: 1366, height: 768 });
+
+  for (const nom of ['Galapagos']) {
     await page.evaluate(async nomEscale => {
       const { plongee, route } = window.__sillage;
       const escale = route.escales.find(item => item.nom === nomEscale);
@@ -152,7 +334,7 @@ test('unreviewed archive imagery opens the calm illustrated arrival state', asyn
       repereType: window.__sillage.plongee.repereType,
     }))).toMatchObject({
       detail: { actif: false, fichier: null },
-      fov: 38,
+      fov: 24,
       routeVisible: false,
       bateauVisible: false,
       ecumeVisible: false,
@@ -160,7 +342,7 @@ test('unreviewed archive imagery opens the calm illustrated arrival state', asyn
       repereType: 'pavillon',
     });
     await expect.poll(() => page.evaluate(() => window.__sillage.camera.position.length()))
-      .toBeCloseTo(1.90, 5);
+      .toBeCloseTo(1.52, 5);
     await expect(page.locator('#plongee-scene-caption')).toBeVisible();
     await expect(page.locator('#plongee-scene-caption')).toContainText(`À l’ancre · ${nom}`);
     await expect(page.locator('#plongee-scene-caption-a11y')).toContainText(`À l’ancre · ${nom}`);
@@ -168,11 +350,8 @@ test('unreviewed archive imagery opens the calm illustrated arrival state', asyn
     await expect(hero).toHaveCount(1);
     await expect(hero.locator('.plongee-hero-carnet-etiquette')).toHaveText('Photographie du carnet');
     await expect(hero.locator('img')).toHaveAttribute('src', new RegExp(
-      nom === 'Galapagos'
-        ? 'Tech/Image/Blog/2009_07_12/iguane\\.webp$'
-        : 'Tech/Blog/NZ/2010-12-10/P5\\.webp$'));
-    await expect(hero.locator('figcaption')).toContainText(nom === 'Galapagos'
-      ? 'Un mâle (ça se voit, non ?)' : 'Plage à l’est du nord.');
+      'Tech/Image/Blog/2009_07_12/iguane\\.webp$'));
+    await expect(hero.locator('figcaption')).toContainText('Un mâle (ça se voit, non ?)');
 
     await page.evaluate(async () => {
       const { plongee } = window.__sillage;

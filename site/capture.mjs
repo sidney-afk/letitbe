@@ -8,6 +8,7 @@ const [url = 'http://localhost:4173/', sortie = path.resolve('capture.png'),
   attente = '4000', action = ''] = process.argv.slice(2);
 
 const viewport = action.match(/viewport=(\d+)x(\d+)/);
+const motionNormale = action.includes('motion=normal');
 const taille = viewport
   ? { width: Number(viewport[1]), height: Number(viewport[2]) }
   : { width: 1440, height: 900 };
@@ -20,7 +21,10 @@ const page = await navigateur.newPage({
   colorScheme: 'light',
   locale: 'fr-FR',
   timezoneId: 'UTC',
-  reducedMotion: 'reduce',
+  // Transition captures opt in to real motion.  The default stays reduced to
+  // keep ordinary QA light and deterministic, but the LOD sea wash needs a
+  // truthful animation clock rather than its accessibility fast path.
+  reducedMotion: motionNormale ? 'no-preference' : 'reduce',
 });
 page.on('console', m => console.log('[console]', m.type(), m.text()));
 page.on('pageerror', e => console.log('[pageerror]', e.message));
@@ -43,26 +47,64 @@ if (zoom) {
   }, Number(zoom[1]));
 }
 const plonge = action.match(/plonge=([^|]+)/);
+const phasePlongee = action.match(/phase-plongee=([\d.]+)/);
+const phaseRetour = action.match(/phase-retour=([\d.]+)/);
+const avanceExperience = (secondes) => page.evaluate((duree) => {
+  const { plongee, globe } = window.__sillage;
+  const etapes = Math.max(1, Math.ceil(Math.max(0, duree) * 60));
+  const dt = Math.max(0, duree) / etapes;
+  for (let i = 0; i < etapes; i += 1) {
+    plongee.metAJour(dt);
+    globe.anime(dt);
+  }
+}, secondes);
 if (plonge) {
-  await page.evaluate(async (nom) => {
+  await page.evaluate(async ({ nom, phase }) => {
     const { plongee, route } = window.__sillage;
     const escale = route.escales.find(e => e.nom === nom);
     if (!escale) throw new Error(`escale introuvable : ${nom}`);
     await plongee.vers(escale);
     // `vers()` has loaded the source and scheduled the in-product camera
-    // flight. Complete that deterministic flight before a later `immobile`
-    // action stops the render loop, otherwise a capture records the overview
-    // rather than the selected-place state it claims to inspect.
-    plongee.metAJour(10);
+    // flight. A phase capture intentionally freezes a real intermediate
+    // product frame so a local source cannot hide a rectangular transition
+    // defect behind the usual settled-state screenshot.
+    if (!Number.isFinite(phase)) plongee.metAJour(10);
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
-  }, plonge[1].trim());
-  // Detail imagery fades in through the same product animation as an ordinary
-  // visit. Do not freeze a candidate screenshot midway through that fade: it
-  // would compare a half-composited globe rather than the settled island view.
-  await page.waitForFunction(() => {
-    const detail = window.__sillage?.globe?.etatDetail?.();
-    return !detail?.actif || detail.opacite >= 0.98;
-  }, null, { timeout: 10_000 });
+  }, {
+    nom: plonge[1].trim(),
+    phase: phasePlongee ? Number(phasePlongee[1]) : null,
+  });
+  if (phasePlongee) {
+    await avanceExperience(2.6 * Math.max(0, Number(phasePlongee[1])));
+    // Let the real render loop present the manually advanced state once
+    // before freezing it. Otherwise screenshot() can retain the previous
+    // WebGL frame even though the camera/uniforms have already changed.
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(
+      () => requestAnimationFrame(resolve))));
+    await page.evaluate(() => window.__sillage?.renderer?.setAnimationLoop(null));
+  } else {
+    // Detail imagery fades in through the same product animation as an
+    // ordinary visit. Do not freeze a candidate screenshot midway through
+    // that fade: it would compare a half-composited globe rather than the
+    // settled island view.
+    await page.waitForFunction(() => {
+      const detail = window.__sillage?.globe?.etatDetail?.();
+      return !detail?.actif || detail.opacite >= 0.98;
+    }, null, { timeout: 10_000 });
+  }
+}
+if (phaseRetour) {
+  await page.evaluate(async () => {
+    const { plongee } = window.__sillage;
+    plongee.remonte();
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+  });
+  // Freeze a real outbound product frame. This catches an aerial layer that
+  // lingers long enough for a local crop edge to re-enter the viewport.
+  await avanceExperience(2.6 * Math.min(1, Math.max(0, Number(phaseRetour[1]))));
+  await page.evaluate(() => new Promise(resolve => requestAnimationFrame(
+    () => requestAnimationFrame(resolve))));
+  await page.evaluate(() => window.__sillage?.renderer?.setAnimationLoop(null));
 }
 const regarde = action.match(/regarde=(-?[\d.]+),(-?[\d.]+)/);
 if (regarde) {
