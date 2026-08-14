@@ -273,8 +273,10 @@
   "latMin": -17.140790393316646
  },
  "Fidji - Makogai|2010-10-03": {
-  "fichier": "media/aerien-detail/makogai-sentinel-2026-05-07-detail.webp",
-  "lonMin": 178.757404331811,
+  "fichier": "media/aerien-detail/makogai-sentinel-2026-05-07-detail-v2.webp",
+  "detailPlongee": true,
+  "detailFov": 3.5,
+  "lonMin": 178.8854142597982,
   "lonMax": 179.188595668189,
   "latMax": -17.247196047558,
   "latMin": -17.658538284963,
