@@ -191,8 +191,8 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
 
 ### Promised in PLAN.md and not built
 
-- Animated morph between Carnet and realistic modes; engraved sea-chart
-  variant (feature 1).
+- ~~Animated morph between Carnet and realistic modes~~ (a dissolve, batch
+  15); engraved sea-chart variant (feature 1) still open.
 - Wind particles (feature 2; judged heavy).
 - Real time of day for sunrise/sunset during the crossing (feature 4).
 - ~~Camping-car route of autumn 2013 (`data/roadtrip.json`) not drawn.~~
@@ -478,6 +478,15 @@ Found and fixed (batch 14):
   buttons now use their icon and one word, as on phones.
 - The ❧ closing a chapter card was pinned to the card's corner and sat on
   the last words of a card that scrolls; it now follows the text.
+
+Built next (batch 15):
+- **The two maps dissolve into each other** (PLAN feature 1, "le
+  basculement de carte… morphe"). Switching between the painted globe and
+  the realistic one used to jump. The last frame of the old look is now
+  copied onto a veil above the scene (below every control) that fades out
+  over 0.9 s, so one map seems laid over the other. Skipped for visitors
+  who ask for reduced motion. Not built: the engraved sea-chart variant,
+  and wind particles (PLAN judged them heavy).
 
 ## Ideas for later
 
