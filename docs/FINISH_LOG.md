@@ -492,6 +492,13 @@ Built next (batch 15):
   who ask for reduced motion. Not built: the engraved sea-chart variant,
   and wind particles (PLAN judged them heavy).
 
+- Batch 16: **realistic mode on phones.** Phones already painted a lighter
+  Carnet globe, but switching to realistic mode still downloaded and
+  decoded the 5400 px day map (2.5 MB, about 58 MB of graphics memory, the
+  kind of load that can crash a phone browser tab). Light devices now get
+  half-size maps (`pipeline/textures_legeres.py`): day 2700 px (576 KB) and
+  night 1800 px (131 KB), indistinguishable at phone size.
+
 ## Ideas for later
 
 - Chapter quotes could also appear during the crossing (kept to titles for
