@@ -949,10 +949,13 @@ body:not(.lecture) .affleure-carte { animation: dissout .5s ease both; }
 #recit-carte {
   position: fixed;
   left: 36px;
-  top: 50%;
+  /* centred in the band between the title (118 px) and the timeline's
+     anchor tab (136 px from the bottom), so a tall card such as the
+     epilogue touches neither: it scrolls inside when the band is short */
+  top: calc(50% - 9px);
   transform: translateY(-40%) rotate(-.3deg);
   width: min(390px, 84vw);
-  max-height: calc(100dvh - 180px);
+  max-height: calc(100dvh - 258px);
   padding: 28px 32px 30px;
   border-radius: 5px 18px 7px 20px / 16px 7px 19px 8px;
   opacity: 0;
@@ -966,6 +969,11 @@ body:not(.lecture) .affleure-carte { animation: dissout .5s ease both; }
   opacity: 1;
   transform: translateY(-50%) rotate(-.3deg);
   pointer-events: auto;
+}
+/* a laptop screen: a little less paper around the text, so the longest
+   card (the epilogue) fits without scrolling */
+@media (max-height: 820px) and (min-width: 641px) {
+  #recit-carte { padding: 22px 28px 22px; }
 }
 /* the closing flourish follows the text: pinned to the corner, it sat on
    the last words of a card that scrolls */
