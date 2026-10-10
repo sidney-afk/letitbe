@@ -608,6 +608,15 @@ welcome card, « L’équipage et le bateau » and « À propos », the sound.
   (Forward reopens it). Same links in the version without 3D. The preview
   shown by a messaging app stays the site's own (a static site cannot give
   each stop its own preview).
+- Batch 25: **« Partager » on each post.** The address now names a post,
+  but nothing told a visitor they could send it. Each post's date line has
+  a discreet « Partager »: on a phone it opens the phone's own share sheet
+  (messages, mail), on a computer it copies the link (« Lien copié »); if
+  the share sheet fails it falls back to copying, and without a clipboard
+  the link is shown to copy by hand. The browser tab names the stop being
+  read (« Tuamotu - Fakarava · Le Sillage »), also for a bookmark. Found on
+  the way: a stop opened by an address typed by hand kept the general tab
+  title; fixed. The version without 3D has the links but not the button.
 
 ## Ideas for later
 

@@ -784,3 +784,20 @@ test('un lien rouvre un carnet, et le bouton Retour le referme sans quitter le s
     return billet && Math.abs(flux.scrollTop - (billet.offsetTop - 14)) < 4;
   }, null, { timeout: 60_000 });
 });
+
+test('un billet se partage : le lien copié rouvre ce billet', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await ouvreExperience(page, { width: 1366, height: 768 });
+  await page.evaluate(async () => {
+    const { plongee, route } = window.__sillage;
+    await plongee.vers(route.escales.find(e => e.nom === 'Sidney'));
+    plongee.metAJour(10);
+  });
+  await expect(page).toHaveTitle('Sidney · Le Sillage');
+  const partage = page.locator('#billet-531 .article-partage');
+  await expect(partage).toHaveAccessibleName('Partager le billet « Sidney, pause pipi »');
+  await partage.click();
+  await expect(partage).toHaveText('Lien copié');
+  const lien = await page.evaluate(() => navigator.clipboard.readText());
+  expect(lien).toMatch(/#sidney-2013-08-20\/billet-531$/);
+});

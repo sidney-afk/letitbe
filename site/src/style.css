@@ -1323,6 +1323,33 @@ body[data-mode="photo"] #plongee-sommaire { color: #e8c87a; }
   color: var(--or);
   font-size: .88rem;
 }
+#plongee-flux .article-date {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+/* « Partager » : discreet, in the date line; the touch area is larger than
+   the word (44 px) without making the line taller */
+.article-partage {
+  flex: none;
+  margin: -13px -6px -13px 0;
+  padding: 13px 6px 13px 14px;
+  border: 0;
+  background: none;
+  font-family: "EB Garamond", serif;
+  font-style: italic;
+  font-size: .86rem;
+  letter-spacing: 0;
+  color: var(--encre-claire);
+  text-decoration: underline;
+  text-decoration-color: rgba(154, 108, 28, .4);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.article-partage:hover { color: var(--encre); }
+.article-partage:focus-visible { outline: 3px solid var(--or); outline-offset: -6px; border-radius: 6px; }
+body[data-mode="photo"] .article-partage { color: rgba(223, 243, 255, .7); }
 #plongee-flux h3 {
   margin: 2px 0 8px;
   color: var(--bleu-encre);
