@@ -302,9 +302,6 @@ body[data-mode="photo"]::after { display: none; }
   display: grid;
   place-items: center;
   padding: 24px;
-  background:
-    var(--grain),
-    radial-gradient(120% 90% at 50% 38%, #cfe8f7 0%, #b7dbf1 55%, #a6d0ec 100%);
   color: var(--encre);
   text-align: center;
   transition: opacity .9s ease, visibility .9s;
@@ -384,6 +381,125 @@ body[data-mode="photo"]::after { display: none; }
 }
 #chargement-reessayer[hidden] { display: none; }
 #chargement.echec .chargement-route { display: none; }
+
+/* ——— l'accueil : la page de garde du carnet, posée sur le globe ———
+   Le ciel opaque du chargement s'efface ; il reste un voile léger, et le
+   cartouche devient une carte de parchemin avec deux chemins : revivre le
+   voyage, ou explorer librement. */
+#chargement::before {
+  /* the opaque sky of the loading screen */
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    var(--grain),
+    radial-gradient(120% 90% at 50% 38%, #cfe8f7 0%, #b7dbf1 55%, #a6d0ec 100%);
+  transition: opacity 1.2s ease;
+}
+#chargement.accueil {
+  background:
+    radial-gradient(70% 60% at 50% 50%, rgba(236, 245, 251, .62), rgba(196, 226, 244, .18) 70%, transparent);
+}
+#chargement.accueil::before { opacity: 0; }
+#chargement.accueil .chargement-route,
+#chargement.accueil #chargement-message { display: none; }
+.chargement-cartouche { position: relative; }
+#chargement.accueil .chargement-cartouche {
+  width: min(460px, 100%);
+  padding: 30px 32px 24px;
+  border-radius: 6px 18px 8px 20px / 16px 8px 19px 9px;
+  background:
+    var(--grain),
+    radial-gradient(120% 140% at 18% 0%, rgba(255, 252, 242, .55), transparent 60%),
+    radial-gradient(130% 120% at 100% 100%, rgba(196, 160, 96, .22), transparent 55%),
+    linear-gradient(168deg, #f9f2df, #f0e3c2);
+  border: 1px solid rgba(122, 84, 40, .55);
+  box-shadow:
+    inset 0 0 0 3px rgba(252, 247, 235, .9),
+    inset 0 0 0 4px rgba(122, 84, 40, .3),
+    0 18px 50px rgba(40, 60, 90, .32);
+  animation: leve .9s ease-out both;
+}
+#accueil-corps[hidden] { display: none; }
+#accueil-corps { display: grid; gap: 16px; margin-top: 10px; }
+#accueil-texte {
+  font-size: 1.06rem;
+  line-height: 1.55;
+  color: #3a3530;
+}
+.accueil-actions { display: grid; gap: 10px; justify-items: center; }
+#accueil-traversee, #accueil-explorer {
+  min-height: 48px;
+  font: inherit;
+  cursor: pointer;
+  border-radius: 12px 16px 11px 17px / 16px 11px 17px 12px;
+}
+#accueil-traversee {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 22px 10px 14px;
+  color: #fffaf0;
+  background: linear-gradient(170deg, #b5452f, #8f2f20);
+  border: 1px solid #6d2014;
+  box-shadow: inset 0 0 0 2px rgba(255, 230, 200, .25), 0 8px 20px rgba(110, 40, 20, .35);
+  font-family: "IM Fell English SC", "EB Garamond", serif;
+  font-size: 1.18rem;
+  letter-spacing: .04em;
+  text-align: left;
+}
+#accueil-traversee svg { width: 34px; height: 34px; flex: none; }
+#accueil-traversee small {
+  display: block;
+  font-family: "EB Garamond", serif;
+  font-style: italic;
+  font-size: .86rem;
+  letter-spacing: 0;
+  opacity: .9;
+}
+#accueil-traversee:hover { background: linear-gradient(170deg, #c04d36, #9a3424); }
+#accueil-explorer {
+  padding: 8px 18px;
+  color: #6d5012;
+  background: transparent;
+  border: 1px solid rgba(122, 84, 40, .45);
+}
+#accueil-explorer:hover { background: rgba(255, 250, 238, .7); }
+#accueil-traversee:focus-visible, #accueil-explorer:focus-visible {
+  outline: 3px solid #fff9e9;
+  outline-offset: 3px;
+  box-shadow: 0 0 0 5px rgba(91, 61, 30, .92);
+}
+#accueil-aide {
+  font-style: italic;
+  font-size: .9rem;
+  color: var(--encre-claire);
+}
+@media (max-width: 640px) and (orientation: portrait) {
+  /* the card sits low so the globe and its route show above it */
+  #chargement.accueil {
+    place-items: end center;
+    padding-bottom: max(18px, calc(env(safe-area-inset-bottom) + 12px));
+  }
+}
+@media (max-width: 640px), (max-height: 520px) {
+  #chargement.accueil .chargement-cartouche { padding: 22px 20px 18px; }
+  #accueil-texte { font-size: 1rem; line-height: 1.45; }
+  #chargement.accueil .chargement-titre { font-size: 2.3rem; }
+}
+@media (max-height: 520px) and (orientation: landscape) {
+  #chargement.accueil .chargement-sous-titre,
+  #accueil-aide { display: none; }
+  #accueil-corps { gap: 10px; margin-top: 4px; }
+  .accueil-actions { grid-auto-flow: column; }
+}
+
+/* While the welcome card is open, the scene controls wait behind it and
+   rise once the visitor has chosen a path. */
+body.accueil-ouvert #titre,
+body.accueil-ouvert #boutons-haut,
+body.accueil-ouvert #timeline,
+body.accueil-ouvert #navigation-escales { visibility: hidden; animation: none !important; }
 
 #mode-bouton[aria-busy="true"] { cursor: progress; }
 #mode-bouton[aria-busy="true"] svg { animation: roue 1.6s linear infinite; }
@@ -942,6 +1058,8 @@ body.recit-actif #recit-indicateur { opacity: 1; }
     inset 3px 0 0 rgba(252, 247, 235, .9),
     inset 4px 0 0 rgba(122, 84, 40, .3),
     -12px 0 40px rgba(30, 45, 70, .3);
+  /* Slides in by animating `right`, not a transform: a transform would make
+     the panel the containing block of the fixed scene porthole. */
   animation: glisse .55s cubic-bezier(.22, .8, .3, 1);
   z-index: 5;
 }
@@ -1025,8 +1143,8 @@ body.lecture #navigation-escales { opacity: 0; visibility: hidden; pointer-event
 }
 body.plongee-ouverte #navigation-escales { display: none; }
 @keyframes glisse {
-  from { transform: translateX(40px); opacity: 0; }
-  to { transform: none; opacity: 1; }
+  from { right: -40px; opacity: 0; }
+  to { right: 0; opacity: 1; }
 }
 
 #plongee-entete {
@@ -1135,7 +1253,10 @@ body.plongee-ouverte #navigation-escales { display: none; }
   text-align: justify;
   hyphens: auto;
 }
-#plongee-flux article:first-child .article-texte::first-letter {
+/* a paragraph break of the original post; a lone "\n" was a line break */
+.article-texte { white-space: pre-line; }
+.article-texte + .article-texte { margin-top: .75em; }
+#plongee-flux article:first-of-type .article-ouverture::first-letter {
   font-family: "IM Fell English", serif;
   font-size: 2.5em;
   float: left;
@@ -1572,3 +1693,287 @@ body[data-mode="photo"] #titre-trait { filter: none; }
     border: 2px solid CanvasText;
   }
 }
+
+/* ——— À propos et crédits ——— */
+.lien-a-propos {
+  justify-self: start;
+  min-height: 44px;
+  padding: 4px 2px;
+  font: inherit;
+  font-size: .88rem;
+  font-style: italic;
+  color: var(--encre-claire);
+  background: none;
+  border: 0;
+  text-decoration: underline;
+  text-decoration-color: rgba(154, 108, 28, .45);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.lien-a-propos:focus-visible {
+  outline: 3px solid #fff9e9;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px rgba(91, 61, 30, .92);
+}
+#a-propos {
+  margin: auto;
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100dvh - 48px);
+  overflow-y: auto;
+  padding: 30px 32px 26px;
+  border: 1px solid rgba(122, 84, 40, .55);
+  border-radius: 6px 18px 8px 20px / 16px 8px 19px 9px;
+  background:
+    var(--grain),
+    linear-gradient(168deg, #f9f2df, #f0e3c2);
+  box-shadow:
+    inset 0 0 0 3px rgba(252, 247, 235, .9),
+    inset 0 0 0 4px rgba(122, 84, 40, .3),
+    0 18px 50px rgba(40, 60, 90, .35);
+  color: #3a3530;
+  line-height: 1.55;
+}
+#a-propos::backdrop { background: rgba(40, 55, 75, .35); }
+#a-propos h2 {
+  font-family: "IM Fell English", "EB Garamond", serif;
+  font-weight: 400;
+  font-size: 1.7rem;
+  color: var(--bleu-encre);
+  margin-bottom: 10px;
+}
+#a-propos h3 {
+  margin: 18px 0 6px;
+  font-family: "IM Fell English SC", "EB Garamond", serif;
+  font-weight: 400;
+  letter-spacing: .08em;
+  color: var(--or);
+}
+#a-propos p + p { margin-top: 10px; }
+#a-propos ul { padding-left: 1.1em; font-size: .94rem; }
+#a-propos li + li { margin-top: 5px; }
+#a-propos a { color: #7c4f12; text-underline-offset: 2px; }
+#a-propos-fermer {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  width: 44px;
+  height: 44px;
+  font: inherit;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: #6d5012;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+#a-propos-fermer:focus-visible { outline: 3px solid rgba(91, 61, 30, .9); border-radius: 8px; }
+#recit-carte .lien-a-propos { margin-top: 10px; display: block; }
+
+/* ——— la vue du ciel : un hublot sur l'image satellite de l'escale ——— */
+#plongee-flux figure.vue-du-ciel {
+  margin: 18px auto 6px;
+  padding: 0;
+  width: min(300px, 78%);
+  background: none;
+  box-shadow: none;
+  transform: none;
+  text-align: center;
+}
+#plongee-flux figure.vue-du-ciel::before { display: none; }
+.vue-du-ciel-hublot {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid #c9a35a;
+  box-shadow:
+    0 0 0 2px #7c5a16,
+    inset 0 0 0 2px rgba(255, 240, 200, .55),
+    0 10px 26px rgba(40, 35, 25, .35);
+}
+.vue-du-ciel-hublot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  /* a breath of the painted world's warmth over the satellite blues */
+  filter: saturate(1.08) contrast(1.04);
+}
+.vue-du-ciel-hublot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  box-shadow: inset 0 0 28px rgba(0, 10, 25, .45);
+  pointer-events: none;
+}
+.vue-du-ciel-ancre {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  font-size: 15px;
+  line-height: 1;
+  color: #8f2f20;
+  background: rgba(255, 250, 238, .92);
+  border: 1.5px solid #8f2f20;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, .35);
+  pointer-events: none;
+}
+#plongee-flux figure.vue-du-ciel figcaption {
+  margin-top: 8px;
+  display: grid;
+  gap: 1px;
+  font-family: "IM Fell English SC", "EB Garamond", serif;
+  letter-spacing: .05em;
+  color: #6d5012;
+}
+#plongee-flux figure.vue-du-ciel figcaption small {
+  font-family: "EB Garamond", serif;
+  font-style: italic;
+  letter-spacing: 0;
+  font-size: .74rem;
+  color: var(--encre-claire);
+}
+
+/* Wide screens: the porthole leaves the journal and floats, large, over the
+   sea in the free part of the scene, as if looking down through a hublot.
+   It waits for the journal's slide-in to finish, then rises. */
+@media (min-width: 1000px) {
+  body.plongee-hublot #plongee-scene-caption { display: none; }
+  /* a backdrop blur would make the panel the porthole's containing block */
+  body.plongee-hublot #plongee { backdrop-filter: none; }
+  #plongee-flux figure.vue-du-ciel {
+    --hublot: min(calc(100dvh - 340px), calc((100vw - min(480px, 94vw)) * .66), 560px);
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: min(480px, 94vw);
+    width: var(--hublot);
+    height: calc(var(--hublot) + 52px);
+    margin: auto;
+    z-index: 4;
+    animation: hublot-monte 1.1s .55s cubic-bezier(.2, .75, .3, 1) both;
+  }
+  #plongee-flux figure.vue-du-ciel figcaption {
+    padding: 4px 12px 5px;
+    width: fit-content;
+    margin-inline: auto;
+    border-radius: 8px;
+    background: rgba(255, 251, 238, .82);
+    box-shadow: 0 2px 10px rgba(30, 50, 80, .18);
+  }
+}
+@keyframes hublot-monte {
+  from { opacity: 0; transform: translateY(24px) scale(.94); filter: blur(4px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+body[data-mode="photo"] #plongee-flux figure.vue-du-ciel { background: none; box-shadow: none; }
+
+/* ——— les albums photo d'une escale ——— */
+.albums-escale { margin-top: 26px; }
+.albums-escale[hidden] { display: none; }
+.albums-titre {
+  font-family: "IM Fell English SC", "EB Garamond", serif;
+  font-weight: 400;
+  font-size: .95rem;
+  letter-spacing: .08em;
+  color: var(--or);
+  margin-bottom: 8px;
+}
+.albums-grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 12px;
+}
+.album-carte {
+  display: grid;
+  gap: 3px;
+  padding: 7px 7px 9px;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  background: linear-gradient(174deg, #fffdf6, #f6efdf);
+  border: 1px solid rgba(122, 84, 40, .25);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(60, 45, 20, .18);
+  transition: transform .2s, box-shadow .2s;
+}
+.album-carte:hover { transform: translateY(-2px) rotate(-.4deg); box-shadow: 0 8px 18px rgba(60, 45, 20, .25); }
+.album-carte:focus-visible { outline: 3px solid rgba(91, 61, 30, .9); outline-offset: 3px; }
+.album-vignettes {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #e8dcc0;
+}
+.album-vignettes img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.album-vignettes img:first-child { grid-row: 1 / 3; }
+.album-nom {
+  margin-top: 4px;
+  font-family: "IM Fell English", "EB Garamond", serif;
+  font-size: 1.05rem;
+  color: var(--bleu-encre);
+}
+.album-detail { font-size: .84rem; font-style: italic; color: var(--encre-claire); }
+body[data-mode="photo"] .album-carte { background: rgba(20, 30, 44, .6); border-color: rgba(232, 200, 122, .3); }
+body[data-mode="photo"] .album-nom { color: #e8c87a; }
+
+/* ——— the viewer for a series (album) ——— */
+.lightbox-fleche {
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(239, 230, 210, .6);
+  border-radius: 50%;
+  background: rgba(8, 10, 14, .6);
+  color: #efe6d2;
+  font: 2.2rem/1 "EB Garamond", Georgia, serif;
+  cursor: pointer;
+  z-index: 1;
+}
+.lightbox-fleche[hidden] { display: none; }
+#lightbox-precedente { left: max(14px, calc(env(safe-area-inset-left) + 8px)); }
+#lightbox-suivante { right: max(14px, calc(env(safe-area-inset-right) + 8px)); }
+.lightbox-fleche:focus-visible { outline: 3px solid #fff9e9; outline-offset: 3px; }
+#lightbox-compteur {
+  margin-top: 6px;
+  color: rgba(239, 230, 210, .75);
+  font-family: "IM Fell English SC", "EB Garamond", serif;
+  letter-spacing: .06em;
+  font-size: .85rem;
+}
+#lightbox-compteur[hidden], #lightbox-album-complet[hidden] { display: none; }
+#lightbox-album-complet {
+  display: inline-block;
+  margin-top: 6px;
+  min-height: 44px;
+  line-height: 44px;
+  color: #e8c87a;
+  font-style: italic;
+  text-underline-offset: 3px;
+}
+@media (max-width: 640px) {
+  .lightbox-fleche { top: auto; bottom: max(14px, calc(env(safe-area-inset-bottom) + 8px)); transform: none; }
+  #lightbox img { max-height: 70vh; }
+}
+@media (min-width: 1000px) {
+  body[data-mode="photo"] #plongee-flux figure.vue-du-ciel figcaption { background: rgba(10, 18, 28, .82); }
+}
+body[data-mode="photo"] #plongee-flux figure.vue-du-ciel figcaption { color: #e8c87a; }
+body[data-mode="photo"] #plongee-flux figure.vue-du-ciel figcaption small { color: rgba(223, 243, 255, .75); }

@@ -84,7 +84,7 @@
   <div id="affleure" aria-hidden="true" data-scene-safe-zone></div>
   <aside id="recit-carte" aria-live="polite" data-scene-safe-zone></aside>
   <div id="recit-indicateur" aria-hidden="true"></div>
-  <p id="recit-aide" data-scene-safe-zone hidden>Le curseur et la barre font avancer le voyage — la molette zoome.</p>
+  <p id="recit-aide" data-scene-safe-zone hidden>Faites glisser le petit voilier, ou lancez la lecture&nbsp;: le récit avance avec lui.</p>
   <p id="plongee-scene-caption" aria-hidden="true" data-scene-safe-zone hidden></p>
 
   <details id="navigation-escales" data-scene-safe-zone>
@@ -95,6 +95,7 @@
         <option value="">Choisir une escale…</option>
       </select>
       <button type="button" id="escales-ouvrir" aria-controls="plongee">Ouvrir le carnet</button>
+      <button type="button" class="lien-a-propos" aria-haspopup="dialog">À propos et crédits</button>
     </div>
   </details>
   </main>
@@ -120,9 +121,13 @@
 
   <div id="lightbox" role="dialog" aria-modal="true" aria-label="Photo agrandie" hidden>
     <button type="button" id="lightbox-fermer" aria-label="Fermer la photo">×</button>
+    <button type="button" id="lightbox-precedente" class="lightbox-fleche" aria-label="Photo précédente" hidden>‹</button>
+    <button type="button" id="lightbox-suivante" class="lightbox-fleche" aria-label="Photo suivante" hidden>›</button>
     <figure>
       <img alt="">
       <figcaption></figcaption>
+      <p id="lightbox-compteur" aria-live="polite" hidden></p>
+      <a id="lightbox-album-complet" target="_blank" rel="noopener" hidden></a>
     </figure>
   </div>
 
@@ -158,6 +163,33 @@
     </button>
   </footer>
 
+  <dialog id="a-propos" aria-labelledby="a-propos-titre">
+    <button type="button" id="a-propos-fermer" aria-label="Fermer">×</button>
+    <h2 id="a-propos-titre">À propos</h2>
+    <p>
+      <em>Le Sillage</em> retrace les cinq années de la famille Laruel à bord
+      de <em>Let It Be</em>, de mai 2009 à janvier 2014. Les textes, les dates et
+      les photographies viennent tous du carnet de bord qu’ils ont tenu en ligne&nbsp;:
+      <a href="https://www.laruel.be/" target="_blank" rel="noopener">laruel.be</a>.
+    </p>
+    <p>
+      Le voyage est aussi raconté dans deux livres&nbsp;: <em>Les p’tites bites</em>
+      (tome&nbsp;1) et <em>95° de latitude Nord</em> (tome&nbsp;2).
+    </p>
+    <h3>Crédits</h3>
+    <ul>
+      <li>Carte peinte d’après <em>Natural Earth III</em> de Tom Patterson (domaine public)&nbsp;; relief d’après les données SRTM de la NASA.</li>
+      <li>Mode réaliste&nbsp;: imagerie NASA <em>Blue Marble</em> et <em>Black Marble</em>.</li>
+      <li>Maquette du catamaran&nbsp;: «&nbsp;Joel&amp;Ludi Catamaran 35 pies&nbsp;» par fgiraldez,
+        <a href="https://sketchfab.com/3d-models/joelludi-catamaran-35-pies-3c0bd11c8c1e46448930c00e5bc4ccea" target="_blank" rel="noopener">Sketchfab</a>,
+        licence <a href="https://creativecommons.org/licenses/by/4.0/deed.fr" target="_blank" rel="noopener">CC BY 4.0</a>, adaptée.</li>
+      <li>Vue de Makogai&nbsp;: contient des données Copernicus Sentinel modifiées (2026).</li>
+      <li>Vue d’Opua&nbsp;: LINZ Data Service, sous licence NIWA, CC BY 4.0.</li>
+      <li>Météo vécue&nbsp;: réanalyse ERA5 (ECMWF, Copernicus) via Open-Meteo.</li>
+      <li>Ciel étoilé&nbsp;: <em>Yale Bright Star Catalog</em>.</li>
+    </ul>
+  </dialog>
+
   <div id="chargement" role="status" aria-busy="true" aria-labelledby="chargement-message">
     <div class="chargement-cartouche">
       <p class="chargement-titre" aria-hidden="true">Le Sillage</p>
@@ -166,13 +198,34 @@
         <path d="M138 10 C 174 4, 214 17, 256 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
         <path d="M130 3.5 134.5 10 130 16.5 125.5 10 Z" fill="currentColor"/>
       </svg>
-      <p class="chargement-sous-titre" aria-hidden="true">Cinq ans autour du Pacifique à bord de <em>Let It Be</em></p>
+      <p class="chargement-sous-titre" aria-hidden="true">Cinq ans autour du Pacifique à bord de <em>Let&nbsp;It&nbsp;Be</em></p>
       <div class="chargement-route" aria-hidden="true">
         <span class="chargement-avance" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></span>
         <span class="chargement-voilier"></span>
       </div>
       <p id="chargement-message">Le carnet de bord s’ouvre…</p>
       <button type="button" id="chargement-reessayer" hidden>Réessayer</button>
+      <div id="accueil-corps" hidden>
+        <p id="accueil-texte">
+          Mai 2009 – janvier 2014. Éric, Cécile, Kenya, Sidney et Syr Daria
+          à bord d’un catamaran, de la Martinique à San Diego&nbsp;:
+          24&nbsp;490&nbsp;milles, et leur carnet de bord écrit en chemin.
+        </p>
+        <div class="accueil-actions">
+          <button type="button" id="accueil-traversee">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+                <circle cx="12" cy="12" r="6.1"/>
+                <path d="M12 5.9V2.4M12 18.1v3.5M5.9 12H2.4M18.1 12h3.5M7.7 7.7 5.2 5.2M16.3 16.3l2.5 2.5M16.3 7.7l2.5-2.5M7.7 16.3l-2.5 2.5"/>
+              </g>
+              <path d="M10.6 9.3 15.3 12l-4.7 2.7Z" fill="currentColor"/>
+            </svg>
+            <span>Larguer les amarres <small>le voyage en trois minutes</small></span>
+          </button>
+          <button type="button" id="accueil-explorer">Explorer la carte</button>
+        </div>
+        <p id="accueil-aide">Choisissez une escale sur le globe pour ouvrir son carnet de bord.</p>
+      </div>
     </div>
   </div>
 

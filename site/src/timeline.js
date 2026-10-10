@@ -20,6 +20,7 @@ export function creerTimeline(voyage) {
   let t = voyage.debut;
   let enLecture = false;
   const auditeurs = [];
+  const auditeursFin = [];
 
   function notifie() {
     const f = (t - voyage.debut) / duree;
@@ -62,11 +63,15 @@ export function creerTimeline(voyage) {
   function metAJour(dtMs) {
     if (!enLecture) return;
     t += dtMs * vitesse;
+    let arrive = false;
     if (t >= voyage.fin) {
       t = voyage.fin;
       lecture(false);
+      arrive = true;
     }
     notifie();
+    // the crossing has reached San Diego on its own (not a pause)
+    if (arrive) for (const fn of auditeursFin) fn();
   }
 
   notifie();
@@ -77,5 +82,6 @@ export function creerTimeline(voyage) {
     vaA,
     metAJour,
     surChangement(fn) { auditeurs.push(fn); },
+    surFinDuVoyage(fn) { auditeursFin.push(fn); },
   };
 }
