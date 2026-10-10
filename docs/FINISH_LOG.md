@@ -15,6 +15,29 @@ Answered by Sidney (2026-10-11):
 - **Who signed the two books**: « it doesn't really matter ». The epilogue
   and « À propos » keep naming the two titles without an author line.
 
+## Where things stand (2026-10-11, loop paused at Sidney's request)
+
+Live at https://sidney-afk.github.io/letitbe/ (29 batches merged, each one
+built, fully tested and checked on the live site). Since the first audit:
+the story's facts checked against the archive; every journal rebuilt from
+the blog with its photos; albums, films, the 2013 road trip, the table of
+contents, links to a stop or a post with « Partager », the crew page, a
+version for computers without 3D; phone, tablet and laptop layouts; and the
+boat at three quarters under sail during the replay.
+
+Nothing needs Sidney. If the work resumes, the best next steps are:
+1. The boat, round two (see batch 29): ink lines on every sail edge so the
+   two sails read apart up close; measure the rig from the model at
+   runtime; keep a tap from dropping the replay camera; place the horizon
+   so the phone's chapter title sits on clear sky; a test that drives the
+   camera with full motion. The three prototypes and their reviews were
+   kept outside the repository for this session only; the reasoning is in
+   batch 29.
+2. Watch the replay once on a real phone and a real laptop (the camera's
+   moves were only checked in a software renderer).
+3. Ideas still open below: the engraved sea-chart map style, chapter
+   quotes during the replay.
+
 ## How the audit was done (2026-10-10, first pass)
 
 - Built `site/` (`npm ci && npm run build`) and served the production build
