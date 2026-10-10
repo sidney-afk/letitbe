@@ -436,6 +436,18 @@ Built next (batch 10):
   a logged crossing, or when the title says so): "Los Roques" and the two
   Nuku Hiva posts lose it, and the two San Blas posts move from Panama's
   journal to San Blas, the stop their titles name.
+- Batch 13: each story chapter card ends with "Lire les billets de ce
+  chapitre", which opens the table of contents at that chapter; choosing a
+  post leaves the story for the journal. Found on the way: on a laptop
+  768 px high, a long chapter card reached down over "Explorer les
+  escales" (the menu took the clicks). The menu now steps aside during
+  the story on every screen, as it already did on phones.
+- Test decision: the realistic-mode layout check gave the mode switch the
+  default 8 s, but since batch 1 the first switch waits for the realistic
+  textures. In one run they downloaded in 0.13 s and the software decode of
+  the 5400 px day map took the rest. The check now allows 30 s for that
+  first switch (passes 2 runs out of 2); the busy globe icon covers the
+  wait for a real visitor.
 - Test decision: "aerial imagery stays hidden during the dive" stepped the
   flight by hand while the page's own loop kept moving it, so one slow run
   finished the flight before the mid-flight check. It now pauses the live
