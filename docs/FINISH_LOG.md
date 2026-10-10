@@ -523,6 +523,16 @@ Built next (batch 15):
 - Accessibility check of today's additions (table of contents, road trip
   section, journal with the post series viewer): no axe violations.
 
+- Batch 19 (from watching the replay to its end): the epilogue card ("La
+  terre ferme") reached 11 px over the timeline's ⚓ tab on a 1366×768
+  laptop. Story cards are now centred in the band between the title and
+  that tab (measured: 118 px to 632 px at 768 px high, 118 to 584 at
+  720), with a little less padding on short laptop screens: at 1366×768
+  the epilogue fits whole; at 720 px it scrolls inside its card. The
+  replay itself ran clean to San Diego and the epilogue. Also checked: the
+  two book titles the epilogue names are the family's own ("le désormais
+  culte « Les p'tites bites »", "95° de latitude Nord").
+
 ## Ideas for later
 
 - Chapter quotes could also appear during the crossing (kept to titles for
