@@ -56,3 +56,18 @@ test('le roadtrip de 2013 figure dans le carnet du repli 2D', async ({ page }) =
   await expect(page.locator('.fallback-carnet .roadtrip-carte img')).toBeVisible();
   await expect(page.locator('.fallback-carnet #fallback-billet-540')).toBeAttached();
 });
+
+test('un lien vers un billet l’ouvre aussi dans le repli 2D', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?force-fallback=1#sidney-2013-08-20/billet-531', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => window.__sillage?.fallback === true);
+  await expect(page.locator('#fallback-billet-531')).toBeInViewport();
+  // the quoted mention of a nearby stop leads there too
+  await page.evaluate(() => {
+    const details = [...document.querySelectorAll('#fallback-liste details')]
+      .find(d => d.querySelector('strong')?.textContent === 'Neah Bay');
+    details.open = true;
+  });
+  await expect(page.locator('#fallback-liste .evoque-lien')).toBeVisible();
+  await expect.poll(() => page.evaluate(() => location.hash)).toBe('#neah-bay-2013-09-04');
+});

@@ -734,3 +734,53 @@ test('un glissé du doigt tourne les photos d’un billet sur téléphone', asyn
   await expect(compteur).toHaveText(/2 \/ 8$/);
   await contexte.close();
 });
+
+test('un lien rouvre un carnet, et le bouton Retour le referme sans quitter le site', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  // a link someone was sent: that stop's journal, over the globe
+  await page.goto('/#tuamotu-fakarava-2010-04-06', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => {
+    window.__sillage?.plongee?.metAJour(10);
+    return window.__sillage?.plongee?.ouverte;
+  }, null, { timeout: 60_000 });
+  await expect(page.locator('#plongee-nom')).toHaveText('Tuamotu - Fakarava');
+  await expect(page.locator('body')).not.toHaveClass(/accueil-ouvert/);
+  await expect.poll(() => page.evaluate(() => location.hash)).toBe('#tuamotu-fakarava-2010-04-06');
+  // Back closes the journal and stays on the site
+  await page.goBack();
+  await page.waitForFunction(() => {
+    window.__sillage.plongee.metAJour(10);
+    return !window.__sillage.plongee.ouverte && !window.__sillage.plongee.enVol;
+  });
+  expect(await page.evaluate(() => location.hash)).toBe('');
+  // Forward reopens it, and closing it again leaves no stale entry behind
+  await page.goForward();
+  await page.waitForFunction(() => {
+    window.__sillage.plongee.metAJour(10);
+    return window.__sillage.plongee.ouverte;
+  });
+  await expect(page.locator('#plongee-nom')).toHaveText('Tuamotu - Fakarava');
+  await page.keyboard.press('Escape');
+  await expect.poll(() => page.evaluate(() => location.hash)).toBe('');
+
+  // a journal opened on the site names its stop, then its post, in the address
+  await page.evaluate(async () => {
+    const { plongee, route } = window.__sillage;
+    await plongee.vers(route.escales.find(e => e.nom === 'Sidney'), { billet: 531 });
+    plongee.metAJour(10);
+  });
+  await expect.poll(() => page.evaluate(() => location.hash)).toBe('#sidney-2013-08-20/billet-531');
+  // Escape closes it and the address lets go of it
+  await page.keyboard.press('Escape');
+  await expect.poll(() => page.evaluate(() => location.hash)).toBe('');
+
+  // a link to a post opens the journal at that post
+  await page.goto('/#sidney-2013-08-20/billet-531', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => {
+    window.__sillage?.plongee?.metAJour(10);
+    if (!window.__sillage?.plongee?.ouverte) return false;
+    const flux = document.getElementById('plongee-flux');
+    const billet = document.getElementById('billet-531');
+    return billet && Math.abs(flux.scrollTop - (billet.offsetTop - 14)) < 4;
+  }, null, { timeout: 60_000 });
+});

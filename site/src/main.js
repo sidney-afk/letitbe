@@ -10,6 +10,7 @@ import { creerBateau } from './boat.js';
 import { creerEtoiles } from './stars.js';
 import { creerTimeline } from './timeline.js';
 import { creerPlongee, blocEvoque } from './plongee.js';
+import { suisLeCarnet, lisLien, slugEscale } from './lien.js';
 import { creerRecit, CHAPITRES } from './recit.js';
 import { creerTraversee } from './traversee.js';
 import {
@@ -225,12 +226,30 @@ async function activeFallback2D() {
         carnet.dataset.rempli = '1';
         carnet.remplissage = remplitCarnetFallback(escale, carnet);
       }
+      // the address names the stop being read, to send it to someone
+      const ancre = `#${slugEscale(escale)}`;
+      if (details.open) history.replaceState(null, '', ancre);
+      else if (location.hash.startsWith(ancre)) {
+        history.replaceState(null, '', location.pathname + location.search);
+      }
     });
     item.append(details);
     items.append(item);
   });
   select?.replaceChildren(options);
   liste?.replaceChildren(items);
+  // a shared link: that stop's journal, open, at that post
+  const lien = lisLien(escales);
+  if (lien) {
+    const index = escales.indexOf(lien.escale);
+    const item = document.getElementById(`fallback-escale-${index}`);
+    if (lien.billet) {
+      void ouvreBilletFallback(lien.escale.nom, lien.escale.date_arrivee, lien.billet);
+    } else if (item) {
+      item.querySelector('details').open = true;
+      item.scrollIntoView({ block: 'start' });
+    }
+  }
   if (ouvrir && select) {
     ouvrir.textContent = 'Ouvrir le carnet';
     ouvrir.addEventListener('click', () => {
@@ -644,26 +663,32 @@ timeline.surFinDuVoyage(() => {
 creerTraversee({ timeline, voyage, mouillagesParCle });
 
 // The whole logbook as a table of contents: chapters, stops, post titles.
+// Opening a journal from elsewhere than the globe: the table of contents, a
+// shared link, the browser's Forward button.
+function ouvreCarnet(escale, billet) {
+  // chosen from the welcome card (or a link): the card steps aside
+  if (document.body.classList.contains('accueil-ouvert')) {
+    chargement.ferme();
+    intro = 1;
+  }
+  if (recit.actif) recit.sort();
+  const menu = document.getElementById('navigation-escales');
+  if (menu?.open) {
+    menu.open = false;
+    menu.querySelector('summary')?.focus({ preventScroll: true });
+  }
+  void plongee.vers(escale, billet ? { billet } : {});
+}
+
 creerSommaire({
   escales: route.escales.filter(e => e.date_arrivee),
   mouillagesParCle,
   carnetsPrets,
   chapitres: CHAPITRES,
-  ouvre: (escale, billet) => {
-    // chosen from the welcome card: the card steps aside for the journal
-    if (document.body.classList.contains('accueil-ouvert')) {
-      chargement.ferme();
-      intro = 1;
-    }
-    if (recit.actif) recit.sort();
-    const menu = document.getElementById('navigation-escales');
-    if (menu?.open) {
-      menu.open = false;
-      menu.querySelector('summary')?.focus({ preventScroll: true });
-    }
-    void plongee.vers(escale, billet ? { billet } : {});
-  },
+  ouvre: ouvreCarnet,
 });
+// the address follows the open journal; Back closes it (lien.js)
+const lienCarnet = suisLeCarnet({ plongee, escales: route.escales, ouvre: ouvreCarnet });
 
 // The canvas is not the only way into the voyage: this native navigator gives
 // keyboard and assistive-technology users direct access to every anchorage.
@@ -974,6 +999,7 @@ renderer.setAnimationLoop(() => {
 
   timeline.metAJour(dt * 1000);
   plongee.metAJour(dt);
+  lienCarnet.metAJour();
   if (suivre && !suiviEnPause && !plongee.enVol && !plongee.enChargement) {
     suitLeBateau(Math.min(1, dt * 3.5));
   }
@@ -1061,6 +1087,8 @@ chargement.accueil().then((choix) => {
   if (camera.position.length() > accueil + 0.5) camera.position.setLength(accueil);
   if (!timeline.enLecture) document.getElementById('lecture').click();
 });
+// a shared link to a stop or a post: straight to that journal
+lienCarnet.ouvreLienInitial();
 } catch (erreur) {
   chargement.echec(erreur);
 }
