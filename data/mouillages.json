@@ -219,33 +219,6 @@
     ]
    },
    {
-    "id": 36,
-    "date": "2009-06-03",
-    "titre": "Los Aves",
-    "blocs": [
-     "Avec 25 noeuds de vent plein est, la navigation des Roques vers Los Aves fut courte: 6h pour les 40 miles, sous génois uniquement. La mer était formée et nous avons été bien secoués.",
-     "Arrivés sur place, nous avons mouillé face à un bande de terre de 1m de haut, ce qui nous protège de la houle mais pas du vent toujours aussi puissant. Nous avons immédiatement plongé pour voir la position de l'ancre, histoire de nous rassurer et de passer une bonne nuit. Dès les premiers coups de palmes, ce fut l'enchantement: nous avons mouillé au milieu d'ilets affleurant qui abritent une faune et une flore multicolores. Les enfants sont émerveillés par ces grandes patates de corail qui jalonnent le sable par 2m de profondeur. Chaque patate est un véritable dédale de petits passages pour les poissons, ce qui ne manque pas de rappeler une 'ville sous-marine' aux enfants.",
-     "Ils ont donc répertorié les alentours du bateau et baptisé chaque patate. Il y a la ville ronde, mini-ville, Beverly Hills, Sheffield, la ville lointaine, la ville des patates, etc.\"",
-     0,
-     "Plus tard dans la journée, nous avons eu la visite de pêcheurs qui nous ont gentiment offert quelques poissons que Cécile s'est empressée de nettoyer sur la jupe arrière. Pour ma part, l'échec est total: depuis qu'on est parti je n'ai eu de cesse de disposer des lignes traînantes munies de leurres plus sophistiqués les uns que les autres chaque fois que l'occasion se présentait. J'ai invoqué les dieux grecs, romains et égyptiens. J'ai expliqué à Sidney que si je n'avais encore rien pris, c'était vraisemblablement parce qu'il n'y avait plus de poissons dans la mer (mais après un snorkeling, il est revenu en disant: 'C'est n'importe quoi ton histoire de poissons'. ). Et voilà, je n'ai rien attrapé et l'on finit par manger le poisson des autres. Ma réputation de capitaine en a pris un coup mais c'est aussi cela, la dure vie d'aventurier des temps modernes...",
-     1
-    ],
-    "images": [
-     {
-      "src": "Tech/Image/Blog/2009_06_04/Pecheurs.JPG",
-      "legende": "",
-      "l": 320,
-      "h": 240
-     },
-     {
-      "src": "Tech/Image/Blog/2009_06_04/Cecile.JPG",
-      "legende": "",
-      "l": 320,
-      "h": 240
-     }
-    ]
-   },
-   {
     "id": 37,
     "date": "2009-06-03",
     "titre": "Los Roques",
@@ -276,6 +249,33 @@
   "type": "mouillage",
   "chapitre": "Les Caraïbes",
   "articles": [
+   {
+    "id": 36,
+    "date": "2009-06-03",
+    "titre": "Los Aves",
+    "blocs": [
+     "Avec 25 noeuds de vent plein est, la navigation des Roques vers Los Aves fut courte: 6h pour les 40 miles, sous génois uniquement. La mer était formée et nous avons été bien secoués.",
+     "Arrivés sur place, nous avons mouillé face à un bande de terre de 1m de haut, ce qui nous protège de la houle mais pas du vent toujours aussi puissant. Nous avons immédiatement plongé pour voir la position de l'ancre, histoire de nous rassurer et de passer une bonne nuit. Dès les premiers coups de palmes, ce fut l'enchantement: nous avons mouillé au milieu d'ilets affleurant qui abritent une faune et une flore multicolores. Les enfants sont émerveillés par ces grandes patates de corail qui jalonnent le sable par 2m de profondeur. Chaque patate est un véritable dédale de petits passages pour les poissons, ce qui ne manque pas de rappeler une 'ville sous-marine' aux enfants.",
+     "Ils ont donc répertorié les alentours du bateau et baptisé chaque patate. Il y a la ville ronde, mini-ville, Beverly Hills, Sheffield, la ville lointaine, la ville des patates, etc.\"",
+     0,
+     "Plus tard dans la journée, nous avons eu la visite de pêcheurs qui nous ont gentiment offert quelques poissons que Cécile s'est empressée de nettoyer sur la jupe arrière. Pour ma part, l'échec est total: depuis qu'on est parti je n'ai eu de cesse de disposer des lignes traînantes munies de leurres plus sophistiqués les uns que les autres chaque fois que l'occasion se présentait. J'ai invoqué les dieux grecs, romains et égyptiens. J'ai expliqué à Sidney que si je n'avais encore rien pris, c'était vraisemblablement parce qu'il n'y avait plus de poissons dans la mer (mais après un snorkeling, il est revenu en disant: 'C'est n'importe quoi ton histoire de poissons'. ). Et voilà, je n'ai rien attrapé et l'on finit par manger le poisson des autres. Ma réputation de capitaine en a pris un coup mais c'est aussi cela, la dure vie d'aventurier des temps modernes...",
+     1
+    ],
+    "images": [
+     {
+      "src": "Tech/Image/Blog/2009_06_04/Pecheurs.JPG",
+      "legende": "",
+      "l": 320,
+      "h": 240
+     },
+     {
+      "src": "Tech/Image/Blog/2009_06_04/Cecile.JPG",
+      "legende": "",
+      "l": 320,
+      "h": 240
+     }
+    ]
+   },
    {
     "id": 38,
     "date": "2009-06-05",
@@ -820,7 +820,19 @@
       "h": 320
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Las Perlas",
+  "lat": 8.625,
+  "lon": -79.034,
+  "log_nm": 1350,
+  "date_arrivee": "2009-06-28",
+  "date_depart": "2009-07-01",
+  "type": "mouillage",
+  "chapitre": "Vers le Pacifique",
+  "articles": [
    {
     "id": 54,
     "date": "2009-06-28",
@@ -845,19 +857,7 @@
       "h": 240
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Las Perlas",
-  "lat": 8.625,
-  "lon": -79.034,
-  "log_nm": 1350,
-  "date_arrivee": "2009-06-28",
-  "date_depart": "2009-07-01",
-  "type": "mouillage",
-  "chapitre": "Vers le Pacifique",
-  "articles": [
+   },
    {
     "id": 55,
     "date": "2009-06-29",
@@ -3509,7 +3509,19 @@
       "h": 271
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Marquises - Hiva Oa",
+  "lat": -9.804,
+  "lon": -139.032,
+  "log_nm": 6205,
+  "date_arrivee": "2009-12-23",
+  "date_depart": "2009-12-26",
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
    {
     "id": 147,
     "date": "2009-12-24",
@@ -3550,19 +3562,7 @@
       "h": 480
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Marquises - Hiva Oa",
-  "lat": -9.804,
-  "lon": -139.032,
-  "log_nm": 6205,
-  "date_arrivee": "2009-12-23",
-  "date_depart": "2009-12-26",
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
+   },
    {
     "id": 148,
     "date": "2009-12-25",
@@ -4763,19 +4763,7 @@
       "h": 480
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Marquises - Tahuata",
-  "lat": -9.905,
-  "lon": -139.105,
-  "log_nm": 6710,
-  "date_arrivee": "2010-03-07",
-  "date_depart": "2010-03-12",
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
+   },
    {
     "id": 181,
     "date": "2010-03-06",
@@ -4844,7 +4832,19 @@
       "h": 320
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Marquises - Tahuata",
+  "lat": -9.905,
+  "lon": -139.105,
+  "log_nm": 6710,
+  "date_arrivee": "2010-03-07",
+  "date_depart": "2010-03-12",
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
    {
     "id": 183,
     "date": "2010-03-09",
@@ -5340,7 +5340,19 @@
       "h": 320
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Tuamotu - Fakarava",
+  "lat": -16.061,
+  "lon": -145.621,
+  "log_nm": 7400,
+  "date_arrivee": "2010-04-06",
+  "date_depart": "2010-04-20",
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
    {
     "id": 196,
     "date": "2010-04-07",
@@ -5377,19 +5389,7 @@
       "h": 360
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Tuamotu - Fakarava",
-  "lat": -16.061,
-  "lon": -145.621,
-  "log_nm": 7400,
-  "date_arrivee": "2010-04-06",
-  "date_depart": "2010-04-20",
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
+   },
    {
     "id": 197,
     "date": "2010-04-11",
@@ -5485,19 +5485,7 @@
       "h": 360
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Tuamotu - Faaite",
-  "lat": -16.687,
-  "lon": -145.249,
-  "log_nm": 7480,
-  "date_arrivee": "2010-04-16",
-  "date_depart": "2010-04-17",
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
+   },
    {
     "id": 200,
     "date": "2010-04-15",
@@ -5537,40 +5525,6 @@
       "legende": "Quelques poissons du récif.",
       "l": 695,
       "h": 514
-     }
-    ]
-   },
-   {
-    "id": 201,
-    "date": "2010-04-16",
-    "titre": "Faaite, pétole.",
-    "blocs": [
-     "Au sud de Fakarava, il y a un petit atoll du nom de Faaite. Toujours en quête de sensations fortes, nous n'avons pas hésité à entreprendre la traversée de plus de 10 miles entre les deux atolls. En ce jour d'avril, il faisait trèèèèèès calme et le mouillage fut très reposant.",
-     0,
-     "Nous avons passé deux jours et une nuit à Faaite, profitant du calme absolu du lagon pour aller pêcher la langouste sur le platier, dès la nuit tombée. Pour une fois, nous avons réussi à en attraper quelques unes, que nous ferons cuire au BBQ un de ces jours.",
-     1,
-     "Au coucher du soleil, le vent était toujours nul et les enfants sont revenus de leur aventure à la rame.",
-     2,
-     "Encore une étape difficile dans notre périlleux voyage aux Tuamotus."
-    ],
-    "images": [
-     {
-      "src": "Tech/Blog/Polynesie/Tuamotu/2010_04_17/P1.JPG",
-      "legende": "Les enfants partent en exploration.",
-      "l": 480,
-      "h": 320
-     },
-     {
-      "src": "Tech/Blog/Polynesie/Tuamotu/2010_04_17/P2.JPG",
-      "legende": "Le soleil se reflète dans l'huile du lagon. Belle photo.",
-      "l": 320,
-      "h": 480
-     },
-     {
-      "src": "Tech/Blog/Polynesie/Tuamotu/2010_04_17/P3.JPG",
-      "legende": "Les enfants reviennent entre chiens et loups.",
-      "l": 480,
-      "h": 320
      }
     ]
    },
@@ -5631,6 +5585,52 @@
       "legende": "Cécile tient le kayak.",
       "l": 480,
       "h": 360
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "nom": "Tuamotu - Faaite",
+  "lat": -16.687,
+  "lon": -145.249,
+  "log_nm": 7480,
+  "date_arrivee": "2010-04-16",
+  "date_depart": "2010-04-17",
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
+   {
+    "id": 201,
+    "date": "2010-04-16",
+    "titre": "Faaite, pétole.",
+    "blocs": [
+     "Au sud de Fakarava, il y a un petit atoll du nom de Faaite. Toujours en quête de sensations fortes, nous n'avons pas hésité à entreprendre la traversée de plus de 10 miles entre les deux atolls. En ce jour d'avril, il faisait trèèèèèès calme et le mouillage fut très reposant.",
+     0,
+     "Nous avons passé deux jours et une nuit à Faaite, profitant du calme absolu du lagon pour aller pêcher la langouste sur le platier, dès la nuit tombée. Pour une fois, nous avons réussi à en attraper quelques unes, que nous ferons cuire au BBQ un de ces jours.",
+     1,
+     "Au coucher du soleil, le vent était toujours nul et les enfants sont revenus de leur aventure à la rame.",
+     2,
+     "Encore une étape difficile dans notre périlleux voyage aux Tuamotus."
+    ],
+    "images": [
+     {
+      "src": "Tech/Blog/Polynesie/Tuamotu/2010_04_17/P1.JPG",
+      "legende": "Les enfants partent en exploration.",
+      "l": 480,
+      "h": 320
+     },
+     {
+      "src": "Tech/Blog/Polynesie/Tuamotu/2010_04_17/P2.JPG",
+      "legende": "Le soleil se reflète dans l'huile du lagon. Belle photo.",
+      "l": 320,
+      "h": 480
+     },
+     {
+      "src": "Tech/Blog/Polynesie/Tuamotu/2010_04_17/P3.JPG",
+      "legende": "Les enfants reviennent entre chiens et loups.",
+      "l": 480,
+      "h": 320
      }
     ]
    }
@@ -6390,19 +6390,7 @@
       "h": 320
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Moorea",
-  "lat": -17.49,
-  "lon": -149.851,
-  "log_nm": 7870,
-  "date_arrivee": "2010-06-22",
-  "date_depart": "2010-06-29",
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
+   },
    {
     "id": 225,
     "date": "2010-06-22",
@@ -6443,7 +6431,19 @@
       "h": 360
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Moorea",
+  "lat": -17.49,
+  "lon": -149.851,
+  "log_nm": 7870,
+  "date_arrivee": "2010-06-22",
+  "date_depart": "2010-06-29",
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
    {
     "id": 226,
     "date": "2010-06-26",
@@ -6523,7 +6523,19 @@
       "h": 95
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Raiatea et Tahaa",
+  "lat": -16.78,
+  "lon": -151.44,
+  "log_nm": 7975,
+  "date_arrivee": "2010-07-02",
+  "date_depart": "2010-07-07",
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
    {
     "id": 228,
     "date": "2010-07-03",
@@ -6556,19 +6568,7 @@
       "h": 480
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Raiatea et Tahaa",
-  "lat": -16.78,
-  "lon": -151.44,
-  "log_nm": 7975,
-  "date_arrivee": "2010-07-02",
-  "date_depart": "2010-07-07",
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
+   },
    {
     "id": 229,
     "date": "2010-07-06",
@@ -6616,7 +6616,19 @@
       "h": 480
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Bora Bora",
+  "lat": -16.5,
+  "lon": -151.741,
+  "log_nm": 8000,
+  "date_arrivee": "2010-07-07",
+  "date_depart": "2010-07-14",
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
    {
     "id": 230,
     "date": "2010-07-08",
@@ -6665,19 +6677,7 @@
       "h": 353
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Bora Bora",
-  "lat": -16.5,
-  "lon": -151.741,
-  "log_nm": 8000,
-  "date_arrivee": "2010-07-07",
-  "date_depart": "2010-07-14",
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
+   },
    {
     "id": 231,
     "date": "2010-07-09",
@@ -8189,7 +8189,19 @@
       "h": 217
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Fidji - Naigani",
+  "lat": -17.583,
+  "lon": 178.672,
+  "log_nm": 9990,
+  "date_arrivee": "2010-10-05",
+  "date_depart": "2010-10-07",
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
    {
     "id": 270,
     "date": "2010-10-05",
@@ -8207,16 +8219,25 @@
       "h": 360
      }
     ]
+   },
+   {
+    "id": 272,
+    "date": "2010-10-07",
+    "titre": "Fidji, 10.000 nm.",
+    "blocs": [
+     "Nous venons de franchir notre 10.000ème mile, ce qui fait de nous des marins avertis. Dorénavant, on peut se la pèter à donf... Je vais même pouvoir tenir des discours autorisés avec les marins français que nous croisons. Mon avis sur les taquets coinceurs et sur les peintures anti-fouling compte désormais ! Par contre, je ne sais pas si je peux continuer à m'adresser à vous, bande d'ignares ;o)))"
+    ],
+    "images": []
    }
   ]
  },
  {
-  "nom": "Fidji - Naigani",
-  "lat": -17.583,
-  "lon": 178.672,
-  "log_nm": 9990,
-  "date_arrivee": "2010-10-05",
-  "date_depart": "2010-10-07",
+  "nom": "Fidji - Nananu",
+  "lat": -17.305,
+  "lon": 178.218,
+  "log_nm": 10020,
+  "date_arrivee": "2010-10-07",
+  "date_depart": "2010-10-09",
   "type": "mouillage",
   "chapitre": "Le Grand Pacifique",
   "articles": [
@@ -8247,38 +8268,6 @@
      }
     ]
    },
-   {
-    "id": 272,
-    "date": "2010-10-07",
-    "titre": "Fidji, 10.000 nm.",
-    "blocs": [
-     "Nous venons de franchir notre 10.000ème mile, ce qui fait de nous des marins avertis. Dorénavant, on peut se la pèter à donf... Je vais même pouvoir tenir des discours autorisés avec les marins français que nous croisons. Mon avis sur les taquets coinceurs et sur les peintures anti-fouling compte désormais ! Par contre, je ne sais pas si je peux continuer à m'adresser à vous, bande d'ignares ;o)))"
-    ],
-    "images": []
-   }
-  ]
- },
- {
-  "nom": "Fidji - Nananu",
-  "lat": -17.305,
-  "lon": 178.218,
-  "log_nm": 10020,
-  "date_arrivee": "2010-10-07",
-  "date_depart": "2010-10-09",
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": []
- },
- {
-  "nom": "Fidji - Natunuku",
-  "lat": -17.47,
-  "lon": 177.935,
-  "log_nm": 10050,
-  "date_arrivee": "2010-10-10",
-  "date_depart": null,
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
    {
     "id": 273,
     "date": "2010-10-09",
@@ -8319,7 +8308,19 @@
       "h": 254
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Fidji - Natunuku",
+  "lat": -17.47,
+  "lon": 177.935,
+  "log_nm": 10050,
+  "date_arrivee": "2010-10-10",
+  "date_depart": null,
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
    {
     "id": 274,
     "date": "2010-10-10",
@@ -14610,7 +14611,19 @@
       "h": 264
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Gambier",
+  "lat": -23.121,
+  "lon": -134.969,
+  "log_nm": 15000,
+  "date_arrivee": "2012-06-09",
+  "date_depart": "2012-07-11",
+  "type": "mouillage",
+  "chapitre": "Le retour en Polynésie",
+  "articles": [
    {
     "id": 432,
     "date": "2012-06-09",
@@ -14629,19 +14642,7 @@
       "h": 360
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Gambier",
-  "lat": -23.121,
-  "lon": -134.969,
-  "log_nm": 15000,
-  "date_arrivee": "2012-06-09",
-  "date_depart": "2012-07-11",
-  "type": "mouillage",
-  "chapitre": "Le retour en Polynésie",
-  "articles": [
+   },
    {
     "id": 433,
     "date": "2012-06-21",
@@ -14983,7 +14984,19 @@
       "h": 320
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Moorea",
+  "lat": -17.49,
+  "lon": -149.851,
+  "log_nm": 16205,
+  "date_arrivee": "2012-07-31",
+  "date_depart": "2012-08-06",
+  "type": "mouillage",
+  "chapitre": "Le retour en Polynésie",
+  "articles": [
    {
     "id": 441,
     "date": "2012-07-31",
@@ -15009,19 +15022,7 @@
       "h": 360
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Moorea",
-  "lat": -17.49,
-  "lon": -149.851,
-  "log_nm": 16205,
-  "date_arrivee": "2012-07-31",
-  "date_depart": "2012-08-06",
-  "type": "mouillage",
-  "chapitre": "Le retour en Polynésie",
-  "articles": [
+   },
    {
     "id": 442,
     "date": "2012-08-04",
@@ -17287,7 +17288,19 @@
       "h": 177
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Puko'o - Molokai",
+  "lat": 21.07,
+  "lon": -156.8,
+  "log_nm": 19850,
+  "date_arrivee": "2013-05-07",
+  "date_depart": "2013-05-18",
+  "type": "mouillage",
+  "chapitre": "La remontée vers le nord",
+  "articles": [
    {
     "id": 496,
     "date": "2013-05-07",
@@ -17336,19 +17349,7 @@
       "h": 400
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Puko'o - Molokai",
-  "lat": 21.07,
-  "lon": -156.8,
-  "log_nm": 19850,
-  "date_arrivee": "2013-05-07",
-  "date_depart": "2013-05-18",
-  "type": "mouillage",
-  "chapitre": "La remontée vers le nord",
-  "articles": [
+   },
    {
     "id": 497,
     "date": "2013-05-10",
@@ -17455,6 +17456,17 @@
   "date_depart": "2013-05-19",
   "type": "mouillage",
   "chapitre": "La remontée vers le nord",
+  "articles": []
+ },
+ {
+  "nom": "Honolulu - Oahu",
+  "lat": 21.29,
+  "lon": -157.847,
+  "log_nm": 19925,
+  "date_arrivee": "2013-05-19",
+  "date_depart": "2013-06-11",
+  "type": "mouillage",
+  "chapitre": "La remontée vers le nord",
   "articles": [
    {
     "id": 500,
@@ -17489,19 +17501,7 @@
       "h": 286
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Honolulu - Oahu",
-  "lat": 21.29,
-  "lon": -157.847,
-  "log_nm": 19925,
-  "date_arrivee": "2013-05-19",
-  "date_depart": "2013-06-11",
-  "type": "mouillage",
-  "chapitre": "La remontée vers le nord",
-  "articles": [
+   },
    {
     "id": 501,
     "date": "2013-05-22",
@@ -18114,7 +18114,30 @@
       "h": 360
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Coghlan Anchorage",
+  "lat": 53.39,
+  "lon": -129.32,
+  "log_nm": 22660,
+  "date_arrivee": "2013-07-12",
+  "date_depart": "2013-07-13",
+  "type": "mouillage",
+  "chapitre": "Le grand nord",
+  "articles": []
+ },
+ {
+  "nom": "Green Spit",
+  "lat": 52.95,
+  "lon": -128.52,
+  "log_nm": 22695,
+  "date_arrivee": "2013-07-13",
+  "date_depart": "2013-07-14",
+  "type": "mouillage",
+  "chapitre": "Le grand nord",
+  "articles": [
    {
     "id": 515,
     "date": "2013-07-13",
@@ -18154,16 +18177,57 @@
       "h": 330
      }
     ]
+   },
+   {
+    "id": 517,
+    "date": "2013-07-15",
+    "titre": "Dowager Island, Crique inconnue",
+    "blocs": [
+     "Cette fois, ça y est, l'été est arrivé. Plus un nuage dans le ciel.",
+     0,
+     "Nous en avons profité pour batifoler sur les flots, à la recherche de saumon.",
+     1,
+     "Bon, je reconnais que j'ai pas grand-chose à dire, les photos parlent d'elle mêmes.",
+     2,
+     "Et sinon, pas beaucoup d'Internet par ici. C'est fou ce que la Colombie Britannique peut être mal connectée. Il faut dire qu'il n'y a pas foule par ici.",
+     3
+    ],
+    "images": [
+     {
+      "src": "Tech/Blog/Canada/2013-07-16/P1.JPG",
+      "legende": "Pas un souffle de vent ce matin...",
+      "l": 640,
+      "h": 427
+     },
+     {
+      "src": "Tech/Blog/Canada/2013-07-16/P2.JPG",
+      "legende": "...mais un compagnon de séjour: une otarie gourmande",
+      "l": 640,
+      "h": 210
+     },
+     {
+      "src": "Tech/Blog/Canada/2013-07-16/P3.JPG",
+      "legende": "Eric aux commandes des p'tites bites",
+      "l": 640,
+      "h": 427
+     },
+     {
+      "src": "Tech/Blog/Canada/2013-07-16/P4.JPG",
+      "legende": "Hop, un hydravion amerrit juste à côté de nous",
+      "l": 640,
+      "h": 427
+     }
+    ]
    }
   ]
  },
  {
-  "nom": "Coghlan Anchorage",
-  "lat": 53.39,
-  "lon": -129.32,
-  "log_nm": 22660,
-  "date_arrivee": "2013-07-12",
-  "date_depart": "2013-07-13",
+  "nom": "Work Bay",
+  "lat": 52.6,
+  "lon": -128.4,
+  "log_nm": 22720,
+  "date_arrivee": "2013-07-14",
+  "date_depart": "2013-07-15",
   "type": "mouillage",
   "chapitre": "Le grand nord",
   "articles": [
@@ -18226,65 +18290,23 @@
   ]
  },
  {
-  "nom": "Green Spit",
-  "lat": 52.95,
-  "lon": -128.52,
-  "log_nm": 22695,
-  "date_arrivee": "2013-07-13",
-  "date_depart": "2013-07-14",
+  "nom": "Unnamed Bay",
+  "lat": 52.23,
+  "lon": -128.13,
+  "log_nm": 22755,
+  "date_arrivee": "2013-07-15",
+  "date_depart": "2013-07-16",
   "type": "mouillage",
   "chapitre": "Le grand nord",
-  "articles": [
-   {
-    "id": 517,
-    "date": "2013-07-15",
-    "titre": "Dowager Island, Crique inconnue",
-    "blocs": [
-     "Cette fois, ça y est, l'été est arrivé. Plus un nuage dans le ciel.",
-     0,
-     "Nous en avons profité pour batifoler sur les flots, à la recherche de saumon.",
-     1,
-     "Bon, je reconnais que j'ai pas grand-chose à dire, les photos parlent d'elle mêmes.",
-     2,
-     "Et sinon, pas beaucoup d'Internet par ici. C'est fou ce que la Colombie Britannique peut être mal connectée. Il faut dire qu'il n'y a pas foule par ici.",
-     3
-    ],
-    "images": [
-     {
-      "src": "Tech/Blog/Canada/2013-07-16/P1.JPG",
-      "legende": "Pas un souffle de vent ce matin...",
-      "l": 640,
-      "h": 427
-     },
-     {
-      "src": "Tech/Blog/Canada/2013-07-16/P2.JPG",
-      "legende": "...mais un compagnon de séjour: une otarie gourmande",
-      "l": 640,
-      "h": 210
-     },
-     {
-      "src": "Tech/Blog/Canada/2013-07-16/P3.JPG",
-      "legende": "Eric aux commandes des p'tites bites",
-      "l": 640,
-      "h": 427
-     },
-     {
-      "src": "Tech/Blog/Canada/2013-07-16/P4.JPG",
-      "legende": "Hop, un hydravion amerrit juste à côté de nous",
-      "l": 640,
-      "h": 427
-     }
-    ]
-   }
-  ]
+  "articles": []
  },
  {
-  "nom": "Work Bay",
-  "lat": 52.6,
-  "lon": -128.4,
-  "log_nm": 22720,
-  "date_arrivee": "2013-07-14",
-  "date_depart": "2013-07-15",
+  "nom": "Beales Bay",
+  "lat": 52.05,
+  "lon": -128.02,
+  "log_nm": 22790,
+  "date_arrivee": "2013-07-16",
+  "date_depart": "2013-07-17",
   "type": "mouillage",
   "chapitre": "Le grand nord",
   "articles": [
@@ -18328,30 +18350,7 @@
       "h": 427
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Unnamed Bay",
-  "lat": 52.23,
-  "lon": -128.13,
-  "log_nm": 22755,
-  "date_arrivee": "2013-07-15",
-  "date_depart": "2013-07-16",
-  "type": "mouillage",
-  "chapitre": "Le grand nord",
-  "articles": []
- },
- {
-  "nom": "Beales Bay",
-  "lat": 52.05,
-  "lon": -128.02,
-  "log_nm": 22790,
-  "date_arrivee": "2013-07-16",
-  "date_depart": "2013-07-17",
-  "type": "mouillage",
-  "chapitre": "Le grand nord",
-  "articles": [
+   },
    {
     "id": 519,
     "date": "2013-07-18",
@@ -18422,17 +18421,6 @@
   "date_depart": "2013-07-23",
   "type": "mouillage",
   "chapitre": "Le grand nord",
-  "articles": []
- },
- {
-  "nom": "Port Harvey",
-  "lat": 50.563,
-  "lon": -126.27,
-  "log_nm": 22950,
-  "date_arrivee": "2013-07-23",
-  "date_depart": "2013-07-24",
-  "type": "mouillage",
-  "chapitre": "Le grand nord",
   "articles": [
    {
     "id": 520,
@@ -18459,7 +18447,19 @@
       "h": 225
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Port Harvey",
+  "lat": 50.563,
+  "lon": -126.27,
+  "log_nm": 22950,
+  "date_arrivee": "2013-07-23",
+  "date_depart": "2013-07-24",
+  "type": "mouillage",
+  "chapitre": "Le grand nord",
+  "articles": [
    {
     "id": 521,
     "date": "2013-07-24",
@@ -18501,7 +18501,19 @@
       "h": 427
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Crawford Anchorage",
+  "lat": 50.435,
+  "lon": -125.42,
+  "log_nm": 22985,
+  "date_arrivee": "2013-07-24",
+  "date_depart": "2013-07-25",
+  "type": "mouillage",
+  "chapitre": "Le grand nord",
+  "articles": [
    {
     "id": 522,
     "date": "2013-07-25",
@@ -18553,17 +18565,6 @@
     ]
    }
   ]
- },
- {
-  "nom": "Crawford Anchorage",
-  "lat": 50.435,
-  "lon": -125.42,
-  "log_nm": 22985,
-  "date_arrivee": "2013-07-24",
-  "date_depart": "2013-07-25",
-  "type": "mouillage",
-  "chapitre": "Le grand nord",
-  "articles": []
  },
  {
   "nom": "Squirel Cove",
@@ -18669,6 +18670,17 @@
   "date_depart": "2013-07-29",
   "type": "mouillage",
   "chapitre": "Le grand nord",
+  "articles": []
+ },
+ {
+  "nom": "Vancouver",
+  "lat": 49.29,
+  "lon": -123.12,
+  "log_nm": 23155,
+  "date_arrivee": "2013-07-29",
+  "date_depart": "2013-08-12",
+  "type": "mouillage",
+  "chapitre": "Le grand nord",
   "articles": [
    {
     "id": 524,
@@ -18719,19 +18731,7 @@
       "h": 427
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Vancouver",
-  "lat": 49.29,
-  "lon": -123.12,
-  "log_nm": 23155,
-  "date_arrivee": "2013-07-29",
-  "date_depart": "2013-08-12",
-  "type": "mouillage",
-  "chapitre": "Le grand nord",
-  "articles": [
+   },
    {
     "id": 525,
     "date": "2013-08-02",
@@ -18926,6 +18926,17 @@
   "date_depart": "2013-08-13",
   "type": "mouillage",
   "chapitre": "Le grand nord",
+  "articles": []
+ },
+ {
+  "nom": "Thetis Island",
+  "lat": 48.98,
+  "lon": -123.66,
+  "log_nm": 23190,
+  "date_arrivee": "2013-08-13",
+  "date_depart": "2013-08-14",
+  "type": "mouillage",
+  "chapitre": "Le grand nord",
   "articles": [
    {
     "id": 529,
@@ -18964,23 +18975,23 @@
   ]
  },
  {
-  "nom": "Thetis Island",
-  "lat": 48.98,
-  "lon": -123.66,
-  "log_nm": 23190,
-  "date_arrivee": "2013-08-13",
-  "date_depart": "2013-08-14",
-  "type": "mouillage",
-  "chapitre": "Le grand nord",
-  "articles": []
- },
- {
   "nom": "Montague Harbour",
   "lat": 48.89,
   "lon": -123.39,
   "log_nm": 23205,
   "date_arrivee": "2013-08-14",
   "date_depart": "2013-08-15",
+  "type": "mouillage",
+  "chapitre": "Le grand nord",
+  "articles": []
+ },
+ {
+  "nom": "Bedwell Harbour",
+  "lat": 48.75,
+  "lon": -123.23,
+  "log_nm": 23220,
+  "date_arrivee": "2013-08-15",
+  "date_depart": "2013-08-20",
   "type": "mouillage",
   "chapitre": "Le grand nord",
   "articles": [
@@ -19039,17 +19050,6 @@
     ]
    }
   ]
- },
- {
-  "nom": "Bedwell Harbour",
-  "lat": 48.75,
-  "lon": -123.23,
-  "log_nm": 23220,
-  "date_arrivee": "2013-08-15",
-  "date_depart": "2013-08-20",
-  "type": "mouillage",
-  "chapitre": "Le grand nord",
-  "articles": []
  },
  {
   "nom": "Sidney",
@@ -19133,6 +19133,17 @@
   "date_depart": "2013-08-24",
   "type": "mouillage",
   "chapitre": "Le grand nord",
+  "articles": []
+ },
+ {
+  "nom": "Victoria",
+  "lat": 48.424,
+  "lon": -123.37,
+  "log_nm": 23250,
+  "date_arrivee": "2013-08-24",
+  "date_depart": "2013-08-26",
+  "type": "mouillage",
+  "chapitre": "Le grand nord",
   "articles": [
    {
     "id": 532,
@@ -19164,14 +19175,14 @@
   ]
  },
  {
-  "nom": "Victoria",
-  "lat": 48.424,
-  "lon": -123.37,
-  "log_nm": 23250,
-  "date_arrivee": "2013-08-24",
-  "date_depart": "2013-08-26",
+  "nom": "Port Angeles",
+  "lat": 48.125,
+  "lon": -123.43,
+  "log_nm": 23270,
+  "date_arrivee": "2013-08-26",
+  "date_depart": "2013-09-04",
   "type": "mouillage",
-  "chapitre": "Le grand nord",
+  "chapitre": "La côte américaine",
   "articles": [
    {
     "id": 533,
@@ -19199,19 +19210,7 @@
       "h": 427
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Port Angeles",
-  "lat": 48.125,
-  "lon": -123.43,
-  "log_nm": 23270,
-  "date_arrivee": "2013-08-26",
-  "date_depart": "2013-09-04",
-  "type": "mouillage",
-  "chapitre": "La côte américaine",
-  "articles": [
+   },
    {
     "id": 534,
     "date": "2013-09-01",

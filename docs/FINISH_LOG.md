@@ -6,12 +6,16 @@ each section. Ranked by how much each item matters to a first-time visitor
 
 ## Needs Sidney
 
-- **The boat's look (taste call, not blocking).** Seen from straight above
-  while following, the 3D catamaran reads as a white deck with an ink
-  outline, not as a sailboat. Earlier sessions chose this realistic model
-  locked flat on the sea, after rejecting a profile "game piece" with sails.
-  If you would rather have a treasure-map style little sailboat standing in
-  profile (sails up, always readable), say so and I will build it.
+- **The boat's look (taste call, not blocking).** During the crossing the
+  3D catamaran is seen from straight above and reads as a small white
+  rectangle with an ink outline, not as a sailboat. This is your own
+  11 August change ("Improve Let It Be catamaran presentation": a stable
+  model that never turns toward the camera, locked flat by tests), which
+  replaced the earlier figurine that turned to show its profile from afar.
+  Three options: keep it; bring back the profile view from afar (your
+  second-round note: "de loin il pivote pour se montrer de profil"); or a
+  hand-drawn sailboat like the one on the timeline. Say which and I will
+  build it.
 
 - **Who signed the two books?** PLAN.md says Éric Laruel and Cécile Van
   Winnendael published them; the archive only shows Éric writing "mon livre"
@@ -178,8 +182,10 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
 - ~~The timeline starts on 27 May 2009 "En mer — Martinique → Ste Lucie"
   although the boat left on the 28th~~ — fixed in batch 4.
 
-- Label collision "Panamá/Aruba/Martinique" at the start of playback (desktop).
-- Phone: weather line wraps ("ciel / couvert"), top buttons are bare icons.
+- ~~Label collision "Panamá/Aruba/Martinique" at the start of playback
+  (desktop).~~ Not seen any more in the third pass (labels reworked).
+- ~~Phone: weather line wraps ("ciel / couvert"), top buttons are bare
+  icons.~~ Fixed in batch 8.
 - ~~Phone: the story card covers the boat.~~ Fixed in batch 6.
 - 24 of 134 stops have no blog article; their journal is a single line.
 
@@ -358,6 +364,46 @@ Found and fixed (batch 6):
 Seen and left as is:
 - In headless runs the journal and porthole appear late; traced to the
   headless frame rate, not the product (image loaded, animation pending).
+
+## Third first-time-visitor pass (2026-10-10, after batch 7)
+
+Laptop 1366×768 and phones 390×844 and 360×740: welcome → "Larguer les
+amarres" → crossing at 1.5, 4, 9 and 20 s → pause. No errors.
+
+Found and fixed (batch 8):
+- Phone: the weather line broke in the middle of its words ("grand /
+  beau", "pluie 7 / mm"). Each part of the bulletin is now one unbreakable
+  piece, and a phone keeps the pieces that fit on one line.
+- Phone: pausing the crossing brought "Explorer les escales" back exactly
+  where a rising photo sat, covering its caption. Paused, the photos now
+  sink away at once.
+- Phone: the two top buttons were bare icons (a globe, a book). They now
+  carry one short word: "Réaliste" (or "Carnet") and "Récit" (or
+  "Quitter").
+
+Seen and left as is:
+- The boat at crossing zoom still reads as a white rectangle seen from
+  above (see Needs Sidney: it is his explicit design, locked by tests).
+
+Built next (batch 9):
+- **Escale précédente / suivante.** At the end of every journal (and under
+  the line of a stop without a post) two buttons open the neighbouring
+  stops, so the voyage can be read stop after stop like the logbook,
+  without going back to the globe. From a reviewed close-up (Makogai,
+  Opua) the camera first rises through the sea wash, then flies on.
+  Moving between journals keeps what the visitor left on the map (focus,
+  lens, zoom) for the final return; before, entering a second stop would
+  have recorded the close-up's 5° lens as "the map's".
+- **Posts filed under the wrong stop (found through the new buttons).**
+  "Nananu, ça sent la pizza" sat in Naigani's journal while Nananu said
+  no post was written there. The date rule picked the shortest stay
+  around a post's date, and a short stop next door often won. Now a post
+  whose title names one of the candidate stops goes to that stop
+  (`pipeline/build_data.py`): 29 posts moved, each to the place its own
+  title names ("Bora Bora, ne croyez pas tout…" from Raiatea to Bora
+  Bora, "Les Gambier, enfin !" from the crossing to Gambier, the Fatu Hiva
+  posts from Tahuata to Fatu Hiva, the Canadian anchorages). Nothing else
+  changed: the rebuilt data was identical before the rule change.
 
 ## Ideas for later
 

@@ -339,6 +339,7 @@ function regleMode(nouveau) {
   bateau?.regleMode?.(mode);
   modeBouton.querySelector('span').textContent =
     carnetActif ? 'Mode réaliste' : 'Mode carnet';
+  modeBouton.querySelector('.bouton-court').textContent = carnetActif ? 'Réaliste' : 'Carnet';
   const actionMode = carnetActif ? 'Passer au mode réaliste' : 'Passer au mode carnet';
   modeBouton.setAttribute('aria-label', actionMode);
   modeBouton.title = actionMode;
@@ -561,6 +562,11 @@ applique(timeline.t);
 const plongee = creerPlongee({
   camera, controls, timeline, regleSuivi, mouillagesParCle, carnetsPrets, scene,
   roadtrip: roadtripPromesse,
+  voisines: (escale) => {
+    const i = route.escales.findIndex(e => e.nom === escale.nom
+      && e.date_arrivee === escale.date_arrivee);
+    return i < 0 ? {} : { precedente: route.escales[i - 1], suivante: route.escales[i + 1] };
+  },
   relief, regleVisibiliteBateau: bateau.regleVisibilite,
   regleVisibiliteRoute: affiche => {
     route.groupe.visible = Boolean(affiche);

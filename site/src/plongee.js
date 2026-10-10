@@ -38,7 +38,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
   regleVisibiliteBateau = () => {}, regleVisibiliteRoute = () => {},
   regleDetailIle = () => false, cacheDetailIle = () => {}, vuesAeriennes = {},
   herosEscales = {}, mouillagesParCle, carnetsPrets = Promise.resolve(), scene, relief,
-  roadtrip = Promise.resolve([]) }) {
+  roadtrip = Promise.resolve([]), voisines = () => ({}) }) {
   const panneau = document.getElementById('plongee');
   const titre = document.getElementById('plongee-nom');
   const sousTitre = document.getElementById('plongee-dates');
@@ -732,6 +732,7 @@ function opaciteRaccordLod(t) {
       p.className = 'plongee-vide';
       p.textContent = 'Aucun billet du blog n’a été écrit depuis ce mouillage.';
       flux.append(p);
+      ajouteSuite(escale);
       return;
     }
     let rang = 0;
@@ -778,6 +779,51 @@ function opaciteRaccordLod(t) {
       }
       flux.append(art);
     }
+    ajouteSuite(escale);
+  }
+
+  // At the end of every journal, the stops on either side: the voyage reads
+  // on, stop after stop, like turning the pages of the logbook.
+  function ajouteSuite(escale) {
+    const { precedente, suivante } = voisines(escale);
+    if (!precedente && !suivante) return;
+    const nav = document.createElement('nav');
+    nav.className = 'plongee-suite';
+    nav.setAttribute('aria-label', 'Escales voisines');
+    const bouton = (voisine, sens) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = `suite-${sens}`;
+      const quoi = document.createElement('span');
+      quoi.className = 'suite-sens';
+      quoi.textContent = sens === 'precedente' ? '← Escale précédente' : 'Escale suivante →';
+      const nom = document.createElement('span');
+      nom.className = 'suite-nom';
+      nom.textContent = voisine.nom;
+      const quand = document.createElement('span');
+      quand.className = 'suite-date';
+      quand.textContent = formatLong.format(new Date(`${voisine.date_arrivee}T12:00:00Z`));
+      b.append(quoi, nom, quand);
+      b.setAttribute('aria-label', `${sens === 'precedente' ? 'Escale précédente' : 'Escale suivante'} : ${
+        voisine.nom}, ${quand.textContent}`);
+      b.addEventListener('click', () => versVoisine(voisine));
+      return b;
+    };
+    if (precedente) nav.append(bouton(precedente, 'precedente'));
+    if (suivante) nav.append(bouton(suivante, 'suivante'));
+    flux.append(nav);
+  }
+
+  // From a reviewed close-up the camera first rises back through the sea
+  // wash (never a magnified atlas in between), then flies to the neighbour.
+  let apresRetour = null;
+  function versVoisine(escale) {
+    if (detailSelectionnee) {
+      remonte();
+      apresRetour = escale;
+    } else {
+      void vers(escale);
+    }
   }
 
   // Scroll the open journal to one place in it (a post, the road-trip map)
@@ -821,6 +867,9 @@ function opaciteRaccordLod(t) {
 
   async function vers(escale, { billet = null } = {}) {
     const demande = ++demandePlongee;
+    // Moving from one journal to another keeps what the visitor left on the
+    // map (focus, lens, zoom): the way back still returns there.
+    const premiereEntree = !ouverte && vol === null && raccordLod === null;
     if (distanceMaxAvantPlongee !== null) {
       controls.maxDistance = distanceMaxAvantPlongee;
       distanceMaxAvantPlongee = null;
@@ -841,9 +890,9 @@ function opaciteRaccordLod(t) {
     detailSelectionnee = null;
     cacheRepereEscale();
     cacheLegendeScene();
-    focusAvantPlongee = document.activeElement;
-    focaleAvantPlongee = camera.fov;
-    if (!ouverte && !vol && !raccordLod) {
+    if (premiereEntree) {
+      focusAvantPlongee = document.activeElement;
+      focaleAvantPlongee = camera.fov;
       distanceRetour = Math.max(DISTANCE_ORBITE, Math.min(controls.maxDistance, camera.position.length()));
     }
     panneau.hidden = true;
@@ -926,6 +975,7 @@ function opaciteRaccordLod(t) {
   }
 
   function remonte() {
+    apresRetour = null;
     // A second Escape during the outbound wash completes that same safe return.
     // During an inbound wash it instead cancels the pending arrival and starts
     // a fresh return below, so an old callback cannot reopen the journal.
@@ -956,6 +1006,18 @@ function opaciteRaccordLod(t) {
       controls.minDistance = 2.1;
       controls.maxDistance = distanceMaxAvantPlongee ?? 12;
       distanceMaxAvantPlongee = null;
+      if (apresRetour) {
+        // risen out of a close-up on the way to the next stop: go on,
+        // keeping what the visitor left on the map for the final return
+        const suite = apresRetour;
+        const memoire = [focusAvantPlongee, focaleAvantPlongee, distanceRetour];
+        apresRetour = null;
+        cacheDetailIle();
+        detailSelectionnee = null;
+        void vers(suite);
+        [focusAvantPlongee, focaleAvantPlongee, distanceRetour] = memoire;
+        return;
+      }
       regleSuivi(true); // on reprend la route en suivant le bateau
       // Le retour est terminé : la maquette et son sillage reprennent
       // ensemble leur place sur la carte générale.

@@ -15,6 +15,7 @@ reconstituer depuis les articles 2014+ — voir PLAN.md.
 
 import json
 import re
+import unicodedata
 from datetime import date, timedelta
 from pathlib import Path
 
@@ -35,6 +36,27 @@ def extrait(texte: str, longueur: int = 320) -> str:
     coupe = texte[:longueur]
     coupe = coupe[:coupe.rfind(" ")]
     return coupe + "…"
+
+
+# mots trop communs pour désigner une escale à eux seuls
+MOTS_GENERIQUES = {
+    "fidji", "tonga", "marquises", "tuamotu", "iles", "island", "islands",
+    "bay", "harbour", "cove", "anchorage", "point", "beach", "baie", "port",
+    "nlle", "zelande", "big", "santa", "san", "unnamed", "the",
+}
+
+
+def mots(texte: str) -> list[str]:
+    t = unicodedata.normalize("NFKD", texte or "").encode("ascii", "ignore").decode().lower()
+    return re.findall(r"[a-z]+", t)
+
+
+def nomme_escale(titre: str, nom: str) -> bool:
+    """Le titre du billet cite-t-il cette escale (« Bora Bora, ne croyez
+    pas tout… ») ? On ne compte que les mots propres au lieu."""
+    propres = [m for m in mots(nom) if len(m) > 3 and m not in MOTS_GENERIQUES]
+    du_titre = set(mots(titre))
+    return any(m in du_titre for m in propres)
 
 
 def main() -> None:
@@ -90,9 +112,13 @@ def main() -> None:
             if a - timedelta(days=1) <= d <= fin + timedelta(days=1):
                 candidats.append((i, (fin - a).days))
         if candidats:
-            # fenêtre la plus courte = escale la plus spécifique
-            # (ex. Faaite pendant le séjour à Fakarava)
-            i = min(candidats, key=lambda c: c[1])[0]
+            # un billet qui nomme une escale dans son titre lui revient
+            # (« Nananu, ça sent la pizza », daté du jour où l'on quitte
+            # Naigani pour Nananu) ; sinon, fenêtre la plus courte = escale
+            # la plus spécifique (ex. Faaite pendant le séjour à Fakarava)
+            nommees = [c for c in candidats
+                       if nomme_escale(art["titre"], mouillages[c[0]]["nom"])]
+            i = min(nommees or candidats, key=lambda c: c[1])[0]
             pour_mouillage[i].append(art)
         elif d >= date(2009, 5, 27):
             # article écrit en mer (« Traversée vers les Galapagos J3 ») ou
