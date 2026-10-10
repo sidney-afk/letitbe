@@ -584,6 +584,13 @@ function creerBateauProcedural() {
   const avant = new THREE.Vector3();
   const droite = new THREE.Vector3();
   const matrice = new THREE.Matrix4();
+  // Le cap exact de la route, et celui que la maquette montre. Ils ne
+  // diffèrent que pendant la lecture animée, le temps d'un virage.
+  const quaternionRoute = new THREE.Quaternion();
+  const capAffiche = new THREE.Vector3(0, 0, 1);
+  const hautAffiche = new THREE.Vector3(0, 1, 0);
+  const droiteAffichee = new THREE.Vector3();
+  let capInitialise = false;
   const perle = new THREE.Vector3();
   const travers = new THREE.Vector3();
   const hautEcume = new THREE.Vector3();
@@ -623,14 +630,64 @@ function creerBateauProcedural() {
     // quaternion déformant. Ici la maquette garde exactement sa géométrie.
     droite.crossVectors(haut, avant).normalize();
     matrice.makeBasis(droite, haut, avant);
-    conteneur.quaternion.setFromRotationMatrix(matrice);
+    quaternionRoute.setFromRotationMatrix(matrice);
+    conteneur.quaternion.copy(quaternionRoute);
+    hautAffiche.copy(haut);
+    if (!capInitialise) {
+      capAffiche.copy(avant);
+      capInitialise = true;
+    }
 
     metAJourEcume(voyage, t);
   }
 
-  function anime() {
-    // Intentionnellement vide : ni échelle caméra, ni rotation vers la caméra,
-    // ni gîte/tangage automatique. La route est l'unique source d'orientation.
+  // Tourne `cap` vers `cible` autour de `axe`, d'une fraction de l'écart et
+  // jamais plus vite que `maxi` radians : un demi-tour reste un virage lisible.
+  function tourneVers(cap, cible, axe, fraction, maxi) {
+    cap.addScaledVector(axe, -cap.dot(axe));
+    if (cap.lengthSq() < 1e-10) cap.copy(cible);
+    cap.normalize();
+    const sinus = droiteAffichee.crossVectors(cap, cible).dot(axe);
+    const angle = Math.atan2(sinus, THREE.MathUtils.clamp(cap.dot(cible), -1, 1));
+    const pas = THREE.MathUtils.clamp(angle * fraction, -maxi, maxi);
+    cap.applyAxisAngle(axe, pas).normalize();
+  }
+
+  function anime(temps = 0, _camera = null, {
+    dt = 0,
+    houle = 0,
+    lissageCap = 0,
+  } = {}) {
+    // Jamais d'échelle caméra ni de rotation vers la caméra : la route reste
+    // l'unique source d'orientation. Deux exceptions, réservées à la lecture
+    // animée (« Larguer les amarres ») et absentes en mouvement réduit :
+    // - le cap montré rejoint celui de la route en un virage, au lieu de
+    //   pivoter d'un coup aux escales ;
+    // - une houle très lente (moins de deux degrés) fait vivre la coque.
+    // Hors lecture, la maquette reprend exactement le cap de route, sans
+    // aucune rotation locale.
+    if (lissageCap > 0 && dt > 0) {
+      tourneVers(capAffiche, avant, hautAffiche,
+        1 - Math.exp(-dt / lissageCap), dt * THREE.MathUtils.degToRad(100));
+      droiteAffichee.crossVectors(hautAffiche, capAffiche).normalize();
+      matrice.makeBasis(droiteAffichee, hautAffiche, capAffiche);
+      conteneur.quaternion.setFromRotationMatrix(matrice);
+    } else {
+      capAffiche.copy(avant);
+      conteneur.quaternion.copy(quaternionRoute);
+    }
+    const amplitude = THREE.MathUtils.clamp(houle, 0, 1);
+    if (amplitude > 0) {
+      // tangage et roulis déterministes, sur deux périodes sans multiple
+      // commun : un mouvement de mer, jamais une oscillation mécanique.
+      const tangage = THREE.MathUtils.degToRad(0.9)
+        * (Math.sin(temps * 1.13) * 0.75 + Math.sin(temps * 0.47 + 1.7) * 0.25);
+      const roulis = THREE.MathUtils.degToRad(1.4)
+        * (Math.sin(temps * 0.83 + 0.6) * 0.7 + Math.sin(temps * 0.31 + 2.2) * 0.3);
+      modele.rotation.set(tangage * amplitude, 0, roulis * amplitude);
+    } else if (modele.rotation.x || modele.rotation.z) {
+      modele.rotation.set(0, 0, 0);
+    }
   }
 
   function regleVisibilite(affiche) {
@@ -663,7 +720,11 @@ function creerBateauProcedural() {
     };
   }
 
-  return { conteneur, ecume, positionne, anime, regleVisibilite, etat };
+  return {
+    conteneur, ecume, positionne, anime, regleVisibilite, etat,
+    // le cap que montre la maquette (monde), pour la caméra de poursuite
+    capAffiche: () => capAffiche,
+  };
 }
 
 // Un contour d'encre à épaisseur constante à l'écran (coque inversée,
@@ -729,6 +790,294 @@ function creerOmbreBateau(longueur, largeur, hauteurLocale) {
   ombre.position.y = hauteurLocale;
   ombre.renderOrder = 2;
   return ombre;
+}
+
+// — La voilure de Let It Be —
+// Sur la photo sous voile : une grande-voile blanche, haute et lattée, et un
+// génois blanc qui recouvre un peu le mât. La maquette importée les montre
+// ferlés (étui sur la bôme, génois enroulé sur l'étai) ; ces deux voiles
+// hissées s'appuient exactement sur son gréement, mesuré dans le repère du
+// modèle (x tribord, y haut, z étrave, unités de la maquette) :
+// - mât : pied (z 0,058 ; y 0,14), tête (z 0,013 ; y 0,94) ;
+// - bôme : de l'arrière du mât jusqu'à z -0,28, à y ≈ 0,19 ;
+// - étai : du davier (z 0,307 ; y 0,073) vers le haut du mât.
+// Les voiles sont bordées sous le vent, à bâbord (x négatif), avec un creux
+// et un vrillage modestes : un bateau qui avance, pas une figurine.
+const MAT_PIED = { y: 0.14, z: 0.058 };
+const MAT_TETE = { y: 0.94, z: 0.013 };
+const zMat = y => THREE.MathUtils.lerp(MAT_PIED.z, MAT_TETE.z,
+  (y - MAT_PIED.y) / (MAT_TETE.y - MAT_PIED.y));
+const zEtai = y => 0.307 - (y - 0.073) * 0.343;
+const SOUS_LE_VENT = -1; // bâbord
+
+function lisseSegment(a, b, x) {
+  const t = THREE.MathUtils.clamp((x - a) / (b - a), 0, 1);
+  return t * t * (3 - 2 * t);
+}
+
+// Toile procédurale : blanc cassé, lattes (grand-voile) ou coutures (génois)
+// très discrètes, bordure de chute un peu plus dense. Une petite texture
+// mipmappée : les lignes s'effacent d'elles-mêmes vues de loin.
+function texturerVoile(lignes, { chute = true } = {}) {
+  const toile = document.createElement('canvas');
+  toile.width = 64;
+  toile.height = 256;
+  const ctx = toile.getContext('2d');
+  ctx.fillStyle = '#fbf8f1';
+  ctx.fillRect(0, 0, 64, 256);
+  // Un peu de modelé peint : l'ombre douce du creux derrière le guindant et
+  // une bordure à peine plus chaude, pour que la toile ait du volume même
+  // sous la lumière plate du carnet.
+  const creux = ctx.createLinearGradient(0, 0, 64, 0);
+  creux.addColorStop(0, 'rgba(206, 196, 178, 0.05)');
+  creux.addColorStop(0.16, 'rgba(206, 196, 178, 0.42)');
+  creux.addColorStop(0.42, 'rgba(206, 196, 178, 0.10)');
+  creux.addColorStop(1, 'rgba(206, 196, 178, 0)');
+  ctx.fillStyle = creux;
+  ctx.fillRect(0, 0, 64, 256);
+  const bordure = ctx.createLinearGradient(0, 256, 0, 200);
+  bordure.addColorStop(0, 'rgba(200, 188, 166, 0.45)');
+  bordure.addColorStop(1, 'rgba(200, 188, 166, 0)');
+  ctx.fillStyle = bordure;
+  ctx.fillRect(0, 200, 64, 56);
+  if (chute) {
+    const bord = ctx.createLinearGradient(52, 0, 64, 0);
+    bord.addColorStop(0, 'rgba(214, 205, 188, 0)');
+    bord.addColorStop(1, 'rgba(214, 205, 188, 0.75)');
+    ctx.fillStyle = bord;
+    ctx.fillRect(52, 0, 12, 256);
+  }
+  for (const { v, epaisseur = 2, couleur = 'rgba(176, 166, 148, 0.85)' } of lignes) {
+    const y = (1 - v) * 256;
+    ctx.fillStyle = couleur;
+    ctx.fillRect(1, y - epaisseur / 2, 63, epaisseur);
+  }
+  const texture = new THREE.CanvasTexture(toile);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = 4;
+  return texture;
+}
+
+// Une voile = une grille (u le long de la corde, guindant → chute ; v du
+// pied à la tête). `section(v)` donne le point d'amure (guindant), le point
+// de chute, le creux et le vrillage de cette hauteur.
+function surfaceVoile(section, { colonnes = 10, rangees = 16 } = {}) {
+  const positions = [];
+  const contours = [];
+  const uvs = [];
+  const indices = [];
+  const centre = new THREE.Vector3();
+  const points = [];
+  for (let j = 0; j <= rangees; j++) {
+    const v = j / rangees;
+    const { guindant, chute, creux, vrillage, creuxMax = 0.38 } = section(v);
+    const corde = new THREE.Vector3().subVectors(chute, guindant);
+    const longueur = corde.length();
+    const sensCorde = corde.clone().normalize();
+    // normale sous le vent, perpendiculaire à la corde dans le plan horizontal
+    const sousLeVent = new THREE.Vector3(SOUS_LE_VENT, 0, 0);
+    sousLeVent.addScaledVector(sensCorde, -sousLeVent.dot(sensCorde)).normalize();
+    // vrillage : la section s'ouvre sous le vent en montant
+    const cos = Math.cos(vrillage);
+    const sin = Math.sin(vrillage);
+    const cordeVrillee = sensCorde.clone().multiplyScalar(cos)
+      .addScaledVector(sousLeVent, sin).multiplyScalar(longueur);
+    const normaleVrillee = sousLeVent.clone().multiplyScalar(cos)
+      .addScaledVector(sensCorde, -sin);
+    for (let i = 0; i <= colonnes; i++) {
+      const u = i / colonnes;
+      // profil à creux maximal vers l'avant, comme une vraie voile
+      const k = u < creuxMax
+        ? Math.sin((u / creuxMax) * Math.PI / 2)
+        : Math.cos(((u - creuxMax) / (1 - creuxMax)) * Math.PI / 2);
+      const p = guindant.clone().addScaledVector(cordeVrillee, u)
+        .addScaledVector(normaleVrillee, creux * longueur * k);
+      points.push(p);
+      positions.push(p.x, p.y, p.z);
+      uvs.push(u, v);
+      centre.add(p);
+    }
+  }
+  centre.divideScalar(points.length);
+  // Contour d'encre : chaque sommet s'écarte du centre de la voile, dans
+  // son plan. Le shader de contour élargit ainsi la silhouette à l'écran.
+  for (const p of points) {
+    const dehors = p.clone().sub(centre).normalize();
+    contours.push(dehors.x, dehors.y, dehors.z);
+  }
+  const largeur = colonnes + 1;
+  for (let j = 0; j < rangees; j++) {
+    for (let i = 0; i < colonnes; i++) {
+      const a = j * largeur + i;
+      indices.push(a, a + 1, a + largeur, a + 1, a + largeur + 1, a + largeur);
+    }
+  }
+  const geometrie = new THREE.BufferGeometry();
+  geometrie.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometrie.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geometrie.setIndex(indices);
+  geometrie.computeVertexNormals();
+  const silhouette = new THREE.BufferGeometry();
+  silhouette.setAttribute('position', geometrie.getAttribute('position'));
+  silhouette.setAttribute('normal', new THREE.Float32BufferAttribute(contours, 3));
+  silhouette.setIndex(indices);
+  return { geometrie, silhouette };
+}
+
+function sectionGrandVoile(v) {
+  // Guindant le long de l'arrière du mât, du dessus de l'étui de bôme à la
+  // tête ; chute tendue par les lattes (rond de chute), petite têtière.
+  const yPied = 0.196;
+  const yTete = 0.915;
+  const y = THREE.MathUtils.lerp(yPied, yTete, v);
+  const guindant = new THREE.Vector3(0, y, zMat(y) - 0.016);
+  const pointeEcoute = new THREE.Vector3(0, 0.190, -0.272);
+  const tetiere = new THREE.Vector3(0, yTete, zMat(yTete) - 0.016 - 0.032);
+  const chute = pointeEcoute.clone().lerp(tetiere, v);
+  chute.z -= 0.030 * Math.sin(Math.PI * Math.min(1, v * 1.05)) * (1 - 0.2 * v);
+  return {
+    guindant,
+    chute,
+    // la bordure suit la bôme : pas de creux tout en bas
+    creux: 0.10 * lisseSegment(0, 0.22, v) * (1 - 0.3 * v),
+    vrillage: THREE.MathUtils.degToRad(11) * Math.pow(v, 1.3),
+    creuxMax: 0.42,
+  };
+}
+
+function sectionGenois(v) {
+  // Guindant sur l'étai (avec un léger creux d'étai), point d'écoute bordé
+  // sous le vent près du rouf, en recouvrement léger du mât, comme sur la
+  // photo. La tête s'arrête un peu sous le capelage.
+  const amure = new THREE.Vector3(0, 0.082, zEtai(0.082));
+  const tete = new THREE.Vector3(0, 0.845, zEtai(0.845));
+  const guindant = amure.clone().lerp(tete, v);
+  guindant.x += SOUS_LE_VENT * 0.006 * Math.sin(Math.PI * v);
+  const ecoute = new THREE.Vector3(SOUS_LE_VENT * 0.078, 0.176, -0.052);
+  const chute = ecoute.clone().lerp(tete, v);
+  // chute légèrement creuse : un génois n'a pas de lattes
+  const versAvant = new THREE.Vector3().subVectors(guindant, chute);
+  chute.addScaledVector(versAvant, 0.04 * Math.sin(Math.PI * v));
+  return {
+    guindant,
+    chute,
+    creux: 0.125 * lisseSegment(0, 0.12, v) * (1 - 0.25 * v),
+    vrillage: THREE.MathUtils.degToRad(9) * v,
+    creuxMax: 0.36,
+  };
+}
+
+function creerVoilure() {
+  const voilure = new THREE.Group();
+  voilure.name = 'voilure-let-it-be';
+  const textureGV = texturerVoile([1, 2, 3, 4, 5, 6].map(k => ({ v: k / 7 })));
+  const textureGenois = texturerVoile([
+    { v: 0.36, epaisseur: 1.5, couleur: 'rgba(190, 181, 164, 0.7)' },
+    { v: 0.70, epaisseur: 1.5, couleur: 'rgba(190, 181, 164, 0.55)' },
+  ]);
+  const materiaux = [];
+  const ajouteVoile = (nom, section, texture) => {
+    const { geometrie, silhouette } = surfaceVoile(section);
+    const matiere = new THREE.MeshStandardMaterial({
+      color: 0xffffff,
+      map: texture,
+      emissive: 0xffffff,
+      emissiveMap: texture,
+      emissiveIntensity: 0.16,
+      roughness: 0.86,
+      metalness: 0,
+      side: THREE.DoubleSide,
+    });
+    materiaux.push(matiere);
+    const voile = new THREE.Mesh(geometrie, matiere);
+    voile.name = nom;
+    voile.renderOrder = 2;
+    const contour = new THREE.Mesh(silhouette, matiereContourEcran(0x4a3b2c, 1.4));
+    contour.name = `${nom}-contour`;
+    contour.userData.contour = true;
+    contour.renderOrder = 1;
+    voilure.add(contour, voile);
+  };
+  ajouteVoile('grand-voile', sectionGrandVoile, textureGV);
+  ajouteVoile('genois', sectionGenois, textureGenois);
+  return {
+    voilure,
+    regleMode(mode) {
+      // le carnet est déjà très clair ; la nuit du globe réaliste l'est moins
+      for (const matiere of materiaux) matiere.emissiveIntensity = mode === 'carnet' ? 0.08 : 0.2;
+    },
+  };
+}
+
+// Voiles hissées, la maquette importée ne peut plus montrer son génois
+// enroulé sur l'étai ni sa balancine tendue (détendue en navigation) : ces
+// deux traits rouges barraient les voiles. Leurs triangles sont retirés, et
+// l'étui de bôme prend le bleu marine de la photo sous voile. Rien d'autre ne
+// change : ni la coque, ni le mât, ni l'échelle.
+function distanceAuSegment(p, a, b, tMin, tMax) {
+  const abx = b.x - a.x, aby = b.y - a.y, abz = b.z - a.z;
+  const t = ((p.x - a.x) * abx + (p.y - a.y) * aby + (p.z - a.z) * abz)
+    / (abx * abx + aby * aby + abz * abz);
+  if (t < tMin || t > tMax) return Infinity;
+  return Math.hypot(p.x - a.x - abx * t, p.y - a.y - aby * t, p.z - a.z - abz * t);
+}
+const ETAI_BAS = new THREE.Vector3(0, 0.073, 0.307);
+const ETAI_HAUT = new THREE.Vector3(0, 0.910, 0.020);
+const BALANCINE_HAUT = new THREE.Vector3(0, 0.935, 0.012);
+const BALANCINE_BAS = new THREE.Vector3(0, 0.198, -0.283);
+const dansGenoisRoule = p => p.y > 0.115 && p.y < 0.765
+  && distanceAuSegment(p, ETAI_BAS, ETAI_HAUT, 0, 1) < 0.017;
+const dansBalancine = p => distanceAuSegment(p, BALANCINE_HAUT, BALANCINE_BAS, 0.06, 0.955) < 0.016;
+const dansEtuiDeBome = p => p.y > 0.153 && p.y < 0.222
+  && p.z > -0.300 && p.z < 0.066 && Math.abs(p.x) < 0.034;
+
+function ajusteGreementHisse(modele) {
+  modele.updateWorldMatrix(true, true);
+  const inverse = modele.matrixWorld.clone().invert();
+  const relatif = new THREE.Matrix4();
+  const point = new THREE.Vector3();
+  const etui = new THREE.MeshStandardMaterial({ color: 0x23304a, roughness: 0.82 });
+  let retires = 0;
+  let marine = 0;
+  modele.traverse(mesh => {
+    const index = mesh.isMesh && !mesh.userData.contour && !Array.isArray(mesh.material)
+      ? mesh.geometry.index : null;
+    if (!index) return;
+    relatif.multiplyMatrices(inverse, mesh.matrixWorld);
+    const positions = mesh.geometry.getAttribute('position');
+    const local = new Float32Array(positions.count * 3);
+    for (let i = 0; i < positions.count; i++) {
+      point.fromBufferAttribute(positions, i).applyMatrix4(relatif);
+      local[i * 3] = point.x;
+      local[i * 3 + 1] = point.y;
+      local[i * 3 + 2] = point.z;
+    }
+    const sommet = (i, cible) => cible.set(local[i * 3], local[i * 3 + 1], local[i * 3 + 2]);
+    const a = new THREE.Vector3(), b = new THREE.Vector3(), c = new THREE.Vector3();
+    const tous = (test) => test(a) && test(b) && test(c);
+    const gardes = [];
+    const etuis = [];
+    for (let k = 0; k < index.count; k += 3) {
+      const i0 = index.getX(k), i1 = index.getX(k + 1), i2 = index.getX(k + 2);
+      sommet(i0, a); sommet(i1, b); sommet(i2, c);
+      if (tous(dansGenoisRoule) || tous(dansBalancine)) {
+        retires++;
+        continue;
+      }
+      (tous(dansEtuiDeBome) ? etuis : gardes).push(i0, i1, i2);
+    }
+    if (!retires && !etuis.length) return;
+    marine += etuis.length / 3;
+    const tableau = positions.count > 65535 ? Uint32Array : Uint16Array;
+    mesh.geometry.setIndex(new THREE.BufferAttribute(tableau.from([...gardes, ...etuis]), 1));
+    mesh.geometry.clearGroups();
+    mesh.geometry.addGroup(0, gardes.length, 0);
+    if (etuis.length) {
+      mesh.geometry.addGroup(gardes.length, etuis.length, 1);
+      mesh.material = [mesh.material, etui];
+    }
+  });
+  return { retires, marine };
 }
 
 // The supplied GLB is a coherent, textured catamaran rather than a collection
@@ -847,6 +1196,11 @@ export async function creerBateau() {
 
     const coqueBasLocale = pointBasRelatif(modele);
     const rayonAncrage = RAYON + GARDE_EAU - coqueBasLocale * ECHELLE_MODELE;
+    // Les voiles hissées, posées sur le gréement de la maquette (après la
+    // mesure des coques : elles ne changent rien à la ligne de flottaison).
+    const greement = ajusteGreementHisse(modele);
+    const voilure = creerVoilure();
+    modele.add(voilure.voilure);
     // just under the hulls, on the water
     bateau.conteneur.add(creerOmbreBateau(
       LONGUEUR_ASSET * ECHELLE_ASSET, LARGEUR_ASSET * ECHELLE_ASSET,
@@ -872,9 +1226,11 @@ export async function creerBateau() {
       coqueBasMonde: bateau.conteneur.position.length()
         + coqueBasLocale * ECHELLE_MODELE,
       maquette: 'gltf',
+      greement,
     });
     bateau.regleMode = mode => {
       regleMode(mode);
+      voilure.regleMode(mode);
       lumierePrincipale.intensity = mode === 'carnet' ? 3.1 : 2.35;
       lumiereContour.intensity = mode === 'carnet' ? 0.72 : 0.55;
     };

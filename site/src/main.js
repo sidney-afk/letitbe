@@ -591,6 +591,86 @@ camera.position.copy(voyage.position(voyage.debut)).normalize()
 camera.lookAt(0, 0, 0);
 let intro = mouvementReduit ? 1 : 0; // 0 → 1 : l'approche du début
 
+// — Le plan « cinéma » —
+// La caméra des contrôles (OrbitControls, toujours tournée vers le centre du
+// globe) reste la référence de toute la page. Par-dessus, deux plans se
+// mêlent en douceur, seulement quand la caméra suit le bateau :
+// - en suivi, une inclinaison légère : le globe reste au centre, le
+//   catamaran remonte un peu et se montre de trois quarts, mât vers le haut ;
+// - pendant « Larguer les amarres », une caméra de poursuite basse, derrière
+//   le bateau, qui laisse la mer s'arrondir jusqu'à l'horizon.
+// Une pause, la fin du voyage, un carnet ou la main du visiteur sur le globe
+// ramènent en douceur la vue d'ensemble. En mouvement réduit, aucun
+// travelling : on passe d'un plan à l'autre d'un coup, la poursuite ne
+// tourne jamais avec le bateau (elle se replace d'un coup après un vrai
+// changement de cap) et la coque ne tangue pas.
+const cinema = {
+  inclinaison: 0, // 0 → 1, avancement linéaire du plan incliné
+  poursuite: 0, // 0 → 1, avancement linéaire de la poursuite
+  houle: 0,
+  interrompue: false, // le visiteur a pris les commandes pendant la lecture
+  applique: false, // la caméra porte-t-elle en ce moment la pose « cinéma » ?
+  capCamera: new THREE.Vector3(),
+  capPret: false,
+  derive: null, // côté vers lequel la caméra de suivi se décale (−1 … 1)
+  base: { position: new THREE.Vector3(), quaternion: new THREE.Quaternion() },
+  rendu: { position: new THREE.Vector3(), quaternion: new THREE.Quaternion() },
+};
+// En suivi, la caméra glisse vers le « sud » de l'écran autour du centre du
+// globe, d'au plus 24°, et jamais au point que le bateau remonte de plus
+// d'un sixième environ de la hauteur d'écran : titre et boutons restent
+// libres, même quand le visiteur a zoomé ou pendant la lecture, plus près.
+const INCLINAISON_SUIVI = THREE.MathUtils.degToRad(24);
+const DERIVE_SUIVI = THREE.MathUtils.degToRad(18);
+// Angle dont la caméra peut tourner autour du centre du globe pour que le
+// bateau (au centre de l'écran) ne se déplace que de `ecartPx` à l'écran :
+// le bateau se décale de δ quand la caméra tourne de α, sin(α + δ) = D sin δ.
+function rotationBornee(distance, ecartPx, maximum) {
+  const hauteur = Math.max(320, innerHeight);
+  const pixelsParRadian = (hauteur / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const ecart = Math.atan(ecartPx / pixelsParRadian);
+  const sinus = distance * Math.sin(ecart);
+  if (sinus >= 1) return maximum;
+  return THREE.MathUtils.clamp(Math.asin(sinus) - ecart, 0, maximum);
+}
+function inclinaisonSuivi(distance) {
+  const largeur = Math.max(320, innerWidth);
+  const hauteur = Math.max(320, innerHeight);
+  return rotationBornee(distance, (hauteur < largeur ? 0.17 : 0.14) * hauteur, INCLINAISON_SUIVI);
+}
+// Et un peu de côté, vers le flanc où les voiles se gonflent, pour que la
+// vue reste de trois quarts quand le bateau file vers le haut ou le bas de
+// l'écran (sinon on ne verrait que sa poupe ou son étrave).
+function deriveSuivi(distance) {
+  return rotationBornee(distance, 0.12 * Math.max(320, innerWidth), DERIVE_SUIVI);
+}
+
+// Redonne à la caméra la pose des contrôles avant que quiconque ne la lise
+// ou ne la déplace hors de la boucle de rendu (molette, redimensionnement,
+// ouverture d'un carnet). Si la caméra a déjà été posée ailleurs, cette pose
+// prime : le plan cinéma s'efface au lieu de la contredire.
+function rendsCameraAuxCommandes() {
+  if (!cinema.applique) return;
+  cinema.applique = false;
+  if (camera.position.equals(cinema.rendu.position)
+    && camera.quaternion.equals(cinema.rendu.quaternion)) {
+    camera.position.copy(cinema.base.position);
+    camera.quaternion.copy(cinema.base.quaternion);
+  } else {
+    cinema.inclinaison = 0;
+    cinema.poursuite = 0;
+  }
+  camera.updateMatrixWorld();
+}
+
+// Un carnet s'ouvre depuis la vue d'ensemble, jamais depuis la poursuite.
+function quitteCinema() {
+  rendsCameraAuxCommandes();
+  cinema.inclinaison = 0;
+  cinema.poursuite = 0;
+  cinema.capPret = false;
+}
+
 // — suivi du bateau : « collant » —
 // Le bouton ⌖ est la seule vraie bascule. Faire tourner le globe à la main
 // ne fait que suspendre le suivi ; toucher la timeline le réengage.
@@ -600,6 +680,7 @@ let suiviEnPause = false;
 function regleSuivi(actif) {
   suivre = actif;
   suiviEnPause = false;
+  cinema.interrompue = false;
   boutonSuivre.setAttribute('aria-pressed', String(actif));
   const action = actif ? 'Arrêter de suivre le bateau' : 'Suivre le bateau';
   boutonSuivre.setAttribute('aria-label', action);
@@ -607,7 +688,13 @@ function regleSuivi(actif) {
 }
 boutonSuivre.addEventListener('click', () => regleSuivi(!suivre));
 regleSuivi(true);
-controls.addEventListener('start', () => { suiviEnPause = true; intro = 1; });
+controls.addEventListener('start', () => {
+  suiviEnPause = true;
+  intro = 1;
+  // pendant la lecture, prendre le globe en main rend la vue d'ensemble
+  // jusqu'à la prochaine relance (⏵ ou ⌖)
+  cinema.interrompue = true;
+});
 
 function suitLeBateau(force = 1) {
   const distance = camera.position.length();
@@ -679,6 +766,7 @@ function ouvreCarnet(escale, billet) {
     menu.open = false;
     menu.querySelector('summary')?.focus({ preventScroll: true });
   }
+  quitteCinema();
   void plongee.vers(escale, billet ? { billet } : {});
 }
 
@@ -718,6 +806,7 @@ if (selectEscales && boutonOuvrirEscale) {
       menu.open = false;
       menu.querySelector('summary')?.focus({ preventScroll: true });
     }
+    quitteCinema();
     void plongee.vers(escale);
   });
 }
@@ -823,12 +912,14 @@ canvas.addEventListener('click', (e) => {
     ?? (touche ? roadtripSous(e.clientX, e.clientY, RAYON_DOIGT_PX, 14) : null));
   if (visee) {
     if (recit.actif) recit.sort(); // on quitte le récit pour plonger
+    quitteCinema();
     void plongee.vers(visee);
   } else if (surRoadtrip) {
     // the trip lives in the San Francisco journal: open it at that post
     const sf = route.escales.find(x => `${x.nom}|${x.date_arrivee}` === CLE_ESCALE_ROADTRIP);
     if (sf) {
       if (recit.actif) recit.sort();
+      quitteCinema();
       void plongee.vers(sf, { billet: surRoadtrip.billet });
     }
   } else if (plongee.ouverte || plongee.enVol || plongee.enChargement) {
@@ -909,6 +1000,9 @@ addEventListener('wheel', (e) => {
   if (e.target.closest?.('#plongee, #recit-carte, #lightbox')) return;
   if (plongee.enVol || plongee.enChargement) return;
   intro = 1;
+  // zoomer, c'est prendre la main : la poursuite rend la vue d'ensemble
+  rendsCameraAuxCommandes();
+  cinema.interrompue = true;
   const d = camera.position.length()
     * Math.exp(e.deltaY * (e.deltaMode === 1 ? 0.05 : 0.0013));
   camera.position.setLength(
@@ -917,6 +1011,7 @@ addEventListener('wheel', (e) => {
 
 // — boucle de rendu —
 function redimensionne() {
+  rendsCameraAuxCommandes();
   const w = innerWidth, h = innerHeight;
   const distanceAvant = camera.position.length();
   renderer.setPixelRatio(ratioPixelsCible());
@@ -963,6 +1058,7 @@ window.__sillage = {
   etiquettes, coton, renderer,
   get roadtrip() { return roadtrip; },
   sauteIntro() {
+    rendsCameraAuxCommandes();
     chargement.ferme();
     intro = 1;
     const accueil = distanceAccueilPourViewport();
@@ -972,6 +1068,11 @@ window.__sillage = {
     return {
       viewport: { largeur: innerWidth, hauteur: innerHeight, dpr: devicePixelRatio },
       camera: { distance: camera.position.length(), accueil: distanceAccueilPourViewport() },
+      cinema: {
+        inclinaison: Number(cinema.inclinaison.toFixed(3)),
+        poursuite: Number(cinema.poursuite.toFixed(3)),
+        distanceBateau: Number(camera.position.distanceTo(bateau.conteneur.position).toFixed(3)),
+      },
       chronologie: {
         instant: timeline.t,
         libelle: voyage.segmentA(timeline.t).libelle,
@@ -986,6 +1087,191 @@ window.__sillage = {
   },
 };
 
+// — le plan cinéma, image par image —
+const lisse = x => x * x * x * (x * (x * 6 - 15) + 10);
+const approche = (valeur, cible, pas) => THREE.MathUtils.clamp(valeur < cible
+  ? Math.min(cible, valeur + Math.max(0, pas)) : Math.max(cible, valeur - Math.max(0, pas)), 0, 1);
+
+function metAJourCinema(dt) {
+  const carnet = plongee.enVol || plongee.ouverte || plongee.enChargement;
+  if (carnet) {
+    // un carnet pilote lui-même la caméra : rien ne s'y superpose
+    cinema.inclinaison = 0;
+    cinema.poursuite = 0;
+  }
+  const libre = !carnet && !recit.actif && bateau.conteneur.visible;
+  const cibleInclinaison = libre && suivre && !suiviEnPause ? 1 : 0;
+  const ciblePoursuite = libre && suivre && timeline.enLecture
+    && !cinema.interrompue && intro >= 1 ? 1 : 0;
+  if (mouvementReduit) {
+    cinema.inclinaison = cibleInclinaison;
+    cinema.poursuite = ciblePoursuite;
+    cinema.houle = 0;
+    return;
+  }
+  cinema.inclinaison = approche(cinema.inclinaison, cibleInclinaison,
+    dt / (cibleInclinaison ? 1.6 : 1.1));
+  // descente vers le bateau un peu plus lente que la remontée
+  cinema.poursuite = approche(cinema.poursuite, ciblePoursuite,
+    dt / (ciblePoursuite ? 3.2 : 2.2));
+  // pas de houle : le bateau reste posé, calme (décision du 10/10/2026)
+  cinema.houle = 0;
+}
+
+// La poursuite, réglée sur l'écran : la coque occupe environ un cinquième
+// du petit côté (≈ 140 px sur un portable, ≈ 85 px sur un téléphone). La
+// caméra se tient sur la hanche bâbord, côté où les voiles se gonflent, assez
+// de travers pour que la grand-voile et le génois se lisent en entier. Sur
+// un écran en hauteur, elle monte un peu : l'horizon reste dans le tiers
+// haut, au-dessus des voiles, et la mer devant le bateau garde sa place.
+const AZIMUT_POURSUITE = THREE.MathUtils.degToRad(-56);
+function parametresPoursuite() {
+  const largeur = Math.max(320, innerWidth);
+  const hauteur = Math.max(320, innerHeight);
+  const portrait = THREE.MathUtils.clamp((hauteur / largeur - 0.8) / 1.0, 0, 1);
+  const coquePx = THREE.MathUtils.clamp(
+    Math.min(largeur, hauteur * 0.9) * THREE.MathUtils.lerp(0.2, 0.22, portrait), 70, 170);
+  const elevation = THREE.MathUtils.degToRad(THREE.MathUtils.lerp(33, 44, portrait));
+  const pixelsParUnite = (hauteur / 2) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  // longueur apparente de la coque (unités du globe) sous cet angle
+  const cosE = Math.cos(elevation);
+  const apparente = 0.078 * Math.sqrt(1 - (cosE * Math.cos(AZIMUT_POURSUITE)) ** 2)
+    + 0.019 * Math.sqrt(1 - (cosE * Math.sin(AZIMUT_POURSUITE)) ** 2);
+  return {
+    distance: apparente * pixelsParUnite / coquePx,
+    elevation,
+    azimut: AZIMUT_POURSUITE,
+    hauteurVisee: 0.05,
+    // un écran en hauteur regarde un peu plus bas : la mer devant le bateau,
+    // et la coque reste au-dessus des photos qui affleurent en bas à gauche
+    tangage: THREE.MathUtils.degToRad(THREE.MathUtils.lerp(0, -5, portrait)),
+    // sur un écran large, de l'espace devant l'étrave (qui pointe vers la
+    // droite, vue de ce côté) : le bateau se décale un peu à gauche
+    lacet: THREE.MathUtils.degToRad(THREE.MathUtils.lerp(-6, 0, portrait)),
+  };
+}
+
+const cinemaAxe = new THREE.Vector3();
+const cinemaQ = new THREE.Quaternion();
+const cinemaQ2 = new THREE.Quaternion();
+const cinemaPos = new THREE.Vector3();
+const cinemaPosPoursuite = new THREE.Vector3();
+const cinemaHaut = new THREE.Vector3();
+const cinemaCap = new THREE.Vector3();
+const cinemaTribord = new THREE.Vector3();
+const cinemaVise = new THREE.Vector3();
+const cinemaPivot = new THREE.Vector3();
+const cinemaPivot2 = new THREE.Vector3();
+const cinemaDevant = new THREE.Vector3();
+const cinemaFlanc = new THREE.Vector3();
+const cinemaMatrice = new THREE.Matrix4();
+const cinemaAxeX = new THREE.Vector3(1, 0, 0);
+const cinemaAxeY = new THREE.Vector3(0, 1, 0);
+const cinemaQ3 = new THREE.Quaternion();
+
+// Tourne `cap` vers `cible` autour de `axe` (même règle que la maquette).
+function tourneCapVers(cap, cible, axe, fraction, maxi) {
+  cap.addScaledVector(axe, -cap.dot(axe));
+  if (cap.lengthSq() < 1e-10) cap.copy(cible);
+  cap.normalize();
+  const sinus = cinemaAxe.crossVectors(cap, cible).dot(axe);
+  const angle = Math.atan2(sinus, THREE.MathUtils.clamp(cap.dot(cible), -1, 1));
+  cap.applyAxisAngle(axe, THREE.MathUtils.clamp(angle * fraction, -maxi, maxi)).normalize();
+}
+
+function appliqueCinema(dt) {
+  cinema.base.position.copy(camera.position);
+  cinema.base.quaternion.copy(camera.quaternion);
+  const wI = lisse(cinema.inclinaison);
+  const wP = lisse(cinema.poursuite);
+  if (wI < 1e-4 && wP < 1e-4) {
+    cinema.applique = false;
+    cinema.capPret = false;
+    camera.updateMatrixWorld();
+    return;
+  }
+
+  // 1. L'inclinaison : la caméra glisse vers le bas de l'écran autour du
+  // centre du globe. Le globe reste centré, nord en haut ; le bateau remonte
+  // et se montre de trois quarts, mât dressé.
+  const distanceGlobe = camera.position.length();
+  // côté des voiles (x négatif de la maquette) vu dans l'axe horizontal de
+  // l'écran : la caméra s'y décale d'autant (−1 … 1), en douceur
+  cinemaAxe.set(1, 0, 0).applyQuaternion(camera.quaternion);
+  cinemaFlanc.set(-1, 0, 0).applyQuaternion(bateau.conteneur.quaternion);
+  const cibleDerive = THREE.MathUtils.clamp(cinemaFlanc.dot(cinemaAxe), -1, 1);
+  cinema.derive = mouvementReduit || cinema.derive === null ? cibleDerive
+    : cinema.derive + (cibleDerive - cinema.derive) * (1 - Math.exp(-dt / 0.6));
+  cinemaQ.setFromAxisAngle(cinemaAxe, inclinaisonSuivi(distanceGlobe) * wI);
+  cinemaAxe.set(0, 1, 0).applyQuaternion(camera.quaternion);
+  cinemaQ3.setFromAxisAngle(cinemaAxe, deriveSuivi(distanceGlobe) * cinema.derive * wI);
+  cinemaQ.premultiply(cinemaQ3);
+  cinemaPos.copy(camera.position).applyQuaternion(cinemaQ);
+  cinemaQ2.copy(cinemaQ).multiply(camera.quaternion);
+
+  if (wP <= 1e-4) cinema.capPret = false;
+  else {
+    // 2. La poursuite : derrière le bateau, basse, sur la hanche bâbord.
+    const bateauMonde = bateau.conteneur.position;
+    cinemaHaut.copy(bateauMonde).normalize();
+    if (mouvementReduit) {
+      // Aucune rotation de vue : la caméra garde son orientation et ne se
+      // replace derrière le bateau, d'un coup, qu'après un vrai changement
+      // de cap (plus de 35°, en général à une escale).
+      cinema.capCamera.addScaledVector(cinemaHaut, -cinema.capCamera.dot(cinemaHaut));
+      if (!cinema.capPret || cinema.capCamera.lengthSq() < 1e-8
+        || cinema.capCamera.angleTo(bateau.capAffiche()) > THREE.MathUtils.degToRad(35)) {
+        cinema.capCamera.copy(bateau.capAffiche());
+        cinema.capPret = true;
+      }
+      cinemaCap.copy(cinema.capCamera).normalize();
+    } else {
+      if (!cinema.capPret) {
+        cinema.capCamera.copy(bateau.capAffiche());
+        cinema.capPret = true;
+      }
+      // la caméra suit le cap montré par la maquette, avec un temps de retard
+      tourneCapVers(cinema.capCamera, bateau.capAffiche(), cinemaHaut,
+        1 - Math.exp(-dt / 0.9), dt * THREE.MathUtils.degToRad(75));
+      cinemaCap.copy(cinema.capCamera);
+    }
+    cinemaTribord.crossVectors(cinemaHaut, cinemaCap).normalize();
+    const p = parametresPoursuite();
+    cinemaVise.copy(bateauMonde).addScaledVector(cinemaHaut, p.hauteurVisee);
+    const cosE = Math.cos(p.elevation);
+    cinemaPosPoursuite.copy(cinemaVise)
+      .addScaledVector(cinemaCap, -cosE * Math.cos(p.azimut) * p.distance)
+      .addScaledVector(cinemaTribord, cosE * Math.sin(p.azimut) * p.distance)
+      .addScaledVector(cinemaHaut, Math.sin(p.elevation) * p.distance);
+    cinemaMatrice.lookAt(cinemaPosPoursuite, cinemaVise, cinemaHaut);
+    cinemaQ.setFromRotationMatrix(cinemaMatrice);
+    if (p.lacet) cinemaQ.multiply(cinemaQ3.setFromAxisAngle(cinemaAxeY, p.lacet));
+    if (p.tangage) cinemaQ.multiply(cinemaQ3.setFromAxisAngle(cinemaAxeX, p.tangage));
+
+    // 3. Le fondu entre les deux : la caméra tourne autour d'un pivot qui
+    // glisse du centre de l'écran vers le bateau, et sa distance se
+    // rapproche en proportion (log), sans jamais traverser la mer.
+    const rayonPivot = bateauMonde.length();
+    cinemaPivot.copy(cinemaPos).setLength(rayonPivot);
+    const distanceVue = Math.max(0.05, cinemaPos.length() - rayonPivot);
+    cinemaDevant.set(0, 0, -1).applyQuaternion(cinemaQ);
+    cinemaPivot2.copy(cinemaPosPoursuite).addScaledVector(cinemaDevant, p.distance);
+    cinemaQ2.slerp(cinemaQ, wP);
+    cinemaPivot.lerp(cinemaPivot2, wP);
+    const distance = Math.exp(THREE.MathUtils.lerp(
+      Math.log(distanceVue), Math.log(p.distance), wP));
+    cinemaDevant.set(0, 0, -1).applyQuaternion(cinemaQ2);
+    cinemaPos.copy(cinemaPivot).addScaledVector(cinemaDevant, -distance);
+  }
+
+  camera.position.copy(cinemaPos);
+  camera.quaternion.copy(cinemaQ2);
+  camera.updateMatrixWorld();
+  cinema.rendu.position.copy(camera.position);
+  cinema.rendu.quaternion.copy(camera.quaternion);
+  cinema.applique = true;
+}
+
 const horloge = new THREE.Clock();
 let decalageVue = 0;
 let accumulateurSurvol = 0;
@@ -998,6 +1284,8 @@ lanceCarnets();
 
 renderer.setAnimationLoop(() => {
   const dt = horloge.getDelta();
+  // la boucle repart toujours de la pose des contrôles (voir « cinéma »)
+  rendsCameraAuxCommandes();
 
   timeline.metAJour(dt * 1000);
   plongee.metAJour(dt);
@@ -1042,9 +1330,20 @@ renderer.setAnimationLoop(() => {
     }
   }
 
+  // Les contrôles placent d'abord leur caméra (vers le centre du globe) ; le
+  // plan cinéma se pose ensuite par-dessus, avant que les étiquettes, les
+  // anneaux et le survol ne lisent la caméra : ils voient ce qui est rendu.
+  metAJourCinema(dt);
+  bateau.anime(mouvementReduit ? 0 : horloge.elapsedTime, camera, {
+    dt,
+    houle: lisse(cinema.houle),
+    lissageCap: timeline.enLecture && !mouvementReduit ? 0.7 : 0,
+  });
+  controls.update();
+  appliqueCinema(dt);
+
   globe.anime(dt);
   coton.anime(dt, mouvementReduit ? 0 : horloge.elapsedTime, camera, !mouvementReduit);
-  bateau.anime(mouvementReduit ? 0 : horloge.elapsedTime, camera);
   etiquettes.anime(camera, bateau.conteneur.position,
     voyage.segmentA(timeline.t).libelle, rectangleEcranBateau(), dt);
   route.orientePerles(camera, mouvementReduit ? 0 : horloge.elapsedTime,
@@ -1075,7 +1374,6 @@ renderer.setAnimationLoop(() => {
     camera.clearViewOffset();
   }
 
-  controls.update();
   renderer.render(scene, camera);
 });
 
@@ -1084,6 +1382,7 @@ renderer.setAnimationLoop(() => {
 // le globe libre.
 chargement.accueil().then((choix) => {
   if (choix !== 'traversee') return;
+  rendsCameraAuxCommandes();
   intro = 1;
   const accueil = distanceAccueilPourViewport();
   if (camera.position.length() > accueil + 0.5) camera.position.setLength(accueil);
