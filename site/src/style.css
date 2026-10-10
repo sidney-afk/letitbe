@@ -1332,7 +1332,8 @@ body[data-mode="photo"] #plongee-sommaire { color: #e8c87a; }
   color: var(--or);
   font-size: .88rem;
 }
-#plongee-flux .article-date {
+#plongee-flux .article-date,
+.fallback-carnet .article-date {
   display: flex;
   justify-content: space-between;
   align-items: baseline;

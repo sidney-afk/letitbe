@@ -60,6 +60,43 @@ export function blocEvoque(evoque, { surBillet }) {
 
 const lisse = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
+// Each post can be sent to someone: the phone's own share sheet (messages,
+// mail), or the link copied on a computer. The link opens the journal at
+// that post (lien.js).
+export function boutonPartage(escale, article) {
+  const bouton = document.createElement('button');
+  bouton.type = 'button';
+  bouton.className = 'article-partage';
+  const nom = article.titre || escale.nom;
+  const libelle = `Partager le billet «\u00a0${nom}\u00a0»`;
+  bouton.textContent = 'Partager';
+  bouton.setAttribute('aria-label', libelle);
+  bouton.title = libelle;
+  bouton.addEventListener('click', async () => {
+    const url = `${location.origin}${location.pathname}#${slugEscale(escale)}/billet-${article.id}`;
+    const signale = (texte) => {
+      bouton.textContent = texte;
+      setTimeout(() => { bouton.textContent = 'Partager'; }, 2400);
+    };
+    if (navigator.share && matchMedia('(pointer: coarse)').matches) {
+      try {
+        await navigator.share({ title: `${nom} · Le Sillage`, url });
+        return;
+      } catch (erreur) {
+        if (erreur?.name === 'AbortError') return; // the visitor changed their mind
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(url);
+      signale('Lien copié');
+    } catch {
+      // no clipboard either: the link itself, to copy by hand
+      prompt('Le lien de ce billet :', url);
+    }
+  });
+  return bouton;
+}
+
 export function creerPlongee({ camera, controls, timeline, regleSuivi,
   regleVisibiliteBateau = () => {}, regleVisibiliteRoute = () => {},
   regleDetailIle = () => false, cacheDetailIle = () => {}, vuesAeriennes = {},
@@ -858,43 +895,6 @@ function opaciteRaccordLod(t) {
       flux.append(art);
     }
     ajouteSuite(escale);
-  }
-
-  // Each post can be sent to someone: the phone's own share sheet (messages,
-  // mail), or the link copied on a computer. The link opens the journal at
-  // that post (lien.js).
-  function boutonPartage(escale, article) {
-    const bouton = document.createElement('button');
-    bouton.type = 'button';
-    bouton.className = 'article-partage';
-    const nom = article.titre || escale.nom;
-    const libelle = `Partager le billet «\u00a0${nom}\u00a0»`;
-    bouton.textContent = 'Partager';
-    bouton.setAttribute('aria-label', libelle);
-    bouton.title = libelle;
-    bouton.addEventListener('click', async () => {
-      const url = `${location.origin}${location.pathname}#${slugEscale(escale)}/billet-${article.id}`;
-      const signale = (texte) => {
-        bouton.textContent = texte;
-        setTimeout(() => { bouton.textContent = 'Partager'; }, 2400);
-      };
-      if (navigator.share && matchMedia('(pointer: coarse)').matches) {
-        try {
-          await navigator.share({ title: `${nom} · Le Sillage`, url });
-          return;
-        } catch (erreur) {
-          if (erreur?.name === 'AbortError') return; // the visitor changed their mind
-        }
-      }
-      try {
-        await navigator.clipboard.writeText(url);
-        signale('Lien copié');
-      } catch {
-        // no clipboard either: the link itself, to copy by hand
-        prompt('Le lien de ce billet :', url);
-      }
-    });
-    return bouton;
   }
 
   // At the end of every journal, the stops on either side: the voyage reads
