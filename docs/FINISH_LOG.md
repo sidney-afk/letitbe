@@ -533,6 +533,13 @@ Built next (batch 15):
   two book titles the epilogue names are the family's own ("le désormais
   culte « Les p'tites bites »", "95° de latitude Nord").
 
+- Batch 20: **the version without 3D, on a laptop.** On a computer that
+  cannot draw the globe, opening a stop's journal scrolled the map out of
+  sight at once, and the journal sat in a column narrower than the list
+  beside it. The journal column is now the wider one, and the map stays in
+  view beside it while the journal is read (on phones the two are stacked,
+  so there the map still scrolls away with the page, as before).
+
 ## Ideas for later
 
 - Chapter quotes could also appear during the crossing (kept to titles for
