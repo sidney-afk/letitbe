@@ -647,6 +647,38 @@ Fixed (batch 26):
   copied link leads to the normal site, not to the forced map version), and
   an accessibility check of today's additions (quoted mentions, share
   buttons, the crew page): no axe violations.
+- Batch 29: **the boat, at last** (Sidney: « I hate the wide rectangle… I
+  want the boat to look cool… maybe at a three-quarter angle »). The model
+  already had a mast and rig; it read as a white rectangle because the
+  camera always looked straight down on it from far away. Three prototypes
+  were built side by side (a three-quarter chase camera; sails with a
+  gentle tilt; a cinematic replay with sails) and judged by three
+  independent reviews (Sidney's wish, the travel-journal look, engineering
+  risk). Shipped: the cinematic one.
+  - During « Larguer les amarres » the camera comes down behind the boat at
+    three quarters (hull about 140 px long on a laptop, 80 px on a phone),
+    the globe curving away to the horizon, the route and islands ahead;
+    it eases back to the globe on pause, at the end, on a drag or a zoom,
+    in the récit or a journal; ⏵ or ⌖ bring it back.
+  - The overview stays the whole globe, north up, with a gentle tilt so the
+    boat reads as a small sail rather than a block.
+  - White mainsail with battens and a white genoa, like the photo « Let It
+    Be sous voile »; the red furled genoa and topping lift that crossed them
+    are removed and the sail bag is navy, as in the photo. The sails stay
+    up at anchor too (a stylisation).
+  - During the replay the boat turns at stops instead of spinning round.
+    The gentle rocking of the prototype was left out (calmer, and it would
+    have broken the boat's pose rules).
+  - Reduced motion: every change of shot is a cut, no continuous turning.
+  - Labels avoid the chapter title shown during the replay.
+  - Checked: laptop and phone, a southbound leg (Fiji to New Zealand: the
+    horizon stays level, New Zealand ahead), all tests.
+  - Not done (ideas for later, from the reviews): ink lines on every sail
+    edge so the two sails read apart up close; measure the rig from the
+    model at runtime instead of fixed numbers (only matters if the model is
+    ever replaced or rescaled); keep a tap from dropping the chase; place
+    the horizon so the phone's chapter title sits on clear sky; a test that
+    drives the camera with full motion.
 
 ## Ideas for later
 

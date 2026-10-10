@@ -39,6 +39,9 @@ const SELECTEURS_ZONES = [
   '#titre',
   '#boutons-haut',
   '#timeline',
+  // the chapter title over the sky during the replay, where the chase
+  // camera brings the labels near the horizon
+  '#interlude',
   '#recit-carte',
   '#plongee',
   '#lightbox',
