@@ -490,3 +490,19 @@ test('un album photo s’ouvre depuis le carnet et se feuillette au clavier', as
   await expect(page.locator('#lightbox-suivante')).toBeHidden();
   await page.keyboard.press('Escape');
 });
+
+test('la page de garde se quitte au clavier et rend la main à la carte', async ({ page }) => {
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => document.body.classList.contains('pret'));
+  await expect(page.locator('#accueil-traversee')).toBeFocused();
+  // the focus stays inside the card while it is open
+  await page.keyboard.press('Tab');
+  await expect(page.locator('#accueil-explorer')).toBeFocused();
+  await page.keyboard.press('Escape');
+  await expect(page.locator('body')).not.toHaveClass(/accueil-ouvert/);
+  await expect(page.locator('#chargement')).toHaveJSProperty('inert', true);
+  await expect(page.locator('#navigation-escales summary')).toBeFocused();
+  await page.keyboard.press('Tab');
+  await expect(page.locator('#lecture')).toBeFocused();
+});

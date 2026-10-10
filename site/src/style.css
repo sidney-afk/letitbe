@@ -503,19 +503,17 @@ body.accueil-ouvert #navigation-escales { visibility: hidden; animation: none !i
 
 /* ——— l'entrée en scène : l'interface se présente une fois la scène prête */
 #titre, #boutons-haut, #timeline, #navigation-escales { opacity: 0; }
-body.pret #navigation-escales { animation: leve 1.4s 1.7s ease-out both; }
+/* One animation for every layout: a layout-specific animation name would
+   restart (and hide the controls again) when a phone is rotated. The
+   controls rise quickly after the welcome card, gently staggered. */
+body.pret #titre { animation: leve .9s .1s ease-out both; }
+body.pret #boutons-haut { animation: leve .9s .25s ease-out both; }
+body.pret #timeline { animation: leve .9s .4s ease-out both; }
+body.pret #navigation-escales { animation: leve .9s .55s ease-out both; }
 body.fallback-actif #navigation-escales { opacity: 1; animation: none; }
-body.pret #titre { animation: leve 1.4s .5s ease-out both; }
-body.pret #boutons-haut { animation: leve 1.4s 1.1s ease-out both; }
-/* la timeline est centrée par transform : son animation garde le -50% */
-body.pret #timeline { animation: leve-centre 1.4s 1.5s ease-out both; }
 @keyframes leve {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: none; }
-}
-@keyframes leve-centre {
-  from { opacity: 0; transform: translate(-50%, 10px); }
-  to { opacity: 1; transform: translate(-50%, 0); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -643,9 +641,11 @@ body.plongee-ouverte #titre { opacity: .35; transition: opacity .4s; }
 /* ——— la timeline : le rouleau de carte ——— */
 #timeline {
   position: fixed;
-  left: 50%;
+  /* centred with margins, not a transform (see the entrance animation) */
+  left: 0;
+  right: 0;
+  margin-inline: auto;
   bottom: max(26px, calc(env(safe-area-inset-bottom) + 12px));
-  transform: translateX(-50%);
   width: min(880px, calc(100% - 48px));
   display: flex;
   align-items: center;
@@ -1086,8 +1086,12 @@ body.recit-actif #recit-indicateur { opacity: 1; }
 #navigation-escales[open] { width: min(300px, calc(100vw - 32px)); }
 /* While the crossing plays, the photos that rise from the sea use this
    corner; the menu steps aside and comes back when the boat stops. */
-#navigation-escales { transition: opacity .45s ease, visibility .45s; }
-body.lecture #navigation-escales { opacity: 0; visibility: hidden; pointer-events: none; }
+/* (the visibility transition only on the way out: coming back, the menu
+   must be focusable at once, e.g. when the welcome card hands it focus) */
+body.lecture #navigation-escales {
+  opacity: 0; visibility: hidden; pointer-events: none;
+  transition: opacity .45s ease, visibility .45s;
+}
 #navigation-escales summary {
   min-height: 44px;
   display: flex;
@@ -1363,7 +1367,8 @@ body.plongee-ouverte #navigation-escales { display: none; }
 }
 
 body.plongee-ouverte #timeline {
-  left: calc(50% - min(240px, 17vw));
+  /* centred in the free space left of the journal */
+  right: min(480px, 94vw);
   width: min(660px, calc(100% - min(480px, 94vw) - 40px));
 }
 
@@ -1548,9 +1553,7 @@ body[data-mode="photo"] #titre-trait { filter: none; }
     min-width: 0;
     padding: 8px 11px;
     gap: 8px;
-    transform: none;
   }
-  body.pret #timeline { animation-name: leve; }
   #timeline::before { left: 16px; }
   #timeline button { width: 44px; height: 44px; }
   #timeline button svg { width: 25px; height: 25px; }
@@ -2144,3 +2147,17 @@ body[data-mode="photo"] .film-lien { color: #e8c87a; }
 .bateau-fiche img { width: 100%; border: 4px solid #fffaf0; box-shadow: 0 3px 10px rgba(60, 45, 20, .25); }
 .bateau-fiche img:last-child { grid-column: 1 / -1; }
 #chargement .lien-a-propos { justify-self: center; }
+
+/* Phones held upright: the chapter card sits low, above the timeline, and
+   the globe view shifts up (main.js) so the boat stays visible above it. */
+@media (max-width: 640px) and (orientation: portrait) {
+  #recit-carte {
+    top: auto;
+    bottom: max(150px, calc(env(safe-area-inset-bottom) + 140px));
+    max-height: min(44dvh, calc(100dvh - 360px));
+    transform: translateY(12px) rotate(-.3deg);
+  }
+  #recit-carte.visible { transform: rotate(-.3deg); }
+  body.recit-actif #navigation-escales { visibility: hidden; pointer-events: none; }
+  #recit-aide { top: max(122px, calc(env(safe-area-inset-top) + 112px)); }
+}
