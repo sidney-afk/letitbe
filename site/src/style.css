@@ -1161,12 +1161,14 @@ body.plongee-ouverte #navigation-escales { display: none; }
   from { opacity: 0; }
   to { opacity: 1; }
 }
-/* the header still glides in; the panel itself only fades (no transform or
-   offset on #plongee: it must never become the porthole's containing block
-   or sit off-screen while an animation waits for its first frame) */
+/* the header rises a little as the panel fades in; the panel itself only
+   fades (no transform or offset on #plongee: it must never become the
+   porthole's containing block). Rising from below, never from the right,
+   keeps the header on screen even while an animation waits for its first
+   frame. */
 #plongee-entete { animation: glisse-entete .55s cubic-bezier(.22, .8, .3, 1); }
 @keyframes glisse-entete {
-  from { transform: translateX(28px); }
+  from { transform: translateY(8px); }
   to { transform: none; }
 }
 

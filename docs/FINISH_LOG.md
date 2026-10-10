@@ -322,6 +322,11 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
   - Tests: the road trip on the globe (hover, click, the journal opening at
     that post, the map and list jumps, the line back after closing) and in
     the fallback.
+  - The journal header now rises a few pixels as the panel fades in,
+    instead of sliding in from the right: in one headless run the slide
+    waited for its first frame and the header sat 28 px past the screen
+    edge (the Nuku Hiva containment check). Rising from below can never
+    leave the screen.
 
 ## Second first-time-visitor pass (2026-10-10, after batch 5)
 
