@@ -133,7 +133,10 @@ async function setRepresentativeState(page, scenario) {
 
   if (scenario.mode === 'photo') {
     await page.locator('#mode-bouton').click();
-    await expect(page.locator('body')).toHaveAttribute('data-mode', 'photo');
+    // The first switch waits for the realistic textures (loaded on demand
+    // since the first-load work): decoding the 5400 px day map in software
+    // WebGL can take longer than the default 8 s on a busy runner.
+    await expect(page.locator('body')).toHaveAttribute('data-mode', 'photo', { timeout: 30_000 });
   }
 
   if (scenario.recit) {
