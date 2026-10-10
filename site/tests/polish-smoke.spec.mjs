@@ -41,3 +41,16 @@ test('fallback 2D multi-navigateur sur téléphone', async ({ page }) => {
   expect(await page.locator('#fallback-liste li').count()).toBeGreaterThan(0);
   expect(await page.locator('#escales-select option').count()).toBeGreaterThan(1);
 });
+
+test('le roadtrip de 2013 figure dans le carnet du repli 2D', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/?force-fallback=1', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => window.__sillage?.fallback === true);
+  await page.evaluate(() => {
+    const details = [...document.querySelectorAll('#fallback-liste details')]
+      .find(d => d.querySelector('strong')?.textContent === 'San Francisco');
+    details.open = true;
+  });
+  await expect(page.locator('.fallback-carnet .roadtrip-carte img')).toBeVisible();
+  await expect(page.locator('.fallback-carnet #fallback-billet-540')).toBeAttached();
+});

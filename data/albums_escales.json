@@ -9,99 +9,147 @@
   "photos": [
    {
     "src": "data/album/San Blas/images/img_7570.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/San Blas/images/img_7582.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/San Blas/images/dsc01095.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/San Blas/images/img_7588.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "data/album/San Blas/images/dsc01103.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/San Blas/images/dsc01107.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/San Blas/images/dsc01111.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/San Blas/images/dsc01123.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/San Blas/images/dsc01131.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/San Blas/images/dsc01132.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/San Blas/images/dsc01139.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/San Blas/images/img_7595.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "data/album/San Blas/images/img_7599.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/San Blas/images/dsc01145.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/San Blas/images/img_7605.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "data/album/San Blas/images/img_7606.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "data/album/San Blas/images/dsc01146.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/San Blas/images/img_7610.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "data/album/San Blas/images/dsc01159.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/San Blas/images/dsc01163.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/San Blas/images/dsc01165.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/San Blas/images/dsc01173.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/San Blas/images/dsc01177.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/San Blas/images/img_7631.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 428
    }
   ],
   "escales": [
@@ -118,99 +166,147 @@
   "photos": [
    {
     "src": "data/album/Panama/images/dsc01182.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01192.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01199.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01203.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01207.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01212.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01217.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01223.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01234.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Panama/images/dsc01236.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Panama/images/dsc01238.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01242.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01249.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01257.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01275.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01295.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01300.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01307.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01314.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01332.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01336.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01338.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01345.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Panama/images/dsc01354.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -228,99 +324,147 @@
   "photos": [
    {
     "src": "data/album/Los Roques/images/img_7087.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Roques/images/img_7089.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Roques/images/dsc00902.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00912.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00917.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00919.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00923.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00927.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Los Roques/images/dsc00932.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00938.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00941.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00946.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Los Roques/images/dsc00951.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00953.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Los Roques/images/dsc00960.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00971.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00982.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/dsc00985.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Roques/images/img_7101.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Roques/images/img_7120.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Roques/images/img_7157.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Roques/images/img_7159.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Roques/images/img_7302.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Roques/images/img_7305.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    }
   ],
   "escales": [
@@ -337,99 +481,147 @@
   "photos": [
    {
     "src": "data/album/Los Aves/images/dsc00991.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/dsc00993.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/dsc00995.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/img_7320.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Aves/images/img_7322.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Aves/images/img_7323.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Aves/images/img_7324.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Aves/images/img_7329.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Aves/images/img_7336.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Aves/images/img_7337.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Aves/images/img_7340.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "data/album/Los Aves/images/dsc00996.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/dsc01004.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/dsc01005.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/img_7346.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Aves/images/dsc01012.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/dsc01017.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/dsc01018.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/img_7403.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Aves/images/img_7406.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Los Aves/images/dsc01034.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/dsc01035.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/dsc01036.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Los Aves/images/dsc01037.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -446,23 +638,33 @@
   "photos": [
    {
     "src": "data/album/Aruba/images/img_7428.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Aruba/images/dsc01040.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Aruba/images/dsc01041.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Aruba/images/dsc01045.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Aruba/images/dsc01046.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -479,87 +681,129 @@
   "photos": [
    {
     "src": "album/GalapGambier/images/dsc01894.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc01896.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/GalapGambier/images/dsc01898.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc01904.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/GalapGambier/images/dsc01912.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/GalapGambier/images/dsc01878.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/GalapGambier/images/dsc01879.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc01881.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc01933.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc01936.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc01938.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc01949.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc01873.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc01955.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc01965.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/GalapGambier/images/dsc01977.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/GalapGambier/images/dsc01982.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc01984.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc02012.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc02015.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/GalapGambier/images/dsc02026.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -576,35 +820,51 @@
   "photos": [
    {
     "src": "data/album/Las Perlas/images/dsc01366.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Las Perlas/images/dsc01370.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Las Perlas/images/dsc01377.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Las Perlas/images/dsc01380.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Las Perlas/images/dsc01381.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Las Perlas/images/dsc01386.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Las Perlas/images/dsc01388.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Las Perlas/images/dsc01389.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -621,99 +881,147 @@
   "photos": [
    {
     "src": "data/album/Galapagos/images/galapagos__63_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__13_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__79_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__84_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__18_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__90_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "data/album/Galapagos/images/galapagos__94_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "data/album/Galapagos/images/galapagos__97_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Galapagos/images/galapagos__103_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Galapagos/images/galapagos__16_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__20_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Galapagos/images/galapagos__8_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 447,
+    "h": 426
    },
    {
     "src": "data/album/Galapagos/images/galapagos__26_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__28_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__40_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__38_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Galapagos/images/galapagos__44_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Galapagos/images/galapagos__50_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Galapagos/images/galapagos__54_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__59_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__92_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "data/album/Galapagos/images/galapagos__104_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "data/album/Galapagos/images/galapagos__67_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Galapagos/images/galapagos__49_.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -730,99 +1038,147 @@
   "photos": [
    {
     "src": "data/album/Gambier08/images/gambier__2_.jpg",
-    "legende": "12/8/2009: on célèbre la 'transpac'"
+    "legende": "12/8/2009: on célèbre la 'transpac'",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__9_.jpg",
-    "legende": "La baie de Rikitea"
+    "legende": "La baie de Rikitea",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__20_.jpg",
-    "legende": "Le 15 août à Akamaru"
+    "legende": "Le 15 août à Akamaru",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Gambier08/images/gambier__25_.jpg",
-    "legende": "Le 15 août à Akamaru: file au barbecue"
+    "legende": "Le 15 août à Akamaru: file au barbecue",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__33_.jpg",
-    "legende": "Les enfants à bord de Pitcairn"
+    "legende": "Les enfants à bord de Pitcairn",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__40_.jpg",
-    "legende": "Let It Be dans la rade"
+    "legende": "Let It Be dans la rade",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__49_.jpg",
-    "legende": "Ballade à Mangareva (île principale des Gambier): les pomelos"
+    "legende": "Ballade à Mangareva (île principale des Gambier): les pomelos",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__60_.jpg",
-    "legende": "Le ravitaillement arrive enfin !"
+    "legende": "Le ravitaillement arrive enfin !",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__66_.jpg",
-    "legende": "23/8/2009: arrivée à Taravaï, île sud ouest de l'archipel"
+    "legende": "23/8/2009: arrivée à Taravaï, île sud ouest de l'archipel",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__74_.jpg",
-    "legende": "Un peu de repos sur le pont !"
+    "legende": "Un peu de repos sur le pont !",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__82_.jpg",
-    "legende": "Quelques photos prises sous l'eau en nageant autour du bateau"
+    "legende": "Quelques photos prises sous l'eau en nageant autour du bateau",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__90_.jpg",
-    "legende": "Sidney et la reine tortue (un petit air de Kermit, non ?)"
+    "legende": "Sidney et la reine tortue (un petit air de Kermit, non ?)",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__97_.jpg",
-    "legende": "Départ en virée"
+    "legende": "Départ en virée",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__113_.jpg",
-    "legende": "TARAVAÏ"
+    "legende": "TARAVAÏ",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__117_.jpg",
-    "legende": "Les sirènes du coin"
+    "legende": "Les sirènes du coin",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__126_.jpg",
-    "legende": "Taravaï: visite à terre"
+    "legende": "Taravaï: visite à terre",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__131_.jpg",
-    "legende": "Taravaï: visite à terre. Eric cueille des piments"
+    "legende": "Taravaï: visite à terre. Eric cueille des piments",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__137_.jpg",
-    "legende": "Eric et Hervé"
+    "legende": "Eric et Hervé",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__142_.jpg",
-    "legende": "Eric, prudent, inspecte la noix de coco"
+    "legende": "Eric, prudent, inspecte la noix de coco",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Gambier08/images/gambier__148_.jpg",
-    "legende": "Café à la plage"
+    "legende": "Café à la plage",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__155_.jpg",
-    "legende": "Hervé rape le coco"
+    "legende": "Hervé rape le coco",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Gambier08/images/gambier__161_.jpg",
-    "legende": "Que c'est calme !"
+    "legende": "Que c'est calme !",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__168_.jpg",
-    "legende": "Taravaï: retour au bateau"
+    "legende": "Taravaï: retour au bateau",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier08/images/gambier__173_.jpg",
-    "legende": "Les filles s'endorment"
+    "legende": "Les filles s'endorment",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -839,99 +1195,147 @@
   "photos": [
    {
     "src": "data/album/Gambier09/images/gambier__84_.jpg",
-    "legende": "30/8/2009: Arrivée à Akamaru"
+    "legende": "30/8/2009: Arrivée à Akamaru",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/gambier__116_.jpg",
-    "legende": "Barbecue à la plage"
+    "legende": "Barbecue à la plage",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/gambier__175_.jpg",
-    "legende": "Ascension à Mekiro"
+    "legende": "Ascension à Mekiro",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Gambier09/images/gambier__193_.jpg",
-    "legende": "Ascension à Mekiro"
+    "legende": "Ascension à Mekiro",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "data/album/Gambier09/images/gambier__201_.jpg",
-    "legende": "Sidney casse une noix de coco"
+    "legende": "Sidney casse une noix de coco",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Gambier09/images/dsc02591.jpg",
-    "legende": "Cécile prépare un gateau"
+    "legende": "Cécile prépare un gateau",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/dsc02624.jpg",
-    "legende": "Kenya, toute émue pour sa petite soeur"
+    "legende": "Kenya, toute émue pour sa petite soeur",
+    "l": 437,
+    "h": 640
    },
    {
     "src": "data/album/Gambier09/images/img_8140.jpg",
-    "legende": "Bel arbre avec Eric"
+    "legende": "Bel arbre avec Eric",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Gambier09/images/dsc02648.jpg",
-    "legende": "Le cadeau"
+    "legende": "Le cadeau",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Gambier09/images/dsc02693.jpg",
-    "legende": "Cécile et Rémi"
+    "legende": "Cécile et Rémi",
+    "l": 640,
+    "h": 455
    },
    {
     "src": "data/album/Gambier09/images/dsc02725.jpg",
-    "legende": "Même pas peur"
+    "legende": "Même pas peur",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/img_8191.jpg",
-    "legende": "Syr Daria s'amuse !"
+    "legende": "Syr Daria s'amuse !",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "data/album/Gambier09/images/dsc02807.jpg",
-    "legende": "Sidney à la campagne"
+    "legende": "Sidney à la campagne",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Gambier09/images/dsc02833.jpg",
-    "legende": "Les enfants écoutent madame météo, alias Carine"
+    "legende": "Les enfants écoutent madame météo, alias Carine",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/dsc02899.jpg",
-    "legende": "16/9/2009: arrivée à Totegegie, au Nord des Gambier"
+    "legende": "16/9/2009: arrivée à Totegegie, au Nord des Gambier",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/dsc02923.jpg",
-    "legende": "Du corail"
+    "legende": "Du corail",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/dsc02991.jpg",
-    "legende": "Coup double pour Cécile"
+    "legende": "Coup double pour Cécile",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/dsc03046.jpg",
-    "legende": "Vue du jardin d'Edouard et Denise"
+    "legende": "Vue du jardin d'Edouard et Denise",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/dsc03095.jpg",
-    "legende": "Cocotiers à Taravaï"
+    "legende": "Cocotiers à Taravaï",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Gambier09/images/dsc03158.jpg",
-    "legende": "Don Corleone, en personne (oui, oui, je sais, je ressemble à mon père)"
+    "legende": "Don Corleone, en personne (oui, oui, je sais, je ressemble à mon père)",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/dsc03200.jpg",
-    "legende": "Cécile donne le mouillage secondaire à Eric, dans le dinghy"
+    "legende": "Cécile donne le mouillage secondaire à Eric, dans le dinghy",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/dsc03229.jpg",
-    "legende": "Arrivée au ponton. Il fait beau mais quand le vent souffle, les embruns mouillent..."
+    "legende": "Arrivée au ponton. Il fait beau mais quand le vent souffle, les embruns mouillent...",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier09/images/dsc03270.jpg",
-    "legende": "La récolte, fruit de près de 4 ans de travail"
+    "legende": "La récolte, fruit de près de 4 ans de travail",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Gambier09/images/dsc03248.jpg",
-    "legende": "Dépose du sable noir"
+    "legende": "Dépose du sable noir",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -948,99 +1352,147 @@
   "photos": [
    {
     "src": "data/album/Gambier10/images/dsc03276.jpg",
-    "legende": "Kenya: autoportrait"
+    "legende": "Kenya: autoportrait",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03286.jpg",
-    "legende": "Sidney, dubitatif..."
+    "legende": "Sidney, dubitatif...",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03307.jpg",
-    "legende": "La bouée tractée, grand moment de plaisir pour Sidney et grand moment de frayeur pour Syr Daria"
+    "legende": "La bouée tractée, grand moment de plaisir pour Sidney et grand moment de frayeur pour Syr Daria",
+    "l": 640,
+    "h": 239
    },
    {
     "src": "data/album/Gambier10/images/dsc03315.jpg",
-    "legende": "Autre petit poisson..."
+    "legende": "Autre petit poisson...",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03317.jpg",
-    "legende": "Grain en perspective"
+    "legende": "Grain en perspective",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03361.jpg",
-    "legende": "La fameuse 'saucisse jaune' poisson dont le camouflage consiste à être chiral"
+    "legende": "La fameuse 'saucisse jaune' poisson dont le camouflage consiste à être chiral",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03375.jpg",
-    "legende": "17/10 - Puamu, nord des Gambier - L'île aux cochons (c'est le truc rose avec les grandes oreilles)"
+    "legende": "17/10 - Puamu, nord des Gambier - L'île aux cochons (c'est le truc rose avec les grandes oreilles)",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03400.jpg",
-    "legende": "Le dinghy, amarré à l'arbre"
+    "legende": "Le dinghy, amarré à l'arbre",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03407.jpg",
-    "legende": "Eric hésite: si on mangeait du boudin ce soir ?"
+    "legende": "Eric hésite: si on mangeait du boudin ce soir ?",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03414.jpg",
-    "legende": "Gros plan de la plage de Puaumu"
+    "legende": "Gros plan de la plage de Puaumu",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03428.jpg",
-    "legende": "et ne ramènent pas de langoustes mais quelques crabes, burgots et cigales"
+    "legende": "et ne ramènent pas de langoustes mais quelques crabes, burgots et cigales",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03370.jpg",
-    "legende": "Sidney mange les burgots"
+    "legende": "Sidney mange les burgots",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03438.jpg",
-    "legende": "Eric ramène les colis de la poste"
+    "legende": "Eric ramène les colis de la poste",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03453.jpg",
-    "legende": "Notre adresse officielle aux Gambier"
+    "legende": "Notre adresse officielle aux Gambier",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03461.jpg",
-    "legende": "Syr Daria, déjà plongée dans la lecture envoyée par Manou"
+    "legende": "Syr Daria, déjà plongée dans la lecture envoyée par Manou",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03467.jpg",
-    "legende": "Cécile sur un belvédère. On distingue Let It Be sur la droite"
+    "legende": "Cécile sur un belvédère. On distingue Let It Be sur la droite",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03481.jpg",
-    "legende": "Eric au sommet du mont Mokoto, appelle les enfants restés sur le bateau"
+    "legende": "Eric au sommet du mont Mokoto, appelle les enfants restés sur le bateau",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03498.jpg",
-    "legende": "25/10 - Journée à Taravaï - Les enfants ramassent les feuilles mortes"
+    "legende": "25/10 - Journée à Taravaï - Les enfants ramassent les feuilles mortes",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03503.jpg",
-    "legende": "Trois enfants, trois chatons, le compte est bon (mais, malheureusement, pas question de les prendre sur le voilier - les chatons, bien sûr)"
+    "legende": "Trois enfants, trois chatons, le compte est bon (mais, malheureusement, pas question de les prendre sur le voilier - les chatons, bien sûr)",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03519.jpg",
-    "legende": "Valérie démontre la technique de rape..."
+    "legende": "Valérie démontre la technique de rape...",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03528.jpg",
-    "legende": "Et reçoit des conseils avisés"
+    "legende": "Et reçoit des conseils avisés",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03536.jpg",
-    "legende": "Toutes la bande de Taravaï sur le trampo !"
+    "legende": "Toutes la bande de Taravaï sur le trampo !",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier10/images/dsc03553.jpg",
-    "legende": "Retour à Rikitea. En chemin, on ferre une bonite qui finira dans notre assiette"
+    "legende": "Retour à Rikitea. En chemin, on ferre une bonite qui finira dans notre assiette",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Gambier10/images/dsc03569.jpg",
-    "legende": "Le BBQ d'Halloween à l'école de Rikitea"
+    "legende": "Le BBQ d'Halloween à l'école de Rikitea",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -1057,99 +1509,147 @@
   "photos": [
    {
     "src": "data/album/Gambier11/images/dsc03575.jpg",
-    "legende": "Si Tahiti était placé sur Paris, les Gambier seraient en Bulgarie et les Marquises en Suède"
+    "legende": "Si Tahiti était placé sur Paris, les Gambier seraient en Bulgarie et les Marquises en Suède",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03585.jpg",
-    "legende": "et ils ont une cravate"
+    "legende": "et ils ont une cravate",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03592.jpg",
-    "legende": "Alors les Lunes enlèvent une couche"
+    "legende": "Alors les Lunes enlèvent une couche",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03612.jpg",
-    "legende": "Gary casse les 7 doigts"
+    "legende": "Gary casse les 7 doigts",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03619.jpg",
-    "legende": "Sidney est prêt pour un 'ride' d'enfer"
+    "legende": "Sidney est prêt pour un 'ride' d'enfer",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03629.jpg",
-    "legende": "Eric et Sabine allument le BBQ"
+    "legende": "Eric et Sabine allument le BBQ",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03658.jpg",
-    "legende": "Les enfants à la plage"
+    "legende": "Les enfants à la plage",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03671.jpg",
-    "legende": "Un grand four datant du 19ème. Probablement destiné aux salaisons de viandes et poissons."
+    "legende": "Un grand four datant du 19ème. Probablement destiné aux salaisons de viandes et poissons.",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Gambier11/images/dsc03681.jpg",
-    "legende": "Fin de journée"
+    "legende": "Fin de journée",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Gambier11/images/img_8283.jpg",
-    "legende": "Sidney, le roi"
+    "legende": "Sidney, le roi",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Gambier11/images/img_8293.jpg",
-    "legende": "Les enfants abandonnés sur la plage, reviennent comme ils peuvent..."
+    "legende": "Les enfants abandonnés sur la plage, reviennent comme ils peuvent...",
+    "l": 640,
+    "h": 426
    },
    {
     "src": "data/album/Gambier11/images/dsc03754.jpg",
-    "legende": "Cécile s'initie à la fabrication du pain"
+    "legende": "Cécile s'initie à la fabrication du pain",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03790.jpg",
-    "legende": "Le ciel bas, la pluie, on se croyait en Belgique ce 19 novembre."
+    "legende": "Le ciel bas, la pluie, on se croyait en Belgique ce 19 novembre.",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03810.jpg",
-    "legende": "20 Novembre: débarquement d'un espadon de 200 kg"
+    "legende": "20 Novembre: débarquement d'un espadon de 200 kg",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03832.jpg",
-    "legende": "Sidney agite le drapeau belge pour célébrer la fin de son année scolaire !"
+    "legende": "Sidney agite le drapeau belge pour célébrer la fin de son année scolaire !",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03840.jpg",
-    "legende": "27 novembre 2009 - Eric, le baroudeur, devant le motu à l'est des Gambier"
+    "legende": "27 novembre 2009 - Eric, le baroudeur, devant le motu à l'est des Gambier",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03866.jpg",
-    "legende": "Les enfants ont ramené le bois"
+    "legende": "Les enfants ont ramené le bois",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03883.jpg",
-    "legende": "Les filets de bonites cuisent sur les nervures de cocotiers reposant sur la tôle"
+    "legende": "Les filets de bonites cuisent sur les nervures de cocotiers reposant sur la tôle",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03892.jpg",
-    "legende": "Un Bernard-Lhermitte"
+    "legende": "Un Bernard-Lhermitte",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Gambier11/images/dsc03902.jpg",
-    "legende": "Aukena à gauche, Mangareva à droite et Taravaï dans le fond"
+    "legende": "Aukena à gauche, Mangareva à droite et Taravaï dans le fond",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier11/images/dsc03916.jpg",
-    "legende": "Repas d'adieu chez Tepano et Hélène. On reçoit les colliers de coquillages pour nous souhaiter de revenir."
+    "legende": "Repas d'adieu chez Tepano et Hélène. On reçoit les colliers de coquillages pour nous souhaiter de revenir.",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier11/images/dsc03947.jpg",
-    "legende": "L'église d'Akamaru, fleurie en ce dimanche"
+    "legende": "L'église d'Akamaru, fleurie en ce dimanche",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier11/images/dsc03961.jpg",
-    "legende": "Bertrand"
+    "legende": "Bertrand",
+    "l": 361,
+    "h": 640
    },
    {
     "src": "data/album/Gambier11/images/img_8346.jpg",
-    "legende": "Syr Daria et Cécile les rejoignent"
+    "legende": "Syr Daria et Cécile les rejoignent",
+    "l": 640,
+    "h": 427
    }
   ],
   "escales": [
@@ -1166,99 +1666,147 @@
   "photos": [
    {
     "src": "data/album/Gambier12/images/dsc03993.jpg",
-    "legende": "Cours de yoga sur le pont: Syr Daria se concentre"
+    "legende": "Cours de yoga sur le pont: Syr Daria se concentre",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc03995.jpg",
-    "legende": "Sidney manie le bâton comme un moine Shaolin"
+    "legende": "Sidney manie le bâton comme un moine Shaolin",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04000.jpg",
-    "legende": "Et Kenya est souple comme une panthère"
+    "legende": "Et Kenya est souple comme une panthère",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04001.jpg",
-    "legende": "Agakauitaï: remarquez la forme du rocher. On dirait un gorille de 3/4 arrière"
+    "legende": "Agakauitaï: remarquez la forme du rocher. On dirait un gorille de 3/4 arrière",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04006.jpg",
-    "legende": "Let It Be vu du haut du mât"
+    "legende": "Let It Be vu du haut du mât",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04008.jpg",
-    "legende": "Patates de corail autour de Taravaï"
+    "legende": "Patates de corail autour de Taravaï",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04010.jpg",
-    "legende": "Autres patates de corail autour de Taravaï"
+    "legende": "Autres patates de corail autour de Taravaï",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04029.jpg",
-    "legende": "Incroyable: un (mini)paquebot aux Gambier"
+    "legende": "Incroyable: un (mini)paquebot aux Gambier",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04032.jpg",
-    "legende": "Cécile"
+    "legende": "Cécile",
+    "l": 361,
+    "h": 640
    },
    {
     "src": "data/album/Gambier12/images/dsc04040.jpg",
-    "legende": "Timéo brûle les feuilles mortes des bananiers"
+    "legende": "Timéo brûle les feuilles mortes des bananiers",
+    "l": 361,
+    "h": 640
    },
    {
     "src": "data/album/Gambier12/images/dsc04064.jpg",
-    "legende": "Petit repas au bord de l'eau"
+    "legende": "Petit repas au bord de l'eau",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04068.jpg",
-    "legende": "Et les parents boivent des bières"
+    "legende": "Et les parents boivent des bières",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04072.jpg",
-    "legende": "Eric, en vahiné..."
+    "legende": "Eric, en vahiné...",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04074.jpg",
-    "legende": "Les enfants jouent à la pétanque"
+    "legende": "Les enfants jouent à la pétanque",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04080.jpg",
-    "legende": "Re-repas au bord de la plage"
+    "legende": "Re-repas au bord de la plage",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04090.jpg",
-    "legende": "La maison d'Edouard et Denise"
+    "legende": "La maison d'Edouard et Denise",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04094.jpg",
-    "legende": "Eric et Denise coupent l'aneth"
+    "legende": "Eric et Denise coupent l'aneth",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04100.jpg",
-    "legende": "Le jardin d'Edouard et Denise, avec des papayers à l'avant-plan"
+    "legende": "Le jardin d'Edouard et Denise, avec des papayers à l'avant-plan",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04112.jpg",
-    "legende": "Dédé, un peu sceptique"
+    "legende": "Dédé, un peu sceptique",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04115.jpg",
-    "legende": "Hervé nous montre la technique de débourrage des cocos"
+    "legende": "Hervé nous montre la technique de débourrage des cocos",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04116.jpg",
-    "legende": "Photo de famille avec Hervé, Valérie et Alan"
+    "legende": "Photo de famille avec Hervé, Valérie et Alan",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04118.jpg",
-    "legende": "Jacques derrière le comptoir de son épicerie, a tenu à nous offrir un pot pour le départ"
+    "legende": "Jacques derrière le comptoir de son épicerie, a tenu à nous offrir un pot pour le départ",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04119.jpg",
-    "legende": "Eric et Noël, le fils de Jacques, trinquent au départ"
+    "legende": "Eric et Noël, le fils de Jacques, trinquent au départ",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Gambier12/images/dsc04128.jpg",
-    "legende": "Les enfants sont de la partie"
+    "legende": "Les enfants sont de la partie",
+    "l": 640,
+    "h": 361
    }
   ],
   "escales": [
@@ -1275,99 +1823,147 @@
   "photos": [
    {
     "src": "data/album/Marquises12/images/dsc04134.jpg",
-    "legende": "14/12/2009 - Un grain pendant la traversée vers les Marquises"
+    "legende": "14/12/2009 - Un grain pendant la traversée vers les Marquises",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04166.jpg",
-    "legende": "Fatu Hiva"
+    "legende": "Fatu Hiva",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04184.jpg",
-    "legende": "Fatu Hiva - Omoa"
+    "legende": "Fatu Hiva - Omoa",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04203.jpg",
-    "legende": "Kenya, Sidney et Syr Daria se baignent tout habillés, à la mode polynésienne"
+    "legende": "Kenya, Sidney et Syr Daria se baignent tout habillés, à la mode polynésienne",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04223.jpg",
-    "legende": "L'accueil des pontes au son des tams-tams"
+    "legende": "L'accueil des pontes au son des tams-tams",
+    "l": 361,
+    "h": 640
    },
    {
     "src": "data/album/Marquises12/images/dsc04257.jpg",
-    "legende": "Le grand chef, arrêté dès sa sortie de scène (pour rire)"
+    "legende": "Le grand chef, arrêté dès sa sortie de scène (pour rire)",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04262.jpg",
-    "legende": "Un chignon bien travaillé"
+    "legende": "Un chignon bien travaillé",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04290.jpg",
-    "legende": "Ballade dans l'arrière pays Omoain"
+    "legende": "Ballade dans l'arrière pays Omoain",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04314.jpg",
-    "legende": "Les danses du soir"
+    "legende": "Les danses du soir",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04365.jpg",
-    "legende": "Let It Be dans la baie d'Hanatetena"
+    "legende": "Let It Be dans la baie d'Hanatetena",
+    "l": 361,
+    "h": 640
    },
    {
     "src": "data/album/Marquises12/images/dsc04401.jpg",
-    "legende": "Sidney a des problèmes de vue..."
+    "legende": "Sidney a des problèmes de vue...",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04418.jpg",
-    "legende": "Sidney, fier de son tatoo"
+    "legende": "Sidney, fier de son tatoo",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04447.jpg",
-    "legende": "Les beaux cheveux de Syr Daria"
+    "legende": "Les beaux cheveux de Syr Daria",
+    "l": 361,
+    "h": 640
    },
    {
     "src": "data/album/Marquises12/images/dsc04474.jpg",
-    "legende": "24/12/2009 - Hiva Oa, baie d'Atuona"
+    "legende": "24/12/2009 - Hiva Oa, baie d'Atuona",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04523.jpg",
-    "legende": "Bon moment pour le cavalier et sa monture"
+    "legende": "Bon moment pour le cavalier et sa monture",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04535.jpg",
-    "legende": "Mouillage de Atuona"
+    "legende": "Mouillage de Atuona",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/dsc04582.jpg",
-    "legende": "Pique-nique le 25/12 à Hiva Oa"
+    "legende": "Pique-nique le 25/12 à Hiva Oa",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/img_8502.jpg",
-    "legende": "Déco de Noël"
+    "legende": "Déco de Noël",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Marquises12/images/img_8532.jpg",
-    "legende": "Blondinet sur ballustrade"
+    "legende": "Blondinet sur ballustrade",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Marquises12/images/dsc04640.jpg",
-    "legende": "Grand Canyon de Nuku Hiva"
+    "legende": "Grand Canyon de Nuku Hiva",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "data/album/Marquises12/images/letitbe_2009_246.jpg",
-    "legende": "Une baie sur Nuku Hiva"
+    "legende": "Une baie sur Nuku Hiva",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Marquises12/images/letitbe_2009_286.jpg",
-    "legende": "Ken"
+    "legende": "Ken",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Marquises12/images/img_8672.jpg",
-    "legende": "Baie d'Hatiheu"
+    "legende": "Baie d'Hatiheu",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/Marquises12/images/letitbe_2009_416.jpg",
-    "legende": "31/12/09 - Ua Pou"
+    "legende": "31/12/09 - Ua Pou",
+    "l": 640,
+    "h": 427
    }
   ],
   "escales": [
@@ -1387,99 +1983,147 @@
   "photos": [
    {
     "src": "data/album/Marquises01/images/dsc04673.jpg",
-    "legende": "Le grand Ganyon de Nuku Hiva"
+    "legende": "Le grand Ganyon de Nuku Hiva",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc04701.jpg",
-    "legende": "Muriel nous gâte"
+    "legende": "Muriel nous gâte",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc04717.jpg",
-    "legende": "Baie d'Hakaui à Nuku Hiva"
+    "legende": "Baie d'Hakaui à Nuku Hiva",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc04732.jpg",
-    "legende": "Hakaui"
+    "legende": "Hakaui",
+    "l": 451,
+    "h": 800
    },
    {
     "src": "data/album/Marquises01/images/dsc04745.jpg",
-    "legende": "Hakaui. Impressionnant."
+    "legende": "Hakaui. Impressionnant.",
+    "l": 451,
+    "h": 800
    },
    {
     "src": "data/album/Marquises01/images/dsc04770.jpg",
-    "legende": "Re-gué"
+    "legende": "Re-gué",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc04793.jpg",
-    "legende": "Lecture sur le pont"
+    "legende": "Lecture sur le pont",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc04814.jpg",
-    "legende": "Chêne centenaire"
+    "legende": "Chêne centenaire",
+    "l": 451,
+    "h": 800
    },
    {
     "src": "data/album/Marquises01/images/img_4222.jpg",
-    "legende": "BBQ sur Let It Be"
+    "legende": "BBQ sur Let It Be",
+    "l": 600,
+    "h": 800
    },
    {
     "src": "data/album/Marquises01/images/dsc04842.jpg",
-    "legende": "Annexe beachée sur sable noir (avec coulis de tomates)"
+    "legende": "Annexe beachée sur sable noir (avec coulis de tomates)",
+    "l": 451,
+    "h": 800
    },
    {
     "src": "data/album/Marquises01/images/dsc04849.jpg",
-    "legende": "Corvée d'eau"
+    "legende": "Corvée d'eau",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc04869.jpg",
-    "legende": "Sirènes du Pacifique"
+    "legende": "Sirènes du Pacifique",
+    "l": 451,
+    "h": 800
    },
    {
     "src": "data/album/Marquises01/images/dsc04882.jpg",
-    "legende": "Sidney a 9 ans"
+    "legende": "Sidney a 9 ans",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc04905.jpg",
-    "legende": "Corvée d'eau"
+    "legende": "Corvée d'eau",
+    "l": 451,
+    "h": 800
    },
    {
     "src": "data/album/Marquises01/images/dsc04923.jpg",
-    "legende": "Anouk, le petit dernier de la bande"
+    "legende": "Anouk, le petit dernier de la bande",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc04937.jpg",
-    "legende": "Jeune homme"
+    "legende": "Jeune homme",
+    "l": 451,
+    "h": 800
    },
    {
     "src": "data/album/Marquises01/images/dsc04946.jpg",
-    "legende": "Promotion"
+    "legende": "Promotion",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc04968.jpg",
-    "legende": "Chasse au cheval dans la prairie"
+    "legende": "Chasse au cheval dans la prairie",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc04979.jpg",
-    "legende": "Pas trop à l'aise quand même"
+    "legende": "Pas trop à l'aise quand même",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc05003.jpg",
-    "legende": "I'm a poor lonesome cowboy"
+    "legende": "I'm a poor lonesome cowboy",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "data/album/Marquises01/images/dsc05034.jpg",
-    "legende": "Cyriaque a soif"
+    "legende": "Cyriaque a soif",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises01/images/dsc05064.jpg",
-    "legende": "Cécile décortique le Méi"
+    "legende": "Cécile décortique le Méi",
+    "l": 450,
+    "h": 800
    },
    {
     "src": "data/album/Marquises01/images/dsc05078.jpg",
-    "legende": "Cécile, Dédé et Marianne mangent à bord"
+    "legende": "Cécile, Dédé et Marianne mangent à bord",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises01/images/dsc05092.jpg",
-    "legende": "Incantation"
+    "legende": "Incantation",
+    "l": 450,
+    "h": 800
    }
   ],
   "escales": [
@@ -1500,99 +2144,147 @@
   "photos": [
    {
     "src": "data/album/Marquises02/images/dsc05106.jpg",
-    "legende": "Kenya et Syr Daria ont fait un chapeau pour Anouk"
+    "legende": "Kenya et Syr Daria ont fait un chapeau pour Anouk",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises02/images/img_8686.jpg",
-    "legende": "Port d'Hakamaii"
+    "legende": "Port d'Hakamaii",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises02/images/img_8709.jpg",
-    "legende": "Cécile"
+    "legende": "Cécile",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises02/images/dsc05171.jpg",
-    "legende": "Cap Sud de Ua Pou"
+    "legende": "Cap Sud de Ua Pou",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises02/images/dsc05203.jpg",
-    "legende": "C'est bon, hein, Cécile ?"
+    "legende": "C'est bon, hein, Cécile ?",
+    "l": 450,
+    "h": 800
    },
    {
     "src": "data/album/Marquises02/images/dsc05224.jpg",
-    "legende": "Manuia et Let It Be côte à côte au mouillage de Hakau"
+    "legende": "Manuia et Let It Be côte à côte au mouillage de Hakau",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises02/images/dsc05239.jpg",
-    "legende": "Marche en Ua Pou"
+    "legende": "Marche en Ua Pou",
+    "l": 450,
+    "h": 800
    },
    {
     "src": "data/album/Marquises02/images/dsc05263.jpg",
-    "legende": "Déjeuner sur le pouce, chez Robert"
+    "legende": "Déjeuner sur le pouce, chez Robert",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises02/images/dsc05317.jpg",
-    "legende": "Sidney adore le jus de coco"
+    "legende": "Sidney adore le jus de coco",
+    "l": 450,
+    "h": 800
    },
    {
     "src": "data/album/Marquises02/images/dsc05341.jpg",
-    "legende": "Tatoo d'Eric"
+    "legende": "Tatoo d'Eric",
+    "l": 450,
+    "h": 800
    },
    {
     "src": "data/album/Marquises02/images/p2090025.jpg",
-    "legende": "Visite du carbot Aranui"
+    "legende": "Visite du carbot Aranui",
+    "l": 800,
+    "h": 600
    },
    {
     "src": "data/album/Marquises02/images/img_8745.jpg",
-    "legende": "Anniversaire d'Eric"
+    "legende": "Anniversaire d'Eric",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/Marquises02/images/img_8760.jpg",
-    "legende": "Duo sur Let It Be"
+    "legende": "Duo sur Let It Be",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises02/images/dsc05392.jpg",
-    "legende": "Chasse au trésor: on déterre le Hima"
+    "legende": "Chasse au trésor: on déterre le Hima",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises02/images/dsc05413.jpg",
-    "legende": "Centre de Ua Pou"
+    "legende": "Centre de Ua Pou",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises02/images/dsc05429.jpg",
-    "legende": "Nouvelle coupe de cheveux"
+    "legende": "Nouvelle coupe de cheveux",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises02/images/dsc05445.jpg",
-    "legende": "Syr Daria et Manon rangent le linge"
+    "legende": "Syr Daria et Manon rangent le linge",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises02/images/p2190079.jpg",
-    "legende": "Eric n'a pas le short le plus récent"
+    "legende": "Eric n'a pas le short le plus récent",
+    "l": 600,
+    "h": 800
    },
    {
     "src": "data/album/Marquises02/images/dsc05472.jpg",
-    "legende": "Les Urus cuisent dans le BBQ"
+    "legende": "Les Urus cuisent dans le BBQ",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises02/images/p2210097.jpg",
-    "legende": "La traversière"
+    "legende": "La traversière",
+    "l": 600,
+    "h": 800
    },
    {
     "src": "data/album/Marquises02/images/dsc05505.jpg",
-    "legende": "Petite pause sylvestre"
+    "legende": "Petite pause sylvestre",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Marquises02/images/dsc05520.jpg",
-    "legende": "Shuttt"
+    "legende": "Shuttt",
+    "l": 450,
+    "h": 800
    },
    {
     "src": "data/album/Marquises02/images/img_8775.jpg",
-    "legende": "Cécile et son atèle"
+    "legende": "Cécile et son atèle",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises02/images/img_8805.jpg",
-    "legende": "Cécile, pas H.S. mais presque"
+    "legende": "Cécile, pas H.S. mais presque",
+    "l": 800,
+    "h": 534
    }
   ],
   "escales": [
@@ -1614,99 +2306,147 @@
   "photos": [
    {
     "src": "data/album/Marquises03/images/dsc05535.jpg",
-    "legende": "Alerte au Tsunami: tous les yachts quittent la baie"
+    "legende": "Alerte au Tsunami: tous les yachts quittent la baie",
+    "l": 800,
+    "h": 600
    },
    {
     "src": "data/album/Marquises03/images/dsc05550.jpg",
-    "legende": "Omoa"
+    "legende": "Omoa",
+    "l": 800,
+    "h": 600
    },
    {
     "src": "data/album/Marquises03/images/img_8885.jpg",
-    "legende": "Les divas à Hanavave (Baie des Vierges)"
+    "legende": "Les divas à Hanavave (Baie des Vierges)",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/dsc05568.jpg",
-    "legende": "On dirait un chimpanzé avec un chapeau"
+    "legende": "On dirait un chimpanzé avec un chapeau",
+    "l": 600,
+    "h": 800
    },
    {
     "src": "data/album/Marquises03/images/img_8996.jpg",
-    "legende": "Cascade d'Hanavave"
+    "legende": "Cascade d'Hanavave",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/Marquises03/images/img_9007.jpg",
-    "legende": "Kenya"
+    "legende": "Kenya",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/img_9018.jpg",
-    "legende": "Nuages bas"
+    "legende": "Nuages bas",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/img_9048.jpg",
-    "legende": "Baie des Vierges"
+    "legende": "Baie des Vierges",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/img_9077.jpg",
-    "legende": "Manon"
+    "legende": "Manon",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/img_9135.jpg",
-    "legende": "Le poulet, c'est bon."
+    "legende": "Le poulet, c'est bon.",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/Marquises03/images/img_9150.jpg",
-    "legende": "Eric retend le trampoline"
+    "legende": "Eric retend le trampoline",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/dsc05581.jpg",
-    "legende": "Après la pizza, c'est le coup de pompe"
+    "legende": "Après la pizza, c'est le coup de pompe",
+    "l": 800,
+    "h": 600
    },
    {
     "src": "data/album/Marquises03/images/img_9181.jpg",
-    "legende": "Falcatas et enfants"
+    "legende": "Falcatas et enfants",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/Marquises03/images/img_9219.jpg",
-    "legende": "Eric et Franck"
+    "legende": "Eric et Franck",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/img_9254.jpg",
-    "legende": "Eric va chercher les enfants à la plage à Tahuata"
+    "legende": "Eric va chercher les enfants à la plage à Tahuata",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/img_9284.jpg",
-    "legende": "Eric s'instruit"
+    "legende": "Eric s'instruit",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/img_9321.jpg",
-    "legende": "No comment"
+    "legende": "No comment",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/img_9353.jpg",
-    "legende": "Umete fait rien que pour nous"
+    "legende": "Umete fait rien que pour nous",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/img_9392.jpg",
-    "legende": "Eric, fier comme Artaban"
+    "legende": "Eric, fier comme Artaban",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/Marquises03/images/img_9402.jpg",
-    "legende": "Les enfants refusent de regagner leur cabine"
+    "legende": "Les enfants refusent de regagner leur cabine",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/Marquises03/images/img_9418.jpg",
-    "legende": "Let It Be dans la baie de Hane"
+    "legende": "Let It Be dans la baie de Hane",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/img_9487.jpg",
-    "legende": "L'île aux oiseaux, au large de Ua Huka"
+    "legende": "L'île aux oiseaux, au large de Ua Huka",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Marquises03/images/img_9507.jpg",
-    "legende": "Kenya vénère son Tiki végétarien"
+    "legende": "Kenya vénère son Tiki végétarien",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/Marquises03/images/img_9517.jpg",
-    "legende": "Ua Huka"
+    "legende": "Ua Huka",
+    "l": 800,
+    "h": 354
    }
   ],
   "escales": [
@@ -1728,99 +2468,147 @@
   "photos": [
    {
     "src": "album/Tuamotu04/images/img_9648.jpg",
-    "legende": "Arrivée aux Tuamotu: les enfants ont amélioré le cockpit"
+    "legende": "Arrivée aux Tuamotu: les enfants ont amélioré le cockpit",
+    "l": 428,
+    "h": 640
    },
    {
     "src": "album/Tuamotu04/images/img_9682.jpg",
-    "legende": "Anniversaire de Kenya"
+    "legende": "Anniversaire de Kenya",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu04/images/img_9722.jpg",
-    "legende": "Let It Be à Kauehi"
+    "legende": "Let It Be à Kauehi",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu04/images/img_9743.jpg",
-    "legende": "Syr Daria dans l'équipe orange"
+    "legende": "Syr Daria dans l'équipe orange",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu04/images/dsc05592.jpg",
-    "legende": "Snack en bord de lagon à Fakarava"
+    "legende": "Snack en bord de lagon à Fakarava",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/dsc05620.jpg",
-    "legende": "Te Ava Nui, centre de plongée."
+    "legende": "Te Ava Nui, centre de plongée.",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/dsc05630.jpg",
-    "legende": "Syr Daria"
+    "legende": "Syr Daria",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/img_0009.jpg",
-    "legende": "Ben et Polly sont arrivés les bras chargés de cadeaux"
+    "legende": "Ben et Polly sont arrivés les bras chargés de cadeaux",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/img_0028.jpg",
-    "legende": "Ben et Eric partent en plongée"
+    "legende": "Ben et Eric partent en plongée",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/dsc_0042.jpg",
-    "legende": "Un verre de vin rouge, un saucisson, le paradis quoi !"
+    "legende": "Un verre de vin rouge, un saucisson, le paradis quoi !",
+    "l": 640,
+    "h": 425
    },
    {
     "src": "album/Tuamotu04/images/img_0120.jpg",
-    "legende": "Black Tip"
+    "legende": "Black Tip",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/img_0182.jpg",
-    "legende": "Sidney"
+    "legende": "Sidney",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/img_9827.jpg",
-    "legende": "Passe sud de Fakarava vue du haut du mât"
+    "legende": "Passe sud de Fakarava vue du haut du mât",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu04/images/img_9888.jpg",
-    "legende": "Calme plat à Faaite"
+    "legende": "Calme plat à Faaite",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu04/images/dsc_0089.jpg",
-    "legende": "Cécile attrape un poisson perroquet à mains nues"
+    "legende": "Cécile attrape un poisson perroquet à mains nues",
+    "l": 640,
+    "h": 425
    },
    {
     "src": "album/Tuamotu04/images/img_9916.jpg",
-    "legende": "Benoit guide Let It Be à travers les patates de corail"
+    "legende": "Benoit guide Let It Be à travers les patates de corail",
+    "l": 428,
+    "h": 640
    },
    {
     "src": "album/Tuamotu04/images/img_0357.jpg",
-    "legende": "Ben et Polly tirent le dinghy, Eric tire au flanc"
+    "legende": "Ben et Polly tirent le dinghy, Eric tire au flanc",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/img_0415.jpg",
-    "legende": "Bis repetita"
+    "legende": "Bis repetita",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/img_0444.jpg",
-    "legende": "Eric à la découpe"
+    "legende": "Eric à la découpe",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/img_0477.jpg",
-    "legende": "Sidney, pas trop à l'aise quand même"
+    "legende": "Sidney, pas trop à l'aise quand même",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/img_0588.jpg",
-    "legende": "Tas d'enfants sur bouée"
+    "legende": "Tas d'enfants sur bouée",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu04/images/img_9945.jpg",
-    "legende": "Etonnant, non ?"
+    "legende": "Etonnant, non ?",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu04/images/img_0085.jpg",
-    "legende": "Gavage des oiseaux"
+    "legende": "Gavage des oiseaux",
+    "l": 428,
+    "h": 640
    },
    {
     "src": "album/Tuamotu04/images/img_0178.jpg",
-    "legende": "Famille LARUEL"
+    "legende": "Famille LARUEL",
+    "l": 640,
+    "h": 428
    }
   ],
   "escales": [
@@ -1842,99 +2630,147 @@
   "photos": [
    {
     "src": "album/Tuamotu05/images/img_0200.jpg",
-    "legende": "Corvée coiffure pour Syr Daria"
+    "legende": "Corvée coiffure pour Syr Daria",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu05/images/img_0714.jpg",
-    "legende": "Cécile en contre plongée"
+    "legende": "Cécile en contre plongée",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tuamotu05/images/img_0739.jpg",
-    "legende": "C'est bon la Chantilly"
+    "legende": "C'est bon la Chantilly",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu05/images/p1070253.jpg",
-    "legende": "Eric fait de la water guitar"
+    "legende": "Eric fait de la water guitar",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu05/images/p1070270.jpg",
-    "legende": "Eric et Cécile dansent la valse sous l'eau"
+    "legende": "Eric et Cécile dansent la valse sous l'eau",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tuamotu05/images/p1070277.jpg",
-    "legende": "Napoléon"
+    "legende": "Napoléon",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu05/images/img_0764.jpg",
-    "legende": "Coucher de soleil à Rangiroa"
+    "legende": "Coucher de soleil à Rangiroa",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu05/images/img_0209.jpg",
-    "legende": "Pourvu que la chaîne ne se coince pas sous une patate !"
+    "legende": "Pourvu que la chaîne ne se coince pas sous une patate !",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu05/images/img_0246.jpg",
-    "legende": "Cécile boit du jus de coco"
+    "legende": "Cécile boit du jus de coco",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu05/images/img_0262.jpg",
-    "legende": "Les vainqueurs"
+    "legende": "Les vainqueurs",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu05/images/img_0306.jpg",
-    "legende": "Le va'a des vainqueurs"
+    "legende": "Le va'a des vainqueurs",
+    "l": 428,
+    "h": 640
    },
    {
     "src": "album/Tuamotu05/images/img_0327.jpg",
-    "legende": "L'évolution du rameur en direct: à 20 ans, à 30 ans et à 40 ans !"
+    "legende": "L'évolution du rameur en direct: à 20 ans, à 30 ans et à 40 ans !",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu05/images/img_0335.jpg",
-    "legende": "Les pirogues reviennent à Papeete en cargo"
+    "legende": "Les pirogues reviennent à Papeete en cargo",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu05/images/img_0779.jpg",
-    "legende": "Roland (et sa femme dans l'eau)"
+    "legende": "Roland (et sa femme dans l'eau)",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu05/images/img_0792.jpg",
-    "legende": "Ted et son kite trainer (un grand cerf volant, en fait)"
+    "legende": "Ted et son kite trainer (un grand cerf volant, en fait)",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu05/images/img_0801.jpg",
-    "legende": "Syr Daria essaie le kite"
+    "legende": "Syr Daria essaie le kite",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tuamotu05/images/img_0822.jpg",
-    "legende": "Eric essaie le kite"
+    "legende": "Eric essaie le kite",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu05/images/img_0842.jpg",
-    "legende": "Roland en pleine action"
+    "legende": "Roland en pleine action",
+    "l": 640,
+    "h": 401
    },
    {
     "src": "album/Tuamotu05/images/img_0866.jpg",
-    "legende": "Ted et Cécile"
+    "legende": "Ted et Cécile",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tuamotu05/images/img_0872.jpg",
-    "legende": "Sidney"
+    "legende": "Sidney",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tuamotu05/images/img_0890.jpg",
-    "legende": "Eric erre"
+    "legende": "Eric erre",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tuamotu05/images/img_0909.jpg",
-    "legende": "Concours de ricochets"
+    "legende": "Concours de ricochets",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tuamotu05/images/img_0362.jpg",
-    "legende": "Malikalalou au mouillage"
+    "legende": "Malikalalou au mouillage",
+    "l": 640,
+    "h": 428
    },
    {
     "src": "album/Tuamotu05/images/img_0376.jpg",
-    "legende": "6 heures du mat: départ de Tikehau à l'aube"
+    "legende": "6 heures du mat: départ de Tikehau à l'aube",
+    "l": 640,
+    "h": 428
    }
   ],
   "escales": [
@@ -1955,99 +2791,147 @@
   "photos": [
    {
     "src": "album/Tahiti06/images/img_0952.jpg",
-    "legende": "Papeete: Cécile fait du shopping"
+    "legende": "Papeete: Cécile fait du shopping",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tahiti06/images/img_0438.jpg",
-    "legende": "Sidney sur la première barre de flèche"
+    "legende": "Sidney sur la première barre de flèche",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/Tahiti06/images/p1070362.jpg",
-    "legende": "Partie de poker sur Manuia"
+    "legende": "Partie de poker sur Manuia",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_0471.jpg",
-    "legende": "Danse des vestales, épisode II"
+    "legende": "Danse des vestales, épisode II",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tahiti06/images/img_1011.jpg",
-    "legende": "Plus de place en cabine..."
+    "legende": "Plus de place en cabine...",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tahiti06/images/img_1022.jpg",
-    "legende": "Truc sous-marin"
+    "legende": "Truc sous-marin",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_1053.jpg",
-    "legende": "C'est joli, Moorea, surtout vu d'en haut"
+    "legende": "C'est joli, Moorea, surtout vu d'en haut",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_1107.jpg",
-    "legende": "Prairie mooréenne"
+    "legende": "Prairie mooréenne",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_1122.jpg",
-    "legende": "Ballade en sous-bois"
+    "legende": "Ballade en sous-bois",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tahiti06/images/img_1136.jpg",
-    "legende": "Les enfants sur un pont suspendu à plus de 200m du sol"
+    "legende": "Les enfants sur un pont suspendu à plus de 200m du sol",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_1145.jpg",
-    "legende": "Sidney ramène du bois pour le feu"
+    "legende": "Sidney ramène du bois pour le feu",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_1162.jpg",
-    "legende": "Dédé et ses saucisses"
+    "legende": "Dédé et ses saucisses",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tahiti06/images/img_1177.jpg",
-    "legende": "Schmeurkebreute"
+    "legende": "Schmeurkebreute",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_1190.jpg",
-    "legende": "Gonzesses"
+    "legende": "Gonzesses",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_1200.jpg",
-    "legende": "Fruits de la passion"
+    "legende": "Fruits de la passion",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_1214.jpg",
-    "legende": "Tikis sous-marins"
+    "legende": "Tikis sous-marins",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_1315.jpg",
-    "legende": "Syr Daria adore les raies (et n'a pas peur)"
+    "legende": "Syr Daria adore les raies (et n'a pas peur)",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_0561.jpg",
-    "legende": "Eric et sa fameuse salade grecque à la tahitienne"
+    "legende": "Eric et sa fameuse salade grecque à la tahitienne",
+    "l": 640,
+    "h": 569
    },
    {
     "src": "album/Tahiti06/images/img_1415.jpg",
-    "legende": "Cécile et Eric, c'est y pas beau ça, là ?"
+    "legende": "Cécile et Eric, c'est y pas beau ça, là ?",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tahiti06/images/img_1444.jpg",
-    "legende": "Soirée festive sur Blue Calaloo"
+    "legende": "Soirée festive sur Blue Calaloo",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_0612.jpg",
-    "legende": "Course de Va'a à Papeete"
+    "legende": "Course de Va'a à Papeete",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tahiti06/images/img_1539.jpg",
-    "legende": "Arbre magique à Vaima"
+    "legende": "Arbre magique à Vaima",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti06/images/img_1609.jpg",
-    "legende": "Les enfants durant l'Happy Hour"
+    "legende": "Les enfants durant l'Happy Hour",
+    "l": 640,
+    "h": 478
    },
    {
     "src": "album/Tahiti06/images/img_1645.jpg",
-    "legende": "Eric, avec sa coiffure de beauf des années 80..."
+    "legende": "Eric, avec sa coiffure de beauf des années 80...",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -2064,99 +2948,147 @@
   "photos": [
    {
     "src": "album/Societe07/images/img_0648.jpg",
-    "legende": "Sidney joue en apesanteur"
+    "legende": "Sidney joue en apesanteur",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/Societe07/images/img_1690.jpg",
-    "legende": "Détail des patates sur lesquelles on est amarré"
+    "legende": "Détail des patates sur lesquelles on est amarré",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Societe07/images/img_0659.jpg",
-    "legende": "Raiatea: le ciel est bas"
+    "legende": "Raiatea: le ciel est bas",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Societe07/images/img_1698.jpg",
-    "legende": "87 kg"
+    "legende": "87 kg",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Societe07/images/img_0706.jpg",
-    "legende": "Danse du ventre sur le pont"
+    "legende": "Danse du ventre sur le pont",
+    "l": 245,
+    "h": 640
    },
    {
     "src": "album/Societe07/images/img_0719.jpg",
-    "legende": "Sidney devant l'hôtel Relais&Châteaux de Tahaa"
+    "legende": "Sidney devant l'hôtel Relais&Châteaux de Tahaa",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Societe07/images/img_1702.jpg",
-    "legende": "Cases de l'hôtel"
+    "legende": "Cases de l'hôtel",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Societe07/images/img_1749.jpg",
-    "legende": "Anémone et Némo"
+    "legende": "Anémone et Némo",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Societe07/images/img_1766.jpg",
-    "legende": "Banc de poissons"
+    "legende": "Banc de poissons",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Societe07/images/img_1772.jpg",
-    "legende": "Coucher de soleil sur Tahaa"
+    "legende": "Coucher de soleil sur Tahaa",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Societe07/images/img_0747.jpg",
-    "legende": "Mascaret à la sortie de la passe de Tahaa"
+    "legende": "Mascaret à la sortie de la passe de Tahaa",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Societe07/images/img_0825.jpg",
-    "legende": "Lagon de Bora Bora"
+    "legende": "Lagon de Bora Bora",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Societe07/images/img_1833.jpg",
-    "legende": "Eric et ses vahinettes"
+    "legende": "Eric et ses vahinettes",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Societe07/images/img_1890.jpg",
-    "legende": "Le poisson que Kenya appelle: scalène, comme le triangle"
+    "legende": "Le poisson que Kenya appelle: scalène, comme le triangle",
+    "l": 640,
+    "h": 562
    },
    {
     "src": "album/Societe07/images/img_1862.jpg",
-    "legende": "Bora Bora"
+    "legende": "Bora Bora",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Societe07/images/img_1909.jpg",
-    "legende": "Hotel Intercontinental à Bora Bora"
+    "legende": "Hotel Intercontinental à Bora Bora",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Societe07/images/img_1923.jpg",
-    "legende": "Kenton Tankiri"
+    "legende": "Kenton Tankiri",
+    "l": 640,
+    "h": 410
    },
    {
     "src": "album/Societe07/images/img_1927.jpg",
-    "legende": "Poissons"
+    "legende": "Poissons",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Societe07/images/2010_07_11.jpg",
-    "legende": "Et voilà ce que ça donne !!!"
+    "legende": "Et voilà ce que ça donne !!!",
+    "l": 640,
+    "h": 400
    },
    {
     "src": "album/Societe07/images/img_1963.jpg",
-    "legende": "Soleil caché"
+    "legende": "Soleil caché",
+    "l": 640,
+    "h": 409
    },
    {
     "src": "album/Societe07/images/img_2020.jpg",
-    "legende": "Bora Bora"
+    "legende": "Bora Bora",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Societe07/images/img_2023.jpg",
-    "legende": "Tortue marine"
+    "legende": "Tortue marine",
+    "l": 640,
+    "h": 448
    },
    {
     "src": "album/Societe07/images/img_2048.jpg",
-    "legende": "Piège à poissons dans le lagon de Bora Bora"
+    "legende": "Piège à poissons dans le lagon de Bora Bora",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Societe07/images/img_2095.jpg",
-    "legende": "Oa à Bora"
+    "legende": "Oa à Bora",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -2178,99 +3110,147 @@
   "photos": [
    {
     "src": "album/Cooks2010Juillet/images/img_2151.jpg",
-    "legende": "Sur la route de Bora Bora à Aitutaki"
+    "legende": "Sur la route de Bora Bora à Aitutaki",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2164.jpg",
-    "legende": "Blue Callaloo et Let It Be, à couple"
+    "legende": "Blue Callaloo et Let It Be, à couple",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2225.jpg",
-    "legende": "Let It Be au mouillage d'Aitutaki"
+    "legende": "Let It Be au mouillage d'Aitutaki",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2244.jpg",
-    "legende": "Petit déjeuner au Kuru's café"
+    "legende": "Petit déjeuner au Kuru's café",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2283.jpg",
-    "legende": "Le crabe soldat (toujours au garde-à-vous avec sa grosse pince au-dessus de la tête)"
+    "legende": "Le crabe soldat (toujours au garde-à-vous avec sa grosse pince au-dessus de la tête)",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2329.jpg",
-    "legende": "Kia Orana veut dire 'Bonjour'"
+    "legende": "Kia Orana veut dire 'Bonjour'",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2364.jpg",
-    "legende": "Danse du feu"
+    "legende": "Danse du feu",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2405.jpg",
-    "legende": "L'ancienne piste, construite par les GI's en 1940"
+    "legende": "L'ancienne piste, construite par les GI's en 1940",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2473.jpg",
-    "legende": "Poisson Picasso"
+    "legende": "Poisson Picasso",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2525.jpg",
-    "legende": "Détail de la lèvre du coquillage"
+    "legende": "Détail de la lèvre du coquillage",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2597.jpg",
-    "legende": "Kite surfeur"
+    "legende": "Kite surfeur",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2640.jpg",
-    "legende": "Eric"
+    "legende": "Eric",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2657.jpg",
-    "legende": "Côte nord de Rarotonga"
+    "legende": "Côte nord de Rarotonga",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2682.jpg",
-    "legende": "Sur les quais"
+    "legende": "Sur les quais",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2705.jpg",
-    "legende": "Markus, Tina, Eric et la voiture de location"
+    "legende": "Markus, Tina, Eric et la voiture de location",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_0969.jpg",
-    "legende": "Cécile et le pont, sous les palmiers"
+    "legende": "Cécile et le pont, sous les palmiers",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Cooks2010Juillet/images/img_1008.jpg",
-    "legende": "Sidney et sa barque de l'extrême"
+    "legende": "Sidney et sa barque de l'extrême",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Cooks2010Juillet/images/img_1047.jpg",
-    "legende": "Cécile et Markus achètent des tickets"
+    "legende": "Cécile et Markus achètent des tickets",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/Cooks2010Juillet/images/img_1101.jpg",
-    "legende": "Arbre et tombes"
+    "legende": "Arbre et tombes",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Cooks2010Juillet/images/img_1144.jpg",
-    "legende": "Fleur"
+    "legende": "Fleur",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2763.jpg",
-    "legende": "Arbre centenaire"
+    "legende": "Arbre centenaire",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2806.jpg",
-    "legende": "Eric grimpe"
+    "legende": "Eric grimpe",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2859.jpg",
-    "legende": "Fin de la promenade"
+    "legende": "Fin de la promenade",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Cooks2010Juillet/images/img_2882.jpg",
-    "legende": "Assis sur une bitte...d'amarrage, il pleure, sa femme qui le quitte, la mer c'est son malheur"
+    "legende": "Assis sur une bitte...d'amarrage, il pleure, sa femme qui le quitte, la mer c'est son malheur",
+    "l": 480,
+    "h": 640
    }
   ],
   "escales": [
@@ -2288,99 +3268,147 @@
   "photos": [
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/beveridge_air.jpg",
-    "legende": "Beveridge Reef: lagon sous-marin à l'est de Niue"
+    "legende": "Beveridge Reef: lagon sous-marin à l'est de Niue",
+    "l": 400,
+    "h": 231
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_1227.jpg",
-    "legende": "Arrivée à Beveridge Reef: c'est ventu"
+    "legende": "Arrivée à Beveridge Reef: c'est ventu",
+    "l": 640,
+    "h": 488
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_2929.jpg",
-    "legende": "Epave d'un chalutier à Beveridge Reef"
+    "legende": "Epave d'un chalutier à Beveridge Reef",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_2955.jpg",
-    "legende": "Détail de l'épave"
+    "legende": "Détail de l'épave",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_2983.jpg",
-    "legende": "Eric dans le corail"
+    "legende": "Eric dans le corail",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_2995.jpg",
-    "legende": "Corail"
+    "legende": "Corail",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_3014.jpg",
-    "legende": "Bénitier"
+    "legende": "Bénitier",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_2945.jpg",
-    "legende": "Corail rose"
+    "legende": "Corail rose",
+    "l": 640,
+    "h": 470
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_2972.jpg",
-    "legende": "Oursin rouge"
+    "legende": "Oursin rouge",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_2951.jpg",
-    "legende": "Oursin bleu"
+    "legende": "Oursin bleu",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_3029.jpg",
-    "legende": "Embarquement du matériel de plongée"
+    "legende": "Embarquement du matériel de plongée",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/p1080872.jpg",
-    "legende": "Faille dans le corail à la sortie de la passe"
+    "legende": "Faille dans le corail à la sortie de la passe",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_3039.jpg",
-    "legende": "Poisson perroquet"
+    "legende": "Poisson perroquet",
+    "l": 640,
+    "h": 353
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_3061.jpg",
-    "legende": "Bulles"
+    "legende": "Bulles",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_3062.jpg",
-    "legende": "Plongeurs de l'extrême"
+    "legende": "Plongeurs de l'extrême",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_3077.jpg",
-    "legende": "Cherchez l'erreur..."
+    "legende": "Cherchez l'erreur...",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/p1080901.jpg",
-    "legende": "Carangue et Cécile"
+    "legende": "Carangue et Cécile",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_3093.jpg",
-    "legende": "Crevasse vue d'en haut"
+    "legende": "Crevasse vue d'en haut",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/p1080893.jpg",
-    "legende": "Crevasse vue du dedans"
+    "legende": "Crevasse vue du dedans",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/p1080897.jpg",
-    "legende": "Cécile dans la crevasse sous-marine"
+    "legende": "Cécile dans la crevasse sous-marine",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/p1080903.jpg",
-    "legende": "Cécile se faufile"
+    "legende": "Cécile se faufile",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/p1080907.jpg",
-    "legende": "Eric, zen"
+    "legende": "Eric, zen",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/p1080906.jpg",
-    "legende": "Eric attrape les carangues à mains nues"
+    "legende": "Eric attrape les carangues à mains nues",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "data/album/Beveridge Reef - Aout 2010/images/img_3019.jpg",
-    "legende": "Eric revient vers le cata"
+    "legende": "Eric revient vers le cata",
+    "l": 640,
+    "h": 508
    }
   ],
   "escales": [
@@ -2397,99 +3425,147 @@
   "photos": [
    {
     "src": "album/Niue - Aout 2010/images/img_1281.jpg",
-    "legende": "Coucher de soleil"
+    "legende": "Coucher de soleil",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3108.jpg",
-    "legende": "Lever de soleil"
+    "legende": "Lever de soleil",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/img_1287.jpg",
-    "legende": "Cécile et son tatouage"
+    "legende": "Cécile et son tatouage",
+    "l": 379,
+    "h": 640
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3197.jpg",
-    "legende": "Marché de Lakepa"
+    "legende": "Marché de Lakepa",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3224.jpg",
-    "legende": "Concours de tressage"
+    "legende": "Concours de tressage",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3138.jpg",
-    "legende": "Rivage"
+    "legende": "Rivage",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3151.jpg",
-    "legende": "Syr Daria, Sidney et Markus"
+    "legende": "Syr Daria, Sidney et Markus",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3179.jpg",
-    "legende": "Sidney au treuil"
+    "legende": "Sidney au treuil",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3277.jpg",
-    "legende": "Terrasse du Wash Away Bar"
+    "legende": "Terrasse du Wash Away Bar",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3256.jpg",
-    "legende": "Les prompteurs"
+    "legende": "Les prompteurs",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3321.jpg",
-    "legende": "Syr Daria des cavernes"
+    "legende": "Syr Daria des cavernes",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3382.jpg",
-    "legende": "Sidney, l'homme-singe"
+    "legende": "Sidney, l'homme-singe",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3420.jpg",
-    "legende": "Eric dans la jungle"
+    "legende": "Eric dans la jungle",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/nahe_limno1_pan.jpg",
-    "legende": "Faille"
+    "legende": "Faille",
+    "l": 640,
+    "h": 371
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3537.jpg",
-    "legende": "Les Laruel's au golf"
+    "legende": "Les Laruel's au golf",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3553.jpg",
-    "legende": "Chemin"
+    "legende": "Chemin",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Niue - Aout 2010/images/img_1325.jpg",
-    "legende": "Petit jeu: trouver Kenya sur la photo"
+    "legende": "Petit jeu: trouver Kenya sur la photo",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3565.jpg",
-    "legende": "Arche"
+    "legende": "Arche",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3612.jpg",
-    "legende": "No Comment"
+    "legende": "No Comment",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3636.jpg",
-    "legende": "John, en grande explication pour les enfants"
+    "legende": "John, en grande explication pour les enfants",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/p1090220.jpg",
-    "legende": "Eric de mer"
+    "legende": "Eric de mer",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/p1090167.jpg",
-    "legende": "Eric, euh non, Cécile"
+    "legende": "Eric, euh non, Cécile",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Niue - Aout 2010/images/img_3322.jpg",
-    "legende": "Nouveau jeu: trouver Sidney"
+    "legende": "Nouveau jeu: trouver Sidney",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Niue - Aout 2010/images/p1080835_2.jpg",
-    "legende": "Cécile bronze en combi sur le dinghy"
+    "legende": "Cécile bronze en combi sur le dinghy",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -2506,99 +3582,147 @@
   "photos": [
    {
     "src": "album/Tonga - Septembre 2010/images/img_3643.jpg",
-    "legende": "Spi et Grand'voile pour aller aux Tonga"
+    "legende": "Spi et Grand'voile pour aller aux Tonga",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tonga - Septembre 2010/images/6.jpg",
-    "legende": "Arrivée aux Tonga"
+    "legende": "Arrivée aux Tonga",
+    "l": 1200,
+    "h": 174
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_3702.jpg",
-    "legende": "Les danseurs, curieusement habillés..."
+    "legende": "Les danseurs, curieusement habillés...",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_3727.jpg",
-    "legende": "Anniversaire de Syr Daria"
+    "legende": "Anniversaire de Syr Daria",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_3740.jpg",
-    "legende": "Repas chez Lofi"
+    "legende": "Repas chez Lofi",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_3763.jpg",
-    "legende": "Neiafu"
+    "legende": "Neiafu",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_3825.jpg",
-    "legende": "Lunch à la voile"
+    "legende": "Lunch à la voile",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_3827.jpg",
-    "legende": "Paysage"
+    "legende": "Paysage",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_3867.jpg",
-    "legende": "La côte à marée basse"
+    "legende": "La côte à marée basse",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_3917.jpg",
-    "legende": "Sentier secret"
+    "legende": "Sentier secret",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_3963.jpg",
-    "legende": "Kenya, notre vigie du jour"
+    "legende": "Kenya, notre vigie du jour",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_4000.jpg",
-    "legende": "Echoppe de noix de coco"
+    "legende": "Echoppe de noix de coco",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_4014.jpg",
-    "legende": "Son ancre bâbord: 500 Kg"
+    "legende": "Son ancre bâbord: 500 Kg",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_4025.jpg",
-    "legende": "Sa table en terrasse"
+    "legende": "Sa table en terrasse",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_4185.jpg",
-    "legende": "Les enfants observent les tisserandes"
+    "legende": "Les enfants observent les tisserandes",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_4182.jpg",
-    "legende": "Sidney l'intello"
+    "legende": "Sidney l'intello",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_4238.jpg",
-    "legende": "Petite collation sur Blue Callaloo"
+    "legende": "Petite collation sur Blue Callaloo",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/dsc06888.jpg",
-    "legende": "Eric et Sidney hissent Cécile en haut du mât"
+    "legende": "Eric et Sidney hissent Cécile en haut du mât",
+    "l": 429,
+    "h": 640
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_4352.jpg",
-    "legende": "Vrai marin"
+    "legende": "Vrai marin",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_4395.jpg",
-    "legende": "Combat à mort entre une étoile de mer et un oursin"
+    "legende": "Combat à mort entre une étoile de mer et un oursin",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_4489.jpg",
-    "legende": "Et Hop ! Dans l'eau avec la baleine et son petit !"
+    "legende": "Et Hop ! Dans l'eau avec la baleine et son petit !",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_4529.jpg",
-    "legende": "Grotte"
+    "legende": "Grotte",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_0579.jpg",
-    "legende": "Mwouais, pas mal..."
+    "legende": "Mwouais, pas mal...",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tonga - Septembre 2010/images/img_4626.jpg",
-    "legende": "Retour au bateau"
+    "legende": "Retour au bateau",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -2615,99 +3739,147 @@
   "photos": [
    {
     "src": "album/Fidji - octobre 2010/images/paysage2.jpg",
-    "legende": "Vanua Levu, côté nord"
+    "legende": "Vanua Levu, côté nord",
+    "l": 1024,
+    "h": 231
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_4784.jpg",
-    "legende": "Vanua Levu"
+    "legende": "Vanua Levu",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_4893.jpg",
-    "legende": "Cécile"
+    "legende": "Cécile",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_4706.jpg",
-    "legende": "Marina de Waitui, à SavuSavu"
+    "legende": "Marina de Waitui, à SavuSavu",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5072.jpg",
-    "legende": "Sidney, dit \"Mains fulgurantes\""
+    "legende": "Sidney, dit \"Mains fulgurantes\"",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5131.jpg",
-    "legende": "Ancienne prison"
+    "legende": "Ancienne prison",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5300.jpg",
-    "legende": "Mouillage de Naigani"
+    "legende": "Mouillage de Naigani",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5378.jpg",
-    "legende": "Encore du corail"
+    "legende": "Encore du corail",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5400.jpg",
-    "legende": "Mangrove autour de Port Denarau"
+    "legende": "Mangrove autour de Port Denarau",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5434.jpg",
-    "legende": "Ile"
+    "legende": "Ile",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/dsc04120.jpg",
-    "legende": "Soeurettes"
+    "legende": "Soeurettes",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5532.jpg",
-    "legende": "Photo de classe"
+    "legende": "Photo de classe",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5624.jpg",
-    "legende": "Tremplin"
+    "legende": "Tremplin",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/dsc04276.jpg",
-    "legende": "Cécile plante du manioc"
+    "legende": "Cécile plante du manioc",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5846.jpg",
-    "legende": "Belle plage"
+    "legende": "Belle plage",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5926.jpg",
-    "legende": "Fils du gérant"
+    "legende": "Fils du gérant",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5952.jpg",
-    "legende": "La classe, toujours dans la bonne humeur"
+    "legende": "La classe, toujours dans la bonne humeur",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_5974.jpg",
-    "legende": "Christel dans un hamac"
+    "legende": "Christel dans un hamac",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_6089.jpg",
-    "legende": "Heureusement, y a des bières (belges !!!)"
+    "legende": "Heureusement, y a des bières (belges !!!)",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_6165.jpg",
-    "legende": "Fêtard tout seul"
+    "legende": "Fêtard tout seul",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_6230.jpg",
-    "legende": "Nymphettes"
+    "legende": "Nymphettes",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_6341.jpg",
-    "legende": "Algue"
+    "legende": "Algue",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_6392.jpg",
-    "legende": "Eric contemple la mer"
+    "legende": "Eric contemple la mer",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - octobre 2010/images/img_6459.jpg",
-    "legende": "Les Nasons à Mana"
+    "legende": "Les Nasons à Mana",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -2746,99 +3918,147 @@
   "photos": [
    {
     "src": "album/Fidji - novembre 2010/images/img_1630.jpg",
-    "legende": "Cécile"
+    "legende": "Cécile",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_6564.jpg",
-    "legende": "Dauphin (si si, regardez bien)"
+    "legende": "Dauphin (si si, regardez bien)",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_1640.jpg",
-    "legende": "Amoureux"
+    "legende": "Amoureux",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_6597.jpg",
-    "legende": "Sidney de récif"
+    "legende": "Sidney de récif",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_6666.jpg",
-    "legende": "Papayer et taro"
+    "legende": "Papayer et taro",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_6691.jpg",
-    "legende": "Orchidées"
+    "legende": "Orchidées",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_6686.jpg",
-    "legende": "Lali (cloche pour ameuter les clients autour de la table)"
+    "legende": "Lali (cloche pour ameuter les clients autour de la table)",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_6775.jpg",
-    "legende": "Brasier"
+    "legende": "Brasier",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_6895.jpg",
-    "legende": "Mangrove"
+    "legende": "Mangrove",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_6960.jpg",
-    "legende": "Eric et ses feuilles de taro"
+    "legende": "Eric et ses feuilles de taro",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_7000.jpg",
-    "legende": "Vuro Island"
+    "legende": "Vuro Island",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/dsc04860.jpg",
-    "legende": "Eric à la barre"
+    "legende": "Eric à la barre",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_7097.jpg",
-    "legende": "Mangrove"
+    "legende": "Mangrove",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_7136.jpg",
-    "legende": "Champignon sous-marin"
+    "legende": "Champignon sous-marin",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_7164.jpg",
-    "legende": "Plage"
+    "legende": "Plage",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_7213.jpg",
-    "legende": "C'est pas mal, Dravuni..."
+    "legende": "C'est pas mal, Dravuni...",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/dsc05061.jpg",
-    "legende": "Et ça ?"
+    "legende": "Et ça ?",
+    "l": 640,
+    "h": 640
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_7245.jpg",
-    "legende": "Sid"
+    "legende": "Sid",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_7291.jpg",
-    "legende": "Dravuni"
+    "legende": "Dravuni",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_7329.jpg",
-    "legende": "C'est beau hein ?"
+    "legende": "C'est beau hein ?",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_7350.jpg",
-    "legende": "Dravuni, toujours"
+    "legende": "Dravuni, toujours",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/dsc05207.jpg",
-    "legende": "Kenya"
+    "legende": "Kenya",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_7467.jpg",
-    "legende": "Christel sous spi"
+    "legende": "Christel sous spi",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Fidji - novembre 2010/images/img_7532.jpg",
-    "legende": "Partie de baby à Suva"
+    "legende": "Partie de baby à Suva",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -2873,99 +4093,147 @@
   "photos": [
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_7573.jpg",
-    "legende": "Formalités de départ aux Fidji"
+    "legende": "Formalités de départ aux Fidji",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_7575.jpg",
-    "legende": "Dernier snooker avant le départ"
+    "legende": "Dernier snooker avant le départ",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/dsc05238.jpg",
-    "legende": "On lève l'ancre pour le départ de Suva"
+    "legende": "On lève l'ancre pour le départ de Suva",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/dsc05268.jpg",
-    "legende": "Cécile assure son premier quart"
+    "legende": "Cécile assure son premier quart",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_3122.jpg",
-    "legende": "Kenya n'est pas au top de sa forme"
+    "legende": "Kenya n'est pas au top de sa forme",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_3133.jpg",
-    "legende": "Christel non plus..."
+    "legende": "Christel non plus...",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_7596.jpg",
-    "legende": "Un calamar s'est échoué dans le trampoline"
+    "legende": "Un calamar s'est échoué dans le trampoline",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_7602.jpg",
-    "legende": "On voit bien ses tentacules"
+    "legende": "On voit bien ses tentacules",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_7605.jpg",
-    "legende": "Philippe et Christel cuisent les pâtes en regardant les vagues qui déferlent"
+    "legende": "Philippe et Christel cuisent les pâtes en regardant les vagues qui déferlent",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/dsc05363.jpg",
-    "legende": "Cécile assure son quart"
+    "legende": "Cécile assure son quart",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/dsc05376.jpg",
-    "legende": "Christel assure son quart"
+    "legende": "Christel assure son quart",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_7609.jpg",
-    "legende": "Philippe dort dans le carré"
+    "legende": "Philippe dort dans le carré",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/dsc05380.jpg",
-    "legende": "Petite soupe entre amoureux"
+    "legende": "Petite soupe entre amoureux",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_7625.jpg",
-    "legende": "Il commence à faire froid: Sidney met 2 bonnets"
+    "legende": "Il commence à faire froid: Sidney met 2 bonnets",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/dsc05384.jpg",
-    "legende": "Les miss en traversée"
+    "legende": "Les miss en traversée",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_3171.jpg",
-    "legende": "En daar is de werk !"
+    "legende": "En daar is de werk !",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/dsc05336.jpg",
-    "legende": "Un petit boulon pour le passage du 30ème parallèle"
+    "legende": "Un petit boulon pour le passage du 30ème parallèle",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/dsc05372.jpg",
-    "legende": "C'est pas beau ça ?"
+    "legende": "C'est pas beau ça ?",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/dsc05418.jpg",
-    "legende": "Mise à poste des pavillons"
+    "legende": "Mise à poste des pavillons",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/dsc05426.jpg",
-    "legende": "Cécile fait des crèpes"
+    "legende": "Cécile fait des crèpes",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_7643.jpg",
-    "legende": "Philippe ramène le poisson à bord"
+    "legende": "Philippe ramène le poisson à bord",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_3186.jpg",
-    "legende": "Coucher de soleil sur la Nlle Zélande"
+    "legende": "Coucher de soleil sur la Nlle Zélande",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_3304.jpg",
-    "legende": "Lever de soleil sur la Nouvelle Zélande"
+    "legende": "Lever de soleil sur la Nouvelle Zélande",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/FidjiNZ - decembre 2010/images/img_3322.jpg",
-    "legende": "Première terre Kiwie"
+    "legende": "Première terre Kiwie",
+    "l": 640,
+    "h": 427
    }
   ],
   "escales": [
@@ -2982,99 +4250,147 @@
   "photos": [
    {
     "src": "album/NZ - decembre  2010/images/img_3249.jpg",
-    "legende": "Coucher de soleil"
+    "legende": "Coucher de soleil",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - decembre  2010/images/img_3307.jpg",
-    "legende": "Lever de soleil"
+    "legende": "Lever de soleil",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - decembre  2010/images/img_7676.jpg",
-    "legende": "Let It Be à Opua"
+    "legende": "Let It Be à Opua",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - decembre  2010/images/dsc05675.jpg",
-    "legende": "Philippe, dit 'Le fakir'"
+    "legende": "Philippe, dit 'Le fakir'",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/NZ - decembre  2010/images/img_3379.jpg",
-    "legende": "Paysage du nord"
+    "legende": "Paysage du nord",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - decembre  2010/images/img_7717.jpg",
-    "legende": "Famille"
+    "legende": "Famille",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - decembre  2010/images/img_7733.jpg",
-    "legende": "90 miles beach, pendant"
+    "legende": "90 miles beach, pendant",
+    "l": 640,
+    "h": 246
    },
    {
     "src": "album/NZ - decembre  2010/images/img_7739.jpg",
-    "legende": "Dunes et fortunes"
+    "legende": "Dunes et fortunes",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - decembre  2010/images/img_3459.jpg",
-    "legende": "Cécile et Eric prennent des photos"
+    "legende": "Cécile et Eric prennent des photos",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/NZ - decembre  2010/images/img_3521.jpg",
-    "legende": "The Man"
+    "legende": "The Man",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - decembre  2010/images/img_3608.jpg",
-    "legende": "Chouchoux"
+    "legende": "Chouchoux",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - decembre  2010/images/img_3570.jpg",
-    "legende": "Philippe (il n'est pas aveugle, c'est ses vraies lunettes)"
+    "legende": "Philippe (il n'est pas aveugle, c'est ses vraies lunettes)",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - decembre  2010/images/dsc05679.jpg",
-    "legende": "Retrouvailles"
+    "legende": "Retrouvailles",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - decembre  2010/images/img_3652.jpg",
-    "legende": "Petite promenade printanière"
+    "legende": "Petite promenade printanière",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - decembre  2010/images/img_8218.jpg",
-    "legende": "Terrasse blanche à Waimangu"
+    "legende": "Terrasse blanche à Waimangu",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - decembre  2010/images/img_3789.jpg",
-    "legende": "WaiOTapu"
+    "legende": "WaiOTapu",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - decembre  2010/images/img_8258.jpg",
-    "legende": "Arbres vus d'en-bas"
+    "legende": "Arbres vus d'en-bas",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - decembre  2010/images/img_3996.jpg",
-    "legende": "Paysage du centre de l'île du Nord III"
+    "legende": "Paysage du centre de l'île du Nord III",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - decembre  2010/images/img_8388.jpg",
-    "legende": "Paysage du centre de l'île du Nord X"
+    "legende": "Paysage du centre de l'île du Nord X",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - decembre  2010/images/img_8378.jpg",
-    "legende": "Vu du ciel"
+    "legende": "Vu du ciel",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/NZ - decembre  2010/images/img_8394.jpg",
-    "legende": "Vu du ciel"
+    "legende": "Vu du ciel",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - decembre  2010/images/img_8450.jpg",
-    "legende": "Au revoir, Philippe"
+    "legende": "Au revoir, Philippe",
+    "l": 480,
+    "h": 640
    },
    {
     "src": "album/NZ - decembre  2010/images/img_8600.jpg",
-    "legende": "Let It Be à Whangarei"
+    "legende": "Let It Be à Whangarei",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - decembre  2010/images/img_8632.jpg",
-    "legende": "C'est pas mignon ça ?"
+    "legende": "C'est pas mignon ça ?",
+    "l": 640,
+    "h": 480
    }
   ],
   "escales": [
@@ -3092,99 +4408,147 @@
   "photos": [
    {
     "src": "album/NZ - janvier 2011/images/img_8729.jpg",
-    "legende": "Notre Campervan"
+    "legende": "Notre Campervan",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - janvier 2011/images/img_1721.jpg",
-    "legende": "Piriaka"
+    "legende": "Piriaka",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/NZ - janvier 2011/images/img_8762.jpg",
-    "legende": "Chez Mark"
+    "legende": "Chez Mark",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - janvier 2011/images/img_1946.jpg",
-    "legende": "Weka"
+    "legende": "Weka",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_2111.jpg",
-    "legende": "Pancake Rocks"
+    "legende": "Pancake Rocks",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_2241.jpg",
-    "legende": "Hop Hop Hop"
+    "legende": "Hop Hop Hop",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/NZ - janvier 2011/images/img_2318.jpg",
-    "legende": "Syr Daria"
+    "legende": "Syr Daria",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_2368.jpg",
-    "legende": "No comment"
+    "legende": "No comment",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/NZ - janvier 2011/images/img_2626.jpg",
-    "legende": "Le Gondor"
+    "legende": "Le Gondor",
+    "l": 1024,
+    "h": 400
    },
    {
     "src": "album/NZ - janvier 2011/images/img_2726.jpg",
-    "legende": "Rivière bleue"
+    "legende": "Rivière bleue",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_2823.jpg",
-    "legende": "Kenya aussi"
+    "legende": "Kenya aussi",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_2986.jpg",
-    "legende": "C'est canooooon"
+    "legende": "C'est canooooon",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_3104.jpg",
-    "legende": "Camping à Moke Lake"
+    "legende": "Camping à Moke Lake",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_8936.jpg",
-    "legende": "Queenstown"
+    "legende": "Queenstown",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/NZ - janvier 2011/images/img_3198.jpg",
-    "legende": "Le vent vient de là"
+    "legende": "Le vent vient de là",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_3271.jpg",
-    "legende": "Cécile, euh non, forêt"
+    "legende": "Cécile, euh non, forêt",
+    "l": 640,
+    "h": 197
    },
    {
     "src": "album/NZ - janvier 2011/images/img_3411.jpg",
-    "legende": "Eric et Cécile"
+    "legende": "Eric et Cécile",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/NZ - janvier 2011/images/img_3534.jpg",
-    "legende": "Boule"
+    "legende": "Boule",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_3659.jpg",
-    "legende": "Canards perchés"
+    "legende": "Canards perchés",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_3718.jpg",
-    "legende": "Arthur's Pass"
+    "legende": "Arthur's Pass",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_3775.jpg",
-    "legende": "On a été chercher du bois pour le feu"
+    "legende": "On a été chercher du bois pour le feu",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_3950.jpg",
-    "legende": "La route est rectiligne"
+    "legende": "La route est rectiligne",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_4013.jpg",
-    "legende": "Cécile surgelée"
+    "legende": "Cécile surgelée",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/NZ - janvier 2011/images/img_4145.jpg",
-    "legende": "Marlborough Sounds, French Pass"
+    "legende": "Marlborough Sounds, French Pass",
+    "l": 640,
+    "h": 427
    }
   ],
   "escales": [
@@ -3202,99 +4566,147 @@
   "photos": [
    {
     "src": "album/NZ - 2011/images/img_9177.jpg",
-    "legende": "Janvier 2011: premier jour d'école pour Kenya (et un peu pour Cécile aussi)"
+    "legende": "Janvier 2011: premier jour d'école pour Kenya (et un peu pour Cécile aussi)",
+    "l": 517,
+    "h": 800
    },
    {
     "src": "album/NZ - 2011/images/img_9205.jpg",
-    "legende": "Le frigoriste remplace les compresseurs..."
+    "legende": "Le frigoriste remplace les compresseurs...",
+    "l": 800,
+    "h": 600
    },
    {
     "src": "album/NZ - 2011/images/img_9216.jpg",
-    "legende": "Coupe règlementaire"
+    "legende": "Coupe règlementaire",
+    "l": 800,
+    "h": 600
    },
    {
     "src": "album/NZ - 2011/images/img_9273.jpg",
-    "legende": "Cécile boit des bières dans la cale"
+    "legende": "Cécile boit des bières dans la cale",
+    "l": 800,
+    "h": 600
    },
    {
     "src": "album/NZ - 2011/images/img_9302.jpg",
-    "legende": "Les kiwis made in Italy"
+    "legende": "Les kiwis made in Italy",
+    "l": 800,
+    "h": 600
    },
    {
     "src": "album/NZ - 2011/images/img_4261.jpg",
-    "legende": "Le fleuve Hatea (en amont de Whangarei)"
+    "legende": "Le fleuve Hatea (en amont de Whangarei)",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/NZ - 2011/images/img_9390.jpg",
-    "legende": "Sidney à l'entraînement"
+    "legende": "Sidney à l'entraînement",
+    "l": 800,
+    "h": 600
    },
    {
     "src": "album/NZ - 2011/images/img_4370.jpg",
-    "legende": "La classe de Sidney"
+    "legende": "La classe de Sidney",
+    "l": 800,
+    "h": 434
    },
    {
     "src": "album/NZ - 2011/images/img_4487.jpg",
-    "legende": "Avril 2011: sortie d'eau pour let It Be"
+    "legende": "Avril 2011: sortie d'eau pour let It Be",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/NZ - 2011/images/img_4498.jpg",
-    "legende": "Cécile, la reine du papier émeri"
+    "legende": "Cécile, la reine du papier émeri",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/NZ - 2011/images/img_9482.jpg",
-    "legende": "Bateaux dans la brume"
+    "legende": "Bateaux dans la brume",
+    "l": 800,
+    "h": 455
    },
    {
     "src": "album/NZ - 2011/images/2011_05_08.jpg",
-    "legende": "Evolution de l'état des coques lors du chantier"
+    "legende": "Evolution de l'état des coques lors du chantier",
+    "l": 800,
+    "h": 566
    },
    {
     "src": "album/NZ - 2011/images/img_9774.jpg",
-    "legende": "Jullet 2011: Cécile donne cours de géo à l'école"
+    "legende": "Jullet 2011: Cécile donne cours de géo à l'école",
+    "l": 800,
+    "h": 600
    },
    {
     "src": "album/NZ - 2011/images/img_4954.jpg",
-    "legende": "Les enfants"
+    "legende": "Les enfants",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/NZ - 2011/images/img_9854.jpg",
-    "legende": "Prêts pour la luge des sables?"
+    "legende": "Prêts pour la luge des sables?",
+    "l": 800,
+    "h": 600
    },
    {
     "src": "album/NZ - 2011/images/img_5153.jpg",
-    "legende": "Signé Hundertwasser"
+    "legende": "Signé Hundertwasser",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "album/NZ - 2011/images/img_0311.jpg",
-    "legende": "Sidney qui bave"
+    "legende": "Sidney qui bave",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "album/NZ - 2011/images/img_0646.jpg",
-    "legende": "Nouvelle déco"
+    "legende": "Nouvelle déco",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "album/NZ - 2011/images/img_0721.jpg",
-    "legende": "Païtangi, Eric et le stoïcisme"
+    "legende": "Païtangi, Eric et le stoïcisme",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "album/NZ - 2011/images/img_5265.jpg",
-    "legende": "Les enfants devant Ocean Beach"
+    "legende": "Les enfants devant Ocean Beach",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "album/NZ - 2011/images/img_0915.jpg",
-    "legende": "La longue chevelure de Sidney"
+    "legende": "La longue chevelure de Sidney",
+    "l": 450,
+    "h": 800
    },
    {
     "src": "album/NZ - 2011/images/img_0053.jpg",
-    "legende": "Banquise factice"
+    "legende": "Banquise factice",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/NZ - 2011/images/img_0365.jpg",
-    "legende": "Cécile repeint le cockpit"
+    "legende": "Cécile repeint le cockpit",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/NZ - 2011/images/img_0390.jpg",
-    "legende": "Sidney, son award"
+    "legende": "Sidney, son award",
+    "l": 800,
+    "h": 696
    }
   ],
   "escales": [
@@ -3312,99 +4724,147 @@
   "photos": [
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1227.jpg",
-    "legende": "La capitale de la Tasmanie"
+    "legende": "La capitale de la Tasmanie",
+    "l": 800,
+    "h": 521
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_0912.jpg",
-    "legende": "Port Arthur"
+    "legende": "Port Arthur",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_0943.jpg",
-    "legende": "L'île des morts"
+    "legende": "L'île des morts",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_0981.jpg",
-    "legende": "Entre port Arthur et Hobart"
+    "legende": "Entre port Arthur et Hobart",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1028.jpg",
-    "legende": "Tronc d'eucalyptus vu du bas"
+    "legende": "Tronc d'eucalyptus vu du bas",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1076.jpg",
-    "legende": "Eric, la forêt, le lac et la forêt à l'envers"
+    "legende": "Eric, la forêt, le lac et la forêt à l'envers",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1129.jpg",
-    "legende": "Arc-en-ciel sur le lac"
+    "legende": "Arc-en-ciel sur le lac",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1189.jpg",
-    "legende": "Toujours ces magnifiques fougères arborescentes"
+    "legende": "Toujours ces magnifiques fougères arborescentes",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1240.jpg",
-    "legende": "Cuisine toute équipée dans le van 5 étoiles"
+    "legende": "Cuisine toute équipée dans le van 5 étoiles",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1305.jpg",
-    "legende": "Eric très souriant"
+    "legende": "Eric très souriant",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1399.jpg",
-    "legende": "Là, par contre, c'est plutôt la forêt humide, toujours dans le Franklin-Gordon etc NP"
+    "legende": "Là, par contre, c'est plutôt la forêt humide, toujours dans le Franklin-Gordon etc NP",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1498.jpg",
-    "legende": "Syr Daria ramasse du bois"
+    "legende": "Syr Daria ramasse du bois",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1525.jpg",
-    "legende": "Le jour s'achève"
+    "legende": "Le jour s'achève",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1563.jpg",
-    "legende": "Les enfants et le kangourou"
+    "legende": "Les enfants et le kangourou",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1589.jpg",
-    "legende": "Beau lac"
+    "legende": "Beau lac",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1634.jpg",
-    "legende": "Panorama"
+    "legende": "Panorama",
+    "l": 800,
+    "h": 259
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1666.jpg",
-    "legende": "Vallée encaissée"
+    "legende": "Vallée encaissée",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1713.jpg",
-    "legende": "Petite rivière de montagne (avec un porc épique, à vous de le localiser...)"
+    "legende": "Petite rivière de montagne (avec un porc épique, à vous de le localiser...)",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1800.jpg",
-    "legende": "Une plage de l'est"
+    "legende": "Une plage de l'est",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1855.jpg",
-    "legende": "Cécile tente d'appater un kangourou"
+    "legende": "Cécile tente d'appater un kangourou",
+    "l": 800,
+    "h": 451
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1952.jpg",
-    "legende": "La rivière sauvage, près de Corinna"
+    "legende": "La rivière sauvage, près de Corinna",
+    "l": 800,
+    "h": 452
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_1998.jpg",
-    "legende": "La route du bord de mer vers Granville Harbour"
+    "legende": "La route du bord de mer vers Granville Harbour",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_2053.jpg",
-    "legende": "Eric se les pèle au coin du feu"
+    "legende": "Eric se les pèle au coin du feu",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Tasmanie - Fevrier 2012/images/img_2205.jpg",
-    "legende": "Syr Daria et ses animaux dressés"
+    "legende": "Syr Daria et ses animaux dressés",
+    "l": 800,
+    "h": 534
    }
   ],
   "escales": [
@@ -3421,99 +4881,147 @@
   "photos": [
    {
     "src": "album/Signs/images/img_1876.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_1877.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_1879.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_1882.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_1763.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_1941.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_1966.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_2011.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_2013.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_2021.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_2025.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_2050.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_2062.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_2259.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_2261.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 449
    },
    {
     "src": "album/Signs/images/img_2264.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "album/Signs/images/img_2300.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 265,
+    "h": 800
    },
    {
     "src": "album/Signs/images/img_2314.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_2328.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_2562.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 767
    },
    {
     "src": "album/Signs/images/img_2639.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_2936.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 637
    },
    {
     "src": "album/Signs/images/img_3003.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Signs/images/img_3072.jpg",
-    "legende": ""
+    "legende": "",
+    "l": 800,
+    "h": 534
    }
   ],
   "escales": [
@@ -3530,99 +5038,147 @@
   "photos": [
    {
     "src": "album/Australia - Fevrier 2012/images/img_1266.jpg",
-    "legende": "Coucher de soleil sur Geelong"
+    "legende": "Coucher de soleil sur Geelong",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_2304.jpg",
-    "legende": "Côte sud"
+    "legende": "Côte sud",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_2388.jpg",
-    "legende": "Pélican"
+    "legende": "Pélican",
+    "l": 800,
+    "h": 587
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_2428.jpg",
-    "legende": "Entrée du 'Pioneer Village'"
+    "legende": "Entrée du 'Pioneer Village'",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_2492.jpg",
-    "legende": "Farmer Sidney"
+    "legende": "Farmer Sidney",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_2624.jpg",
-    "legende": "Charmant assemblage de Grenache-Syrah-Mourvèdre"
+    "legende": "Charmant assemblage de Grenache-Syrah-Mourvèdre",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_2685.jpg",
-    "legende": "Pas facile de les éviter"
+    "legende": "Pas facile de les éviter",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_2785.jpg",
-    "legende": "Les aigles, un peu charognards sur les bords..."
+    "legende": "Les aigles, un peu charognards sur les bords...",
+    "l": 800,
+    "h": 761
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_2890.jpg",
-    "legende": "La route vers Broken Hill"
+    "legende": "La route vers Broken Hill",
+    "l": 800,
+    "h": 319
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_2972.jpg",
-    "legende": "Les Alpes australiennes"
+    "legende": "Les Alpes australiennes",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_3013.jpg",
-    "legende": "Ben oui, il a beaucoup plu"
+    "legende": "Ben oui, il a beaucoup plu",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_3084.jpg",
-    "legende": "Chevaux sauvages"
+    "legende": "Chevaux sauvages",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/valley.jpg",
-    "legende": "Une vallée dans le Kociusko NP"
+    "legende": "Une vallée dans le Kociusko NP",
+    "l": 800,
+    "h": 275
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_3259.jpg",
-    "legende": "Le barrage déborde"
+    "legende": "Le barrage déborde",
+    "l": 800,
+    "h": 301
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_3322.jpg",
-    "legende": "Pin Up"
+    "legende": "Pin Up",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_3417.jpg",
-    "legende": "Maître Esss"
+    "legende": "Maître Esss",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_3587.jpg",
-    "legende": "Sidney aux commandes du destroyer"
+    "legende": "Sidney aux commandes du destroyer",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_3680.jpg",
-    "legende": "Un musicien connu, qui joue du digéridou"
+    "legende": "Un musicien connu, qui joue du digéridou",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_3773.jpg",
-    "legende": "Lézard"
+    "legende": "Lézard",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_3878.jpg",
-    "legende": "Gold Coast, près de Brisbane"
+    "legende": "Gold Coast, près de Brisbane",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_3913.jpg",
-    "legende": "La plage de Fraser Island"
+    "legende": "La plage de Fraser Island",
+    "l": 800,
+    "h": 280
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_3956.jpg",
-    "legende": "Cécile, Kenya, Sidney et Syr Daria dans le lac"
+    "legende": "Cécile, Kenya, Sidney et Syr Daria dans le lac",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_4020.jpg",
-    "legende": "Cécile s'amuse"
+    "legende": "Cécile s'amuse",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Australia - Fevrier 2012/images/img_4096.jpg",
-    "legende": "On rencontre vraiment de tout sur la plage"
+    "legende": "On rencontre vraiment de tout sur la plage",
+    "l": 800,
+    "h": 534
    }
   ],
   "escales": [
@@ -3639,99 +5195,147 @@
   "photos": [
    {
     "src": "album/Tahiti2012/images/img_1975.jpg",
-    "legende": "Arrivée joyeuse de Charlotte"
+    "legende": "Arrivée joyeuse de Charlotte",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tahiti2012/images/img_2001.jpg",
-    "legende": "Bungalows à Moorea"
+    "legende": "Bungalows à Moorea",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tahiti2012/images/img_5247.jpg",
-    "legende": "Cécile répare notre panneau solaire qui s'est envolé"
+    "legende": "Cécile répare notre panneau solaire qui s'est envolé",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tahiti2012/images/p1010266.jpg",
-    "legende": "Let It Be dans une baie à Huahine"
+    "legende": "Let It Be dans une baie à Huahine",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti2012/images/img_5300.jpg",
-    "legende": "Charlotte à la cambuse"
+    "legende": "Charlotte à la cambuse",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/Tahiti2012/images/img_2015.jpg",
-    "legende": "Petite princesse locale"
+    "legende": "Petite princesse locale",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tahiti2012/images/img_5316.jpg",
-    "legende": "Charlotte et sa nouvelle amie"
+    "legende": "Charlotte et sa nouvelle amie",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tahiti2012/images/img_2078.jpg",
-    "legende": "Murène (celle-là par contre, elle mord...)"
+    "legende": "Murène (celle-là par contre, elle mord...)",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tahiti2012/images/img_2129.jpg",
-    "legende": "Requins de Bora Bora"
+    "legende": "Requins de Bora Bora",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "album/Tahiti2012/images/p1010273.jpg",
-    "legende": "Au restaurant à Bora Bora"
+    "legende": "Au restaurant à Bora Bora",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti2012/images/img_4655.jpg",
-    "legende": "Chéchilia"
+    "legende": "Chéchilia",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tahiti2012/images/img_4788.jpg",
-    "legende": "Bora Bora"
+    "legende": "Bora Bora",
+    "l": 1024,
+    "h": 234
    },
    {
     "src": "album/Tahiti2012/images/img_5391.jpg",
-    "legende": "Sidney saute dans le lagon"
+    "legende": "Sidney saute dans le lagon",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tahiti2012/images/img_5438.jpg",
-    "legende": "Sidney, très à l'aise en bouée"
+    "legende": "Sidney, très à l'aise en bouée",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tahiti2012/images/img_2167.jpg",
-    "legende": "Formule 1 de Tahaa"
+    "legende": "Formule 1 de Tahaa",
+    "l": 1024,
+    "h": 413
    },
    {
     "src": "album/Tahiti2012/images/img_2226.jpg",
-    "legende": "Poisson-coffre"
+    "legende": "Poisson-coffre",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tahiti2012/images/img_4923.jpg",
-    "legende": "Presqu'aussi beau que Let It Be..."
+    "legende": "Presqu'aussi beau que Let It Be...",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "album/Tahiti2012/images/img_2261.jpg",
-    "legende": "Arrêt au belvédère"
+    "legende": "Arrêt au belvédère",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tahiti2012/images/p1010291.jpg",
-    "legende": "No comment"
+    "legende": "No comment",
+    "l": 640,
+    "h": 480
    },
    {
     "src": "album/Tahiti2012/images/img_2281.jpg",
-    "legende": "Plage de sable noir"
+    "legende": "Plage de sable noir",
+    "l": 640,
+    "h": 361
    },
    {
     "src": "album/Tahiti2012/images/img_2331.jpg",
-    "legende": "Poisson flûte"
+    "legende": "Poisson flûte",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tahiti2012/images/img_2356.jpg",
-    "legende": "Coucher de soleil sur Moorea"
+    "legende": "Coucher de soleil sur Moorea",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tahiti2012/images/img_5538.jpg",
-    "legende": "Sidney est éblouï par le soleil"
+    "legende": "Sidney est éblouï par le soleil",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tahiti2012/images/snapshot_2__23_08_2012_09_18_.jpg",
-    "legende": "Re-Picsoum"
+    "legende": "Re-Picsoum",
+    "l": 640,
+    "h": 360
    }
   ],
   "escales": [
@@ -3756,99 +5360,147 @@
   "photos": [
    {
     "src": "album/Tuam2012/images/img_5626.jpg",
-    "legende": "Cécile frotte les coques"
+    "legende": "Cécile frotte les coques",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tuam2012/images/img_2533.jpg",
-    "legende": "Toujours la passe sud de Fakarava"
+    "legende": "Toujours la passe sud de Fakarava",
+    "l": 640,
+    "h": 402
    },
    {
     "src": "album/Tuam2012/images/img_2596.jpg",
-    "legende": "Motu"
+    "legende": "Motu",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tuam2012/images/img_2612.jpg",
-    "legende": "Joli"
+    "legende": "Joli",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tuam2012/images/img_2672.jpg",
-    "legende": "Kenya"
+    "legende": "Kenya",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tuam2012/images/img_5672.jpg",
-    "legende": "Passe de Tahanea"
+    "legende": "Passe de Tahanea",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tuam2012/images/img_2761.jpg",
-    "legende": "Bulles, par Kenya"
+    "legende": "Bulles, par Kenya",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tuam2012/images/img_5711.jpg",
-    "legende": "Philippe prépare les langoustes"
+    "legende": "Philippe prépare les langoustes",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tuam2012/images/img_5749.jpg",
-    "legende": "Kenya et Sidney sur la bouée"
+    "legende": "Kenya et Sidney sur la bouée",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tuam2012/images/img_2849.jpg",
-    "legende": "Papa aux quillons, Kenya aux coques"
+    "legende": "Papa aux quillons, Kenya aux coques",
+    "l": 360,
+    "h": 640
    },
    {
     "src": "album/Tuam2012/images/img_5776.jpg",
-    "legende": "Le fameux dinghy à voiles"
+    "legende": "Le fameux dinghy à voiles",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tuam2012/images/img_3032.jpg",
-    "legende": "Raie manta"
+    "legende": "Raie manta",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tuam2012/images/img_5820.jpg",
-    "legende": "Les dauphins nous saluent dans la passe ouest de Makemo"
+    "legende": "Les dauphins nous saluent dans la passe ouest de Makemo",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tuam2012/images/img_3116.jpg",
-    "legende": "Eric rentre chez lui"
+    "legende": "Eric rentre chez lui",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tuam2012/images/img_3195.jpg",
-    "legende": "Petit pas de danse au palaistafé"
+    "legende": "Petit pas de danse au palaistafé",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tuam2012/images/img_3289.jpg",
-    "legende": "Les marais salins"
+    "legende": "Les marais salins",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tuam2012/images/img_5900.jpg",
-    "legende": "Le gamin à la fleur de tiare"
+    "legende": "Le gamin à la fleur de tiare",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tuam2012/images/img_5887.jpg",
-    "legende": "L'orchestre local"
+    "legende": "L'orchestre local",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tuam2012/images/img_5905.jpg",
-    "legende": "Les jeunes s'amusent sur le quai"
+    "legende": "Les jeunes s'amusent sur le quai",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tuam2012/images/img_3410.jpg",
-    "legende": "Bleu"
+    "legende": "Bleu",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tuam2012/images/img_6065.jpg",
-    "legende": "Sidney saute"
+    "legende": "Sidney saute",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tuam2012/images/img_6199.jpg",
-    "legende": "Kenya Lee"
+    "legende": "Kenya Lee",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Tuam2012/images/img_3527.jpg",
-    "legende": "Let It Be"
+    "legende": "Let It Be",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Tuam2012/images/img_3618.jpg",
-    "legende": "Un beau duo ces deux-là !"
+    "legende": "Un beau duo ces deux-là !",
+    "l": 640,
+    "h": 360
    }
   ],
   "escales": [
@@ -3867,99 +5519,147 @@
   "photos": [
    {
     "src": "album/Marquises2012/images/img_3664.jpg",
-    "legende": "Escale à Atuona"
+    "legende": "Escale à Atuona",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_6355.jpg",
-    "legende": "La sépulture du grand Jacques"
+    "legende": "La sépulture du grand Jacques",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "album/Marquises2012/images/img_3737.jpg",
-    "legende": "Teiki, artiste sculpteur"
+    "legende": "Teiki, artiste sculpteur",
+    "l": 360,
+    "h": 640
    },
    {
     "src": "album/Marquises2012/images/img_3741.jpg",
-    "legende": "Cécile, Maria et mini-Maria"
+    "legende": "Cécile, Maria et mini-Maria",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_3791.jpg",
-    "legende": "L'atelier de Franck"
+    "legende": "L'atelier de Franck",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_3851.jpg",
-    "legende": "Les élèves du lycée s'initient aux danses tribales"
+    "legende": "Les élèves du lycée s'initient aux danses tribales",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_3961.jpg",
-    "legende": "Eric et ses petits choux"
+    "legende": "Eric et ses petits choux",
+    "l": 360,
+    "h": 640
    },
    {
     "src": "album/Marquises2012/images/img_4183.jpg",
-    "legende": "Accueil des écoliers par les écoliers"
+    "legende": "Accueil des écoliers par les écoliers",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_4586.jpg",
-    "legende": "Le pain de Cécile"
+    "legende": "Le pain de Cécile",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_4597.jpg",
-    "legende": "Kenya grimpante"
+    "legende": "Kenya grimpante",
+    "l": 360,
+    "h": 640
    },
    {
     "src": "album/Marquises2012/images/img_6745.jpg",
-    "legende": "Les oeufs au plat de Noël"
+    "legende": "Les oeufs au plat de Noël",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Marquises2012/images/img_4656.jpg",
-    "legende": "La rivière sauvage de Taipivai"
+    "legende": "La rivière sauvage de Taipivai",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_4693.jpg",
-    "legende": "Le snack du coin"
+    "legende": "Le snack du coin",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_4756.jpg",
-    "legende": "Sidney se fait trouer la peau"
+    "legende": "Sidney se fait trouer la peau",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_6807.jpg",
-    "legende": "BBQ au col"
+    "legende": "BBQ au col",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Marquises2012/images/img_4783.jpg",
-    "legende": "Nicolas et Juliette, dits Don quichottes"
+    "legende": "Nicolas et Juliette, dits Don quichottes",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_4803.jpg",
-    "legende": "Après la rando, le repos des chevaux"
+    "legende": "Après la rando, le repos des chevaux",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_6926.jpg",
-    "legende": "Manu, équipé pour les sommets"
+    "legende": "Manu, équipé pour les sommets",
+    "l": 640,
+    "h": 535
    },
    {
     "src": "album/Marquises2012/images/img_6894.jpg",
-    "legende": "Sidney fête ses 12 ans"
+    "legende": "Sidney fête ses 12 ans",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Marquises2012/images/img_4862.jpg",
-    "legende": "Barbecue à la plage"
+    "legende": "Barbecue à la plage",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_6957.jpg",
-    "legende": "La baie d'Hapatoni, sur Tahuata"
+    "legende": "La baie d'Hapatoni, sur Tahuata",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Marquises2012/images/img_6984.jpg",
-    "legende": "Tous le monde est là"
+    "legende": "Tous le monde est là",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "album/Marquises2012/images/img_4924.jpg",
-    "legende": "Eric donne à manger au cochon"
+    "legende": "Eric donne à manger au cochon",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "album/Marquises2012/images/img_7054.jpg",
-    "legende": "Renato et les enfants sur le fly-bridge du Lagoon"
+    "legende": "Renato et les enfants sur le fly-bridge du Lagoon",
+    "l": 640,
+    "h": 427
    }
   ],
   "escales": [
@@ -3983,99 +5683,147 @@
   "photos": [
    {
     "src": "album/Hawaii/images/img_5005.jpg",
-    "legende": "Let It Be dans le port de Hilo"
+    "legende": "Let It Be dans le port de Hilo",
+    "l": 800,
+    "h": 317
    },
    {
     "src": "album/Hawaii/images/img_7236.jpg",
-    "legende": "Sidney, la lave et la route"
+    "legende": "Sidney, la lave et la route",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_7318.jpg",
-    "legende": "Rivage au sud de l'île"
+    "legende": "Rivage au sud de l'île",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_7406.jpg",
-    "legende": "Eric dans un champ de lave"
+    "legende": "Eric dans un champ de lave",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_7489.jpg",
-    "legende": "Arrivée du métro"
+    "legende": "Arrivée du métro",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "album/Hawaii/images/img_7538.jpg",
-    "legende": "Encore un paquebot venu faire un saut à Hilo"
+    "legende": "Encore un paquebot venu faire un saut à Hilo",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_7764.jpg",
-    "legende": "Kenya a 14 ans"
+    "legende": "Kenya a 14 ans",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "album/Hawaii/images/img_8017.jpg",
-    "legende": "Ses parures... femmes"
+    "legende": "Ses parures... femmes",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "album/Hawaii/images/img_8358.jpg",
-    "legende": "Le Mauna Kea"
+    "legende": "Le Mauna Kea",
+    "l": 800,
+    "h": 452
    },
    {
     "src": "album/Hawaii/images/img_8436.jpg",
-    "legende": "Encore chez nous !!!"
+    "legende": "Encore chez nous !!!",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_8490.jpg",
-    "legende": "Un gecko"
+    "legende": "Un gecko",
+    "l": 800,
+    "h": 472
    },
    {
     "src": "album/Hawaii/images/img_8554.jpg",
-    "legende": "Le jardin botanique de Big Island: ses visiteurs"
+    "legende": "Le jardin botanique de Big Island: ses visiteurs",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_8603.jpg",
-    "legende": "Le jardin botanique de Big Island: ses orchidées"
+    "legende": "Le jardin botanique de Big Island: ses orchidées",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "album/Hawaii/images/img_8679.jpg",
-    "legende": "Chez Mauricio et Paola (amis péruviens de voilier), qui ont déjà construit"
+    "legende": "Chez Mauricio et Paola (amis péruviens de voilier), qui ont déjà construit",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_5193.jpg",
-    "legende": "On relache le caméléon dans la nature"
+    "legende": "On relache le caméléon dans la nature",
+    "l": 450,
+    "h": 800
    },
    {
     "src": "album/Hawaii/images/img_8911.jpg",
-    "legende": "Maison en front de plage à Maui"
+    "legende": "Maison en front de plage à Maui",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_8962.jpg",
-    "legende": "Côte Nord de Maui"
+    "legende": "Côte Nord de Maui",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_9073.jpg",
-    "legende": "Etonnant non?"
+    "legende": "Etonnant non?",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "album/Hawaii/images/img_9230.jpg",
-    "legende": "Côte nord de Molokai"
+    "legende": "Côte nord de Molokai",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_9329.jpg",
-    "legende": "Molokai"
+    "legende": "Molokai",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_9417.jpg",
-    "legende": "J'aime ces palmiers"
+    "legende": "J'aime ces palmiers",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_9588.jpg",
-    "legende": "Le stade de surf"
+    "legende": "Le stade de surf",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "album/Hawaii/images/img_5500.jpg",
-    "legende": "Encore un banyan, je ne m'en lasse pas !"
+    "legende": "Encore un banyan, je ne m'en lasse pas !",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "album/Hawaii/images/img_9798.jpg",
-    "legende": "Notre plus fidèle crew member: Phil !!"
+    "legende": "Notre plus fidèle crew member: Phil !!",
+    "l": 800,
+    "h": 534
    }
   ],
   "escales": [
@@ -4097,99 +5845,147 @@
   "photos": [
    {
     "src": "data/album/HawaiiBC/images/img_9918.jpg",
-    "legende": "Traversée Hawaii-Canada: moment de répit"
+    "legende": "Traversée Hawaii-Canada: moment de répit",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/HawaiiBC/images/img_9927.jpg",
-    "legende": "Que peut-on bien faire en traversée... quand il fait calme !"
+    "legende": "Que peut-on bien faire en traversée... quand il fait calme !",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_9961.jpg",
-    "legende": "Beau coucher de soleil"
+    "legende": "Beau coucher de soleil",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0066.jpg",
-    "legende": "Lever de soleil sur Let It Be..."
+    "legende": "Lever de soleil sur Let It Be...",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0074.jpg",
-    "legende": "... encore un peu plus tard"
+    "legende": "... encore un peu plus tard",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0095.jpg",
-    "legende": "Vous préférez celui-ci ?"
+    "legende": "Vous préférez celui-ci ?",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0101.jpg",
-    "legende": "Et froides surtout !"
+    "legende": "Et froides surtout !",
+    "l": 800,
+    "h": 434
    },
    {
     "src": "data/album/HawaiiBC/images/img_0105.jpg",
-    "legende": "Eric le Cap'tain"
+    "legende": "Eric le Cap'tain",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/HawaiiBC/images/img_0124.jpg",
-    "legende": "Que la vie est belle !!"
+    "legende": "Que la vie est belle !!",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0144.jpg",
-    "legende": "N'est-ce pas ?"
+    "legende": "N'est-ce pas ?",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0190.jpg",
-    "legende": "Coucher de soleil exceptionnel..."
+    "legende": "Coucher de soleil exceptionnel...",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0240.jpg",
-    "legende": "... et puis..."
+    "legende": "... et puis...",
+    "l": 800,
+    "h": 386
    },
    {
     "src": "data/album/HawaiiBC/images/img_0281.jpg",
-    "legende": "Le bouquet final..."
+    "legende": "Le bouquet final...",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/HawaiiBC/images/img_0364.jpg",
-    "legende": "Quelle habileté"
+    "legende": "Quelle habileté",
+    "l": 800,
+    "h": 153
    },
    {
     "src": "data/album/HawaiiBC/images/img_0381.jpg",
-    "legende": "Pêcheurs devant les forêts de résineux"
+    "legende": "Pêcheurs devant les forêts de résineux",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0408.jpg",
-    "legende": "Ou cela..."
+    "legende": "Ou cela...",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0399.jpg",
-    "legende": "Laminaire esthétique"
+    "legende": "Laminaire esthétique",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0493.jpg",
-    "legende": "Philippe assure la sécurité de notre beau navire"
+    "legende": "Philippe assure la sécurité de notre beau navire",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/HawaiiBC/images/img_0486.jpg",
-    "legende": "Pas mal les paysages !"
+    "legende": "Pas mal les paysages !",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0516.jpg",
-    "legende": "Phil par contre est chaud chaud !!"
+    "legende": "Phil par contre est chaud chaud !!",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0542.jpg",
-    "legende": "Le brouillard se lève"
+    "legende": "Le brouillard se lève",
+    "l": 800,
+    "h": 286
    },
    {
     "src": "data/album/HawaiiBC/images/img_0559.jpg",
-    "legende": "Les filles profitent de ces nouveaux paysages"
+    "legende": "Les filles profitent de ces nouveaux paysages",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0567.jpg",
-    "legende": "Prince Rupert"
+    "legende": "Prince Rupert",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/HawaiiBC/images/img_0592.jpg",
-    "legende": "Première escale de Let It Be: presque au pied des glaciers"
+    "legende": "Première escale de Let It Be: presque au pied des glaciers",
+    "l": 800,
+    "h": 487
    }
   ],
   "escales": [
@@ -4206,99 +6002,147 @@
   "photos": [
    {
     "src": "data/album/Alaska/images/img_0689.jpg",
-    "legende": "Nord Canada, en route vers l'Alaska"
+    "legende": "Nord Canada, en route vers l'Alaska",
+    "l": 800,
+    "h": 273
    },
    {
     "src": "data/album/Alaska/images/img_0917.jpg",
-    "legende": "Nord Canada, en route vers l'Alaska"
+    "legende": "Nord Canada, en route vers l'Alaska",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_0730.jpg",
-    "legende": "Nord Canada, en route vers l'Alaska"
+    "legende": "Nord Canada, en route vers l'Alaska",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_0755.jpg",
-    "legende": "Nord Canada, en route vers l'Alaska"
+    "legende": "Nord Canada, en route vers l'Alaska",
+    "l": 800,
+    "h": 266
    },
    {
     "src": "data/album/Alaska/images/img_0831.jpg",
-    "legende": "Quelle nature !!"
+    "legende": "Quelle nature !!",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_0860.jpg",
-    "legende": "Et nous !!"
+    "legende": "Et nous !!",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_0893.jpg",
-    "legende": "Notre petit logis en Alaska"
+    "legende": "Notre petit logis en Alaska",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_0911.jpg",
-    "legende": "Maisonnette en Alaska"
+    "legende": "Maisonnette en Alaska",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_0903.jpg",
-    "legende": "Sur le mur et sur le comptoir !"
+    "legende": "Sur le mur et sur le comptoir !",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_0928.jpg",
-    "legende": "Lagon d'eau de fonte des glaciers"
+    "legende": "Lagon d'eau de fonte des glaciers",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_0994.jpg",
-    "legende": "L'ivresse des glaciers ?"
+    "legende": "L'ivresse des glaciers ?",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_1015.jpg",
-    "legende": "Après les volcans de Hawaii..."
+    "legende": "Après les volcans de Hawaii...",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_1024.jpg",
-    "legende": "Entrée du terrier d'une marmote: pas peur moi !!"
+    "legende": "Entrée du terrier d'une marmote: pas peur moi !!",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_1052.jpg",
-    "legende": "Clochettes des glaciers"
+    "legende": "Clochettes des glaciers",
+    "l": 536,
+    "h": 800
    },
    {
     "src": "data/album/Alaska/images/img_1073.jpg",
-    "legende": "Sid le solitaire"
+    "legende": "Sid le solitaire",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_1032.jpg",
-    "legende": "Pied du glacier"
+    "legende": "Pied du glacier",
+    "l": 800,
+    "h": 425
    },
    {
     "src": "data/album/Alaska/images/img_1090.jpg",
-    "legende": "Joli..."
+    "legende": "Joli...",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_1104.jpg",
-    "legende": "Partie centrale du pied du glacier"
+    "legende": "Partie centrale du pied du glacier",
+    "l": 800,
+    "h": 459
    },
    {
     "src": "data/album/Alaska/images/img_1105.jpg",
-    "legende": "Isn't it ?"
+    "legende": "Isn't it ?",
+    "l": 800,
+    "h": 351
    },
    {
     "src": "data/album/Alaska/images/img_1142.jpg",
-    "legende": "C'est blanc l'Alaska..."
+    "legende": "C'est blanc l'Alaska...",
+    "l": 800,
+    "h": 314
    },
    {
     "src": "data/album/Alaska/images/img_1193.jpg",
-    "legende": "Nous montrons a Phil une alternative 'alaskaienne' à son foodtruck: le foodbus !"
+    "legende": "Nous montrons a Phil une alternative 'alaskaienne' à son foodtruck: le foodbus !",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_1197.jpg",
-    "legende": "Désolée Phil !"
+    "legende": "Désolée Phil !",
+    "l": 534,
+    "h": 800
    },
    {
     "src": "data/album/Alaska/images/img_1210.jpg",
-    "legende": "Brise-lame 'alaskaien' façon locale"
+    "legende": "Brise-lame 'alaskaien' façon locale",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Alaska/images/img_1240.jpg",
-    "legende": "Ours noir adulte qui a élu domicile dans une maison jetée à la casse"
+    "legende": "Ours noir adulte qui a élu domicile dans une maison jetée à la casse",
+    "l": 800,
+    "h": 534
    }
   ],
   "escales": [
@@ -4315,99 +6159,147 @@
   "photos": [
    {
     "src": "data/album/Canada/images/img_0605.jpg",
-    "legende": "Dur dur la paperasserie d'arrivée..."
+    "legende": "Dur dur la paperasserie d'arrivée...",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_0748.jpg",
-    "legende": "Après les tikis polynésiens, maoris, hawaiiens... les tikis indiens"
+    "legende": "Après les tikis polynésiens, maoris, hawaiiens... les tikis indiens",
+    "l": 546,
+    "h": 800
    },
    {
     "src": "data/album/Canada/images/img_1313.jpg",
-    "legende": "Premier mouillage dans le nord canadien"
+    "legende": "Premier mouillage dans le nord canadien",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_1348.jpg",
-    "legende": "Quelques berges dans les fjords"
+    "legende": "Quelques berges dans les fjords",
+    "l": 800,
+    "h": 433
    },
    {
     "src": "data/album/Canada/images/img_1390.jpg",
-    "legende": "Quelques roches basaltiques sous les sapins..."
+    "legende": "Quelques roches basaltiques sous les sapins...",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_5581.jpg",
-    "legende": "Cours de rattrapage l'après-midi, pour Kenya, en math..."
+    "legende": "Cours de rattrapage l'après-midi, pour Kenya, en math...",
+    "l": 800,
+    "h": 450
    },
    {
     "src": "data/album/Canada/images/img_1599.jpg",
-    "legende": "Une famille d'orques de passage"
+    "legende": "Une famille d'orques de passage",
+    "l": 800,
+    "h": 371
    },
    {
     "src": "data/album/Canada/images/img_1783.jpg",
-    "legende": "Les couchers de soleil sont toujours aussi paisibles..."
+    "legende": "Les couchers de soleil sont toujours aussi paisibles...",
+    "l": 800,
+    "h": 391
    },
    {
     "src": "data/album/Canada/images/img_1909.jpg",
-    "legende": "Magnifique mouillage, à marée haute..."
+    "legende": "Magnifique mouillage, à marée haute...",
+    "l": 800,
+    "h": 266
    },
    {
     "src": "data/album/Canada/images/img_2012.jpg",
-    "legende": "Quelle majesté"
+    "legende": "Quelle majesté",
+    "l": 800,
+    "h": 505
    },
    {
     "src": "data/album/Canada/images/img_2104.jpg",
-    "legende": "... et de leurs formations nuageuses"
+    "legende": "... et de leurs formations nuageuses",
+    "l": 800,
+    "h": 325
    },
    {
     "src": "data/album/Canada/images/img_2147.jpg",
-    "legende": "... et je chante..."
+    "legende": "... et je chante...",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_2178.jpg",
-    "legende": "... d'autres sont plus modernes..."
+    "legende": "... d'autres sont plus modernes...",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_2231.jpg",
-    "legende": "..."
+    "legende": "...",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_2303.jpg",
-    "legende": "Forêts pluvieuses canadiennes, parmi les cêdres"
+    "legende": "Forêts pluvieuses canadiennes, parmi les cêdres",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_5660.jpg",
-    "legende": "21,5kg de cours: de quoi tenir seulement 2 mois à 3 enfants"
+    "legende": "21,5kg de cours: de quoi tenir seulement 2 mois à 3 enfants",
+    "l": 450,
+    "h": 800
    },
    {
     "src": "data/album/Canada/images/img_2398.jpg",
-    "legende": "voire même en pierre"
+    "legende": "voire même en pierre",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_2480.jpg",
-    "legende": "Syr Daria, à la dérobée"
+    "legende": "Syr Daria, à la dérobée",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_2530.jpg",
-    "legende": "Joli écueil"
+    "legende": "Joli écueil",
+    "l": 800,
+    "h": 391
    },
    {
     "src": "data/album/Canada/images/img_2572.jpg",
-    "legende": "Arbres très étonnants"
+    "legende": "Arbres très étonnants",
+    "l": 800,
+    "h": 413
    },
    {
     "src": "data/album/Canada/images/img_2595.jpg",
-    "legende": "Pas très confo quand même !?"
+    "legende": "Pas très confo quand même !?",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_2672.jpg",
-    "legende": "Point d'orgue de notre rando: vue sur Let It Be, entre deux sapins"
+    "legende": "Point d'orgue de notre rando: vue sur Let It Be, entre deux sapins",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_2755.jpg",
-    "legende": "Let It Be aussi est beau dans de tels paysages"
+    "legende": "Let It Be aussi est beau dans de tels paysages",
+    "l": 800,
+    "h": 534
    },
    {
     "src": "data/album/Canada/images/img_2805.jpg",
-    "legende": "Un invité surprise"
+    "legende": "Un invité surprise",
+    "l": 800,
+    "h": 534
    }
   ],
   "escales": [
@@ -4451,99 +6343,147 @@
   "photos": [
    {
     "src": "data/album/USA1/images/2013_08_26.jpg",
-    "legende": "Heureusement que les eaux sont froides ici, qu'on ne s'y baigne pas"
+    "legende": "Heureusement que les eaux sont froides ici, qu'on ne s'y baigne pas",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA1/images/img_2920.jpg",
-    "legende": "Syr Daria a 11 ans, visez les gateaux format US"
+    "legende": "Syr Daria a 11 ans, visez les gateaux format US",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA1/images/img_2929.jpg",
-    "legende": "Lion des mers qui nous accueille à Port Angeles, US"
+    "legende": "Lion des mers qui nous accueille à Port Angeles, US",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA1/images/img_3033.jpg",
-    "legende": "Des dauphins nous accompagnent"
+    "legende": "Des dauphins nous accompagnent",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA1/images/img_3116.jpg",
-    "legende": "Et puis on se regarde un petit film"
+    "legende": "Et puis on se regarde un petit film",
+    "l": 640,
+    "h": 325
    },
    {
     "src": "data/album/USA1/images/img_3157.jpg",
-    "legende": "... des bateaux plus traditionnels"
+    "legende": "... des bateaux plus traditionnels",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA1/images/img_3197.jpg",
-    "legende": "... et donc son fameux pont"
+    "legende": "... et donc son fameux pont",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA1/images/img_5725.jpg",
-    "legende": "Il y a des bateaux de course..."
+    "legende": "Il y a des bateaux de course...",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA1/images/img_3213.jpg",
-    "legende": "Let It Be dans la baie de San Francisco"
+    "legende": "Let It Be dans la baie de San Francisco",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA1/images/img_3249.jpg",
-    "legende": "Nous avons marché sur le Golden Gate Bridge de San Francisco ! ..."
+    "legende": "Nous avons marché sur le Golden Gate Bridge de San Francisco ! ...",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA1/images/img_3262.jpg",
-    "legende": "A droite, le yacht (plus de 80m de long) du patron d'Oracle, team US de l'America's Cup, mouillé juste derrière nous"
+    "legende": "A droite, le yacht (plus de 80m de long) du patron d'Oracle, team US de l'America's Cup, mouillé juste derrière nous",
+    "l": 640,
+    "h": 225
    },
    {
     "src": "data/album/USA1/images/img_3265.jpg",
-    "legende": "Les gradins aux couleurs de l'America's Cup, sur les berges de SF"
+    "legende": "Les gradins aux couleurs de l'America's Cup, sur les berges de SF",
+    "l": 640,
+    "h": 249
    },
    {
     "src": "data/album/USA1/images/img_5737.jpg",
-    "legende": "Différents modes de locomotion à SF: les gros camions Coca Cola..."
+    "legende": "Différents modes de locomotion à SF: les gros camions Coca Cola...",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA1/images/img_5820.jpg",
-    "legende": "... les Cable Car typiques de San Francisco"
+    "legende": "... les Cable Car typiques de San Francisco",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA1/images/img_5841.jpg",
-    "legende": "... les mini-restaurants"
+    "legende": "... les mini-restaurants",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA1/images/img_5743.jpg",
-    "legende": "... les bicycles électriques"
+    "legende": "... les bicycles électriques",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA1/images/img_5747.jpg",
-    "legende": "... les bateaux de pêche"
+    "legende": "... les bateaux de pêche",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA1/images/img_5759.jpg",
-    "legende": "Ses rues bondées"
+    "legende": "Ses rues bondées",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA1/images/img_5775.jpg",
-    "legende": "... ses oisifs"
+    "legende": "... ses oisifs",
+    "l": 640,
+    "h": 241
    },
    {
     "src": "data/album/USA1/images/img_5793.jpg",
-    "legende": "Solo cool... yoh man !"
+    "legende": "Solo cool... yoh man !",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA1/images/img_3294.jpg",
-    "legende": "Le Golden Gate Bridge"
+    "legende": "Le Golden Gate Bridge",
+    "l": 640,
+    "h": 322
    },
    {
     "src": "data/album/USA1/images/img_3304.jpg",
-    "legende": "Ecrans géants partout"
+    "legende": "Ecrans géants partout",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA1/images/img_3283.jpg",
-    "legende": "L'équipe US devant le yacht du patron d'Oracle"
+    "legende": "L'équipe US devant le yacht du patron d'Oracle",
+    "l": 640,
+    "h": 390
    },
    {
     "src": "data/album/USA1/images/img_5827.jpg",
-    "legende": "Chinatown..."
+    "legende": "Chinatown...",
+    "l": 640,
+    "h": 360
    }
   ],
   "escales": [
@@ -4562,99 +6502,147 @@
   "photos": [
    {
     "src": "data/album/USA2/images/img_3344.jpg",
-    "legende": "Dans la baie de SF, Let It Be mouille à côté d'ancêtres"
+    "legende": "Dans la baie de SF, Let It Be mouille à côté d'ancêtres",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA2/images/img_3345.jpg",
-    "legende": "Dans la baie de SF, Let It Be mouille à côté d'ancêtres"
+    "legende": "Dans la baie de SF, Let It Be mouille à côté d'ancêtres",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA2/images/img_5847.jpg",
-    "legende": "San Francisco et son port pour touristes, toujours bondé"
+    "legende": "San Francisco et son port pour touristes, toujours bondé",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA2/images/img_5853.jpg",
-    "legende": "San Francisco, vue du haut"
+    "legende": "San Francisco, vue du haut",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA2/images/img_5861.jpg",
-    "legende": "Lombard Street, dite 'la rue la plus sinueuse du monde' (27% de dénivelé, réduits à 17% grâce aux 8 virages)"
+    "legende": "Lombard Street, dite 'la rue la plus sinueuse du monde' (27% de dénivelé, réduits à 17% grâce aux 8 virages)",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA2/images/img_5867.jpg",
-    "legende": "Après Syr Daria, c'est au tour de Kenya de se faire greffer le portrait, comme elle dirait"
+    "legende": "Après Syr Daria, c'est au tour de Kenya de se faire greffer le portrait, comme elle dirait",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA2/images/img_3379.jpg",
-    "legende": "Cécile et sa nièce Elyn en visite"
+    "legende": "Cécile et sa nièce Elyn en visite",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA2/images/img_3377.jpg",
-    "legende": "Digne d'un tableau impressionniste"
+    "legende": "Digne d'un tableau impressionniste",
+    "l": 640,
+    "h": 236
    },
    {
     "src": "data/album/USA2/images/img_3388.jpg",
-    "legende": "C'est bien tout le pont qui disparait"
+    "legende": "C'est bien tout le pont qui disparait",
+    "l": 640,
+    "h": 194
    },
    {
     "src": "data/album/USA2/images/img_3399.jpg",
-    "legende": "La belle Alcatraz, dans une semi-brûme"
+    "legende": "La belle Alcatraz, dans une semi-brûme",
+    "l": 640,
+    "h": 259
    },
    {
     "src": "data/album/USA2/images/img_3392.jpg",
-    "legende": "Comment font-ils donc pour passer les 'bumps' ?"
+    "legende": "Comment font-ils donc pour passer les 'bumps' ?",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA2/images/img_5848.jpg",
-    "legende": "Encore un moyen original de se déplacer dans SF"
+    "legende": "Encore un moyen original de se déplacer dans SF",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/USA2/images/img_3397.jpg",
-    "legende": "Un boulangerie réputée de SF, au charmant nom de 'Boudin'"
+    "legende": "Un boulangerie réputée de SF, au charmant nom de 'Boudin'",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA2/images/img_3430.jpg",
-    "legende": "Des lions des mers en plein SF"
+    "legende": "Des lions des mers en plein SF",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA2/images/img_3427.jpg",
-    "legende": "Des lions des mers en plein SF"
+    "legende": "Des lions des mers en plein SF",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA2/images/img_3452.jpg",
-    "legende": "Un artiste de rue en cours de réalisation"
+    "legende": "Un artiste de rue en cours de réalisation",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA2/images/img_3456.jpg",
-    "legende": "Et voici le résultat qui a fini dans la chambre d'Elyn"
+    "legende": "Et voici le résultat qui a fini dans la chambre d'Elyn",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA2/images/img_3403.jpg",
-    "legende": "Même les trimarans de course font pâle figure à côté de ces géants de l'America's Cup"
+    "legende": "Même les trimarans de course font pâle figure à côté de ces géants de l'America's Cup",
+    "l": 640,
+    "h": 399
    },
    {
     "src": "data/album/USA2/images/img_3436.jpg",
-    "legende": "Les grands vainqueurs et leur cortège..."
+    "legende": "Les grands vainqueurs et leur cortège...",
+    "l": 640,
+    "h": 246
    },
    {
     "src": "data/album/USA2/images/img_3445.jpg",
-    "legende": "... des vaincus ;o("
+    "legende": "... des vaincus ;o(",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA2/images/img_3483.jpg",
-    "legende": "Et profite aussi des pauses"
+    "legende": "Et profite aussi des pauses",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/USA2/images/img_3474.jpg",
-    "legende": "Ainsi que du spectacle offert par SAP en plein ciel"
+    "legende": "Ainsi que du spectacle offert par SAP en plein ciel",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "data/album/USA2/images/img_3480.jpg",
-    "legende": "En voilà les acteurs presqu'invisibles"
+    "legende": "En voilà les acteurs presqu'invisibles",
+    "l": 640,
+    "h": 149
    },
    {
     "src": "data/album/USA2/images/img_3488.jpg",
-    "legende": "Plus près du ciel... plus près d'internet"
+    "legende": "Plus près du ciel... plus près d'internet",
+    "l": 640,
+    "h": 427
    }
   ],
   "escales": [
@@ -4671,99 +6659,147 @@
   "photos": [
    {
     "src": "data/album/US Parks 1/images/img_3494.jpg",
-    "legende": "Coucher de soleil sur les montagnes du Névada (vue de notre campement)"
+    "legende": "Coucher de soleil sur les montagnes du Névada (vue de notre campement)",
+    "l": 640,
+    "h": 351
    },
    {
     "src": "data/album/US Parks 1/images/img_3509.jpg",
-    "legende": "Le ciel est parfois très bas"
+    "legende": "Le ciel est parfois très bas",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_3828.jpg",
-    "legende": "Une petite famille de wapitis"
+    "legende": "Une petite famille de wapitis",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_3911.jpg",
-    "legende": "Les arbres en souffrent..."
+    "legende": "Les arbres en souffrent...",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_3934.jpg",
-    "legende": "Geysers"
+    "legende": "Geysers",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4021.jpg",
-    "legende": "Autre rivière coulant paisiblement en plaine"
+    "legende": "Autre rivière coulant paisiblement en plaine",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4051.jpg",
-    "legende": "Belle bête"
+    "legende": "Belle bête",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4111.jpg",
-    "legende": "Joli paysage"
+    "legende": "Joli paysage",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4155.jpg",
-    "legende": "Magnifique pool"
+    "legende": "Magnifique pool",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4227.jpg",
-    "legende": "Nous étions à celui-ci juste à temps"
+    "legende": "Nous étions à celui-ci juste à temps",
+    "l": 640,
+    "h": 331
    },
    {
     "src": "data/album/US Parks 1/images/img_4299.jpg",
-    "legende": "Encore une rivière de plaine"
+    "legende": "Encore une rivière de plaine",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4361.jpg",
-    "legende": "Chaîne de montagnes du parc Grand Teton"
+    "legende": "Chaîne de montagnes du parc Grand Teton",
+    "l": 640,
+    "h": 229
    },
    {
     "src": "data/album/US Parks 1/images/img_4406.jpg",
-    "legende": "Le Wyoming en automne"
+    "legende": "Le Wyoming en automne",
+    "l": 640,
+    "h": 384
    },
    {
     "src": "data/album/US Parks 1/images/img_4437.jpg",
-    "legende": "Coucher de soleil sur un campement sauvage"
+    "legende": "Coucher de soleil sur un campement sauvage",
+    "l": 640,
+    "h": 353
    },
    {
     "src": "data/album/US Parks 1/images/img_4460.jpg",
-    "legende": "Un jour, la terre s'est soulevée"
+    "legende": "Un jour, la terre s'est soulevée",
+    "l": 640,
+    "h": 288
    },
    {
     "src": "data/album/US Parks 1/images/img_4519.jpg",
-    "legende": "Dead Horse Point"
+    "legende": "Dead Horse Point",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "data/album/US Parks 1/images/img_4543.jpg",
-    "legende": "Mimiss avec encore quelques flocons dans les cheveux"
+    "legende": "Mimiss avec encore quelques flocons dans les cheveux",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4613.jpg",
-    "legende": "... on grimpe..."
+    "legende": "... on grimpe...",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4614.jpg",
-    "legende": "... pour pouvoir enfin admirer le coucher de soleil sur Canyonland, dont nous sommes privés !!"
+    "legende": "... pour pouvoir enfin admirer le coucher de soleil sur Canyonland, dont nous sommes privés !!",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4698.jpg",
-    "legende": "Cactus rencontrés sur le chemin"
+    "legende": "Cactus rencontrés sur le chemin",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4727.jpg",
-    "legende": "Une rencontre tout à fait mignone"
+    "legende": "Une rencontre tout à fait mignone",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4824.jpg",
-    "legende": "Les paysages sont vraiment grandioses"
+    "legende": "Les paysages sont vraiment grandioses",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 1/images/img_4769.jpg",
-    "legende": "Allez hop, on est reparti !!"
+    "legende": "Allez hop, on est reparti !!",
+    "l": 640,
+    "h": 223
    },
    {
     "src": "data/album/US Parks 1/images/img_4809.jpg",
-    "legende": "Les filles font du cheval sur les clôtures d'un ancien repère de cowboys"
+    "legende": "Les filles font du cheval sur les clôtures d'un ancien repère de cowboys",
+    "l": 640,
+    "h": 427
    }
   ],
   "escales": [
@@ -4780,99 +6816,147 @@
   "photos": [
    {
     "src": "data/album/US Parks 2/images/img_4900.jpg",
-    "legende": "On aimerait tellement visiter le 'Natural Bridges National Park'..."
+    "legende": "On aimerait tellement visiter le 'Natural Bridges National Park'...",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_4889.jpg",
-    "legende": "La terre est bien sèche"
+    "legende": "La terre est bien sèche",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_4931.jpg",
-    "legende": "... on souffle un coup..."
+    "legende": "... on souffle un coup...",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_4969.jpg",
-    "legende": "... vraiment étonnants..."
+    "legende": "... vraiment étonnants...",
+    "l": 640,
+    "h": 269
    },
    {
     "src": "data/album/US Parks 2/images/img_5013.jpg",
-    "legende": "Et on finit la soirée dans le van avec un bon bouquin"
+    "legende": "Et on finit la soirée dans le van avec un bon bouquin",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_5077.jpg",
-    "legende": "Et nous y faisons une très belle balade jusque dans son fin fond"
+    "legende": "Et nous y faisons une très belle balade jusque dans son fin fond",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_5131.jpg",
-    "legende": "'Petrified Forest' ... national parc... donc fermé"
+    "legende": "'Petrified Forest' ... national parc... donc fermé",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_5187.jpg",
-    "legende": "Encore d'autres cactus"
+    "legende": "Encore d'autres cactus",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_5241.jpg",
-    "legende": "Tout simplement magnifique"
+    "legende": "Tout simplement magnifique",
+    "l": 640,
+    "h": 180
    },
    {
     "src": "data/album/US Parks 2/images/img_5334.jpg",
-    "legende": "Autre vieille Américaine"
+    "legende": "Autre vieille Américaine",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_5416.jpg",
-    "legende": "On descend, sous le niveau du plateau"
+    "legende": "On descend, sous le niveau du plateau",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_5555.jpg",
-    "legende": "car c'est un Navajo Tribal Parc..."
+    "legende": "car c'est un Navajo Tribal Parc...",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_6135.jpg",
-    "legende": "Bryce Canyon !!"
+    "legende": "Bryce Canyon !!",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/US Parks 2/images/img_5762.jpg",
-    "legende": "Où la nature une fois de plus..."
+    "legende": "Où la nature une fois de plus...",
+    "l": 427,
+    "h": 640
    },
    {
     "src": "data/album/US Parks 2/images/img_5860.jpg",
-    "legende": "Yeah !!"
+    "legende": "Yeah !!",
+    "l": 640,
+    "h": 390
    },
    {
     "src": "data/album/US Parks 2/images/img_6233.jpg",
-    "legende": "... du Venetian"
+    "legende": "... du Venetian",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/US Parks 2/images/img_6275.jpg",
-    "legende": "Excalibur"
+    "legende": "Excalibur",
+    "l": 640,
+    "h": 360
    },
    {
     "src": "data/album/US Parks 2/images/img_5883.jpg",
-    "legende": "Quelles palettes de couleurs"
+    "legende": "Quelles palettes de couleurs",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_5936.jpg",
-    "legende": "On reprend un peu d'altitude"
+    "legende": "On reprend un peu d'altitude",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_6008.jpg",
-    "legende": "C'est assez étrange..."
+    "legende": "C'est assez étrange...",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_6095.jpg",
-    "legende": "Autre balade dans une forêt qui a manifestement bien brûlé"
+    "legende": "Autre balade dans une forêt qui a manifestement bien brûlé",
+    "l": 640,
+    "h": 301
    },
    {
     "src": "data/album/US Parks 2/images/img_6155.jpg",
-    "legende": "... pour se rapprocher..."
+    "legende": "... pour se rapprocher...",
+    "l": 640,
+    "h": 339
    },
    {
     "src": "data/album/US Parks 2/images/img_6196.jpg",
-    "legende": "... de m'en donner à coeur joie..."
+    "legende": "... de m'en donner à coeur joie...",
+    "l": 640,
+    "h": 427
    },
    {
     "src": "data/album/US Parks 2/images/img_6274.jpg",
-    "legende": "Objectif de notre balade"
+    "legende": "Objectif de notre balade",
+    "l": 640,
+    "h": 427
    }
   ],
   "escales": [

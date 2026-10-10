@@ -506,3 +506,50 @@ test('la page de garde se quitte au clavier et rend la main à la carte', async 
   await page.keyboard.press('Tab');
   await expect(page.locator('#lecture')).toBeFocused();
 });
+
+test('le roadtrip de 2013 se lit sur le globe et ouvre le carnet au bon billet', async ({ page }) => {
+  await ouvreExperience(page, { width: 1366, height: 768 });
+  await page.waitForFunction(() => window.__sillage.roadtrip);
+  // over the western parks, close enough for the stops to show
+  await page.evaluate(() => {
+    const { camera, controls } = window.__sillage;
+    controls.dispatchEvent({ type: 'start' });
+    const [lat, lon, d] = [40, -114, 1.75];
+    const phi = (90 - lat) * Math.PI / 180;
+    const theta = (lon + 180) * Math.PI / 180;
+    camera.position.set(-d * Math.sin(phi) * Math.cos(theta), d * Math.cos(phi),
+      d * Math.sin(phi) * Math.sin(theta));
+    camera.lookAt(0, 0, 0);
+    controls.update();
+  });
+  await page.waitForFunction(() => window.__sillage.etatComposition().roadtrip?.points >= 8);
+  const etat = await page.evaluate(() => window.__sillage.etatComposition().roadtrip);
+  expect(etat.visible).toBe(true);
+  const cible = etat.marqueurs.find(m => m.nom === 'Bryce Canyon' && m.x !== undefined)
+    ?? etat.marqueurs.find(m => m.x !== undefined);
+  await page.mouse.move(cible.x, cible.y);
+  await expect(page.locator('#infobulle')).toBeVisible();
+  await expect(page.locator('#infobulle')).toContainText('en camping-car');
+  await page.mouse.click(cible.x, cible.y);
+  await page.waitForFunction(() => window.__sillage.plongee.ouverte, null, { timeout: 30_000 });
+  await expect(page.locator('#plongee-nom')).toHaveText('San Francisco');
+  // the journal opens on that stop's post, not at the top
+  await page.waitForFunction((id) => {
+    const flux = document.getElementById('plongee-flux');
+    const billet = document.getElementById(`billet-${id}`);
+    return billet && Math.abs(flux.scrollTop - (billet.offsetTop - 14)) < 4;
+  }, cible.billet);
+  // the trip's own map and list sit in the same journal
+  await expect(page.locator('#roadtrip .roadtrip-point')).toHaveCount(etat.lieux);
+  await expect(page.locator('#roadtrip .roadtrip-liste li')).toHaveCount(23);
+  await page.locator('#roadtrip .roadtrip-liste summary').click();
+  await page.locator('#roadtrip .roadtrip-liste li').first().locator('button').click();
+  await page.waitForFunction(() => {
+    const flux = document.getElementById('plongee-flux');
+    const billet = document.getElementById('billet-540');
+    return Math.abs(flux.scrollTop - (billet.offsetTop - 14)) < 4;
+  });
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(() => !window.__sillage.plongee.ouverte && !window.__sillage.plongee.enVol);
+  await page.waitForFunction(() => window.__sillage.etatComposition().roadtrip?.visible === true);
+});
