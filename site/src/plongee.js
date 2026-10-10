@@ -32,13 +32,38 @@ const formatLong = new Intl.DateTimeFormat('fr-FR', {
   day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',
 });
 
+// A stop with no post of its own is sometimes mentioned in a post written
+// nearby (pipeline/build_data.py keeps that sentence word for word): the
+// journal quotes it and leads to the post, instead of a dead end.
+export function blocEvoque(evoque, { surBillet }) {
+  const bloc = document.createElement('div');
+  bloc.className = 'plongee-evoque';
+  for (const v of evoque) {
+    const citation = document.createElement('blockquote');
+    citation.textContent = `« ${v.phrase} »`;
+    const lien = document.createElement('button');
+    lien.type = 'button';
+    lien.className = 'evoque-lien';
+    const quoi = document.createElement('span');
+    quoi.className = 'evoque-titre';
+    quoi.textContent = `Lire « ${v.titre} »`;
+    const quand = document.createElement('span');
+    quand.className = 'evoque-date';
+    quand.textContent = `${formatLong.format(new Date(`${v.date}T12:00:00Z`))} · ${v.escale}`;
+    lien.append(quoi, quand);
+    lien.addEventListener('click', () => surBillet(v));
+    bloc.append(citation, lien);
+  }
+  return bloc;
+}
+
 const lisse = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
 export function creerPlongee({ camera, controls, timeline, regleSuivi,
   regleVisibiliteBateau = () => {}, regleVisibiliteRoute = () => {},
   regleDetailIle = () => false, cacheDetailIle = () => {}, vuesAeriennes = {},
   herosEscales = {}, mouillagesParCle, carnetsPrets = Promise.resolve(), scene, relief,
-  roadtrip = Promise.resolve([]), voisines = () => ({}) }) {
+  roadtrip = Promise.resolve([]), voisines = () => ({}), escaleParCle = () => null }) {
   const panneau = document.getElementById('plongee');
   const titre = document.getElementById('plongee-nom');
   const sousTitre = document.getElementById('plongee-dates');
@@ -754,6 +779,15 @@ function opaciteRaccordLod(t) {
       p.className = 'plongee-vide';
       p.textContent = 'Aucun billet du blog n’a été écrit depuis ce mouillage.';
       flux.append(p);
+      if (escale.evoque?.length) {
+        p.textContent += ` Il est évoqué dans ${escale.evoque.length > 1 ? 'des billets voisins' : 'un billet voisin'} :`;
+        flux.append(blocEvoque(escale.evoque, {
+          surBillet: (v) => {
+            const cible = escaleParCle(v.escale, v.escale_arrivee);
+            if (cible) versVoisine(cible, v.id);
+          },
+        }));
+      }
       ajouteSuite(escale);
       return;
     }
@@ -840,12 +874,12 @@ function opaciteRaccordLod(t) {
   // From a reviewed close-up the camera first rises back through the sea
   // wash (never a magnified atlas in between), then flies to the neighbour.
   let apresRetour = null;
-  function versVoisine(escale) {
+  function versVoisine(escale, billet = null) {
     if (detailSelectionnee) {
       remonte();
-      apresRetour = escale;
+      apresRetour = { escale, billet };
     } else {
-      void vers(escale);
+      void vers(escale, { billet });
     }
   }
 
@@ -1037,7 +1071,7 @@ function opaciteRaccordLod(t) {
         apresRetour = null;
         cacheDetailIle();
         detailSelectionnee = null;
-        void vers(suite);
+        void vers(suite.escale, { billet: suite.billet });
         [focusAvantPlongee, focaleAvantPlongee, distanceRetour] = memoire;
         return;
       }
