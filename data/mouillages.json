@@ -719,7 +719,30 @@
       "h": 240
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Canal de Panama",
+  "lat": 9.12,
+  "lon": -79.72,
+  "log_nm": 1250,
+  "date_arrivee": "2009-06-25",
+  "date_depart": null,
+  "type": "traversee",
+  "chapitre": "Vers le Pacifique",
+  "articles": []
+ },
+ {
+  "nom": "Balboa (l'oeil du tigre)",
+  "lat": 8.94,
+  "lon": -79.56,
+  "log_nm": 1300,
+  "date_arrivee": "2009-06-27",
+  "date_depart": null,
+  "type": "mouillage",
+  "chapitre": "Vers le Pacifique",
+  "articles": [
    {
     "id": 52,
     "date": "2009-06-25",
@@ -763,23 +786,12 @@
   ]
  },
  {
-  "nom": "Canal de Panama",
-  "lat": 9.12,
-  "lon": -79.72,
-  "log_nm": 1250,
-  "date_arrivee": "2009-06-25",
-  "date_depart": null,
-  "type": "traversee",
-  "chapitre": "Vers le Pacifique",
-  "articles": []
- },
- {
-  "nom": "Balboa (l'oeil du tigre)",
-  "lat": 8.94,
-  "lon": -79.56,
-  "log_nm": 1300,
-  "date_arrivee": "2009-06-27",
-  "date_depart": null,
+  "nom": "Las Perlas",
+  "lat": 8.625,
+  "lon": -79.034,
+  "log_nm": 1350,
+  "date_arrivee": "2009-06-28",
+  "date_depart": "2009-07-01",
   "type": "mouillage",
   "chapitre": "Vers le Pacifique",
   "articles": [
@@ -816,19 +828,7 @@
       "h": 320
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Las Perlas",
-  "lat": 8.625,
-  "lon": -79.034,
-  "log_nm": 1350,
-  "date_arrivee": "2009-06-28",
-  "date_depart": "2009-07-01",
-  "type": "mouillage",
-  "chapitre": "Vers le Pacifique",
-  "articles": [
+   },
    {
     "id": 54,
     "date": "2009-06-28",
@@ -3607,7 +3607,19 @@
       "h": 320
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Marquises - Nuku Hiva",
+  "lat": -8.918,
+  "lon": -140.096,
+  "log_nm": 6355,
+  "date_arrivee": "2009-12-27",
+  "date_depart": "2010-02-03",
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
    {
     "id": 149,
     "date": "2009-12-27",
@@ -3625,19 +3637,7 @@
       "h": 271
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Marquises - Nuku Hiva",
-  "lat": -8.918,
-  "lon": -140.096,
-  "log_nm": 6355,
-  "date_arrivee": "2009-12-27",
-  "date_depart": "2010-02-03",
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
+   },
    {
     "id": 150,
     "date": "2009-12-29",
@@ -8564,19 +8564,7 @@
       "h": 162
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Fidji - Yasawairara",
-  "lat": -16.712,
-  "lon": 177.572,
-  "log_nm": 10150,
-  "date_arrivee": "2010-10-22",
-  "date_depart": null,
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
+   },
    {
     "id": 280,
     "date": "2010-10-21",
@@ -8638,11 +8626,11 @@
   ]
  },
  {
-  "nom": "Fidji - Blue Lagoon",
-  "lat": -16.94,
-  "lon": 177.368,
-  "log_nm": 10170,
-  "date_arrivee": "2010-10-25",
+  "nom": "Fidji - Yasawairara",
+  "lat": -16.712,
+  "lon": 177.572,
+  "log_nm": 10150,
+  "date_arrivee": "2010-10-22",
   "date_depart": null,
   "type": "mouillage",
   "chapitre": "Le Grand Pacifique",
@@ -8744,6 +8732,17 @@
   ]
  },
  {
+  "nom": "Fidji - Blue Lagoon",
+  "lat": -16.94,
+  "lon": 177.368,
+  "log_nm": 10170,
+  "date_arrivee": "2010-10-25",
+  "date_depart": null,
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": []
+ },
+ {
   "nom": "Fidji - Likuliku",
   "lat": -17.29,
   "lon": 177.14,
@@ -8840,17 +8839,6 @@
   "date_depart": null,
   "type": "mouillage",
   "chapitre": "Le Grand Pacifique",
-  "articles": []
- },
- {
-  "nom": "Fidji - Mana",
-  "lat": -17.672,
-  "lon": 177.098,
-  "log_nm": 10205,
-  "date_arrivee": "2010-11-02",
-  "date_depart": null,
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
   "articles": [
    {
     "id": 285,
@@ -8893,7 +8881,19 @@
       "h": 360
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Fidji - Mana",
+  "lat": -17.672,
+  "lon": 177.098,
+  "log_nm": 10205,
+  "date_arrivee": "2010-11-02",
+  "date_depart": null,
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
    {
     "id": 286,
     "date": "2010-11-02",
@@ -9333,19 +9333,7 @@
       "h": 480
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Fidji - Suva",
-  "lat": -18.13,
-  "lon": 178.425,
-  "log_nm": 10470,
-  "date_arrivee": "2010-11-24",
-  "date_depart": null,
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
+   },
    {
     "id": 295,
     "date": "2010-11-23",
@@ -9387,7 +9375,19 @@
       "h": 360
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Fidji - Suva",
+  "lat": -18.13,
+  "lon": 178.425,
+  "log_nm": 10470,
+  "date_arrivee": "2010-11-24",
+  "date_depart": null,
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
+  "articles": [
    {
     "id": 296,
     "date": "2010-11-24",
@@ -14870,7 +14870,17 @@
   "date_depart": "2012-07-23",
   "type": "mouillage",
   "chapitre": "Le retour en Polynésie",
-  "articles": []
+  "articles": [],
+  "evoque": [
+   {
+    "id": 439,
+    "date": "2012-07-25",
+    "titre": "Raiatea, Les 12 travaux de Philippe",
+    "escale": "Raiatea",
+    "escale_arrivee": "2012-07-26",
+    "phrase": "Elle fait du snorkeling à Tahiti, elle plonge avec les raies de Moorea, elle se promène à Huahine et elle joue avec les dauphins à Raiatea."
+   }
+  ]
  },
  {
   "nom": "Huahine",
@@ -14881,7 +14891,17 @@
   "date_depart": "2012-07-26",
   "type": "mouillage",
   "chapitre": "Le retour en Polynésie",
-  "articles": []
+  "articles": [],
+  "evoque": [
+   {
+    "id": 439,
+    "date": "2012-07-25",
+    "titre": "Raiatea, Les 12 travaux de Philippe",
+    "escale": "Raiatea",
+    "escale_arrivee": "2012-07-26",
+    "phrase": "Elle fait du snorkeling à Tahiti, elle plonge avec les raies de Moorea, elle se promène à Huahine et elle joue avec les dauphins à Raiatea."
+   }
+  ]
  },
  {
   "nom": "Raiatea",
@@ -15928,7 +15948,17 @@
   "date_depart": "2012-11-19",
   "type": "mouillage",
   "chapitre": "Le retour en Polynésie",
-  "articles": []
+  "articles": [],
+  "evoque": [
+   {
+    "id": 464,
+    "date": "2012-11-23",
+    "titre": "On insiste",
+    "escale": "Hiva Oa",
+    "escale_arrivee": "2012-11-19",
+    "phrase": "Après un bref séjour à Tahuata, l'île voisine, où j'ai pu valider que mes aptitudes au harpon n'ont pas progressé depuis notre dernière visite…"
+   }
+  ]
  },
  {
   "nom": "Hiva Oa",
@@ -19126,7 +19156,17 @@
   "date_depart": "2013-08-22",
   "type": "mouillage",
   "chapitre": "Le grand nord",
-  "articles": []
+  "articles": [],
+  "evoque": [
+   {
+    "id": 531,
+    "date": "2013-08-21",
+    "titre": "Sidney, pause pipi",
+    "escale": "Sidney",
+    "escale_arrivee": "2013-08-20",
+    "phrase": "Après une nuit passée face à la marina, nous sommes partis vers d'autres aventures, en la prestigieuse île d'Arcy."
+   }
+  ]
  },
  {
   "nom": "Chatham Islands",
@@ -19244,7 +19284,17 @@
   "date_depart": "2013-09-05",
   "type": "mouillage",
   "chapitre": "La côte américaine",
-  "articles": []
+  "articles": [],
+  "evoque": [
+   {
+    "id": 535,
+    "date": "2013-09-11",
+    "titre": "San Francisco, arrivée dans la brume",
+    "escale": "San Francisco",
+    "escale_arrivee": "2013-09-10",
+    "phrase": "En fin de journée, nous avions prévu une brève escale nocturne à Neah Bay, histoire de prendre la dernière météo disponible."
+   }
+  ]
  },
  {
   "nom": "Neah Bay to San Francisco",
@@ -20739,7 +20789,17 @@
   "date_depart": "2013-11-14",
   "type": "mouillage",
   "chapitre": "La côte américaine",
-  "articles": []
+  "articles": [],
+  "evoque": [
+   {
+    "id": 564,
+    "date": "2013-11-14",
+    "titre": "Channel Islands",
+    "escale": "Santa Barbara Island",
+    "escale_arrivee": "2013-11-12",
+    "phrase": "Un peu plus loin, nous avons retrouvé la civilisation en arrivant à Catalina, île située à 35 km de Los Angeles et sur laquelle se trouve Avalon, petite bourgade qui fait office de Knokke le Zoute insulaire pour les marins du dimanche Losangelesois."
+   }
+  ]
  },
  {
   "nom": "San Diego",

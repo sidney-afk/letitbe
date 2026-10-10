@@ -41,6 +41,10 @@ def extrait(texte: str, longueur: int = 320) -> str:
 # un titre qui dit la mer : « Traversée … », « En mer », « J12 »
 MER = re.compile(r"\btravers|\ben mer\b|\bj\d+\b")
 
+# « … vers Beveridge Reef », « En route pour Rangiroa », « Sur la route de
+# Port Mc Neil » : ce qui suit est la destination
+DESTINATION = re.compile(r"\b(?:vers|pour|route de|route du|route des|direction)\b")
+
 # mots trop communs pour désigner une escale à eux seuls
 MOTS_GENERIQUES = {
     "fidji", "tonga", "marquises", "tuamotu", "iles", "island", "islands",
@@ -54,12 +58,48 @@ def mots(texte: str) -> list[str]:
     return re.findall(r"[a-z]+", t)
 
 
+def mots_cites(titre: str, nom: str) -> tuple[int, float]:
+    """Combien de mots propres à cette escale le titre du billet cite-t-il
+    (« Bora Bora, ne croyez pas tout… »), et quelle part de son nom ?
+    « Arrivée à Nuku Hiva » cite deux mots de Nuku Hiva ; « Noël à Hiva Oa »
+    en cite un de chacune, mais tout le nom de Hiva Oa (« oa » est trop
+    court pour compter) et la moitié seulement de celui de Nuku Hiva."""
+    propres = {m for m in mots(nom) if len(m) > 3 and m not in MOTS_GENERIQUES}
+    # « En route pour Rangiroa. » raconte l'escale d'avant (Toau) : un lieu
+    # annoncé comme destination ne désigne pas l'escale du billet
+    titre = DESTINATION.split(" ".join(mots(titre)), 1)[0]
+    cites = len(propres & set(titre.split()))
+    return cites, cites / len(propres) if propres else 0.0
+
+
 def nomme_escale(titre: str, nom: str) -> bool:
-    """Le titre du billet cite-t-il cette escale (« Bora Bora, ne croyez
-    pas tout… ») ? On ne compte que les mots propres au lieu."""
-    propres = [m for m in mots(nom) if len(m) > 3 and m not in MOTS_GENERIQUES]
-    du_titre = set(mots(titre))
-    return any(m in du_titre for m in propres)
+    return mots_cites(titre, nom)[0] > 0
+
+
+def phrase_qui_cite(blocs: list, propres: set[str]) -> str | None:
+    """La première phrase d'un billet qui nomme ce lieu, mot pour mot ;
+    rognée autour du nom (« … ») si elle est très longue."""
+    for bloc in blocs:
+        if not isinstance(bloc, str):
+            continue
+        for phrase in re.split(r"(?<=[.!?…])\s+", bloc.strip()):
+            if not propres <= set(mots(phrase)):
+                continue
+            if len(phrase) <= 280:
+                return phrase
+            # autour du premier mot du nom, coupé entre deux mots
+            plat = unicodedata.normalize("NFKD", phrase).encode("ascii", "ignore").decode().lower()
+            ici = min(plat.find(m) for m in propres if m in plat)
+            ici = round(ici * len(phrase) / max(len(plat), 1))
+            # de préférence à une virgule, un peu après le nom
+            virgule = phrase.find(",", ici + 40)
+            if ici < 200 and 0 < virgule <= 300:
+                return phrase[:virgule] + "…"
+            a = phrase.rfind(" ", 0, max(0, ici - 130)) + 1
+            b = phrase.find(" ", min(len(phrase), ici + 130))
+            b = len(phrase) if b < 0 else b
+            return ("…" if a > 0 else "") + phrase[a:b].strip(" ,;:") + ("…" if b < len(phrase) else "")
+    return None
 
 
 def main() -> None:
@@ -127,11 +167,26 @@ def main() -> None:
         if candidats:
             # un billet qui nomme une escale dans son titre lui revient
             # (« Nananu, ça sent la pizza », daté du jour où l'on quitte
-            # Naigani pour Nananu) ; sinon, fenêtre la plus courte = escale
-            # la plus spécifique (ex. Faaite pendant le séjour à Fakarava)
-            nommees = [c for c in candidats
-                       if nomme_escale(art["titre"], mouillages[c[0]]["nom"])]
-            i = min(nommees or candidats, key=lambda c: c[1])[0]
+            # Naigani pour Nananu), même écrit un ou deux jours après l'avoir
+            # quittée (« Vanua Lailai, beau au-dessus, beau en-dessous. »,
+            # daté du lendemain, au mouillage suivant) ; sinon, fenêtre la
+            # plus courte = escale la plus spécifique (ex. Faaite pendant le
+            # séjour à Fakarava)
+            dans = {c[0] for c in candidats}
+            voisines = [(i, 0) for i, m in enumerate(mouillages)
+                        if i not in dans and m["type"] != "traversee"
+                        and m["date_arrivee"]
+                        and abs((date.fromisoformat(m["date_arrivee"]) - d).days) <= 3]
+            cites = {c[0]: mots_cites(art["titre"], mouillages[c[0]]["nom"])
+                     for c in candidats + voisines}
+            nommees = [c for c in candidats + voisines if cites[c[0]][0]]
+            if nommees:
+                # le plus de mots cités, puis la plus grande part du nom,
+                # puis une escale où l'on était ce jour-là, la plus précise
+                i = min(nommees, key=lambda c: (-cites[c[0]][0], -cites[c[0]][1],
+                                                c[0] not in dans, c[1]))[0]
+            else:
+                i = min(candidats, key=lambda c: c[1])[0]
             pour_mouillage[i].append(art)
         elif d >= date(2009, 5, 27):
             # article écrit dans un trou entre escales ou en mer (« Traversée
@@ -190,6 +245,35 @@ def main() -> None:
                 **({"en_mer": True} if a.get("en_mer") else {}),
             } for a in arts],
         })
+    # Une escale sans billet à elle est parfois évoquée dans un billet écrit
+    # tout près (« … en la prestigieuse île d'Arcy. ») : on garde la phrase,
+    # telle quelle, et le billet où la lire. Jamais un billet d'une autre
+    # visite au même lieu (« Retour à Moorea », une semaine plus tard).
+    for e in enrichis:
+        if e["articles"] or e["type"] != "mouillage":
+            continue
+        propres = {m for m in mots(e["nom"]) if len(m) > 3 and m not in MOTS_GENERIQUES}
+        if not propres:
+            continue
+        debut = date.fromisoformat(e["date_arrivee"])
+        fin = date.fromisoformat(e["date_depart"]) if e["date_depart"] else debut
+        evoque = []
+        for autre in enrichis:
+            if autre["nom"] == e["nom"]:
+                continue
+            for art in autre["articles"]:
+                d = date.fromisoformat(art["date"])
+                if not debut - timedelta(days=2) <= d <= fin + timedelta(days=7):
+                    continue
+                phrase = phrase_qui_cite(art["blocs"], propres)
+                if phrase:
+                    evoque.append({
+                        "id": art["id"], "date": art["date"], "titre": art["titre"],
+                        "escale": autre["nom"], "escale_arrivee": autre["date_arrivee"],
+                        "phrase": phrase,
+                    })
+        if evoque:
+            e["evoque"] = sorted(evoque, key=lambda x: x["date"])[:3]
     (DATA / "mouillages.json").write_text(
         json.dumps(enrichis, ensure_ascii=False, indent=1))
 

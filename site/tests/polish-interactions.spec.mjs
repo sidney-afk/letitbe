@@ -610,11 +610,32 @@ test('le carnet se lit d’escale en escale, même depuis une vue rapprochée', 
   // a stop without a post still leads on
   await page.evaluate(async () => {
     const { plongee, route } = window.__sillage;
-    await plongee.vers(route.escales.find(e => e.nom === 'Fidji - Vanua Lailai'));
+    await plongee.vers(route.escales.find(e => e.nom === 'Fidji - Naboutini'));
     plongee.metAJour(10);
   });
   await expect(page.locator('#plongee-flux .plongee-vide')).toBeVisible();
   await expect(page.locator('#plongee-flux .plongee-suite button')).toHaveCount(2);
+
+  // a stop the blog only mentions quotes that sentence and leads to its post
+  await page.evaluate(async () => {
+    const { plongee, route } = window.__sillage;
+    await plongee.vers(route.escales.find(e => e.nom === 'D\'Arcy Island'));
+    plongee.metAJour(10);
+  });
+  await expect(page.locator('#plongee-flux .plongee-vide')).toContainText('évoqué dans un billet voisin');
+  await expect(page.locator('#plongee-flux .plongee-evoque blockquote')).toContainText('la prestigieuse île d\'Arcy');
+  await page.locator('#plongee-flux .evoque-lien').click();
+  await page.waitForFunction(() => {
+    window.__sillage.plongee.metAJour(10);
+    return document.getElementById('plongee-nom')?.textContent === 'Sidney'
+      && window.__sillage.plongee.ouverte;
+  }, null, { timeout: 30_000 });
+  await page.waitForFunction(() => {
+    const flux = document.getElementById('plongee-flux');
+    const titre = [...flux.querySelectorAll('article h3')].find(h => h.textContent === 'Sidney, pause pipi');
+    const billet = titre?.closest('article');
+    return billet && Math.abs(flux.scrollTop - (billet.offsetTop - 14)) < 4;
+  });
 });
 
 test('le sommaire retrouve un billet et ouvre son carnet à cet endroit', async ({ page }) => {

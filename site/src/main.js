@@ -9,7 +9,7 @@ import { creerRoute } from './route.js';
 import { creerBateau } from './boat.js';
 import { creerEtoiles } from './stars.js';
 import { creerTimeline } from './timeline.js';
-import { creerPlongee } from './plongee.js';
+import { creerPlongee, blocEvoque } from './plongee.js';
 import { creerRecit, CHAPITRES } from './recit.js';
 import { creerTraversee } from './traversee.js';
 import {
@@ -132,6 +132,13 @@ async function activeFallback2D() {
       const vide = document.createElement('p');
       vide.textContent = 'Aucun billet du blog n’a été écrit depuis ce mouillage.';
       conteneur.append(vide);
+      const evoque = complet?.evoque ?? [];
+      if (evoque.length) {
+        vide.textContent += ` Il est évoqué dans ${evoque.length > 1 ? 'des billets voisins' : 'un billet voisin'} :`;
+        conteneur.append(blocEvoque(evoque, {
+          surBillet: v => ouvreBilletFallback(v.escale, v.escale_arrivee, v.id),
+        }));
+      }
       return;
     }
     for (const article of articles) {
@@ -177,6 +184,21 @@ async function activeFallback2D() {
       }
     }
   };
+  // from a quoted mention to the post itself, in another stop's journal
+  const ouvreBilletFallback = async (nom, arrivee, id) => {
+    const index = escales.findIndex(e => e.nom === nom && e.date_arrivee === arrivee);
+    const details = document.querySelector(`#fallback-escale-${index} details`);
+    if (!details) return;
+    const carnet = details.querySelector('.fallback-carnet');
+    if (!carnet.dataset.rempli) {
+      carnet.dataset.rempli = '1';
+      carnet.remplissage = remplitCarnetFallback(escales[index], carnet);
+    }
+    details.open = true;
+    await carnet.remplissage;
+    const billet = document.getElementById(`fallback-billet-${id}`);
+    billet?.scrollIntoView({ block: 'start', behavior: mouvementReduit ? 'auto' : 'smooth' });
+  };
   escales.forEach((escale, index) => {
     const date = formatDateFallback.format(new Date(`${escale.date_arrivee}T12:00:00Z`));
     const option = document.createElement('option');
@@ -201,7 +223,7 @@ async function activeFallback2D() {
     details.addEventListener('toggle', () => {
       if (details.open && !carnet.dataset.rempli) {
         carnet.dataset.rempli = '1';
-        void remplitCarnetFallback(escale, carnet);
+        carnet.remplissage = remplitCarnetFallback(escale, carnet);
       }
     });
     item.append(details);
@@ -599,6 +621,7 @@ const plongee = creerPlongee({
       && e.date_arrivee === escale.date_arrivee);
     return i < 0 ? {} : { precedente: route.escales[i - 1], suivante: route.escales[i + 1] };
   },
+  escaleParCle: (nom, arrivee) => route.escales.find(e => e.nom === nom && e.date_arrivee === arrivee),
   relief, regleVisibiliteBateau: bateau.regleVisibilite,
   regleVisibiliteRoute: affiche => {
     route.groupe.visible = Boolean(affiche);

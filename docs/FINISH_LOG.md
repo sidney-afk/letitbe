@@ -187,7 +187,10 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
 - ~~Phone: weather line wraps ("ciel / couvert"), top buttons are bare
   icons.~~ Fixed in batch 8.
 - ~~Phone: the story card covers the boat.~~ Fixed in batch 6.
-- 24 of 134 stops have no blog article; their journal is a single line.
+- ~~24 of 134 stops have no blog article; their journal is a single line.~~
+  Batch 21: 25 anchorages (plus 7 crossings) have no post of their own; 6
+  of them now quote the nearby post that mentions them, and every journal
+  ends with the stops on either side.
 
 ### Promised in PLAN.md and not built
 
@@ -535,10 +538,33 @@ Built next (batch 15):
 
 - Batch 20: **the version without 3D, on a laptop.** On a computer that
   cannot draw the globe, opening a stop's journal scrolled the map out of
-  sight at once, and the journal sat in a column narrower than the list
-  beside it. The journal column is now the wider one, and the map stays in
-  view beside it while the journal is read (on phones the two are stacked,
+  sight at once, and the journal sat in a narrow column (about 28 % of the
+  width). The journal column is now wider (40 %, about 420 px of text at
+  1366 px, a comfortable reading width), and the map stays in view beside
+  it while the journal is read (on phones the two are stacked,
   so there the map still scrolls away with the page, as before).
+
+- Batch 21: **posts that named a stop sat at the next one.** A post whose
+  title names a stop now goes to that stop even when it was written a day
+  or two after leaving it ("Vanua Lailai, beau au-dessus, beau
+  en-dessous.", written at Mana the next day, left Vanua Lailai with an
+  empty journal). A place announced as a destination does not count ("En
+  route pour Rangiroa." tells the stop at Toau, so it stays there), and a
+  title that names two stops goes to the one it names more fully ("Arrivée
+  à Nuku Hiva" to Nuku Hiva, "Noël à Hiva Oa" stays at Hiva Oa). Eight
+  posts moved, each read before accepting it: the canal transit to Balboa,
+  "Balboa - Las Perlas" to Las Perlas, "Arrivée à Nuku Hiva", Sawa-I-Lau,
+  the two Yasawairara posts, Vanua Lailai and Dravuni.
+- **A stop with no post of its own now quotes the post that mentions it.**
+  Six such stops are named in a post written within a week, by another
+  stop: the journal quotes that sentence word for word and a button opens
+  that post ("… en la prestigieuse île d'Arcy." → "Sidney, pause pipi").
+  Moorea and Huahine (July 2012), Tahuata, D'Arcy Island, Neah Bay,
+  Catalina. A later visit to the same place never counts ("Retour à
+  Moorea" is about the next week). Same in the version without 3D.
+- **Home-screen icon.** Saving the site to an iPhone or iPad home screen
+  showed a blurred screenshot; it now shows the boat on its little sea
+  (`pipeline/icone_ecran.mjs`, drawn from the tab icon).
 
 ## Ideas for later
 
