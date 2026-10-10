@@ -587,6 +587,15 @@ welcome card, « L’équipage et le bateau » and « À propos », the sound.
 - Fixed: the ocean sound kept playing in a tab the visitor had left. It
   now falls silent while the page is hidden and comes back with it (only
   if it was on).
+- Batch 23: **an enlarged photo is now actually larger.** The archive's
+  photos are small (most 480 to 640 px wide; the blog never kept bigger
+  ones), and the viewer showed them at their own size: on a 1366×768
+  laptop, « enlarging » a 480 px photo gave 480 px, next to the 411 px it
+  already had in the journal. The viewer now fits the photo to the screen
+  like any photo viewer, never beyond twice its size so it does not turn to
+  mush (that photo now opens at 960×640, its caption still in view). Phones
+  are unchanged (the photo already filled the width); a phone on its side
+  fits photo and caption within 390 px.
 
 ## Ideas for later
 

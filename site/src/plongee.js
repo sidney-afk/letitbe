@@ -174,8 +174,22 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
       lightboxLegende.textContent = legende || '';
     }
     lightbox.hidden = false;
+    if (lightboxImg.complete) ajustePhoto();
     requestAnimationFrame(() => boutonFermerLightbox?.focus({ preventScroll: true }));
   }
+  // The archive's photos are small (most 480 to 640 px wide): shown at
+  // their own size, « enlarging » one on a laptop barely changed it. The
+  // viewer now fits the photo to the screen, never beyond twice its size.
+  function ajustePhoto() {
+    lightboxImg.style.width = '';
+    const { naturalWidth: l, naturalHeight: h } = lightboxImg;
+    if (lightbox.hidden || !l || !h) return;
+    const style = getComputedStyle(lightboxImg);
+    const echelle = Math.min(2, parseFloat(style.maxWidth) / l, parseFloat(style.maxHeight) / h);
+    if (echelle > 1) lightboxImg.style.width = `${Math.floor(l * echelle)}px`;
+  }
+  lightboxImg.addEventListener('load', ajustePhoto);
+  addEventListener('resize', ajustePhoto);
   boutonPrecedente?.addEventListener('click', () => serie && afficheDansSerie(serie.index - 1));
   boutonSuivante?.addEventListener('click', () => serie && afficheDansSerie(serie.index + 1));
   let debutGlisse = null;
