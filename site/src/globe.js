@@ -541,8 +541,12 @@ export function creerGlobe(relief, { carnetLeger = false } = {}) {
   function prepareRealiste() {
     if (realiste) return realiste;
     const textures = [
-      ['carteJour', './textures/earth_day_5400.jpg', THREE.SRGBColorSpace],
-      ['carteNuit', './textures/earth_night_3600.jpg', THREE.SRGBColorSpace],
+      // light devices (phones) get half-size maps: a quarter of the download,
+      // decoding time and graphics memory (pipeline/textures_legeres.py)
+      ['carteJour', carnetLeger ? './textures/earth_day_2700.jpg' : './textures/earth_day_5400.jpg',
+        THREE.SRGBColorSpace],
+      ['carteNuit', carnetLeger ? './textures/earth_night_1800.jpg' : './textures/earth_night_3600.jpg',
+        THREE.SRGBColorSpace],
       ['carteNormales', './textures/earth_normal_2048.jpg', THREE.NoColorSpace],
       ['carteNuages', './textures/clouds_2048.jpg', THREE.NoColorSpace],
     ].map(([nom, url, espace]) => chargePromesse(url, espace).promesse.then(texture => {
