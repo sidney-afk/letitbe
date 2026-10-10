@@ -385,6 +385,26 @@ Seen and left as is:
 - The boat at crossing zoom still reads as a white rectangle seen from
   above (see Needs Sidney: it is his explicit design, locked by tests).
 
+Built next (batch 9):
+- **Escale précédente / suivante.** At the end of every journal (and under
+  the line of a stop without a post) two buttons open the neighbouring
+  stops, so the voyage can be read stop after stop like the logbook,
+  without going back to the globe. From a reviewed close-up (Makogai,
+  Opua) the camera first rises through the sea wash, then flies on.
+  Moving between journals keeps what the visitor left on the map (focus,
+  lens, zoom) for the final return; before, entering a second stop would
+  have recorded the close-up's 5° lens as "the map's".
+- **Posts filed under the wrong stop (found through the new buttons).**
+  "Nananu, ça sent la pizza" sat in Naigani's journal while Nananu said
+  no post was written there. The date rule picked the shortest stay
+  around a post's date, and a short stop next door often won. Now a post
+  whose title names one of the candidate stops goes to that stop
+  (`pipeline/build_data.py`): 29 posts moved, each to the place its own
+  title names ("Bora Bora, ne croyez pas tout…" from Raiatea to Bora
+  Bora, "Les Gambier, enfin !" from the crossing to Gambier, the Fatu Hiva
+  posts from Tahuata to Fatu Hiva, the Canadian anchorages). Nothing else
+  changed: the rebuilt data was identical before the rule change.
+
 ## Ideas for later
 
 - Chapter quotes could also appear during the crossing (kept to titles for

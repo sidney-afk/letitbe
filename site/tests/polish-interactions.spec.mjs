@@ -588,7 +588,7 @@ test('le carnet se lit d’escale en escale, même depuis une vue rapprochée', 
   // a stop without a post still leads on
   await page.evaluate(async () => {
     const { plongee, route } = window.__sillage;
-    await plongee.vers(route.escales.find(e => e.nom === 'Fidji - Nananu'));
+    await plongee.vers(route.escales.find(e => e.nom === 'Fidji - Vanua Lailai'));
     plongee.metAJour(10);
   });
   await expect(page.locator('#plongee-flux .plongee-vide')).toBeVisible();
