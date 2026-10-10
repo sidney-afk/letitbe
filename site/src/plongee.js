@@ -1046,6 +1046,9 @@ function opaciteRaccordLod(t) {
 
   boutonRemonter.addEventListener('click', remonte);
   addEventListener('keydown', (e) => {
+    // a native dialog on top (the table of contents, « À propos ») owns the
+    // keyboard: the journal must not pull the focus back into itself
+    if (document.querySelector('dialog[open]')) return;
     if (!lightbox.hidden) {
       if (e.key === 'Escape') {
         e.preventDefault();
