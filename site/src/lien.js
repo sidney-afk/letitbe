@@ -32,7 +32,12 @@ export function suisLeCarnet({ plongee, escales, ouvre }) {
 
   // Called every frame: cheap, and it catches every way a journal opens,
   // changes or closes (globe, menu, table of contents, neighbours, Escape).
+  const titreSite = document.title;
   function metAJour() {
+    // the tab (and a bookmark) names the stop being read
+    const escale = plongee.escaleCourante;
+    const titre = escale ? `${escale.nom} · Le Sillage` : titreSite;
+    if (document.title !== titre) document.title = titre;
     const voulue = adresse();
     if (voulue === affiche) return;
     if (voulue && !affiche) {
