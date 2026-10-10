@@ -2416,3 +2416,157 @@ body[data-mode="photo"] .plongee-suite button {
 body[data-mode="photo"] .suite-nom { color: #dff3ff; }
 body[data-mode="photo"] .suite-sens { color: #e8c87a; }
 body[data-mode="photo"] .suite-date { color: rgba(223, 243, 255, .6); }
+
+/* — Le sommaire du carnet — */
+#sommaire {
+  margin: auto;
+  width: min(620px, calc(100vw - 24px));
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  padding: 28px 30px 24px;
+  border: 1px solid rgba(122, 84, 40, .55);
+  border-radius: 6px 18px 8px 20px / 16px 8px 19px 9px;
+  background: var(--grain), linear-gradient(168deg, #f9f2df, #f0e3c2);
+  box-shadow:
+    inset 0 0 0 3px rgba(252, 247, 235, .9),
+    inset 0 0 0 4px rgba(122, 84, 40, .3),
+    0 18px 50px rgba(40, 60, 90, .35);
+  color: #3a3530;
+  line-height: 1.45;
+}
+#sommaire::backdrop { background: rgba(40, 55, 75, .35); }
+#sommaire h2 {
+  font-family: "IM Fell English", "EB Garamond", serif;
+  font-weight: 400;
+  font-size: 1.7rem;
+  color: var(--bleu-encre);
+  margin-bottom: 12px;
+}
+#sommaire-fermer {
+  position: sticky;
+  top: 0;
+  float: right;
+  width: 44px;
+  height: 44px;
+  margin: -14px -16px 0 0;
+  border: 0;
+  background: none;
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--encre-claire);
+  cursor: pointer;
+}
+#sommaire-fermer:focus-visible { outline: 3px solid var(--or); outline-offset: -4px; }
+#sommaire label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: .85rem;
+  font-style: italic;
+  color: var(--encre-claire);
+}
+#sommaire-recherche {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid rgba(122, 84, 40, .55);
+  border-radius: 9px 12px 8px 13px / 12px 8px 13px 9px;
+  background: rgba(255, 252, 243, .95);
+  color: var(--encre);
+  font: inherit;
+  font-size: 1rem;
+}
+#sommaire-recherche:focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
+#sommaire-compte {
+  margin: 8px 0 4px;
+  font-size: .85rem;
+  font-style: italic;
+  color: var(--encre-claire);
+}
+.sommaire-chapitre h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  margin: 22px 0 6px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid rgba(122, 84, 40, .3);
+  font-family: "IM Fell English", "EB Garamond", serif;
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: var(--bleu-encre);
+}
+.sommaire-numero { font-family: "IM Fell English SC", serif; color: var(--or); }
+.sommaire-periode { margin-left: auto; font-size: .85rem; font-style: italic; color: var(--encre-claire); }
+.sommaire-escale { margin: 8px 0 2px; }
+.sommaire-escale button {
+  display: flex;
+  width: 100%;
+  min-height: 36px;
+  padding: 5px 6px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.sommaire-escale button:hover { background: rgba(232, 190, 90, .16); }
+.sommaire-escale button:focus-visible { outline: 3px solid var(--or); outline-offset: -2px; }
+.sommaire-lieu { flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+.sommaire-nom {
+  font-family: "IM Fell English SC", serif;
+  letter-spacing: .04em;
+  color: #7c5a16;
+}
+.sommaire-quand { font-size: .82rem; font-style: italic; color: var(--encre-claire); }
+.sommaire-escale ol { list-style: none; margin: 0 0 0 14px; padding: 0 0 0 10px; border-left: 1px dotted rgba(122, 84, 40, .35); }
+.sommaire-escale ol button { gap: 10px; align-items: baseline; }
+.sommaire-date { flex: none; width: 5.6em; font-size: .8rem; color: var(--encre-claire); }
+.sommaire-billet { color: var(--bleu-encre); }
+@media (max-width: 640px) {
+  #sommaire { padding: 22px 16px 18px; width: calc(100vw - 16px); max-height: calc(100dvh - 16px); }
+  .sommaire-escale ol { margin-left: 4px; }
+  .sommaire-date { width: 4.8em; }
+}
+.navigation-escales-corps .lien-sommaire {
+  width: 100%;
+  min-height: 44px;
+  border: 1px solid rgba(122, 84, 40, .4);
+  border-radius: 9px 12px 8px 13px / 12px 8px 13px 9px;
+  background: rgba(255, 251, 240, .7);
+  color: var(--encre);
+  font: inherit;
+  cursor: pointer;
+}
+.navigation-escales-corps .lien-sommaire:focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
+body[data-mode="photo"] .navigation-escales-corps .lien-sommaire {
+  background: rgba(232, 200, 122, .06);
+  border-color: rgba(232, 200, 122, .4);
+  color: #e8c87a;
+}
+
+/* the welcome card's two quiet links, side by side */
+.accueil-liens {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 22px;
+}
+.accueil-liens .lien-a-propos { justify-self: auto; }
+.accueil-liens .lien-sommaire {
+  min-height: 44px;
+  padding: 4px 2px;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: .88rem;
+  font-style: italic;
+  color: var(--encre-claire);
+  text-decoration: underline;
+  text-decoration-color: rgba(154, 108, 28, .45);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.accueil-liens .lien-sommaire:hover { color: var(--encre); }
+.accueil-liens .lien-sommaire:focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }

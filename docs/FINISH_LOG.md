@@ -405,6 +405,28 @@ Built next (batch 9):
   posts from Tahuata to Fatu Hiva, the Canadian anchorages). Nothing else
   changed: the rebuilt data was identical before the rule change.
 
+Built next (batch 10):
+- **23 posts could not be read anywhere.** Posts dated during a sea
+  crossing were filed under the crossing itself, and a crossing has no
+  journal on the site: the whole first Pacific crossing diary ("Traversée
+  du Pacifique J3 … J20"), the four "En mer" of the return crossing,
+  "Farewell New Zealand", the Panama Canal day ("Colon, le grand jour",
+  "Lac Gatun - Balboa"), "Equateur", "Bye Bye Hawaii", "San Francisco,
+  arrivée dans la brume". Crossings no longer own posts: a post goes to
+  the stop it was written at, or, written at sea, opens the journal of
+  the stop the boat was sailing to ("✉ écrit en mer").
+- **Le sommaire du carnet.** The whole logbook as a table of contents:
+  the eight chapters of the story, their stops, and under each stop the
+  titles of its posts, 537 in all. A search box finds a post or a place
+  ("noel hiva", "baleines", "fakarava"); choosing a post opens that
+  stop's journal right at it. Reached from "Explorer les escales" and from
+  the welcome card, for a visitor who comes to read rather than explore.
+- Testing note: in headless Chromium the page's animation clock freezes
+  once the globe renders (measured: `document.timeline` stops advancing
+  even with the 3D loop stopped). Screenshots taken without reduced
+  motion can show panels mid-fade; the suite runs with reduced motion and
+  my visual checks now do too.
+
 ## Ideas for later
 
 - Chapter quotes could also appear during the crossing (kept to titles for

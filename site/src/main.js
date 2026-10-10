@@ -10,7 +10,7 @@ import { creerBateau } from './boat.js';
 import { creerEtoiles } from './stars.js';
 import { creerTimeline } from './timeline.js';
 import { creerPlongee } from './plongee.js';
-import { creerRecit } from './recit.js';
+import { creerRecit, CHAPITRES } from './recit.js';
 import { creerTraversee } from './traversee.js';
 import {
   chargeRoadtrip, creerTraceRoadtrip, infobulleLieu, sectionRoadtrip, CLE_ESCALE_ROADTRIP,
@@ -26,6 +26,7 @@ import { soleilEtCiel } from './sun.js';
 import { chargeRelief, reliefPlat } from './relief.js';
 import { creerChargement } from './chargement.js';
 import { activeAPropos } from './apropos.js';
+import { creerSommaire } from './sommaire.js';
 
 const canvas = document.getElementById('scene');
 const mouvementReduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -587,6 +588,28 @@ timeline.surFinDuVoyage(() => {
   if (!recit.actif && !plongee.ouverte && !plongee.enVol) recit.entre({ aide: false });
 });
 creerTraversee({ timeline, voyage, mouillagesParCle });
+
+// The whole logbook as a table of contents: chapters, stops, post titles.
+creerSommaire({
+  escales: route.escales.filter(e => e.date_arrivee),
+  mouillagesParCle,
+  carnetsPrets,
+  chapitres: CHAPITRES,
+  ouvre: (escale, billet) => {
+    // chosen from the welcome card: the card steps aside for the journal
+    if (document.body.classList.contains('accueil-ouvert')) {
+      chargement.ferme();
+      intro = 1;
+    }
+    if (recit.actif) recit.sort();
+    const menu = document.getElementById('navigation-escales');
+    if (menu?.open) {
+      menu.open = false;
+      menu.querySelector('summary')?.focus({ preventScroll: true });
+    }
+    void plongee.vers(escale, billet ? { billet } : {});
+  },
+});
 
 // The canvas is not the only way into the voyage: this native navigator gives
 // keyboard and assistive-technology users direct access to every anchorage.

@@ -594,3 +594,32 @@ test('le carnet se lit d’escale en escale, même depuis une vue rapprochée', 
   await expect(page.locator('#plongee-flux .plongee-vide')).toBeVisible();
   await expect(page.locator('#plongee-flux .plongee-suite button')).toHaveCount(2);
 });
+
+test('le sommaire retrouve un billet et ouvre son carnet à cet endroit', async ({ page }) => {
+  await ouvreExperience(page, { width: 1366, height: 768 });
+  await page.locator('#navigation-escales summary').click();
+  await page.locator('#navigation-escales .lien-sommaire').click();
+  await expect(page.locator('#sommaire')).toBeVisible();
+  await expect(page.locator('#sommaire-recherche')).toBeFocused();
+  // every post of the archive is there, the ones written at sea included
+  await expect(page.locator('#sommaire-compte')).toContainText('537 billets');
+  await page.locator('#sommaire-recherche').fill('traversee du pacifique j3');
+  await expect(page.locator('#sommaire-compte')).toHaveText('1 billet, 1 escale');
+  await page.locator('#sommaire-recherche').fill('noel hiva');
+  const billet = page.locator('.sommaire-escale:not([hidden]) li:not([hidden]) button').first();
+  await expect(billet).toContainText('Noël à Hiva Oa');
+  await billet.click();
+  await expect(page.locator('#sommaire')).toBeHidden();
+  await page.waitForFunction(() => window.__sillage.plongee.ouverte, null, { timeout: 30_000 });
+  await expect(page.locator('#plongee-nom')).toHaveText('Marquises - Hiva Oa');
+  await page.waitForFunction(() => {
+    const flux = document.getElementById('plongee-flux');
+    const titre = [...flux.querySelectorAll('article h3')].find(h => h.textContent === 'Noël à Hiva Oa');
+    const article = titre?.closest('article');
+    return article && Math.abs(flux.scrollTop - (article.offsetTop - 14)) < 4;
+  });
+  // Escape closes the journal, and the menu that led there has folded away
+  await page.keyboard.press('Escape');
+  await page.waitForFunction(() => !window.__sillage.plongee.ouverte && !window.__sillage.plongee.enVol);
+  expect(await page.evaluate(() => document.getElementById('navigation-escales').open)).toBe(false);
+});

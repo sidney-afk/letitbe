@@ -105,6 +105,10 @@ def main() -> None:
             continue  # ère Costa Rica : hors route bateau
         candidats = []
         for i, m in enumerate(mouillages):
+            # une traversée n'a pas de carnet à ouvrir : ses billets vont à
+            # l'escale où elle mène (ci-dessous, « écrit en mer »)
+            if m["type"] == "traversee":
+                continue
             iv = intervalle(i, m)
             if not iv:
                 continue
@@ -124,7 +128,7 @@ def main() -> None:
             # article écrit en mer (« Traversée vers les Galapagos J3 ») ou
             # dans un trou entre escales : rattaché à la destination
             suivants = [i for i, m in enumerate(mouillages)
-                        if m["date_arrivee"] and
+                        if m["date_arrivee"] and m["type"] != "traversee" and
                         date.fromisoformat(m["date_arrivee"]) >= d]
             if suivants:
                 art["en_mer"] = True
