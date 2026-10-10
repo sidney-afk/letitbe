@@ -15,7 +15,8 @@ export function creerTimeline(voyage) {
   const boutonLecture = document.getElementById('lecture');
 
   const duree = voyage.fin - voyage.debut;
-  const vitesse = duree / (DUREE_LECTURE_S * 1000);
+  // playback speed in "story weight" per millisecond (see voyage.lecture)
+  const vitessePoids = voyage.lecture.total / (DUREE_LECTURE_S * 1000);
 
   let t = voyage.debut;
   let enLecture = false;
@@ -62,7 +63,9 @@ export function creerTimeline(voyage) {
 
   function metAJour(dtMs) {
     if (!enLecture) return;
-    t += dtMs * vitesse;
+    // a background tab can hand back one huge frame: never jump a chapter
+    const pas = Math.min(dtMs, 250) * vitessePoids;
+    t = voyage.lecture.depuisPoids(voyage.lecture.versPoids(t) + pas);
     let arrive = false;
     if (t >= voyage.fin) {
       t = voyage.fin;

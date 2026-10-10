@@ -166,6 +166,13 @@ TRAVERSEES = {
     "Neah Bay to San Francisco", "Canal de Panama",
 }
 
+# Départs connus par le blog mais absents des tables de log. Le Marin : « Dés
+# demain, nous quitterons enfin le Marin » (27/5/2009), puis « nous avons
+# levé l'ancre » le 28 (billet « D Day »).
+DEPARTS_CORRIGES = {
+    ("Martinique", "2009-05-27"): "2009-05-28",
+}
+
 # chapitres du récit (cf. PLAN.md), par page source
 CHAPITRES = {
     "trajetcar.html": "Les Caraïbes",
@@ -269,7 +276,7 @@ def main() -> None:
             "lon": lon,
             "log_nm": e["log_nm"],
             "date_arrivee": e["date_arrivee"],
-            "date_depart": e["date_depart"],
+            "date_depart": DEPARTS_CORRIGES.get((nom, e["date_arrivee"]), e["date_depart"]),
             "type": "traversee" if nom in TRAVERSEES else "mouillage",
             "chapitre": CHAPITRE_TRAVERSEE.get(nom, CHAPITRES.get(e["source"], "")),
             "source": e["source"],

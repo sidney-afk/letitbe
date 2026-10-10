@@ -143,5 +143,53 @@ export function construireVoyage(route) {
     return direction.normalize();
   }
 
-  return { segments: seg, debut, fin, position, tangent, segmentA };
+  // L'horloge de la Traversée : la lecture n'avance pas au rythme du
+  // calendrier brut, sinon les 17 mois d'hivernage à Whangarei occupent un
+  // quart des trois minutes. Chaque jour de mer garde son poids ; une escale
+  // pèse au plus quelques jours, un mouillage d'une nuit un peu plus d'un.
+  // Le curseur, lui, reste linéaire dans le temps.
+  const POIDS_ESCALE_MIN = 1.5;
+  const POIDS_ESCALE_MAX = 7;
+  const tranches = seg.map((s, i) => {
+    const t0 = s.t0;
+    const t1 = i + 1 < seg.length ? Math.max(t0, seg[i + 1].t0) : fin;
+    const jours = (t1 - t0) / JOUR_MS;
+    // (very long stays, like the NZ wintering, earn a few more seconds)
+    const poids = s.enMer
+      ? Math.max(0.5, jours)
+      : jours <= POIDS_ESCALE_MAX
+        ? Math.max(POIDS_ESCALE_MIN, jours)
+        : POIDS_ESCALE_MAX + Math.min(POIDS_ESCALE_MAX, (jours - POIDS_ESCALE_MAX) / 30);
+    return { t0, t1, poids };
+  });
+  let cumul = 0;
+  for (const tr of tranches) {
+    tr.w0 = cumul;
+    cumul += tr.poids;
+  }
+  const poidsTotal = cumul;
+
+  function versPoids(t) {
+    t = THREE.MathUtils.clamp(t, debut, fin);
+    const tr = tranches[indiceSegment(t)];
+    const f = tr.t1 > tr.t0 ? THREE.MathUtils.clamp((t - tr.t0) / (tr.t1 - tr.t0), 0, 1) : 1;
+    return tr.w0 + f * tr.poids;
+  }
+
+  function depuisPoids(w) {
+    w = THREE.MathUtils.clamp(w, 0, poidsTotal);
+    let lo = 0, hi = tranches.length - 1;
+    while (lo < hi) {
+      const mi = (lo + hi + 1) >> 1;
+      if (tranches[mi].w0 <= w) lo = mi; else hi = mi - 1;
+    }
+    const tr = tranches[lo];
+    const f = tr.poids > 0 ? THREE.MathUtils.clamp((w - tr.w0) / tr.poids, 0, 1) : 1;
+    return tr.t0 + f * (tr.t1 - tr.t0);
+  }
+
+  return {
+    segments: seg, debut, fin, position, tangent, segmentA,
+    lecture: { versPoids, depuisPoids, total: poidsTotal },
+  };
 }

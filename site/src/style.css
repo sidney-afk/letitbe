@@ -909,10 +909,24 @@ body.plongee-ouverte #boutons-haut { display: none; }
 }
 .affleure-carte figcaption {
   margin-top: 6px;
+  display: grid;
+  gap: 2px;
   font-size: .8rem;
-  font-style: italic;
   color: #4a4036;
   text-align: center;
+}
+.affleure-legende {
+  font-family: "IM Fell English", "EB Garamond", serif;
+  font-style: italic;
+  font-size: .92rem;
+  line-height: 1.25;
+  color: #3a3024;
+}
+.affleure-lieu {
+  font-family: "IM Fell English SC", "EB Garamond", serif;
+  font-size: .72rem;
+  letter-spacing: .05em;
+  color: #7c5a16;
 }
 
 /* ——— le mode Récit : les chapitres au fil du voyage ——— */
@@ -1783,6 +1797,8 @@ body[data-mode="photo"] #titre-trait { filter: none; }
 .vue-du-ciel-hublot {
   position: relative;
   aspect-ratio: 1;
+  /* the deep-sea tone of the imagery while it loads, never an empty ring */
+  background: #0d2235;
   border-radius: 50%;
   overflow: hidden;
   border: 5px solid #c9a35a;
@@ -1977,3 +1993,98 @@ body[data-mode="photo"] .album-nom { color: #e8c87a; }
 }
 body[data-mode="photo"] #plongee-flux figure.vue-du-ciel figcaption { color: #e8c87a; }
 body[data-mode="photo"] #plongee-flux figure.vue-du-ciel figcaption small { color: rgba(223, 243, 255, .75); }
+
+/* ——— l'interlude : le titre du chapitre pendant la Traversée ——— */
+#interlude {
+  position: fixed;
+  /* under the title and the top buttons at every width */
+  top: max(120px, calc(env(safe-area-inset-top) + 108px));
+  left: 50%;
+  transform: translate(-50%, 6px);
+  width: min(440px, calc(100vw - 32px));
+  text-align: center;
+  color: var(--encre);
+  text-shadow: 0 0 16px rgba(255, 252, 240, .95), 0 0 5px rgba(255, 252, 240, .9);
+  opacity: 0;
+  transition: opacity 1s ease, transform 1s ease;
+  pointer-events: none;
+  z-index: 3;
+  padding: 10px 18px 12px;
+  /* a soft cream haze keeps it legible over land as well as sea */
+  background: radial-gradient(closest-side, rgba(255, 252, 240, .72), rgba(255, 252, 240, .35) 70%, transparent);
+}
+body[data-mode="photo"] #interlude { background: radial-gradient(closest-side, rgba(0, 12, 24, .6), transparent); }
+#interlude[hidden] { display: none; }
+#interlude.visible { opacity: 1; transform: translate(-50%, 0); }
+.interlude-numero {
+  font-family: "IM Fell English SC", "EB Garamond", serif;
+  letter-spacing: .26em;
+  font-size: .82rem;
+  color: var(--or);
+}
+.interlude-titre {
+  font-family: "IM Fell English", "EB Garamond", serif;
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  line-height: 1.1;
+  color: var(--bleu-encre);
+}
+.interlude-periode { font-style: italic; font-size: .92rem; color: var(--encre-claire); }
+body[data-mode="photo"] #interlude { color: #dff3ff; text-shadow: 0 1px 12px rgba(0, 20, 40, .9); }
+body[data-mode="photo"] .interlude-titre { color: #e8c87a; }
+body[data-mode="photo"] .interlude-periode { color: rgba(223, 243, 255, .8); }
+/* a short landscape phone has no free band for it: the timeline already
+   names the place and date */
+@media (max-height: 500px) and (orientation: landscape) {
+  #interlude { display: none; }
+}
+
+/* ——— les films du bord ——— */
+.films-escale { margin-top: 24px; }
+.films-escale[hidden] { display: none; }
+#plongee-flux figure.film-bord { margin: 10px 0 16px; }
+.film-lecture, .film-cadre {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: 0;
+  border-radius: 2px;
+  background: #0d2235;
+}
+.film-lecture { padding: 0; cursor: pointer; overflow: hidden; }
+.film-lecture img { width: 100%; height: 100%; object-fit: cover; }
+.film-icone {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 64px;
+  height: 64px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: rgba(143, 47, 32, .9);
+  box-shadow: 0 0 0 3px rgba(255, 240, 210, .85), 0 6px 18px rgba(0, 0, 0, .4);
+  transition: transform .2s;
+}
+.film-icone::after {
+  content: "";
+  position: absolute;
+  left: 26px;
+  top: 20px;
+  border-style: solid;
+  border-width: 12px 0 12px 20px;
+  border-color: transparent transparent transparent #fffaf0;
+}
+.film-lecture:hover .film-icone { transform: translate(-50%, -50%) scale(1.06); }
+.film-lecture:focus-visible { outline: 3px solid rgba(91, 61, 30, .9); outline-offset: 3px; }
+#plongee-flux figure.film-bord figcaption { display: grid; gap: 2px; text-align: left; }
+.film-titre { font-family: "IM Fell English", "EB Garamond", serif; font-size: 1.02rem; color: var(--bleu-encre); font-style: normal; }
+.film-commentaire { font-style: italic; }
+body[data-mode="photo"] .film-titre { color: #e8c87a; }
+.film-lien {
+  justify-self: start;
+  font-size: .84rem;
+  color: #7c4f12;
+  text-underline-offset: 2px;
+  padding: 10px 0;
+}
+body[data-mode="photo"] .film-lien { color: #e8c87a; }

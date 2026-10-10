@@ -190,6 +190,7 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
 
   function entre({ aide: montrerAide = true } = {}) {
     actif = true;
+    document.getElementById('interlude')?.classList.remove('visible');
     document.body.classList.add('recit-actif');
     nommeBouton();
     chapitreAffiche = null;
@@ -208,6 +209,39 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
     chapitreAffiche = null;
     aide.hidden = true;
   }
+
+  // During the replayed crossing (outside story mode), each new chapter is
+  // announced by a brief title over the sky, so the three minutes read as a
+  // story with its chapters.
+  const interlude = document.getElementById('interlude');
+  let chapitreLecture = null;
+  let minuterieInterlude = null;
+  function annonceChapitre(c, titre) {
+    if (!interlude) return;
+    interlude.replaceChildren();
+    const num = document.createElement('p');
+    num.className = 'interlude-numero';
+    num.textContent = `Chapitre ${c.numero}`;
+    const h = document.createElement('p');
+    h.className = 'interlude-titre';
+    h.textContent = c.titre ?? titre;
+    const per = document.createElement('p');
+    per.className = 'interlude-periode';
+    per.textContent = c.periode;
+    interlude.append(num, h, per);
+    interlude.hidden = false;
+    interlude.classList.remove('visible');
+    requestAnimationFrame(() => requestAnimationFrame(() => interlude.classList.add('visible')));
+    clearTimeout(minuterieInterlude);
+    minuterieInterlude = setTimeout(() => interlude.classList.remove('visible'), 4200);
+  }
+  timeline.surChangement((t) => {
+    if (!timeline.enLecture || actif) return;
+    const [nom, c] = chapitreA(t);
+    if (nom === chapitreLecture) return;
+    chapitreLecture = nom;
+    if (c && nom !== '__epilogue__') annonceChapitre(c, nom);
+  });
 
   bouton.addEventListener('click', () => (actif ? sort() : entre()));
   addEventListener('keydown', (e) => {
