@@ -316,7 +316,7 @@ test('a reviewed aerial switches scales only while the sea wash fully covers the
   expect(retourSousLavage.fov).toBeCloseTo(38, 5);
 });
 
-test('unreviewed archive imagery opens the clear regional arrival state', async ({ page }) => {
+test('a stop without a reviewed close-up opens on its satellite porthole', async ({ page }) => {
   await ouvreExperience(page, { width: 1366, height: 768 });
 
   for (const nom of ['Galapagos']) {
@@ -344,13 +344,22 @@ test('unreviewed archive imagery opens the clear regional arrival state', async 
       routeVisible: false,
       bateauVisible: false,
       ecumeVisible: false,
-      repereVisible: true,
-      repereType: 'pavillon',
+      // the porthole's anchor marks the mooring; no pennant on the globe
+      repereVisible: false,
     });
     await expect.poll(() => page.evaluate(() => window.__sillage.camera.position.length()))
       .toBeCloseTo(1.52, 5);
-    await expect(page.locator('#plongee-scene-caption')).toBeVisible();
-    await expect(page.locator('#plongee-scene-caption')).toContainText(`À l’ancre · ${nom}`);
+    const hublot = page.locator('#plongee-flux figure.vue-du-ciel');
+    await expect(hublot).toHaveCount(1);
+    await expect(hublot.locator('img')).toHaveAttribute('src', /media\/aerien\/\d+\.webp$/);
+    await expect(hublot.locator('figcaption')).toContainText(`Vue du ciel · ${nom}`);
+    await expect(hublot.locator('figcaption')).toContainText('Esri');
+    // wide screen, Carnet mode: the porthole floats in the scene, beside the
+    // journal, and replaces the bottom-left scene caption
+    const boite = await hublot.boundingBox();
+    const panneau = await page.locator('#plongee').boundingBox();
+    expect(boite.x + boite.width).toBeLessThanOrEqual(panneau.x + 1);
+    await expect(page.locator('#plongee-scene-caption')).toBeHidden();
     await expect(page.locator('#plongee-scene-caption-a11y')).toContainText(`À l’ancre · ${nom}`);
     const hero = page.locator('.plongee-hero-carnet');
     await expect(hero).toHaveCount(1);
@@ -449,4 +458,35 @@ test('la lightbox piège le focus, se ferme avec Échap et le rend à la photo',
   await page.keyboard.press('Escape');
   await expect(page.locator('#lightbox')).toBeHidden();
   await expect(photo).toBeFocused();
+});
+
+test('un album photo s’ouvre depuis le carnet et se feuillette au clavier', async ({ page }) => {
+  await ouvreExperience(page, { width: 1366, height: 768 });
+  await page.evaluate(async () => {
+    const { plongee, route } = window.__sillage;
+    const escale = route.escales.find(item => item.nom === 'Fakarava');
+    await plongee.vers(escale);
+    plongee.metAJour(10);
+  });
+  const carte = page.locator('#plongee-flux .album-carte').first();
+  await expect(carte).toBeVisible();
+  await expect(carte).toHaveAttribute('aria-label', /Tuamotu/);
+  await carte.click();
+  const compteur = page.locator('#lightbox-compteur');
+  await expect(page.locator('#lightbox')).toBeVisible();
+  await expect(compteur).toHaveText(/1 \/ \d+$/);
+  await expect(page.locator('#lightbox-album-complet')).toHaveAttribute('href', /^https:\/\/www\.laruel\.be\//);
+  await page.keyboard.press('ArrowRight');
+  await expect(compteur).toHaveText(/2 \/ \d+$/);
+  await page.keyboard.press('ArrowLeft');
+  await page.keyboard.press('ArrowLeft');
+  await expect(compteur).not.toHaveText(/ 1 \//);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#lightbox')).toBeHidden();
+  await expect(carte).toBeFocused();
+  // a single journal photo keeps the plain viewer, without series controls
+  await page.locator('#plongee-flux article .photo-ouvrir').first().click();
+  await expect(page.locator('#lightbox')).toBeVisible();
+  await expect(page.locator('#lightbox-suivante')).toBeHidden();
+  await page.keyboard.press('Escape');
 });

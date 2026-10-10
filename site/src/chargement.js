@@ -30,12 +30,66 @@ export function creerChargement(etapesTotal) {
     },
     termine() {
       regle(1);
-      if (!ecran) return;
+      if (!ecran || ecran.classList.contains('fini')) return;
+      ecran.classList.remove('accueil');
       ecran.classList.add('fini');
       ecran.setAttribute('aria-busy', 'false');
+      document.body.classList.remove('accueil-ouvert');
       const retire = () => { ecran.hidden = true; };
       ecran.addEventListener('transitionend', retire, { once: true });
       setTimeout(retire, 1600);
+    },
+    // La page de garde : le globe est prêt derrière un voile léger, et le
+    // visiteur choisit son chemin. Renvoie 'traversee' ou 'explorer'.
+    accueil() {
+      regle(1);
+      const corps = document.getElementById('accueil-corps');
+      const traversee = document.getElementById('accueil-traversee');
+      const explorer = document.getElementById('accueil-explorer');
+      if (!ecran || !corps || !traversee || !explorer) {
+        this.termine();
+        return Promise.resolve('explorer');
+      }
+      ecran.setAttribute('aria-busy', 'false');
+      ecran.setAttribute('role', 'dialog');
+      ecran.setAttribute('aria-modal', 'true');
+      ecran.setAttribute('aria-labelledby', 'accueil-titre');
+      ecran.setAttribute('aria-describedby', 'accueil-texte');
+      ecran.querySelector('.chargement-titre')?.setAttribute('id', 'accueil-titre');
+      ecran.querySelector('.chargement-titre')?.removeAttribute('aria-hidden');
+      corps.hidden = false;
+      ecran.classList.add('accueil');
+      document.body.classList.add('accueil-ouvert');
+      traversee.focus({ preventScroll: true });
+
+      return new Promise((resolve) => {
+        let fait = false;
+        const choisit = (choix) => {
+          if (fait) return;
+          fait = true;
+          removeEventListener('keydown', clavier, true);
+          this.termine();
+          resolve(choix);
+        };
+        const clavier = (e) => {
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            choisit('explorer');
+          } else if (e.key === 'Tab') {
+            // two buttons: keep the focus inside the card
+            e.preventDefault();
+            (document.activeElement === traversee ? explorer : traversee).focus();
+          }
+        };
+        addEventListener('keydown', clavier, true);
+        traversee.addEventListener('click', () => choisit('traversee'), { once: true });
+        explorer.addEventListener('click', () => choisit('explorer'), { once: true });
+        this.ferme = () => choisit('explorer');
+      });
+    },
+    // Ferme l'accueil sans choix explicite (capture, tests, raccourcis).
+    ferme() {
+      this.termine();
     },
     echec(erreur) {
       console.error(erreur);

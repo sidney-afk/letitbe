@@ -167,6 +167,14 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
       citation.append(bloc, signe);
       carte.append(citation);
     }
+    if (nom === '__epilogue__') {
+      const lien = document.createElement('button');
+      lien.type = 'button';
+      lien.className = 'lien-a-propos';
+      lien.setAttribute('aria-haspopup', 'dialog');
+      lien.textContent = 'À propos du site, des livres et des crédits';
+      carte.append(lien);
+    }
     carte.classList.remove('visible');
     requestAnimationFrame(() => requestAnimationFrame(
       () => carte.classList.add('visible')));
@@ -180,13 +188,14 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
     indicateur.style.setProperty('--avancement', `${f * 100}%`);
   }
 
-  function entre() {
+  function entre({ aide: montrerAide = true } = {}) {
     actif = true;
     document.body.classList.add('recit-actif');
     nommeBouton();
     chapitreAffiche = null;
     regleSuivi(true);
     applique(timeline.t);
+    if (!montrerAide) return;
     aide.hidden = false;
     setTimeout(() => { aide.hidden = true; }, 5200);
   }
@@ -211,6 +220,7 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
   timeline.surChangement(applique);
 
   return {
+    entre,
     sort,
     get actif() { return actif; },
     get distanceCamera() { return DISTANCE_RECIT; },

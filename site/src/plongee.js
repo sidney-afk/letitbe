@@ -48,6 +48,10 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
   const lightboxImg = lightbox.querySelector('img');
   const lightboxLegende = lightbox.querySelector('figcaption');
   const boutonFermerLightbox = document.getElementById('lightbox-fermer');
+  const boutonPrecedente = document.getElementById('lightbox-precedente');
+  const boutonSuivante = document.getElementById('lightbox-suivante');
+  const compteurLightbox = document.getElementById('lightbox-compteur');
+  const lienAlbumComplet = document.getElementById('lightbox-album-complet');
   const raccordLodElement = document.getElementById('raccord-lod');
 
   let vol = null; // { t, depart:{dir,dist}, arrivee:{dir,dist}, alOuverture }
@@ -94,18 +98,64 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     }
   }
 
-  function ouvreLightbox(src, legende, declencheur) {
+  // A series (an album) adds previous/next, a counter and the link to the
+  // complete album on laruel.be; a single photo keeps the plain lightbox.
+  let serie = null;
+  const webp = src => `./media/${src.replace(/\.[a-z]+$/i, '.webp')}`;
+  function regleSerie(visible) {
+    for (const element of [boutonPrecedente, boutonSuivante, compteurLightbox, lienAlbumComplet]) {
+      if (element) element.hidden = !visible;
+    }
+  }
+  function afficheDansSerie(index) {
+    const n = serie.photos.length;
+    serie.index = (index + n) % n;
+    const photo = serie.photos[serie.index];
+    lightboxImg.src = webp(photo.src);
+    lightboxImg.alt = photo.legende || `Photo de l’album ${serie.titre}`;
+    lightboxLegende.textContent = photo.legende || '';
+    compteurLightbox.textContent = `${serie.titre} · ${serie.index + 1} / ${n}`;
+    // the next photo is usually wanted next
+    const suivante = new Image();
+    suivante.src = webp(serie.photos[(serie.index + 1) % n].src);
+  }
+  function ouvreLightbox(src, legende, declencheur, options = {}) {
     focusAvantLightbox = declencheur ?? document.activeElement;
-    lightboxImg.src = src;
-    lightboxImg.alt = legende || 'Photographie du carnet de bord';
-    lightboxLegende.textContent = legende || '';
+    serie = options.serie ?? null;
+    if (serie) {
+      regleSerie(true);
+      if (lienAlbumComplet) {
+        lienAlbumComplet.href = serie.url;
+        lienAlbumComplet.textContent = `Les ${serie.total} photos de l’album sur laruel.be`;
+      }
+      afficheDansSerie(serie.index ?? 0);
+    } else {
+      regleSerie(false);
+      lightboxImg.src = src;
+      lightboxImg.alt = legende || 'Photographie du carnet de bord';
+      lightboxLegende.textContent = legende || '';
+    }
     lightbox.hidden = false;
     requestAnimationFrame(() => boutonFermerLightbox?.focus({ preventScroll: true }));
   }
+  boutonPrecedente?.addEventListener('click', () => serie && afficheDansSerie(serie.index - 1));
+  boutonSuivante?.addEventListener('click', () => serie && afficheDansSerie(serie.index + 1));
+  let debutGlisse = null;
+  lightboxImg.addEventListener('pointerdown', (e) => { debutGlisse = { x: e.clientX, y: e.clientY }; });
+  lightboxImg.addEventListener('pointerup', (e) => {
+    if (!serie || !debutGlisse) return;
+    const dx = e.clientX - debutGlisse.x;
+    const dy = e.clientY - debutGlisse.y;
+    debutGlisse = null;
+    if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+      afficheDansSerie(serie.index + (dx < 0 ? 1 : -1));
+    }
+  });
 
   function fermeLightbox() {
     if (lightbox.hidden) return;
     lightbox.hidden = true;
+    serie = null;
     lightboxImg.removeAttribute('src');
     const cible = focusAvantLightbox;
     focusAvantLightbox = null;
@@ -445,7 +495,141 @@ function opaciteRaccordLod(t) {
     flux.append(figure);
   }
 
-  function rempli(escale, heroCarnet = null) {
+  function figurePhoto(im, titreArticle, rangPhoto) {
+    const fig = document.createElement('figure');
+    fig.style.setProperty('--rang', rangPhoto);
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.src = `./media/${im.src.replace(/\.[a-z]+$/i, '.webp')}`;
+    img.alt = im.legende || titreArticle || '';
+    img.addEventListener('error', () => fig.remove());
+    const ouvrirImage = document.createElement('button');
+    ouvrirImage.type = 'button';
+    ouvrirImage.className = 'photo-ouvrir';
+    ouvrirImage.setAttribute('aria-label', `Agrandir la photo${im.legende ? ` : ${im.legende}` : ''}`);
+    ouvrirImage.addEventListener('click', () => ouvreLightbox(img.src, im.legende, ouvrirImage));
+    ouvrirImage.append(img);
+    fig.append(ouvrirImage);
+    if (im.legende) {
+      const cap = document.createElement('figcaption');
+      cap.textContent = im.legende;
+      fig.append(cap);
+    }
+    return fig;
+  }
+
+  // « Vue du ciel » : la vraie image satellite de l'escale (Esri, ~97 km de
+  // côté), dans un hublot, avec une ancre là où ils ont mouillé. Elle remplace
+  // l'agrandissement flou de la carte peinte pour les escales sans vue
+  // rapprochée revue.
+  const mercator = lat => Math.log(Math.tan(Math.PI / 4 + THREE.MathUtils.degToRad(lat) / 2));
+  function estVueDuCiel(vue) {
+    return Boolean(vue && typeof vue.fichier === 'string' && /^media\/aerien\//.test(vue.fichier)
+      && [vue.lonMin, vue.lonMax, vue.latMin, vue.latMax].every(Number.isFinite));
+  }
+  function ajouteVueDuCiel(vue, escale) {
+    if (!estVueDuCiel(vue)) return;
+    const fx = (escale.lon - vue.lonMin) / (vue.lonMax - vue.lonMin);
+    const fy = (mercator(vue.latMax) - mercator(escale.lat))
+      / (mercator(vue.latMax) - mercator(vue.latMin));
+    if (!(fx > 0 && fx < 1 && fy > 0 && fy < 1)) return;
+    const figure = document.createElement('figure');
+    figure.className = 'vue-du-ciel';
+    const ouvrir = document.createElement('button');
+    ouvrir.type = 'button';
+    ouvrir.className = 'photo-ouvrir vue-du-ciel-hublot';
+    const legende = `Vue du ciel · ${escale.nom}`;
+    ouvrir.setAttribute('aria-label', `Agrandir la vue du ciel de ${escale.nom}`);
+    const img = document.createElement('img');
+    img.loading = 'eager';
+    img.fetchPriority = 'high';
+    img.src = `./${vue.fichier}`;
+    img.alt = `Image satellite de ${escale.nom} et de ses environs, une ancre marque le mouillage.`;
+    img.decoding = 'async';
+    img.addEventListener('error', () => figure.remove());
+    const ancre = document.createElement('span');
+    ancre.className = 'vue-du-ciel-ancre';
+    ancre.setAttribute('aria-hidden', 'true');
+    ancre.textContent = '⚓';
+    ancre.style.left = `${(fx * 100).toFixed(2)}%`;
+    ancre.style.top = `${(fy * 100).toFixed(2)}%`;
+    ouvrir.addEventListener('click', () => ouvreLightbox(img.src,
+      `${legende} — imagerie © Esri, Maxar, Earthstar Geographics`, ouvrir));
+    ouvrir.append(img, ancre);
+    const cap = document.createElement('figcaption');
+    const titreCap = document.createElement('span');
+    titreCap.textContent = legende;
+    const credit = document.createElement('small');
+    credit.textContent = 'Imagerie © Esri, Maxar, Earthstar Geographics';
+    cap.append(titreCap, credit);
+    figure.append(ouvrir, cap);
+    flux.append(figure);
+  }
+
+  // Les albums photo de laruel.be rattachés aux escales (une sélection par
+  // album ; l'album complet reste en ligne sur le site de la famille).
+  let albumsPromesse = null;
+  function chargeAlbums() {
+    albumsPromesse ??= fetch('./data/albums_escales.json')
+      .then(r => (r.ok ? r.json() : []))
+      .catch(() => []);
+    return albumsPromesse;
+  }
+  // « Septembre/Octobre 2012 » → « septembre/octobre 2012 »
+  const periodeAlbum = texte => texte.toLocaleLowerCase('fr-FR');
+  function carteAlbum(album) {
+    const titre = `${album.nom}, ${periodeAlbum(album.periode)}`;
+    const bouton = document.createElement('button');
+    bouton.type = 'button';
+    bouton.className = 'album-carte';
+    bouton.setAttribute('aria-label',
+      `Ouvrir l’album ${titre} : ${album.photos.length} photos`);
+    const vignettes = document.createElement('span');
+    vignettes.className = 'album-vignettes';
+    vignettes.setAttribute('aria-hidden', 'true');
+    for (const photo of album.photos.slice(0, 3)) {
+      const img = document.createElement('img');
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.alt = '';
+      img.src = `./media/vignettes/${photo.src.replace(/\.[a-z]+$/i, '.webp')}`;
+      vignettes.append(img);
+    }
+    const nom = document.createElement('span');
+    nom.className = 'album-nom';
+    nom.textContent = album.nom;
+    const detail = document.createElement('span');
+    detail.className = 'album-detail';
+    detail.textContent = `${periodeAlbum(album.periode)} · ${album.photos.length} photos`;
+    bouton.append(vignettes, nom, detail);
+    bouton.addEventListener('click', () => ouvreLightbox(null, null, bouton, {
+      serie: { photos: album.photos, index: 0, titre: album.nom, url: album.url, total: album.total },
+    }));
+    return bouton;
+  }
+  function ajouteAlbums(escale, demande) {
+    const section = document.createElement('section');
+    section.className = 'albums-escale';
+    section.hidden = true;
+    flux.append(section);
+    const cle = `${escale.nom}|${escale.date_arrivee}`;
+    chargeAlbums().then((albums) => {
+      if (demande !== demandePlongee || !section.isConnected) return;
+      const liste = albums.filter(a => a.escales?.includes(cle) && a.photos?.length);
+      if (!liste.length) { section.remove(); return; }
+      const titre = document.createElement('h3');
+      titre.className = 'albums-titre';
+      titre.textContent = liste.length > 1 ? 'Les albums photo' : 'L’album photo';
+      const grille = document.createElement('div');
+      grille.className = 'albums-grille';
+      grille.append(...liste.map(carteAlbum));
+      section.append(titre, grille);
+      section.hidden = false;
+    });
+  }
+
+  function rempli(escale, heroCarnet = null, vueDuCiel = null) {
     titre.textContent = escale.nom;
     const d1 = formatLong.format(new Date(escale.date_arrivee + 'T12:00:00Z'));
     const d2 = escale.date_depart && escale.date_depart !== escale.date_arrivee
@@ -454,11 +638,13 @@ function opaciteRaccordLod(t) {
       `${d2 ? `du ${d1} au ${d2}` : d1} · ${escale.log_nm.toLocaleString('fr-FR')} milles au log`;
 
     flux.replaceChildren();
+    ajouteVueDuCiel(vueDuCiel, escale);
     // A curated journal photograph makes the two deliberately selected atlas
     // arrivals tangible, while remaining visibly distinct from map imagery.
     // It is passed only for the calm fallback state, never for a reviewed
     // aerial detail such as Makogai.
     ajouteHeroCarnet(heroCarnet);
+    ajouteAlbums(escale, demandePlongee);
     const articles = escale.articles ?? [];
     if (!articles.length) {
       const p = document.createElement('p');
@@ -470,7 +656,7 @@ function opaciteRaccordLod(t) {
     let rang = 0;
     for (const a of articles) {
       const art = document.createElement('article');
-      art.style.setProperty('--rang', rang++);
+      art.style.setProperty('--rang', Math.min(rang++, 10));
 
       const date = document.createElement('p');
       date.className = 'article-date';
@@ -484,32 +670,25 @@ function opaciteRaccordLod(t) {
         art.append(h);
       }
 
-      const texte = document.createElement('p');
-      texte.className = 'article-texte';
-      texte.textContent = a.texte ?? a.extrait;
-      art.append(texte);
-
-      for (const im of a.images) {
-        const fig = document.createElement('figure');
-        fig.style.setProperty('--rang', rang++);
-        const img = document.createElement('img');
-        img.loading = 'lazy';
-        img.src = `./media/${im.src.replace(/\.[a-z]+$/i, '.webp')}`;
-        img.alt = im.legende || a.titre;
-        img.addEventListener('error', () => fig.remove());
-        const ouvrirImage = document.createElement('button');
-        ouvrirImage.type = 'button';
-        ouvrirImage.className = 'photo-ouvrir';
-        ouvrirImage.setAttribute('aria-label', `Agrandir la photo${im.legende ? ` : ${im.legende}` : ''}`);
-        ouvrirImage.addEventListener('click', () => ouvreLightbox(img.src, im.legende, ouvrirImage));
-        ouvrirImage.append(img);
-        fig.append(ouvrirImage);
-        if (im.legende) {
-          const cap = document.createElement('figcaption');
-          cap.textContent = im.legende;
-          fig.append(cap);
+      // Le billet tel que les parents l'ont composé : paragraphes et photos
+      // dans leur ordre d'origine (`blocs`), au lieu d'un bloc de texte
+      // suivi de toutes les images.
+      const images = a.images ?? [];
+      const blocs = Array.isArray(a.blocs) && a.blocs.length
+        ? a.blocs
+        : [a.texte ?? a.extrait ?? '', ...images.map((_, i) => i)];
+      let ouverture = true;
+      for (const bloc of blocs) {
+        if (typeof bloc === 'string') {
+          if (!bloc.trim()) continue;
+          const texte = document.createElement('p');
+          texte.className = ouverture ? 'article-texte article-ouverture' : 'article-texte';
+          texte.textContent = bloc;
+          art.append(texte);
+          ouverture = false;
+        } else if (Number.isInteger(bloc) && images[bloc]) {
+          art.append(figurePhoto(images[bloc], a.titre, Math.min(rang++, 10)));
         }
-        art.append(fig);
       }
       flux.append(art);
     }
@@ -572,14 +751,18 @@ function opaciteRaccordLod(t) {
     // The real island image is its own focal point. Keep a small pennant only
     // for escales without a reliable local source, where it remains useful
     // rather than covering the shoreline with a target-like circle.
-    if (detailDisponible) cacheRepereEscale();
+    // The satellite porthole (journal, or scene on wide screens) marks the
+    // anchorage itself; the pennant remains only for a stop without one.
+    const vueDuCiel = !detailDisponible && estVueDuCiel(vue) ? vue : null;
+    if (detailDisponible || vueDuCiel) cacheRepereEscale();
     else montreRepereEscale(complet);
     const directionCible = directionDetail ?? latLonVers3D(complet.lat, complet.lon, 1);
     const ouvreEscale = () => {
       if (demande !== demandePlongee) return;
       const heroCarnet = detailDisponible
         ? null : herosEscales[`${complet.nom}|${complet.date_arrivee}`];
-      rempli(complet, heroCarnet);
+      rempli(complet, heroCarnet, vueDuCiel);
+      document.body.classList.toggle('plongee-hublot', Boolean(vueDuCiel));
       panneau.hidden = false;
       if (!detailDisponible) montreLegendeScene(complet);
       document.body.classList.add('plongee-ouverte');
@@ -624,7 +807,7 @@ function opaciteRaccordLod(t) {
     controls.enabled = true;
     fermeLightbox();
     panneau.hidden = true;
-    document.body.classList.remove('plongee-ouverte');
+    document.body.classList.remove('plongee-ouverte', 'plongee-hublot');
     ouverte = false;
     cacheLegendeScene();
     cacheRepereEscale();
@@ -669,6 +852,9 @@ function opaciteRaccordLod(t) {
       if (e.key === 'Escape') {
         e.preventDefault();
         fermeLightbox();
+      } else if (serie && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) {
+        e.preventDefault();
+        afficheDansSerie(serie.index + (e.key === 'ArrowRight' ? 1 : -1));
       } else gardeFocus(e, lightbox);
       return;
     }

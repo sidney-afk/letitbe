@@ -22,6 +22,7 @@ import { construireVoyage } from './geo.js';
 import { soleilEtCiel } from './sun.js';
 import { chargeRelief, reliefPlat } from './relief.js';
 import { creerChargement } from './chargement.js';
+import { activeAPropos } from './apropos.js';
 
 const canvas = document.getElementById('scene');
 const mouvementReduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -132,6 +133,8 @@ async function activeFallback2D() {
     },
   };
 }
+
+activeAPropos();
 
 // relief, étoiles, données du voyage, carte peinte, bateau
 const chargement = creerChargement(5);
@@ -451,6 +454,11 @@ const plongee = creerPlongee({
   cacheDetailIle: () => globe.cacheDetail(),
 });
 const recit = creerRecit({ timeline, regleSuivi, voyage });
+// When the replayed crossing reaches San Diego, the voyage ends on its
+// epilogue ("La terre ferme") instead of simply stopping.
+timeline.surFinDuVoyage(() => {
+  if (!recit.actif && !plongee.ouverte && !plongee.enVol) recit.entre({ aide: false });
+});
 creerTraversee({ timeline, voyage, mouillagesParCle });
 
 // The canvas is not the only way into the voyage: this native navigator gives
@@ -647,6 +655,7 @@ window.__sillage = {
   camera, controls, timeline, voyage, bateau, plongee, route, recit, etoiles, globe,
   etiquettes, coton, renderer,
   sauteIntro() {
+    chargement.ferme();
     intro = 1;
     const accueil = distanceAccueilPourViewport();
     if (camera.position.length() > accueil + 0.5) camera.position.setLength(accueil);
@@ -675,7 +684,6 @@ let lectureAvant = false;
 // The painted globe must be on screen before the curtain lifts.
 await globePret;
 document.body.classList.add('pret'); // l'interface peut entrer en scène
-chargement.termine();
 
 renderer.setAnimationLoop(() => {
   const dt = horloge.getDelta();
@@ -738,6 +746,17 @@ renderer.setAnimationLoop(() => {
 
   controls.update();
   renderer.render(scene, camera);
+});
+
+// La page de garde : un premier visiteur sait tout de suite quoi faire.
+// « Larguer les amarres » rejoue le voyage ; « Explorer la carte » laisse
+// le globe libre.
+chargement.accueil().then((choix) => {
+  if (choix !== 'traversee') return;
+  intro = 1;
+  const accueil = distanceAccueilPourViewport();
+  if (camera.position.length() > accueil + 0.5) camera.position.setLength(accueil);
+  if (!timeline.enLecture) document.getElementById('lecture').click();
 });
 } catch (erreur) {
   chargement.echec(erreur);
