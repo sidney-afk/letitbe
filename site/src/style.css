@@ -2374,3 +2374,45 @@ body[data-mode="photo"] .roadtrip-liste button { color: rgba(223, 243, 255, .88)
   #plongee-flux .signale h3,
   #plongee-flux .roadtrip.signale .roadtrip-titre { animation-duration: .01s; }
 }
+
+/* — Escale précédente / suivante, en bas de chaque carnet — */
+.plongee-suite {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 34px 0 6px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(122, 84, 40, .3);
+}
+.plongee-suite button {
+  display: grid;
+  gap: 2px;
+  align-content: start;
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid rgba(122, 84, 40, .3);
+  border-radius: 6px;
+  background: rgba(255, 251, 240, .6);
+  color: var(--encre);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.plongee-suite button:hover { border-color: rgba(122, 84, 40, .6); background: rgba(255, 251, 240, .95); }
+.plongee-suite button:focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
+.plongee-suite .suite-suivante { grid-column: 2; text-align: right; }
+.suite-sens {
+  font-family: "IM Fell English SC", serif;
+  font-size: .78rem;
+  letter-spacing: .05em;
+  color: var(--or);
+}
+.suite-nom { font-size: 1rem; color: var(--bleu-encre); line-height: 1.25; }
+.suite-date { font-size: .8rem; font-style: italic; color: var(--encre-claire); }
+body[data-mode="photo"] .plongee-suite button {
+  background: rgba(20, 30, 44, .6);
+  border-color: rgba(232, 200, 122, .3);
+}
+body[data-mode="photo"] .suite-nom { color: #dff3ff; }
+body[data-mode="photo"] .suite-sens { color: #e8c87a; }
+body[data-mode="photo"] .suite-date { color: rgba(223, 243, 255, .6); }

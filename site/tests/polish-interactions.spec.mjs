@@ -553,3 +553,44 @@ test('le roadtrip de 2013 se lit sur le globe et ouvre le carnet au bon billet',
   await page.waitForFunction(() => !window.__sillage.plongee.ouverte && !window.__sillage.plongee.enVol);
   await page.waitForFunction(() => window.__sillage.etatComposition().roadtrip?.visible === true);
 });
+
+test('le carnet se lit d’escale en escale, même depuis une vue rapprochée', async ({ page }) => {
+  await ouvreExperience(page, { width: 1366, height: 768 });
+  const depart = await page.evaluate(async () => {
+    const { plongee, route, camera } = window.__sillage;
+    const fov = camera.fov;
+    const i = route.escales.findIndex(e => e.nom === 'Fidji - Makogai');
+    await plongee.vers(route.escales[i]);
+    plongee.metAJour(10);
+    return { fov, suivante: route.escales[i + 1].nom, precedente: route.escales[i - 1].nom };
+  });
+  await expect(page.locator('#plongee-nom')).toHaveText('Fidji - Makogai');
+  const nav = page.locator('#plongee-flux .plongee-suite');
+  await expect(nav.locator('.suite-precedente .suite-nom')).toHaveText(depart.precedente);
+  await expect(nav.locator('.suite-suivante .suite-nom')).toHaveText(depart.suivante);
+  await nav.locator('.suite-suivante').click();
+  // out of the close-up through the sea wash, then on to the next stop
+  await expect.poll(async () => {
+    await page.evaluate(() => window.__sillage.plongee.metAJour(10));
+    return page.evaluate(() => window.__sillage.plongee.ouverte
+      && document.getElementById('plongee-nom').textContent);
+  }, { timeout: 20_000 }).toBe(depart.suivante);
+  expect(await page.evaluate(() => window.__sillage.globe.etatDetail().actif)).toBe(false);
+  // the way back still returns to the map as the visitor left it
+  await page.keyboard.press('Escape');
+  await expect.poll(async () => {
+    await page.evaluate(() => window.__sillage.plongee.metAJour(10));
+    return page.evaluate(() => !window.__sillage.plongee.ouverte && !window.__sillage.plongee.enVol);
+  }).toBe(true);
+  expect(await page.evaluate(() => window.__sillage.camera.fov)).toBeCloseTo(depart.fov, 3);
+  await expect.poll(() => page.evaluate(() => window.__sillage.route.groupe.visible)).toBe(true);
+
+  // a stop without a post still leads on
+  await page.evaluate(async () => {
+    const { plongee, route } = window.__sillage;
+    await plongee.vers(route.escales.find(e => e.nom === 'Fidji - Nananu'));
+    plongee.metAJour(10);
+  });
+  await expect(page.locator('#plongee-flux .plongee-vide')).toBeVisible();
+  await expect(page.locator('#plongee-flux .plongee-suite button')).toHaveCount(2);
+});
