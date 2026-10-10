@@ -181,8 +181,7 @@
       "l": 320,
       "h": 240
      }
-    ],
-    "en_mer": true
+    ]
    },
    {
     "id": 35,
@@ -479,19 +478,7 @@
       "h": 360
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Panama",
-  "lat": 9.368,
-  "lon": -79.95,
-  "log_nm": 1250,
-  "date_arrivee": "2009-06-18",
-  "date_depart": null,
-  "type": "mouillage",
-  "chapitre": "Les Caraïbes",
-  "articles": [
+   },
    {
     "id": 45,
     "date": "2009-06-15",
@@ -517,8 +504,7 @@
       "l": 360,
       "h": 480
      }
-    ],
-    "en_mer": true
+    ]
    },
    {
     "id": 46,
@@ -551,9 +537,20 @@
       "l": 320,
       "h": 214
      }
-    ],
-    "en_mer": true
-   },
+    ]
+   }
+  ]
+ },
+ {
+  "nom": "Panama",
+  "lat": 9.368,
+  "lon": -79.95,
+  "log_nm": 1250,
+  "date_arrivee": "2009-06-18",
+  "date_depart": null,
+  "type": "mouillage",
+  "chapitre": "Les Caraïbes",
+  "articles": [
    {
     "id": 47,
     "date": "2009-06-19",
@@ -4665,8 +4662,7 @@
       "l": 480,
       "h": 360
      }
-    ],
-    "en_mer": true
+    ]
    },
    {
     "id": 178,
@@ -4701,8 +4697,7 @@
       "l": 480,
       "h": 320
      }
-    ],
-    "en_mer": true
+    ]
    },
    {
     "id": 179,
