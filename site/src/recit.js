@@ -162,7 +162,7 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
       const citation = document.createElement('figure');
       citation.className = 'recit-citation';
       const bloc = document.createElement('blockquote');
-      bloc.textContent = `« ${c.citation} »`;
+      bloc.textContent = `«\u00a0${c.citation}\u00a0»`;
       const signe = document.createElement('figcaption');
       signe.textContent = `Carnet de bord, ${c.source}`;
       citation.append(bloc, signe);

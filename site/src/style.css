@@ -1884,17 +1884,22 @@ body[data-mode="photo"] #titre-trait { filter: none; }
 #a-propos li + li { margin-top: 5px; }
 #a-propos a { color: #7c4f12; text-underline-offset: 2px; }
 #a-propos-fermer {
-  position: absolute;
-  top: 8px;
-  right: 10px;
+  /* the page is long (crew, boat, credits): the way out stays in view while
+     it scrolls, as in the table of contents */
+  position: sticky;
+  top: 4px;
+  z-index: 1;
+  float: right;
   width: 44px;
   height: 44px;
+  margin: -24px -24px 0 0;
   font: inherit;
   font-size: 1.6rem;
   line-height: 1;
   color: #6d5012;
-  background: none;
+  background: rgba(249, 242, 223, .92);
   border: 0;
+  border-radius: 50%;
   cursor: pointer;
 }
 #a-propos-fermer:focus-visible { outline: 3px solid rgba(91, 61, 30, .9); border-radius: 8px; }
@@ -2273,7 +2278,7 @@ body[data-mode="photo"] .film-lien { color: #e8c87a; }
 }
 .equipage strong { font-family: "IM Fell English", "EB Garamond", serif; font-weight: 400; font-size: 1.08rem; color: var(--bleu-encre); }
 .equipage-role { font-family: "IM Fell English SC", "EB Garamond", serif; font-size: .78rem; letter-spacing: .06em; color: var(--or); }
-.equipage q { font-style: italic; color: var(--encre-claire); quotes: "« " " »"; }
+.equipage q { font-style: italic; color: var(--encre-claire); quotes: "«\00a0" "\00a0»"; }
 .a-propos-source { margin-top: 8px !important; font-size: .8rem; font-style: italic; color: var(--encre-claire); }
 .bateau-fiche { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: start; }
 .bateau-fiche img { width: 100%; border: 4px solid #fffaf0; box-shadow: 0 3px 10px rgba(60, 45, 20, .25); }

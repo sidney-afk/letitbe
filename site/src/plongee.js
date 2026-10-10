@@ -40,13 +40,13 @@ export function blocEvoque(evoque, { surBillet }) {
   bloc.className = 'plongee-evoque';
   for (const v of evoque) {
     const citation = document.createElement('blockquote');
-    citation.textContent = `« ${v.phrase} »`;
+    citation.textContent = `«\u00a0${v.phrase}\u00a0»`;
     const lien = document.createElement('button');
     lien.type = 'button';
     lien.className = 'evoque-lien';
     const quoi = document.createElement('span');
     quoi.className = 'evoque-titre';
-    quoi.textContent = `Lire « ${v.titre} »`;
+    quoi.textContent = `Lire «\u00a0${v.titre}\u00a0»`;
     const quand = document.createElement('span');
     quand.className = 'evoque-date';
     quand.textContent = `${formatLong.format(new Date(`${v.date}T12:00:00Z`))} · ${v.escale}`;
@@ -146,7 +146,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     const photo = serie.photos[serie.index];
     lightboxImg.src = webp(photo.src);
     lightboxImg.alt = photo.legende || (serie.url
-      ? `Photo de l’album ${serie.titre}` : `Photo du billet « ${serie.titre} »`);
+      ? `Photo de l’album ${serie.titre}` : `Photo du billet «\u00a0${serie.titre}\u00a0»`);
     lightboxLegende.textContent = photo.legende || '';
     compteurLightbox.textContent = `${serie.titre} · ${serie.index + 1} / ${n}`;
     // the next photo is usually wanted next
@@ -689,7 +689,7 @@ function opaciteRaccordLod(t) {
     const lecture = document.createElement('button');
     lecture.type = 'button';
     lecture.className = 'film-lecture';
-    lecture.setAttribute('aria-label', `Regarder le film « ${video.titre} »`);
+    lecture.setAttribute('aria-label', `Regarder le film «\u00a0${video.titre}\u00a0»`);
     const img = document.createElement('img');
     img.loading = 'lazy';
     img.decoding = 'async';
@@ -780,7 +780,7 @@ function opaciteRaccordLod(t) {
       p.textContent = 'Aucun billet du blog n’a été écrit depuis ce mouillage.';
       flux.append(p);
       if (escale.evoque?.length) {
-        p.textContent += ` Il est évoqué dans ${escale.evoque.length > 1 ? 'des billets voisins' : 'un billet voisin'} :`;
+        p.textContent += ` Il est évoqué dans ${escale.evoque.length > 1 ? 'des billets voisins' : 'un billet voisin'}\u00a0:`;
         flux.append(blocEvoque(escale.evoque, {
           surBillet: (v) => {
             const cible = escaleParCle(v.escale, v.escale_arrivee);

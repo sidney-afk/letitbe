@@ -61,6 +61,13 @@ export function creerOcean() {
     return actif;
   }
 
+  // another tab, another app: the sea falls silent until the page is back
+  document.addEventListener('visibilitychange', () => {
+    if (!ctx) return;
+    if (document.hidden) void ctx.suspend();
+    else if (actif) void ctx.resume();
+  });
+
   function metAJour(dt, enLecture) {
     if (!ctx) return;
     cibleGain = actif ? (enLecture ? 0.34 : 0.15) : 0;

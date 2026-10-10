@@ -134,7 +134,7 @@ async function activeFallback2D() {
       conteneur.append(vide);
       const evoque = complet?.evoque ?? [];
       if (evoque.length) {
-        vide.textContent += ` Il est évoqué dans ${evoque.length > 1 ? 'des billets voisins' : 'un billet voisin'} :`;
+        vide.textContent += ` Il est évoqué dans ${evoque.length > 1 ? 'des billets voisins' : 'un billet voisin'}\u00a0:`;
         conteneur.append(blocEvoque(evoque, {
           surBillet: v => ouvreBilletFallback(v.escale, v.escale_arrivee, v.id),
         }));
