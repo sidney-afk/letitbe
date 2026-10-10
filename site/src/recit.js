@@ -6,73 +6,96 @@
 
 const DISTANCE_RECIT = 2.05;
 
-// Textes d'introduction — le récit du site, nourri des données réelles.
+// Textes d'introduction. Chaque fait vient de l'archive (articles du blog
+// `content/articles.json`, tables de log, pages du site laruel.be) ; les
+// citations sont mot pour mot, avec la date du billet. Vérifié le 10/10/2026.
 const CHAPITRES = {
   'Les Caraïbes': {
     numero: 'I',
     periode: 'mai – juin 2009',
-    texte: 'Tout commence au Marin, à la Martinique, le 28 mai 2009. '
-      + 'Éric, Cécile et les enfants larguent les amarres d’un catamaran '
-      + 'qui s’appelle déjà Let It Be. Cap à l’ouest : Sainte-Lucie, les '
-      + 'eaux turquoise de Los Roques, Aruba — le log commence à compter.',
+    texte: 'Le 28 mai 2009, au Marin, à la Martinique, Let It Be lève l’ancre : '
+      + 'un Bahia 46 de 2004, ancien bateau de location devenu celui de la '
+      + 'famille le 1er avril. À bord, Éric, Cécile, Kenya, Sidney et Syr Daria. '
+      + 'Cap au sud vers Sainte-Lucie, puis plein ouest : Los Roques, Aruba, '
+      + 'les San Blas. Le log commence à compter.',
+    citation: 'C’est à la fine pointe de l’aube, quand les rayons du soleil '
+      + 'naissant rasent les flots assoupis par la nuit étoilée que nous avons '
+      + 'levé l’ancre.',
+    source: '28 mai 2009',
   },
   'Vers le Pacifique': {
     numero: 'II',
     periode: 'juin – juillet 2009',
-    texte: 'Les San Blas, puis l’écluse de Gatún : Let It Be se hisse '
-      + 'au-dessus de l’isthme et bascule dans une autre moitié du monde. '
-      + 'Aux Galápagos, les iguanes ne se poussent pas pour laisser passer '
-      + 'les visiteurs — c’est la porte du grand océan.',
+    texte: 'Fin juin, dans le sillage d’un cargo slovène, Let It Be gravit les '
+      + 'trois écluses de Gatún : de l’autre côté de l’isthme commence une autre '
+      + 'moitié du monde. Les Perlas, puis les Galápagos. Le 23 juillet, cap sur '
+      + 'le grand large.',
+    citation: 'Nous avons pris un ticket avant de nous insérer dans la file, '
+      + 'juste derrière un lion des mers (mais devant le booby à pattes bleues '
+      + 'qui tentait de resquiller).',
+    source: 'Galápagos, 17 juillet 2009',
   },
   'Le Grand Pacifique': {
     numero: 'III',
     periode: 'juillet 2009 – novembre 2010',
-    texte: 'Dix-neuf jours de mer d’une traite, et les Gambier apparaissent. '
-      + 'Puis tout l’éventail polynésien : les Marquises, les atolls des '
-      + 'Tuamotu, Tahiti, Bora Bora ; les Cook, Beveridge Reef, Niue, les '
-      + 'baleines de Tonga, le dédale des Fidji. Seize mois au cœur du '
-      + 'Pacifique, l’école dans le carré et le récif pour cour de récré.',
+    texte: 'Vingt jours de mer d’une traite, et les Gambier apparaissent. Puis '
+      + 'tout l’éventail polynésien : les Marquises, les atolls des Tuamotu, '
+      + 'Tahiti, Bora Bora ; les Cook, Beveridge Reef, Niue, les baleines de '
+      + 'Tonga, les Fidji. Seize mois au cœur du Pacifique, et l’école à bord.',
+    citation: 'A l’heure où j’écris ces lignes, le bateau dort. Seul dans le '
+      + 'carré silencieux, j’entends à peine le bruit du vent dans le génois…',
+    source: 'Traversée du Pacifique, 5 août 2009',
   },
   'La Nouvelle-Zélande': {
     numero: 'IV',
     periode: 'décembre 2010 – mai 2012',
-    texte: 'Mille milles de mer grise et voilà Opua, puis Whangarei, où '
-      + 'Let It Be se repose dix-sept mois. La famille troque la voile '
-      + 'contre les routes : la Nouvelle-Zélande de fond en comble, et '
-      + 'jusqu’à l’Australie et la Tasmanie. Le bateau, lui, attend son heure.',
+    texte: 'Un peu plus de mille milles, des creux de six mètres, et voilà '
+      + 'Opua, puis Whangarei, où Let It Be se repose dix-sept mois. La famille '
+      + 'troque la voile contre la route : la Nouvelle-Zélande en campervan, puis '
+      + 'deux mois et 11 000 km en Australie, jusqu’en Tasmanie. Le bateau, lui, '
+      + 'attend son heure.',
   },
   'Le retour en Polynésie': {
     numero: 'V',
-    periode: 'mai 2012 – mars 2013',
-    texte: 'Le chemin du retour passe par les quarantièmes rugissants : '
-      + 'vingt-quatre jours de près serré, rafales à plus de 90 km/h, '
-      + 'creux de six mètres — la plus rude traversée du voyage. En '
-      + 'récompense : les Gambier retrouvés, Tahanea, Makemo, et un long '
-      + 'hiver austral aux Marquises.',
+    periode: 'mai 2012 – février 2013',
+    texte: 'Le chemin du retour passe aux portes des quarantièmes : 3 250 milles '
+      + 'en vingt-trois jours et demi, des surfs à plus de 15 nœuds, puis le près, '
+      + 'des rafales à 55 nœuds et des creux estimés à huit mètres. La plus rude '
+      + 'traversée du voyage. Suivent l’hiver aux Gambier, Tahiti et les îles de '
+      + 'la Société, les mantas de Tahanea, et la saison des cyclones à l’abri '
+      + 'des Marquises.',
+    citation: 'A vrai dire, nous avons tous, je pense, une petite larme à '
+      + 'l’oeil… On est arrivé !!!',
+    source: 'Les Gambier, 9 juin 2012',
   },
   'La remontée vers le nord': {
     numero: 'VI',
-    periode: 'mars – juin 2013',
-    texte: 'De Nuku Hiva, cap plein nord : l’équateur repasse sous la '
-      + 'quille, et Hilo surgit après dix-sept jours. Hawaï se déguste '
-      + 'd’île en île — Big Island, Maui, Molokai, Oahu — avant le grand '
-      + 'saut vers le continent américain.',
+    periode: 'février – juin 2013',
+    texte: 'Le 19 février 2013, cap plein nord depuis Nuku Hiva. L’équateur '
+      + 'repasse sous la quille, 196 milles en 24 heures, leur record, et Hilo '
+      + 'surgit après treize jours de mer : 2 100 milles au près, bâbord amures. '
+      + 'Puis Hawaï d’île en île : Big Island, Maui, Molokai, Oahu.',
+    citation: 'Après un séjour de près de 4 ans dans l’hémisphère sud, nous '
+      + 'allons maintenant écumer le Pacifique Nord.',
+    source: 'Équateur, 22 février 2013',
   },
   'Le grand nord': {
     numero: 'VII',
     periode: 'juin – août 2013',
-    texte: 'Dix-neuf jours entre Honolulu et Prince Rupert, aux portes de '
-      + 'l’Alaska. Puis l’Inside Passage, déroulé mouillage après '
-      + 'mouillage : fjords, ours et saumons, brumes du matin. Les alizés '
-      + 'sont loin ; on navigue en polaire.',
+    texte: 'Dix-neuf jours d’une traversée « fort calme et bien motorisée » '
+      + 'entre Honolulu et Prince Rupert, aux portes de l’Alaska. Puis la côte '
+      + 'de la Colombie-Britannique, mouillage après mouillage, entre fjords, '
+      + 'aigles à tête blanche et otaries, jusqu’à Vancouver et Victoria.',
+    citation: 'Au loin, les saumons font des cabrioles et les otaries soupirent.',
+    source: '13 juillet 2013',
   },
   'La côte américaine': {
     numero: 'VIII',
     periode: 'août 2013 – janvier 2014',
-    texte: 'Victoria, Neah Bay, puis la longue glissade vers le Golden '
-      + 'Gate. Pendant que le bateau souffle à San Francisco, un '
-      + 'camping-car avale 4 972 miles de parcs nationaux. Les îles '
-      + 'Channel ferment la marche : le 13 janvier 2014, à San Diego, '
+    texte: 'Port Angeles, Neah Bay, puis la descente vers San Francisco, sous le '
+      + 'Golden Gate à la voile. Pendant que le bateau attend, un camping-car '
+      + 'avale près de 5 000 miles de parcs nationaux, en plein « shutdown ». '
+      + 'Les îles Channel ferment la marche : le 15 novembre 2013, à San Diego, '
       + 'le log s’arrête à 24 490 milles.',
   },
 };
@@ -81,11 +104,14 @@ const EPILOGUE = {
   numero: '∗',
   titre: 'La terre ferme',
   periode: 'et après…',
-  texte: 'Let It Be change de mains à San Diego ; la famille, elle, '
-    + 'continue : le Mexique, puis le Costa Rica, une finca face aux '
-    + 'volcans et des chambres d’hôtes. Le voyage est devenu deux livres '
-    + 'signés Éric Laruel et Cécile Van Winnendael — et ce sillage-ci, '
-    + 'pour mémoire.',
+  texte: 'Le 13 janvier 2014, la famille quitte Let It Be pour de bon ; le '
+    + 'bateau voguera désormais sous la houlette d’un nouveau capitaine. Elle '
+    + 's’envole pour le Costa Rica : une finca de 40 hectares près de Bijagua, '
+    + 'entre les volcans Tenorio et Miravalles, et de futures chambres d’hôtes. '
+    + 'Le voyage est devenu deux livres, Les p’tites bites et 95° de latitude '
+    + 'Nord, et ce sillage-ci, pour mémoire.',
+  citation: 'Let It Be, c’est fini. Et dire que c’était mon premier bateau…',
+  source: 'Costa Rica, 17 janvier 2014',
 };
 
 const JOUR_MS = 86400e3;
@@ -130,6 +156,17 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
     tx.className = 'recit-texte';
     tx.textContent = c.texte;
     carte.append(num, h, per, tx);
+    if (c.citation) {
+      // Les mots mêmes du carnet de bord, datés.
+      const citation = document.createElement('figure');
+      citation.className = 'recit-citation';
+      const bloc = document.createElement('blockquote');
+      bloc.textContent = `« ${c.citation} »`;
+      const signe = document.createElement('figcaption');
+      signe.textContent = `Carnet de bord, ${c.source}`;
+      citation.append(bloc, signe);
+      carte.append(citation);
+    }
     carte.classList.remove('visible');
     requestAnimationFrame(() => requestAnimationFrame(
       () => carte.classList.add('visible')));

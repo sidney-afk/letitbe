@@ -463,7 +463,7 @@ function opaciteRaccordLod(t) {
     if (!articles.length) {
       const p = document.createElement('p');
       p.className = 'plongee-vide';
-      p.textContent = 'Le blog est resté silencieux dans ce mouillage — l’équipage devait être à l’eau.';
+      p.textContent = 'Aucun billet du blog n’a été écrit depuis ce mouillage.';
       flux.append(p);
       return;
     }
