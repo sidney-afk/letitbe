@@ -5,7 +5,7 @@
   "lon": -60.871,
   "log_nm": 0,
   "date_arrivee": "2009-05-27",
-  "date_depart": null,
+  "date_depart": "2009-05-28",
   "type": "mouillage",
   "chapitre": "Les Caraïbes",
   "articles": [
@@ -57,7 +57,19 @@
       "legende": ""
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Ste Lucie",
+  "lat": 14.075,
+  "lon": -60.95,
+  "log_nm": 40,
+  "date_arrivee": "2009-05-29",
+  "date_depart": null,
+  "type": "mouillage",
+  "chapitre": "Les Caraïbes",
+  "articles": [
    {
     "id": 32,
     "date": "2009-05-28",
@@ -79,19 +91,7 @@
       "legende": ""
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Ste Lucie",
-  "lat": 14.075,
-  "lon": -60.95,
-  "log_nm": 40,
-  "date_arrivee": "2009-05-29",
-  "date_depart": null,
-  "type": "mouillage",
-  "chapitre": "Les Caraïbes",
-  "articles": [
+   },
    {
     "id": 33,
     "date": "2009-05-29",

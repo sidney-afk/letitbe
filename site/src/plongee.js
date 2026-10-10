@@ -4,6 +4,7 @@
 
 import * as THREE from 'three';
 import { latLonVers3D } from './geo.js';
+import { chargeAlbums, albumsDeLEscale, chargeVideos, videosDeLEscale } from './albums.js';
 
 // A stop without an explicitly reviewed close-up is still a real arrival,
 // rather than a barely perceptible change of the overview.  This regional
@@ -35,7 +36,7 @@ const lisse = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 export function creerPlongee({ camera, controls, timeline, regleSuivi,
   regleVisibiliteBateau = () => {}, regleVisibiliteRoute = () => {},
   regleDetailIle = () => false, cacheDetailIle = () => {}, vuesAeriennes = {},
-  herosEscales = {}, mouillagesParCle, scene, relief }) {
+  herosEscales = {}, mouillagesParCle, carnetsPrets = Promise.resolve(), scene, relief }) {
   const panneau = document.getElementById('plongee');
   const titre = document.getElementById('plongee-nom');
   const sousTitre = document.getElementById('plongee-dates');
@@ -567,15 +568,6 @@ function opaciteRaccordLod(t) {
     flux.append(figure);
   }
 
-  // Les albums photo de laruel.be rattachés aux escales (une sélection par
-  // album ; l'album complet reste en ligne sur le site de la famille).
-  let albumsPromesse = null;
-  function chargeAlbums() {
-    albumsPromesse ??= fetch('./data/albums_escales.json')
-      .then(r => (r.ok ? r.json() : []))
-      .catch(() => []);
-    return albumsPromesse;
-  }
   // « Septembre/Octobre 2012 » → « septembre/octobre 2012 »
   const periodeAlbum = texte => texte.toLocaleLowerCase('fr-FR');
   function carteAlbum(album) {
@@ -613,10 +605,9 @@ function opaciteRaccordLod(t) {
     section.className = 'albums-escale';
     section.hidden = true;
     flux.append(section);
-    const cle = `${escale.nom}|${escale.date_arrivee}`;
     chargeAlbums().then((albums) => {
       if (demande !== demandePlongee || !section.isConnected) return;
-      const liste = albums.filter(a => a.escales?.includes(cle) && a.photos?.length);
+      const liste = albumsDeLEscale(albums, escale);
       if (!liste.length) { section.remove(); return; }
       const titre = document.createElement('h3');
       titre.className = 'albums-titre';
@@ -625,6 +616,73 @@ function opaciteRaccordLod(t) {
       grille.className = 'albums-grille';
       grille.append(...liste.map(carteAlbum));
       section.append(titre, grille);
+      section.hidden = false;
+    });
+  }
+
+  // Les films du bord : une vignette hébergée avec le site ; le lecteur
+  // YouTube (sans cookies) n'est chargé que si l'on appuie sur lecture.
+  function carteVideo(video) {
+    const figure = document.createElement('figure');
+    figure.className = 'film-bord';
+    const lecture = document.createElement('button');
+    lecture.type = 'button';
+    lecture.className = 'film-lecture';
+    lecture.setAttribute('aria-label', `Regarder le film « ${video.titre} »`);
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.decoding = 'async';
+    img.alt = '';
+    img.src = `./media/videos/${video.youtube_id}.webp`;
+    const icone = document.createElement('span');
+    icone.className = 'film-icone';
+    icone.setAttribute('aria-hidden', 'true');
+    lecture.append(img, icone);
+    lecture.addEventListener('click', () => {
+      const cadre = document.createElement('iframe');
+      cadre.className = 'film-cadre';
+      cadre.src = `https://www.youtube-nocookie.com/embed/${video.youtube_id}?autoplay=1&rel=0`;
+      cadre.title = video.titre;
+      cadre.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+      cadre.allowFullscreen = true;
+      lecture.replaceWith(cadre);
+      cadre.focus();
+    });
+    const cap = document.createElement('figcaption');
+    const titre = document.createElement('span');
+    titre.className = 'film-titre';
+    titre.textContent = video.titre;
+    cap.append(titre);
+    if (video.commentaire) {
+      const mots = document.createElement('span');
+      mots.className = 'film-commentaire';
+      mots.textContent = video.commentaire;
+      cap.append(mots);
+    }
+    // always a way to watch it, even if a browser refuses the embedded player
+    const lien = document.createElement('a');
+    lien.className = 'film-lien';
+    lien.href = `https://www.youtube.com/watch?v=${video.youtube_id}`;
+    lien.target = '_blank';
+    lien.rel = 'noopener';
+    lien.textContent = 'Voir sur YouTube';
+    cap.append(lien);
+    figure.append(lecture, cap);
+    return figure;
+  }
+  function ajouteVideos(escale, demande) {
+    const section = document.createElement('section');
+    section.className = 'films-escale';
+    section.hidden = true;
+    flux.append(section);
+    chargeVideos().then((videos) => {
+      if (demande !== demandePlongee || !section.isConnected) return;
+      const liste = videosDeLEscale(videos, escale);
+      if (!liste.length) { section.remove(); return; }
+      const titre = document.createElement('h3');
+      titre.className = 'albums-titre';
+      titre.textContent = liste.length > 1 ? 'Les films du bord' : 'Le film du bord';
+      section.append(titre, ...liste.map(carteVideo));
       section.hidden = false;
     });
   }
@@ -645,6 +703,7 @@ function opaciteRaccordLod(t) {
     // aerial detail such as Makogai.
     ajouteHeroCarnet(heroCarnet);
     ajouteAlbums(escale, demandePlongee);
+    ajouteVideos(escale, demandePlongee);
     const articles = escale.articles ?? [];
     if (!articles.length) {
       const p = document.createElement('p');
@@ -719,8 +778,13 @@ function opaciteRaccordLod(t) {
     focusAvantPlongee = document.activeElement;
     focaleAvantPlongee = camera.fov;
     panneau.hidden = true;
+    await carnetsPrets; // usually long done: the journals load during the intro
+    if (demande !== demandePlongee) return;
     const complet = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`) ?? escale;
     const vue = vuesAeriennes[`${complet.nom}|${complet.date_arrivee}`];
+    // Start fetching the satellite porthole now, so it is there when the
+    // camera arrives rather than appearing as an empty ring.
+    if (estVueDuCiel(vue) && !vue.detailPlongee) new Image().src = `./${vue.fichier}`;
     // The clean selected-place state is reserved for a source that has passed
     // the per-location imagery gate. A merely existing legacy file must not
     // turn a visit into a blurry satellite rectangle; it keeps the illustrated

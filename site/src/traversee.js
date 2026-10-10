@@ -1,13 +1,21 @@
 // Le Mode Traversée (étape 5 du plan) : pendant la lecture, les photos des
 // escales « affleurent » au passage du bateau — une carte qui monte
-// doucement de l'eau, reste un instant, et se dissout.
+// doucement de l'eau, reste un instant, et se dissout. Chaque carte porte,
+// quand elle existe, la légende écrite par la famille sous la photo.
+
+import { chargeAlbums, albumsDeLEscale } from './albums.js';
 
 const VIE_CARTE_MS = 3600;
 const ENTRE_CARTES_MS = 1100;
+// A short caption fits the little print; longer ones stay for the journal.
+const LEGENDE_MAX = 90;
 
 const formatCourt = new Intl.DateTimeFormat('fr-FR', {
   month: 'long', year: 'numeric', timeZone: 'UTC',
 });
+
+const legendeCourte = legende => typeof legende === 'string'
+  && legende.trim().length >= 3 && legende.trim().length <= LEGENDE_MAX;
 
 export function creerTraversee({ timeline, voyage, mouillagesParCle }) {
   const couche = document.getElementById('affleure');
@@ -15,16 +23,28 @@ export function creerTraversee({ timeline, voyage, mouillagesParCle }) {
   let dernierAffichage = 0;
   let dejaVues = new Set();
   let enCours = 0; // cartes actuellement à l'écran
+  let albums = [];
+  let albumsDemandes = false;
+
+  function candidates(escale) {
+    const photos = [];
+    const m = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`);
+    for (const a of m?.articles ?? []) {
+      for (const im of a.images ?? []) photos.push({ src: im.src, legende: im.legende });
+    }
+    for (const album of albumsDeLEscale(albums, escale)) {
+      for (const p of album.photos) photos.push({ src: p.src, legende: p.legende });
+    }
+    return photos;
+  }
 
   function photoDe(escale) {
-    const m = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`);
-    if (!m) return null;
-    for (const a of m.articles ?? []) {
-      if (a.images.length) {
-        return { src: a.images[0].src, legende: a.images[0].legende, m };
-      }
-    }
-    return null;
+    const photos = candidates(escale);
+    if (!photos.length) return null;
+    // the family's own words when there are some; a new pick at every replay
+    const legendees = photos.filter(p => legendeCourte(p.legende));
+    const parmi = legendees.length ? legendees : photos;
+    return parmi[Math.floor(Math.random() * parmi.length)];
   }
 
   function affleure(escale) {
@@ -39,8 +59,17 @@ export function creerTraversee({ timeline, voyage, mouillagesParCle }) {
     img.alt = photo.legende || escale.nom;
     img.addEventListener('error', () => fig.remove());
     const cap = document.createElement('figcaption');
-    cap.textContent = `${escale.nom} · ${formatCourt.format(
+    if (legendeCourte(photo.legende)) {
+      const mots = document.createElement('span');
+      mots.className = 'affleure-legende';
+      mots.textContent = photo.legende.trim();
+      cap.append(mots);
+    }
+    const lieu = document.createElement('span');
+    lieu.className = 'affleure-lieu';
+    lieu.textContent = `${escale.nom} · ${formatCourt.format(
       new Date(escale.date_arrivee + 'T12:00:00Z'))}`;
+    cap.append(lieu);
     fig.append(img, cap);
     couche.append(fig);
     setTimeout(() => {
@@ -51,6 +80,10 @@ export function creerTraversee({ timeline, voyage, mouillagesParCle }) {
 
   timeline.surChangement((t) => {
     if (!timeline.enLecture) return;
+    if (!albumsDemandes) {
+      albumsDemandes = true;
+      chargeAlbums().then((liste) => { albums = liste; });
+    }
     const s = voyage.segmentA(t);
     const e = s.escale;
     if (!e || s.enMer || !e.date_arrivee) return;

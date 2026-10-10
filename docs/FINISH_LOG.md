@@ -103,7 +103,7 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
   "Explorer les escales" and the timeline's anchor tab; the second card's
   caption disappears behind the timeline (1440×900).
 
-### 6. The album photos and videos are never shown (P2, high value) — ALBUMS IN PROGRESS
+### 6. The album photos and videos are never shown (P2, high value) — DONE
 
 - Decision (2026-10-10): publishing all 4,760 album photos would add about
   400 MB. Instead `pipeline/build_albums.py` picks up to 24 photos per album
@@ -159,8 +159,8 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
   captions) were flattened, so sentences run into each other
   ("…Syr Daria Croft On s'est empiffré…"). Rebuild paragraphs from the
   archived HTML. (P2, high value for the parents.)
-- The timeline starts on 27 May 2009 "En mer — Martinique → Ste Lucie"
-  although the boat left on the 28th (the log table's date is approximate).
+- ~~The timeline starts on 27 May 2009 "En mer — Martinique → Ste Lucie"
+  although the boat left on the 28th~~ — fixed in batch 4.
 
 - Label collision "Panamá/Aruba/Martinique" at the start of playback (desktop).
 - Phone: weather line wraps ("ciel / couvert"), top buttons are bare icons.
@@ -220,10 +220,34 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
   - Found and fixed: Escape could not close a dialog while the story was
     open.
 
+- **Batch 4 (2026-10-10): the crossing as a story.**
+  - Pacing: the replay used raw calendar time, so the boat sat still at
+    Whangarei for about 45 of the 180 seconds. It now runs on a "story
+    clock": each day at sea keeps its weight, a stop counts for 1.5 to
+    7 days, very long stays a little more (`voyage.lecture` in `geo.js`).
+    The NZ wintering now takes 4 s, the 20-day Pacific crossing about 5 s.
+    The timeline slider stays linear in time.
+  - The rising photos now come from the blog and the albums of that stop,
+    preferring photos with the family's own short caption, which is shown
+    on the print ("Taravai : visite à terre. Eric cueille des piments").
+  - Each chapter is announced by a brief title as the boat enters it.
+  - Satellite porthole preloaded during the dive flight; dark sea tone
+    while it loads.
+  - The family's films: 8 of the 14 YouTube videos are placed in the
+    journal of the stop they name (Tahanea's mantas, the Tonga whales,
+    "Le port du Marin présenté par Sidney"…). `pipeline/build_videos.py`
+    keeps the mapping explicit; "Sous l'eau" (July 2010) names no place and
+    stays unplaced; the five pre-departure videos are outside the voyage.
+    Thumbnails are hosted with the site; the YouTube player (no-cookie)
+    loads only on click, with a "Voir sur YouTube" link as a fallback.
+  - Departure date: the boat left Le Marin on 28 May 2009 at dawn (blog,
+    "D Day"); the log table said 27. The timeline now starts at anchor in
+    Martinique, and the "D Day" post sits in the Sainte-Lucie journal.
+
 ## Ideas for later
 
-- During the crossing, a brief chapter title (and its quote) as the boat
-  enters each chapter, so the three-minute replay reads as a story.
+- Chapter quotes could also appear during the crossing (kept to titles for
+  now: three minutes leave little reading time).
 
 - Per-chapter ambient sound variations.
 - "Ce jour-là" and similar features stay out (owner decision in PLAN.md).
