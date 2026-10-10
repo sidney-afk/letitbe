@@ -566,6 +566,28 @@ Built next (batch 15):
   showed a blurred screenshot; it now shows the boat on its little sea
   (`pipeline/icone_ecran.mjs`, drawn from the tab icon).
 
+## Fifth first-time-visitor pass (2026-10-10, after batch 21)
+
+Phone 390×844 on a simulated 4G connection, then 1366×768: loading, the
+welcome card, « L’équipage et le bateau » and « À propos », the sound.
+
+- Loading: the welcome card is readable and its buttons usable within 3 s
+  on 4G (about 2.9 MB). The rest loads behind it.
+- Fixed (batch 22): on a phone, « L’équipage et le bateau » opens partway
+  down a long page (crew, boat, credits) and its close button (×) was
+  scrolled out of sight: on a phone, with no Escape key, there was no visible
+  way out except a thin margin. The × now stays pinned at the top corner
+  while the page scrolls, as in the table of contents.
+- Fixed: Cécile's presentation ended with a lone « » » on its own line. The
+  site's own guillemets and colons (crew quotes, story quotes, the quoted
+  mentions, photo and film labels) are now held to their words by a
+  non-breaking space, as the page's static text already was; three straight
+  apostrophes became typographic ones (« n’est pas disponible », « Changer
+  l’apparence du globe »).
+- Fixed: the ocean sound kept playing in a tab the visitor had left. It
+  now falls silent while the page is hidden and comes back with it (only
+  if it was on).
+
 ## Ideas for later
 
 - Chapter quotes could also appear during the crossing (kept to titles for
