@@ -6,22 +6,14 @@ each section. Ranked by how much each item matters to a first-time visitor
 
 ## Needs Sidney
 
-- **The boat's look (taste call, not blocking).** During the crossing the
-  3D catamaran is seen from straight above and reads as a small white
-  rectangle with an ink outline, not as a sailboat. This is your own
-  11 August change ("Improve Let It Be catamaran presentation": a stable
-  model that never turns toward the camera, locked flat by tests), which
-  replaced the earlier figurine that turned to show its profile from afar.
-  Three options: keep it; bring back the profile view from afar (your
-  second-round note: "de loin il pivote pour se montrer de profil"); or a
-  hand-drawn sailboat like the one on the timeline. Say which and I will
-  build it.
+Nothing at the moment.
 
-- **Who signed the two books?** PLAN.md says Éric Laruel and Cécile Van
-  Winnendael published them; the archive only shows Éric writing "mon livre"
-  and the Costa Rica page saying "les livres de nos aventures". The epilogue
-  now names the two titles without an author line. If both signed them,
-  say so and I will add "d'Éric Laruel et Cécile Van Winnendael" back.
+Answered by Sidney (2026-10-11):
+- **The boat**: « I hate the white rectangle… I want the boat to look cool
+  and good, maybe at a three-quarter angle. » Left to this loop: now the top
+  item of the work list (batch 29 onwards).
+- **Who signed the two books**: « it doesn't really matter ». The epilogue
+  and « À propos » keep naming the two titles without an author line.
 
 ## How the audit was done (2026-10-10, first pass)
 
