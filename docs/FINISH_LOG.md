@@ -191,8 +191,8 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
 
 ### Promised in PLAN.md and not built
 
-- Animated morph between Carnet and realistic modes; engraved sea-chart
-  variant (feature 1).
+- ~~Animated morph between Carnet and realistic modes~~ (a dissolve, batch
+  15); engraved sea-chart variant (feature 1) still open.
 - Wind particles (feature 2; judged heavy).
 - Real time of day for sunrise/sunset during the crossing (feature 4).
 - ~~Camping-car route of autumn 2013 (`data/roadtrip.json`) not drawn.~~
@@ -442,6 +442,10 @@ Built next (batch 10):
   768 px high, a long chapter card reached down over "Explorer les
   escales" (the menu took the clicks). The menu now steps aside during
   the story on every screen, as it already did on phones.
+- Test decision (follow-up): the same 30 s allowance now covers the two
+  other tests that make the first realistic switch (controls and Escape,
+  main smoke path), after one of them hit the 8 s default too. Noted as a
+  product item: phones decode the 5400 px realistic day map as well.
 - Test decision: the realistic-mode layout check gave the mode switch the
   default 8 s, but since batch 1 the first switch waits for the realistic
   textures. In one run they downloaded in 0.13 s and the software decode of
@@ -478,6 +482,15 @@ Found and fixed (batch 14):
   buttons now use their icon and one word, as on phones.
 - The ❧ closing a chapter card was pinned to the card's corner and sat on
   the last words of a card that scrolls; it now follows the text.
+
+Built next (batch 15):
+- **The two maps dissolve into each other** (PLAN feature 1, "le
+  basculement de carte… morphe"). Switching between the painted globe and
+  the realistic one used to jump. The last frame of the old look is now
+  copied onto a veil above the scene (below every control) that fades out
+  over 0.9 s, so one map seems laid over the other. Skipped for visitors
+  who ask for reduced motion. Not built: the engraved sea-chart variant,
+  and wind particles (PLAN judged them heavy).
 
 ## Ideas for later
 

@@ -367,8 +367,39 @@ modeBouton.addEventListener('click', async () => {
       modeBouton.removeAttribute('aria-busy');
     }
   }
-  regleMode(mode === 'carnet' ? 'photo' : 'carnet');
+  fonduMode(() => regleMode(mode === 'carnet' ? 'photo' : 'carnet'));
 });
+
+// The painted globe and the photographic one dissolve into each other, like
+// one map laid over the other, instead of jumping (plan, feature 1). The
+// last frame is copied (scaled down: a dissolve hides the detail) onto a
+// veil above the scene and below every control, which then fades away.
+function fonduMode(change) {
+  if (mouvementReduit) {
+    change();
+    return;
+  }
+  const source = renderer.domElement;
+  const voile = document.createElement('canvas');
+  voile.className = 'fondu-mode';
+  voile.setAttribute('aria-hidden', 'true');
+  const echelle = Math.min(1, 1280 / Math.max(1, source.width));
+  voile.width = Math.max(1, Math.round(source.width * echelle));
+  voile.height = Math.max(1, Math.round(source.height * echelle));
+  try {
+    renderer.render(scene, camera); // the drawing buffer is valid right after a render
+    voile.getContext('2d').drawImage(source, 0, 0, voile.width, voile.height);
+  } catch {
+    change();
+    return;
+  }
+  canvas.after(voile);
+  change();
+  const retire = () => voile.remove();
+  voile.addEventListener('transitionend', retire, { once: true });
+  setTimeout(retire, 1600);
+  requestAnimationFrame(() => requestAnimationFrame(() => voile.classList.add('dissous')));
+}
 
 function estCatalogueObjet(valeur) {
   return valeur !== null && typeof valeur === 'object' && !Array.isArray(valeur);

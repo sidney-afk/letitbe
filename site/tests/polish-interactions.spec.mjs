@@ -398,7 +398,9 @@ test('les commandes annoncent leur état et le récit se quitte avec Échap', as
   const mode = page.locator('#mode-bouton');
   await expect(mode).toHaveAttribute('aria-label', 'Passer au mode réaliste');
   await mode.click();
-  await expect(page.locator('body')).toHaveAttribute('data-mode', 'photo');
+  // the first switch waits for the on-demand realistic textures, whose
+  // software decode can outlast the default 8 s on a busy runner
+  await expect(page.locator('body')).toHaveAttribute('data-mode', 'photo', { timeout: 30_000 });
   await expect(mode).toHaveAttribute('aria-label', 'Passer au mode carnet');
 
   const recit = page.locator('#recit-bouton');

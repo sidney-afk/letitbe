@@ -14,7 +14,9 @@ test('parcours principal multi-navigateur', async ({ page }) => {
 
   const mode = page.locator('#mode-bouton');
   await mode.click();
-  await expect(page.locator('body')).toHaveAttribute('data-mode', 'photo');
+  // the first switch waits for the on-demand realistic textures, whose
+  // software decode can outlast the default 8 s on a busy runner
+  await expect(page.locator('body')).toHaveAttribute('data-mode', 'photo', { timeout: 30_000 });
   await mode.click();
   await expect(page.locator('body')).toHaveAttribute('data-mode', 'carnet');
 
