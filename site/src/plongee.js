@@ -599,7 +599,8 @@ function opaciteRaccordLod(t) {
   }
 
   // « Vue du ciel » : la vraie image satellite de l'escale (Esri, ~97 km de
-  // côté), dans un hublot, avec une ancre là où ils ont mouillé. Elle remplace
+  // côté, plus près pour quelques îlots : pipeline/vues_aeriennes_rapprochees.py),
+  // dans un hublot, avec une ancre là où ils ont mouillé. Elle remplace
   // l'agrandissement flou de la carte peinte pour les escales sans vue
   // rapprochée revue.
   const mercator = lat => Math.log(Math.tan(Math.PI / 4 + THREE.MathUtils.degToRad(lat) / 2));
