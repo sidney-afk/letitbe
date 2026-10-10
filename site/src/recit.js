@@ -9,7 +9,7 @@ const DISTANCE_RECIT = 2.05;
 // Textes d'introduction. Chaque fait vient de l'archive (articles du blog
 // `content/articles.json`, tables de log, pages du site laruel.be) ; les
 // citations sont mot pour mot, avec la date du billet. Vérifié le 10/10/2026.
-const CHAPITRES = {
+export const CHAPITRES = {
   'Les Caraïbes': {
     numero: 'I',
     periode: 'mai – juin 2009',

@@ -98,6 +98,7 @@
         <option value="">Choisir une escale…</option>
       </select>
       <button type="button" id="escales-ouvrir" aria-controls="plongee">Ouvrir le carnet</button>
+      <button type="button" class="lien-sommaire" aria-haspopup="dialog" aria-controls="sommaire">Le sommaire du carnet</button>
       <button type="button" class="lien-a-propos" aria-haspopup="dialog">À propos et crédits</button>
     </div>
   </details>
@@ -165,6 +166,16 @@
       </svg>
     </button>
   </footer>
+
+  <dialog id="sommaire" aria-labelledby="sommaire-titre">
+    <button type="button" id="sommaire-fermer" aria-label="Fermer">×</button>
+    <h2 id="sommaire-titre">Le sommaire du carnet</h2>
+    <label for="sommaire-recherche">Chercher un billet ou une escale</label>
+    <input id="sommaire-recherche" type="search" autocomplete="off" spellcheck="false"
+           placeholder="Noël, Fakarava, baleines…">
+    <p id="sommaire-compte" aria-live="polite"></p>
+    <div id="sommaire-liste"></div>
+  </dialog>
 
   <dialog id="a-propos" aria-labelledby="a-propos-titre">
     <button type="button" id="a-propos-fermer" aria-label="Fermer">×</button>
@@ -257,7 +268,10 @@
           <button type="button" id="accueil-explorer">Explorer la carte</button>
         </div>
         <p id="accueil-aide">Choisissez une escale sur le globe pour ouvrir son carnet de bord.</p>
-        <button type="button" class="lien-a-propos" data-section="a-propos-equipage" aria-haspopup="dialog">L’équipage et le bateau</button>
+        <p class="accueil-liens">
+          <button type="button" class="lien-sommaire" aria-haspopup="dialog" aria-controls="sommaire">Le sommaire du carnet</button>
+          <button type="button" class="lien-a-propos" data-section="a-propos-equipage" aria-haspopup="dialog">L’équipage et le bateau</button>
+        </p>
       </div>
     </div>
   </div>

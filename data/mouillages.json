@@ -688,19 +688,7 @@
       "h": 240
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Canal de Panama",
-  "lat": 9.12,
-  "lon": -79.72,
-  "log_nm": 1250,
-  "date_arrivee": "2009-06-25",
-  "date_depart": null,
-  "type": "traversee",
-  "chapitre": "Vers le Pacifique",
-  "articles": [
+   },
    {
     "id": 51,
     "date": "2009-06-24",
@@ -776,6 +764,17 @@
     ]
    }
   ]
+ },
+ {
+  "nom": "Canal de Panama",
+  "lat": 9.12,
+  "lon": -79.72,
+  "log_nm": 1250,
+  "date_arrivee": "2009-06-25",
+  "date_depart": null,
+  "type": "traversee",
+  "chapitre": "Vers le Pacifique",
+  "articles": []
  },
  {
   "nom": "Balboa (l'oeil du tigre)",
@@ -1428,6 +1427,17 @@
   "date_depart": "2009-08-12",
   "type": "traversee",
   "chapitre": "Le Grand Pacifique",
+  "articles": []
+ },
+ {
+  "nom": "Gambier",
+  "lat": -23.121,
+  "lon": -134.969,
+  "log_nm": 5305,
+  "date_arrivee": "2009-08-12",
+  "date_depart": "2009-12-10",
+  "type": "mouillage",
+  "chapitre": "Le Grand Pacifique",
   "articles": [
    {
     "id": 77,
@@ -1447,7 +1457,8 @@
       "l": 320,
       "h": 240
      }
-    ]
+    ],
+    "en_mer": true
    },
    {
     "id": 78,
@@ -1459,7 +1470,8 @@
      "Le temps reste couvert et un peu frisquet (26° dans le bateau mais 23/24 dehors), ce qui me convient parfaitement mais un peu moins à Cécile qui doit maintenant assurer ses quarts avec 2 polaires (sic!).",
      "Dans ces moments de traversée, le temps s'écoule lentement et on a tout loisir de penser à nos amis et à notre famille. On vous embrasse tous et on vous aime !"
     ],
-    "images": []
+    "images": [],
+    "en_mer": true
    },
    {
     "id": 79,
@@ -1479,7 +1491,8 @@
       "l": 240,
       "h": 320
      }
-    ]
+    ],
+    "en_mer": true
    },
    {
     "id": 80,
@@ -1488,7 +1501,8 @@
     "blocs": [
      "Putain, le Pacifique, c'est grand !"
     ],
-    "images": []
+    "images": [],
+    "en_mer": true
    },
    {
     "id": 81,
@@ -1499,7 +1513,8 @@
      "Ca fait maintenant 7 jours qu'on n'a plus vu le moindre bateau. Le temps, un peu maussade au début de la traversée, est maintenant au grand beau. La lune est de plus en plus pleine, et pendant la nuit, elle nous éclaire de mieux en mieux.",
      "Notre principale préoccupation provient des fichiers météo que nous téléchargeons d'Internet tous les 3/4 jours. Il semble qu'une dépression se prépare au Sud (au delà des 40èmes rugissants). Apparemment, elle pourrait nous affecter en fin de semaine. Enfin, pour être honnête, nous ne subirions que faiblement son impact: des vents de 30 à 35 noeuds, alors qu'au Sud, les vents soufflent à plus de 60 noeuds."
     ],
-    "images": []
+    "images": [],
+    "en_mer": true
    },
    {
     "id": 82,
@@ -1536,7 +1551,8 @@
       "l": 320,
       "h": 240
      }
-    ]
+    ],
+    "en_mer": true
    },
    {
     "id": 83,
@@ -1548,7 +1564,8 @@
      "Au rayon nourriture, nous avons mangé notre dernier fruit frais: une pomme. Il nous reste quelques tomates, oignons et patates et un chou-fleur. Pour la suite du voyage, on compte sur les haricots rouges et blancs, les lentilles et la purée en poudre. Heureusement, on a aussi un stock de pâtes suffisant pour ouvrir une superette et du maïs en grain en suffisance pour faire les pop-corns qui accompagnent les séances cinéma de début de soirée.",
      "Aujourd'hui, on a aussi franchi notre deuxième et dernier fuseau horaire de la traversée. On a maintenant 10h de décalage avec la Belgique."
     ],
-    "images": []
+    "images": [],
+    "en_mer": true
    },
    {
     "id": 84,
@@ -1567,7 +1584,8 @@
       "l": 240,
       "h": 320
      }
-    ]
+    ],
+    "en_mer": true
    },
    {
     "id": 85,
@@ -1602,7 +1620,8 @@
       "l": 240,
       "h": 320
      }
-    ]
+    ],
+    "en_mer": true
    },
    {
     "id": 86,
@@ -1614,19 +1633,7 @@
      "A 14h, ce mercredi, nous avons mouillé en face du village de Rikitea, aux Gambier, et nous avons sabré le champagne !!!"
     ],
     "images": []
-   }
-  ]
- },
- {
-  "nom": "Gambier",
-  "lat": -23.121,
-  "lon": -134.969,
-  "log_nm": 5305,
-  "date_arrivee": "2009-08-12",
-  "date_depart": "2009-12-10",
-  "type": "mouillage",
-  "chapitre": "Le Grand Pacifique",
-  "articles": [
+   },
    {
     "id": 87,
     "date": "2009-08-14",
@@ -9480,6 +9487,17 @@
   "date_depart": "2010-12-08",
   "type": "traversee",
   "chapitre": "La Nouvelle-Zélande",
+  "articles": []
+ },
+ {
+  "nom": "Nlle Zélande - Opua",
+  "lat": -35.31,
+  "lon": 174.121,
+  "log_nm": 11670,
+  "date_arrivee": "2010-12-08",
+  "date_depart": "2010-12-16",
+  "type": "mouillage",
+  "chapitre": "La Nouvelle-Zélande",
   "articles": [
    {
     "id": 298,
@@ -9537,20 +9555,9 @@
       "l": 480,
       "h": 360
      }
-    ]
-   }
-  ]
- },
- {
-  "nom": "Nlle Zélande - Opua",
-  "lat": -35.31,
-  "lon": 174.121,
-  "log_nm": 11670,
-  "date_arrivee": "2010-12-08",
-  "date_depart": "2010-12-16",
-  "type": "mouillage",
-  "chapitre": "La Nouvelle-Zélande",
-  "articles": [
+    ],
+    "en_mer": true
+   },
    {
     "id": 299,
     "date": "2010-12-08",
@@ -14468,19 +14475,7 @@
       "h": 187
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Transpacifique retour",
-  "lat": -23.121,
-  "lon": -134.969,
-  "log_nm": 15000,
-  "date_arrivee": "2012-05-16",
-  "date_depart": "2012-06-09",
-  "type": "traversee",
-  "chapitre": "Le retour en Polynésie",
-  "articles": [
+   },
    {
     "id": 427,
     "date": "2012-05-16",
@@ -14501,7 +14496,30 @@
       "h": 453
      }
     ]
-   },
+   }
+  ]
+ },
+ {
+  "nom": "Transpacifique retour",
+  "lat": -23.121,
+  "lon": -134.969,
+  "log_nm": 15000,
+  "date_arrivee": "2012-05-16",
+  "date_depart": "2012-06-09",
+  "type": "traversee",
+  "chapitre": "Le retour en Polynésie",
+  "articles": []
+ },
+ {
+  "nom": "Gambier",
+  "lat": -23.121,
+  "lon": -134.969,
+  "log_nm": 15000,
+  "date_arrivee": "2012-06-09",
+  "date_depart": "2012-07-11",
+  "type": "mouillage",
+  "chapitre": "Le retour en Polynésie",
+  "articles": [
    {
     "id": 428,
     "date": "2012-05-24",
@@ -14542,7 +14560,8 @@
       "l": 480,
       "h": 270
      }
-    ]
+    ],
+    "en_mer": true
    },
    {
     "id": 429,
@@ -14560,7 +14579,8 @@
       "l": 480,
       "h": 320
      }
-    ]
+    ],
+    "en_mer": true
    },
    {
     "id": 430,
@@ -14590,7 +14610,8 @@
       "l": 480,
       "h": 270
      }
-    ]
+    ],
+    "en_mer": true
    },
    {
     "id": 431,
@@ -14610,20 +14631,9 @@
       "l": 489,
       "h": 264
      }
-    ]
-   }
-  ]
- },
- {
-  "nom": "Gambier",
-  "lat": -23.121,
-  "lon": -134.969,
-  "log_nm": 15000,
-  "date_arrivee": "2012-06-09",
-  "date_depart": "2012-07-11",
-  "type": "mouillage",
-  "chapitre": "Le retour en Polynésie",
-  "articles": [
+    ],
+    "en_mer": true
+   },
    {
     "id": 432,
     "date": "2012-06-09",
@@ -16428,6 +16438,17 @@
   "date_depart": "2013-03-04",
   "type": "traversee",
   "chapitre": "La remontée vers le nord",
+  "articles": []
+ },
+ {
+  "nom": "Hilo - Big Island",
+  "lat": 19.73,
+  "lon": -155.066,
+  "log_nm": 19660,
+  "date_arrivee": "2013-03-04",
+  "date_depart": "2013-04-28",
+  "type": "mouillage",
+  "chapitre": "La remontée vers le nord",
   "articles": [
    {
     "id": 476,
@@ -16449,7 +16470,8 @@
       "l": 640,
       "h": 427
      }
-    ]
+    ],
+    "en_mer": true
    },
    {
     "id": 477,
@@ -16479,19 +16501,7 @@
       "h": 254
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Hilo - Big Island",
-  "lat": 19.73,
-  "lon": -155.066,
-  "log_nm": 19660,
-  "date_arrivee": "2013-03-04",
-  "date_depart": "2013-04-28",
-  "type": "mouillage",
-  "chapitre": "La remontée vers le nord",
-  "articles": [
+   },
    {
     "id": 478,
     "date": "2013-03-06",
@@ -17630,19 +17640,7 @@
       "h": 360
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "Honolulu (Hawaii) - Prince Rupert (Canada)",
-  "lat": 54.317,
-  "lon": -130.324,
-  "log_nm": 22585,
-  "date_arrivee": "2013-06-11",
-  "date_depart": "2013-06-30",
-  "type": "traversee",
-  "chapitre": "Le grand nord",
-  "articles": [
+   },
    {
     "id": 504,
     "date": "2013-06-11",
@@ -17728,6 +17726,17 @@
     ]
    }
   ]
+ },
+ {
+  "nom": "Honolulu (Hawaii) - Prince Rupert (Canada)",
+  "lat": 54.317,
+  "lon": -130.324,
+  "log_nm": 22585,
+  "date_arrivee": "2013-06-11",
+  "date_depart": "2013-06-30",
+  "type": "traversee",
+  "chapitre": "Le grand nord",
+  "articles": []
  },
  {
   "nom": "Prince Rupert",
@@ -19251,6 +19260,17 @@
   "date_depart": "2013-09-10",
   "type": "traversee",
   "chapitre": "La côte américaine",
+  "articles": []
+ },
+ {
+  "nom": "San Francisco",
+  "lat": 37.81,
+  "lon": -122.442,
+  "log_nm": 24040,
+  "date_arrivee": "2013-09-10",
+  "date_depart": "2013-11-07",
+  "type": "mouillage",
+  "chapitre": "La côte américaine",
   "articles": [
    {
     "id": 535,
@@ -19301,19 +19321,7 @@
       "h": 293
      }
     ]
-   }
-  ]
- },
- {
-  "nom": "San Francisco",
-  "lat": 37.81,
-  "lon": -122.442,
-  "log_nm": 24040,
-  "date_arrivee": "2013-09-10",
-  "date_depart": "2013-11-07",
-  "type": "mouillage",
-  "chapitre": "La côte américaine",
-  "articles": [
+   },
    {
     "id": 536,
     "date": "2013-09-12",
