@@ -513,6 +513,16 @@ Built next (batch 15):
   page (vertical panning and pinch-zoom stay with the browser). New test
   with real touch events; it fails without the fix.
 
+- Batch 18: **the link preview.** The site is most likely first seen as a
+  link in a message or an email, and it had no preview image (a bare link
+  in WhatsApp or iMessage). It now has one: the painted globe centred on
+  the Pacific, the whole route and the title, rendered by the site itself
+  (`pipeline/apercu_lien.mjs`, 1200×630, 54 KB), with the usual preview
+  tags. The preview text also said "aux portes de l'Alaska" while the page
+  description says Martinique to San Diego: now both say the same.
+- Accessibility check of today's additions (table of contents, road trip
+  section, journal with the post series viewer): no axe violations.
+
 ## Ideas for later
 
 - Chapter quotes could also appear during the crossing (kept to titles for
