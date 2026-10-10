@@ -121,7 +121,8 @@ body.fallback-actif #fallback-2d {
   inset: 0;
   z-index: 3;
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(250px, .55fr);
+  /* the list holds the journals: wide enough to read them comfortably */
+  grid-template-columns: minmax(0, 1.2fr) minmax(250px, .8fr);
   grid-template-areas:
     "entete entete"
     "carte escales";
@@ -199,7 +200,10 @@ body.fallback-actif #navigation-escales[open] { width: 100%; }
 #fallback-carte {
   grid-area: carte;
   align-self: start;
-  position: relative;
+  /* side by side with the list, the map stays in view while a journal is
+     read (the stacked phone layout below lets it scroll away) */
+  position: sticky;
+  top: 0;
   overflow: hidden;
   border: 1px solid rgba(91, 61, 30, .48);
   border-radius: 18px 26px 16px 28px / 25px 17px 29px 19px;
@@ -1610,6 +1614,8 @@ body[data-mode="photo"] #titre-trait { filter: none; }
   }
   #fallback-message { font-size: .96rem; }
   .fallback-escales { padding: 17px 18px 20px; }
+  /* stacked: the map scrolls away with the page, above the list */
+  #fallback-carte { position: relative; }
 
   #titre {
     top: max(14px, calc(env(safe-area-inset-top) + 10px));
