@@ -1463,6 +1463,11 @@ body.plongee-ouverte #timeline {
   max-height: 84vh;
   border-radius: 4px;
   box-shadow: 0 8px 60px rgba(0, 0, 0, .8);
+  /* a sideways swipe turns the photo: the browser keeps only vertical
+     panning and pinch-zoom, so it does not cancel the gesture */
+  touch-action: pan-y pinch-zoom;
+  -webkit-user-drag: none;
+  user-select: none;
 }
 #lightbox figcaption {
   margin-top: 12px;

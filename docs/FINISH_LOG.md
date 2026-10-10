@@ -499,6 +499,20 @@ Built next (batch 15):
   half-size maps (`pipeline/textures_legeres.py`): day 2700 px (576 KB) and
   night 1800 px (131 KB), indistinguishable at phone size.
 
+- Batch 17: **a post's photos turn like an album.** A journal photo opened
+  alone in the viewer, so a post with eight photos meant opening and
+  closing eight times. Now the arrows, the arrow keys or a swipe turn
+  through the photos of that post ("M3495 - Bryce Canyon · 2 / 8"), with
+  their captions; a post with one photo keeps the plain viewer, and the
+  link to a full album only shows for albums.
+- Found on the way, real bug: **a finger swipe never turned the photos on
+  a phone**, albums included. The image had no touch setting, so the
+  browser took the sideways gesture for itself and cancelled it before
+  the page saw it (measured on the live site with real touch events: an
+  album stayed on 1 / 24). The image now leaves sideways swipes to the
+  page (vertical panning and pinch-zoom stay with the browser). New test
+  with real touch events; it fails without the fix.
+
 ## Ideas for later
 
 - Chapter quotes could also appear during the crossing (kept to titles for

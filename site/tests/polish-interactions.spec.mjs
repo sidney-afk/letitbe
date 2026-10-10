@@ -490,8 +490,24 @@ test('un album photo s’ouvre depuis le carnet et se feuillette au clavier', as
   await page.keyboard.press('Escape');
   await expect(page.locator('#lightbox')).toBeHidden();
   await expect(carte).toBeFocused();
-  // a single journal photo keeps the plain viewer, without series controls
-  await page.locator('#plongee-flux article .photo-ouvrir').first().click();
+  // a post's photos turn like an album, without the link to a full album
+  const billetPlusieurs = page.locator('#plongee-flux article')
+    .filter({ has: page.locator('figure:nth-of-type(2)') }).first();
+  const nombre = await billetPlusieurs.locator('.photo-ouvrir').count();
+  await billetPlusieurs.locator('.photo-ouvrir').first().click();
+  await expect(page.locator('#lightbox')).toBeVisible();
+  await expect(page.locator('#lightbox-suivante')).toBeVisible();
+  await expect(compteur).toHaveText(new RegExp(`1 / ${nombre}$`));
+  await expect(page.locator('#lightbox-album-complet')).toBeHidden();
+  await page.keyboard.press('ArrowRight');
+  await expect(compteur).toHaveText(new RegExp(`2 / ${nombre}$`));
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#lightbox')).toBeHidden();
+  // a post with a single photo keeps the plain viewer, without series controls
+  const billetSeul = page.locator('#plongee-flux article')
+    .filter({ has: page.locator('figure') })
+    .filter({ hasNot: page.locator('figure:nth-of-type(2)') }).first();
+  await billetSeul.locator('.photo-ouvrir').first().click();
   await expect(page.locator('#lightbox')).toBeVisible();
   await expect(page.locator('#lightbox-suivante')).toBeHidden();
   await page.keyboard.press('Escape');
@@ -660,4 +676,40 @@ test('un chapitre du récit mène à ses billets dans le sommaire', async ({ pag
   await page.locator('.sommaire-chapitre[data-chapitre="Le Grand Pacifique"] li button').first().click();
   await page.waitForFunction(() => window.__sillage.plongee.ouverte, null, { timeout: 30_000 });
   expect(await page.evaluate(() => window.__sillage.recit.actif)).toBe(false);
+});
+
+test('un glissé du doigt tourne les photos d’un billet sur téléphone', async ({ browser }, testInfo) => {
+  const contexte = await browser.newContext({
+    ...testInfo.project.use,
+    viewport: { width: 390, height: 844 },
+    hasTouch: true,
+    isMobile: true,
+  });
+  const page = await contexte.newPage();
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+  await page.waitForFunction(() => document.body.classList.contains('pret') && window.__sillage?.plongee);
+  await page.evaluate(async () => {
+    const { plongee, route } = window.__sillage;
+    window.__sillage.sauteIntro();
+    await plongee.vers(route.escales.find(e => e.nom === 'San Francisco'), { billet: 556 });
+    plongee.metAJour(10);
+  });
+  await page.waitForFunction(() => window.__sillage.plongee.ouverte, null, { timeout: 30_000 });
+  await page.locator('#billet-556 .photo-ouvrir').first().click();
+  const compteur = page.locator('#lightbox-compteur');
+  await expect(compteur).toHaveText(/1 \/ 8$/);
+  // a real touch swipe, right to left: the browser must not keep it
+  const boite = await page.locator('#lightbox img').boundingBox();
+  const cdp = await contexte.newCDPSession(page);
+  const y = boite.y + boite.height / 2;
+  const point = x => [{ x, y, id: 1 }];
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: point(boite.x + boite.width * 0.8) });
+  for (let k = 1; k <= 6; k++) {
+    await cdp.send('Input.dispatchTouchEvent', {
+      type: 'touchMove', touchPoints: point(boite.x + boite.width * (0.8 - 0.1 * k)),
+    });
+  }
+  await cdp.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
+  await expect(compteur).toHaveText(/2 \/ 8$/);
+  await contexte.close();
 });
