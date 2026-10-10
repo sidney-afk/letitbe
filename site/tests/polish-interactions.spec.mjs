@@ -184,6 +184,10 @@ test('aerial imagery stays hidden during the dive and before its edge can re-ent
     const escale = route.escales.find(item => item.nom === 'Fidji - Makogai');
     if (!escale) throw new Error('Escale Makogai introuvable');
     await plongee.vers(escale);
+    // From here the test steps time itself: real frames must not advance
+    // the flight between two evaluate() calls (a slow run could finish the
+    // whole flight before the mid-flight check).
+    window.__sillage.renderer.setAnimationLoop(null);
     return {
       detail: globe.etatDetail(),
       enVol: plongee.enVol,

@@ -421,6 +421,11 @@ Built next (batch 10):
   ("noel hiva", "baleines", "fakarava"); choosing a post opens that
   stop's journal right at it. Reached from "Explorer les escales" and from
   the welcome card, for a visitor who comes to read rather than explore.
+- Test decision: "aerial imagery stays hidden during the dive" stepped the
+  flight by hand while the page's own loop kept moving it, so one slow run
+  finished the flight before the mid-flight check. It now pauses the live
+  loop first, exactly like the sea-wash test next to it (passes 3 runs out
+  of 3). Same assertions, nothing skipped.
 - Testing note: in headless Chromium the page's animation clock freezes
   once the globe renders (measured: `document.timeline` stops advancing
   even with the 3D loop stopped). Screenshots taken without reduced
