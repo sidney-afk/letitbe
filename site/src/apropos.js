@@ -13,6 +13,9 @@ export function activeAPropos() {
     if (typeof dialogue.showModal === 'function') dialogue.showModal();
     else dialogue.setAttribute('open', '');
     document.getElementById('a-propos-fermer')?.focus();
+    // a link can point at a section (« L'équipage et le bateau »)
+    const section = lien.dataset.section && document.getElementById(lien.dataset.section);
+    dialogue.scrollTop = section ? section.offsetTop - 16 : 0;
   });
   document.getElementById('a-propos-fermer')?.addEventListener('click', () => dialogue.close());
   // a click on the dimmed backdrop (outside the parchment) closes it

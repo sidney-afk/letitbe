@@ -208,14 +208,18 @@ async function measureComposition(page) {
         bottom: rect.bottom,
         width: rect.width,
         height: rect.height,
+        // The fallback page is one intentional vertical scroll container
+        // (a document of map + stops + journals): its content may continue
+        // below the fold, but never past the sides.
+        defileVerticalement: Boolean(element.parentElement?.closest('#fallback-2d')),
       };
     };
 
     const elements = selectors.map(visibleRect).filter(Boolean);
     const containmentViolations = elements.filter(rect => rect.left < -tolerance
-      || rect.top < -tolerance
       || rect.right > viewport.width + tolerance
-      || rect.bottom > viewport.height + tolerance);
+      || (!rect.defileVerticalement && (rect.top < -tolerance
+        || rect.bottom > viewport.height + tolerance)));
 
     const structuralSelectors = new Set([
       '#titre', '#boutons-haut', '#timeline', '#recit-carte',

@@ -115,6 +115,9 @@ body.fallback-actif #fallback-2d {
     "carte escales";
   gap: clamp(18px, 3vw, 34px);
   align-content: start;
+  /* rows keep their content height even when the long list overflows the
+     screen (otherwise the clipped map row collapses under the list) */
+  grid-auto-rows: max-content;
   overflow-y: auto;
   overscroll-behavior: contain;
   padding:
@@ -183,20 +186,14 @@ body.fallback-actif #navigation-escales[open] { width: 100%; }
 }
 #fallback-carte {
   grid-area: carte;
+  align-self: start;
   position: relative;
-  min-height: 300px;
-  aspect-ratio: 2 / 1;
   overflow: hidden;
   border: 1px solid rgba(91, 61, 30, .48);
   border-radius: 18px 26px 16px 28px / 25px 17px 29px 19px;
-  background:
-    radial-gradient(ellipse at 21% 35%, rgba(97, 140, 82, .72) 0 8%, transparent 8.8%),
-    radial-gradient(ellipse at 29% 56%, rgba(104, 147, 86, .68) 0 10%, transparent 10.8%),
-    radial-gradient(ellipse at 50% 47%, rgba(105, 145, 82, .66) 0 9%, transparent 9.8%),
-    radial-gradient(ellipse at 70% 62%, rgba(101, 143, 83, .68) 0 12%, transparent 12.8%),
-    radial-gradient(ellipse at 81% 32%, rgba(111, 151, 88, .64) 0 7%, transparent 7.8%),
-    repeating-radial-gradient(circle at 40% 42%, transparent 0 15px, rgba(35, 105, 143, .055) 16px 17px),
-    linear-gradient(168deg, #bcdfee, #82c4df 58%, #abd7e8);
+  /* the painted world of the globe, flattened (see pipeline/carte_fallback.py);
+     the sea colour shows while it loads */
+  background: #a9d6ec;
   box-shadow:
     inset 0 0 0 5px rgba(255, 251, 235, .62),
     inset 0 0 45px rgba(53, 89, 102, .18),
@@ -211,18 +208,19 @@ body.fallback-actif #navigation-escales[open] { width: 100%; }
   mix-blend-mode: multiply;
 }
 #fallback-trace {
-  position: absolute;
-  inset: 0;
+  /* the map sizes itself from its viewBox: the grid row always fits it */
+  position: relative;
+  display: block;
   z-index: 1;
   width: 100%;
-  height: 100%;
-  overflow: visible;
+  height: auto;
+  aspect-ratio: 1600 / 1083;
 }
 #fallback-trace path,
 #fallback-trace polyline {
   fill: none;
-  stroke: #f5df9f;
-  stroke-width: 4;
+  stroke: #c8922e;
+  stroke-width: 3;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
@@ -252,7 +250,6 @@ body.fallback-actif #navigation-escales[open] { width: 100%; }
 #fallback-liste {
   display: grid;
   gap: 7px;
-  max-height: min(48vh, 430px);
   margin-top: 12px;
   padding: 0 4px 0 2.1rem;
   overflow-y: auto;
@@ -1072,8 +1069,6 @@ body.recit-actif #recit-indicateur { opacity: 1; }
     inset 3px 0 0 rgba(252, 247, 235, .9),
     inset 4px 0 0 rgba(122, 84, 40, .3),
     -12px 0 40px rgba(30, 45, 70, .3);
-  /* Slides in by animating `right`, not a transform: a transform would make
-     the panel the containing block of the fixed scene porthole. */
   animation: glisse .55s cubic-bezier(.22, .8, .3, 1);
   z-index: 5;
 }
@@ -1157,8 +1152,16 @@ body.lecture #navigation-escales { opacity: 0; visibility: hidden; pointer-event
 }
 body.plongee-ouverte #navigation-escales { display: none; }
 @keyframes glisse {
-  from { right: -40px; opacity: 0; }
-  to { right: 0; opacity: 1; }
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+/* the header still glides in; the panel itself only fades (no transform or
+   offset on #plongee: it must never become the porthole's containing block
+   or sit off-screen while an animation waits for its first frame) */
+#plongee-entete { animation: glisse-entete .55s cubic-bezier(.22, .8, .3, 1); }
+@keyframes glisse-entete {
+  from { transform: translateX(28px); }
+  to { transform: none; }
 }
 
 #plongee-entete {
@@ -1517,9 +1520,7 @@ body[data-mode="photo"] #titre-trait { filter: none; }
       max(16px, calc(env(safe-area-inset-left) + 12px));
   }
   #fallback-message { font-size: .96rem; }
-  #fallback-carte { min-height: 220px; aspect-ratio: 1.45 / 1; }
   .fallback-escales { padding: 17px 18px 20px; }
-  #fallback-liste { max-height: min(36dvh, 300px); }
 
   #titre {
     top: max(14px, calc(env(safe-area-inset-top) + 10px));
@@ -2088,3 +2089,58 @@ body[data-mode="photo"] .film-titre { color: #e8c87a; }
   padding: 10px 0;
 }
 body[data-mode="photo"] .film-lien { color: #e8c87a; }
+
+/* ——— le repli 2D : chaque escale ouvre son carnet ——— */
+#fallback-liste details > summary {
+  display: grid;
+  gap: 1px;
+  min-height: 44px;
+  padding: 6px 0;
+  cursor: pointer;
+  list-style: none;
+}
+#fallback-liste details > summary::-webkit-details-marker { display: none; }
+#fallback-liste details[open] > summary strong { color: var(--bleu-encre); }
+.fallback-carnet {
+  padding: 4px 0 18px;
+  border-bottom: 1px solid rgba(154, 108, 28, .22);
+}
+.fallback-carnet h4 {
+  margin: 14px 0 4px;
+  font-weight: 500;
+  color: var(--bleu-encre);
+}
+.fallback-carnet .article-date { font-size: .8rem; }
+.fallback-carnet p + p { margin-top: .6em; }
+.fallback-carnet figure { margin: 10px 0; }
+.fallback-carnet img { width: 100%; height: auto; display: block; border-radius: 2px; }
+.fallback-carnet figcaption { font-size: .82rem; font-style: italic; color: var(--encre-claire); }
+.fallback-carnet .vue-ciel-plate { width: min(220px, 70%); border-radius: 50%; aspect-ratio: 1; object-fit: cover; }
+#fallback-trace .fallback-escale-point { fill: #fffbef; stroke: #9a6c1c; stroke-width: 2.5; }
+
+/* ——— À propos : l'équipage et le bateau ——— */
+.equipage {
+  list-style: none;
+  padding: 0 !important;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 14px;
+}
+.equipage li { display: grid; gap: 2px; align-content: start; margin: 0 !important; font-size: .9rem; }
+.equipage img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 4px solid #fffaf0;
+  box-shadow: 0 3px 10px rgba(60, 45, 20, .25);
+  margin-bottom: 4px;
+}
+.equipage strong { font-family: "IM Fell English", "EB Garamond", serif; font-weight: 400; font-size: 1.08rem; color: var(--bleu-encre); }
+.equipage-role { font-family: "IM Fell English SC", "EB Garamond", serif; font-size: .78rem; letter-spacing: .06em; color: var(--or); }
+.equipage q { font-style: italic; color: var(--encre-claire); quotes: "« " " »"; }
+.a-propos-source { margin-top: 8px !important; font-size: .8rem; font-style: italic; color: var(--encre-claire); }
+.bateau-fiche { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: start; }
+.bateau-fiche img { width: 100%; border: 4px solid #fffaf0; box-shadow: 0 3px 10px rgba(60, 45, 20, .25); }
+.bateau-fiche img:last-child { grid-column: 1 / -1; }
+#chargement .lien-a-propos { justify-self: center; }

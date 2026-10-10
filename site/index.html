@@ -28,8 +28,8 @@
       <h2 id="fallback-titre">Le voyage, en carte</h2>
       <p id="fallback-message">
         La planète en trois dimensions n'est pas disponible sur cet appareil.
-        Le voyage reste accessible sous la forme d'une carte illustrée et de
-        la liste chronologique des escales.
+        Le voyage reste là, sous la forme d'une carte et de la liste des
+        escales&nbsp;: chacune ouvre son carnet de bord.
       </p>
     </header>
     <div id="fallback-carte">
@@ -177,6 +177,35 @@
       Le voyage est aussi raconté dans deux livres&nbsp;: <em>Les p’tites bites</em>
       (tome&nbsp;1) et <em>95° de latitude Nord</em> (tome&nbsp;2).
     </p>
+    <h3 id="a-propos-equipage">L’équipage</h3>
+    <ul class="equipage">
+      <li><img src="./media/equipage/cecile.webp" alt="Portrait de Cécile" loading="lazy">
+        <strong>Cécile</strong> <span class="equipage-role">La capitaine</span>
+        <q>A bord, elle s’occupe de tout, principalement de l’école des enfants, de l’intendance et de l’infirmerie.</q></li>
+      <li><img src="./media/equipage/eric.webp" alt="Portrait d’Éric" loading="lazy">
+        <strong>Éric</strong> <span class="equipage-role">Le fidèle lieutenant</span>
+        <q>A bord, il s’occupe de la navigation, des manoeuvres de pont et de la tambouille.</q></li>
+      <li><img src="./media/equipage/kenya.webp" alt="Portrait de Kenya" loading="lazy">
+        <strong>Kenya</strong> <span class="equipage-role">Le moussaillon n°1</span>
+        <q>Son imagination est fertile</q></li>
+      <li><img src="./media/equipage/sidney.webp" alt="Portrait de Sidney" loading="lazy">
+        <strong>Sidney</strong> <span class="equipage-role">Le moussaillon n°2</span>
+        <q>Il doit son nom aux Jeux Olympiques</q></li>
+      <li><img src="./media/equipage/syrdaria.webp" alt="Portrait de Syr Daria" loading="lazy">
+        <strong>Syr Daria</strong> <span class="equipage-role">Le moussaillon n°3</span>
+        <q>A bord, elle s’occupe de dire ce qui est bien et ce qui ne l’est pas.</q></li>
+    </ul>
+    <p class="a-propos-source">Présentations tirées de la page «&nbsp;L’équipage&nbsp;» de laruel.be.</p>
+    <h3>Le bateau</h3>
+    <div class="bateau-fiche">
+      <img src="./media/equipage/bateau-sous-voile.webp" alt="Let It Be sous voile" loading="lazy">
+      <p>
+        <em>Let It Be</em>, catamaran Fountaine-Pajot de 2004&nbsp;: 14,05&nbsp;m sur 7,38&nbsp;m,
+        123&nbsp;m² de voilure, quatre cabines doubles. Blanc avec des lignes rouges
+        et un tatoo, la clef de sol maorie.
+      </p>
+      <img src="./media/equipage/bateau-clef-de-sol.webp" alt="La clef de sol maorie peinte sur la coque de Let It Be" loading="lazy">
+    </div>
     <h3>Crédits</h3>
     <ul>
       <li>Carte peinte d’après <em>Natural Earth III</em> de Tom Patterson (domaine public)&nbsp;; relief d’après les données SRTM de la NASA.</li>
@@ -226,6 +255,7 @@
           <button type="button" id="accueil-explorer">Explorer la carte</button>
         </div>
         <p id="accueil-aide">Choisissez une escale sur le globe pour ouvrir son carnet de bord.</p>
+        <button type="button" class="lien-a-propos" data-section="a-propos-equipage" aria-haspopup="dialog">L’équipage et le bateau</button>
       </div>
     </div>
   </div>
