@@ -442,6 +442,10 @@ Built next (batch 10):
   768 px high, a long chapter card reached down over "Explorer les
   escales" (the menu took the clicks). The menu now steps aside during
   the story on every screen, as it already did on phones.
+- Test decision (follow-up): the same 30 s allowance now covers the two
+  other tests that make the first realistic switch (controls and Escape,
+  main smoke path), after one of them hit the 8 s default too. Noted as a
+  product item: phones decode the 5400 px realistic day map as well.
 - Test decision: the realistic-mode layout check gave the mode switch the
   default 8 s, but since batch 1 the first switch waits for the realistic
   textures. In one run they downloaded in 0.13 s and the software decode of
