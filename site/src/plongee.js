@@ -84,6 +84,9 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
 
   let vol = null; // { t, depart:{dir,dist}, arrivee:{dir,dist}, alOuverture }
   let ouverte = false;
+  // the stop (and post) being opened or read, for the address bar (lien.js)
+  let escaleCourante = null;
+  let billetCourant = null;
   let focusAvantPlongee = null;
   let focusAvantLightbox = null;
   let focaleAvantPlongee = camera.fov;
@@ -892,6 +895,9 @@ function opaciteRaccordLod(t) {
     if (detailSelectionnee) {
       remonte();
       apresRetour = { escale, billet };
+      // rising out of the close-up is the way to the next stop, not a return
+      escaleCourante = escale;
+      billetCourant = billet;
     } else {
       void vers(escale, { billet });
     }
@@ -933,11 +939,14 @@ function opaciteRaccordLod(t) {
   }
 
   function allerAuBillet(id, doux = true) {
+    billetCourant = id;
     defileVers(flux.querySelector(`#billet-${id}`), doux);
   }
 
   async function vers(escale, { billet = null } = {}) {
     const demande = ++demandePlongee;
+    escaleCourante = escale;
+    billetCourant = billet;
     // Moving from one journal to another keeps what the visitor left on the
     // map (focus, lens, zoom): the way back still returns there.
     const premiereEntree = !ouverte && vol === null && raccordLod === null;
@@ -1047,6 +1056,8 @@ function opaciteRaccordLod(t) {
 
   function remonte() {
     apresRetour = null;
+    escaleCourante = null;
+    billetCourant = null;
     // A second Escape during the outbound wash completes that same safe return.
     // During an inbound wash it instead cancels the pending arrival and starts
     // a fresh return below, so an old callback cannot reopen the journal.
@@ -1147,6 +1158,8 @@ function opaciteRaccordLod(t) {
     metAJour,
     get enVol() { return vol !== null || raccordLod !== null; },
     get ouverte() { return ouverte; },
+    get escaleCourante() { return escaleCourante; },
+    get billetCourant() { return billetCourant; },
     get enChargement() { return chargement; },
     get repereVisible() { return repereEscale !== null; },
     get repereType() { return repereEscale?.userData.type ?? null; },

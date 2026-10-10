@@ -596,6 +596,18 @@ welcome card, « L’équipage et le bateau » and « À propos », the sound.
   mush (that photo now opens at 960×640, its caption still in view). Phones
   are unchanged (the photo already filled the width); a phone on its side
   fits photo and caption within 390 px.
+- Batch 24: **a link to a stop or a post, and the Back button.** The site
+  had a single address, whatever was open. Two consequences: the parents
+  could not send someone « our post about Fakarava », only the globe; and on
+  a phone the Back gesture, the most natural way to close a journal, left
+  the site altogether. Now the address follows the open journal
+  (`…/letitbe/#tuamotu-fakarava-2010-04-06`, and `…/billet-531` after a jump
+  to a post from the table of contents, a quoted mention or the road trip),
+  a link with that address opens that journal at that post (the welcome
+  card steps aside), and Back closes the journal while staying on the site
+  (Forward reopens it). Same links in the version without 3D. The preview
+  shown by a messaging app stays the site's own (a static site cannot give
+  each stop its own preview).
 
 ## Ideas for later
 
