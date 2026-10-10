@@ -12,6 +12,7 @@ vieille carte marine, des terres saturées et posterisées en aplats, et un
 liseré de plage crème.
 
 Sortie : site/public/textures/earth_carnet.jpg (8192×4096)
+        et earth_carnet_4096.jpg (4096×2048, téléphones)
 """
 
 from pathlib import Path
@@ -164,9 +165,13 @@ def main() -> None:
     final = final * (1 - liseret[..., None] * 0.55) \
         + PLAGE[None, None] * liseret[..., None] * 0.55
 
-    Image.fromarray(np.clip(final, 0, 255).astype(np.uint8)).save(
-        TEX / "earth_carnet.jpg", quality=88)
+    carte = Image.fromarray(np.clip(final, 0, 255).astype(np.uint8))
+    carte.save(TEX / "earth_carnet.jpg", quality=88)
     print(f"écrit : {TEX / 'earth_carnet.jpg'}")
+    # Variante 4096×2048 pour les téléphones : un quart de la mémoire GPU.
+    carte.resize((4096, 2048), Image.LANCZOS).save(
+        TEX / "earth_carnet_4096.jpg", quality=88, optimize=True, progressive=True)
+    print(f"écrit : {TEX / 'earth_carnet_4096.jpg'}")
 
 
 if __name__ == "__main__":

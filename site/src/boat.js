@@ -8,6 +8,7 @@
 import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { MeshoptDecoder } from 'three/addons/libs/meshopt_decoder.module.js';
 import { RAYON } from './geo.js';
 
 // Bahia 46 : 14,05 m × 7,38 m. Les proportions locales ci-dessous gardent
@@ -693,7 +694,9 @@ function pointBasRelatif(racine) {
 
 async function chargeMaquetteCatamaran() {
   const url = `${import.meta.env.BASE_URL}models/let-it-be-catamaran.glb`;
-  const gltf = await new GLTFLoader().loadAsync(url);
+  // The asset ships meshopt-compressed with WebP textures (1.3 MB instead of
+  // 9.6 MB): same geometry and look, a fraction of the first-load weight.
+  const gltf = await new GLTFLoader().setMeshoptDecoder(MeshoptDecoder).loadAsync(url);
   const maquette = gltf.scene;
   maquette.name = 'let-it-be-catamaran-asset';
   // Le modèle importé, et lui seul, passe exactement à la moitié de sa taille

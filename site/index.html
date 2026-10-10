@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Le Sillage — cinq ans autour du Pacifique</title>
-  <meta name="description" content="Le voyage de la famille Laruel à bord du catamaran Let It Be : 24 500 milles autour du Pacifique, de la Martinique à San Diego par la Nouvelle-Zélande et l'Alaska.">
+  <meta name="description" content="Le voyage de la famille Laruel à bord du catamaran Let It Be : 24 500 milles autour du Pacifique, de la Martinique à San Diego, par la Polynésie, la Nouvelle-Zélande et la Colombie-Britannique.">
   <meta name="theme-color" content="#bfe0f5">
   <meta property="og:title" content="Le Sillage — cinq ans autour du Pacifique">
-  <meta property="og:description" content="La route du catamaran Let It Be, racontée sur une planète miniature : 24 500 milles, des Caraïbes à l'Alaska.">
+  <meta property="og:description" content="La route du catamaran Let It Be, racontée sur une planète miniature : 24 500 milles, des Caraïbes aux portes de l'Alaska.">
   <meta property="og:type" content="website">
   <link rel="icon" type="image/svg+xml" href="./favicon.svg">
   <link rel="stylesheet" href="./src/style.css">
@@ -157,6 +157,24 @@
       </svg>
     </button>
   </footer>
+
+  <div id="chargement" role="status" aria-busy="true" aria-labelledby="chargement-message">
+    <div class="chargement-cartouche">
+      <p class="chargement-titre" aria-hidden="true">Le Sillage</p>
+      <svg class="chargement-trait" viewBox="0 0 260 18" aria-hidden="true">
+        <path d="M4 10 C 50 3, 86 16, 122 10" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M138 10 C 174 4, 214 17, 256 9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+        <path d="M130 3.5 134.5 10 130 16.5 125.5 10 Z" fill="currentColor"/>
+      </svg>
+      <p class="chargement-sous-titre" aria-hidden="true">Cinq ans autour du Pacifique à bord de <em>Let It Be</em></p>
+      <div class="chargement-route" aria-hidden="true">
+        <span class="chargement-avance" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"></span>
+        <span class="chargement-voilier"></span>
+      </div>
+      <p id="chargement-message">Le carnet de bord s’ouvre…</p>
+      <button type="button" id="chargement-reessayer" hidden>Réessayer</button>
+    </div>
+  </div>
 
   <script type="module" src="./src/main.js"></script>
 </body>

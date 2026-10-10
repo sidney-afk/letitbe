@@ -49,7 +49,9 @@ test('le parcours clavier ouvre une escale, la referme et restitue le focus', as
     ecume: window.__sillage.bateau.ecume.visible,
     route: window.__sillage.route.groupe.visible,
   }))).toEqual({ bateau: true, ecume: true, route: true });
-  await expect(ouvrir).toBeFocused();
+  // The menu folds away once a journal is opened; focus returns to it.
+  await expect(navigation).not.toHaveAttribute('open', '');
+  await expect(resume).toBeFocused();
 });
 
 test('la rotation est fortement amortie pendant une plongée puis revient à la carte', async ({ page }) => {
@@ -246,6 +248,10 @@ test('a reviewed aerial switches scales only while the sea wash fully covers the
     const escale = route.escales.find(item => item.nom === 'Fidji - Makogai');
     if (!escale) throw new Error('Escale Makogai introuvable');
     await plongee.vers(escale);
+    // From here the test steps time itself. Pausing the live loop keeps real
+    // frames from advancing the 0.34 s wash between two evaluate() calls
+    // (which made this check flaky on fast or slow runners).
+    window.__sillage.renderer.setAnimationLoop(null);
     // The ordinary overview rotation has finished; the scale handoff has
     // started but is still transparent, so the camera must remain atlas-safe.
     plongee.metAJour(2.6);

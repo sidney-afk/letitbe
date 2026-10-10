@@ -109,8 +109,8 @@ function attendImage(url) {
   });
 }
 
-function charge(url, espace = THREE.SRGBColorSpace) {
-  const t = texLoader.load(url);
+function charge(url, espace = THREE.SRGBColorSpace, surCharge, surErreur) {
+  const t = texLoader.load(url, surCharge, undefined, surErreur);
   t.colorSpace = espace;
   // Les cartes équirectangulaires rejoignent leurs bords gauche/droit sur le
   // méridien 180°. Sans répétition horizontale, les deux colonnes de la
@@ -138,16 +138,31 @@ function soudeCouture(geo, segL, segH) {
   n.needsUpdate = true;
 }
 
-export function creerGlobe(relief) {
+function chargePromesse(url, espace) {
+  let texture;
+  const promesse = new Promise((resolve, reject) => {
+    texture = charge(url, espace, () => resolve(texture),
+      () => reject(new Error(`Texture indisponible : ${url}`)));
+  });
+  return { texture, promesse };
+}
+
+export function creerGlobe(relief, { carnetLeger = false } = {}) {
   const groupe = new THREE.Group();
 
-  const jour = charge('./textures/earth_day_5400.jpg');
-  const nuit = charge('./textures/earth_night_3600.jpg');
-  const spec = charge('./textures/earth_specular_2048.jpg', THREE.NoColorSpace);
-  const normales = charge('./textures/earth_normal_2048.jpg', THREE.NoColorSpace);
-  const nuages = charge('./textures/clouds_2048.jpg', THREE.NoColorSpace);
-
-  const carnet = charge('./textures/earth_carnet.jpg');
+  // The painted Carnet globe is the default view: only its two textures are
+  // part of the first load. Phones get a 4096 px painting (a quarter of the
+  // GPU memory of the 8192 px one, which can crash a mobile tab).
+  const carnetCharge = chargePromesse(carnetLeger
+    ? './textures/earth_carnet_4096.jpg' : './textures/earth_carnet.jpg');
+  const specCharge = chargePromesse('./textures/earth_specular_2048.jpg', THREE.NoColorSpace);
+  const carnet = carnetCharge.texture;
+  const spec = specCharge.texture;
+  // The realistic textures (≈4.5 MB) wait until someone asks for that mode.
+  const jour = textureNeutre();
+  const nuit = textureNeutre();
+  const normales = textureNeutre();
+  const nuages = textureNeutre();
 
   const uniforms = {
     carteJour: { value: jour },
@@ -522,9 +537,31 @@ export function creerGlobe(relief) {
     }
   }
 
+  let realiste = null;
+  function prepareRealiste() {
+    if (realiste) return realiste;
+    const textures = [
+      ['carteJour', './textures/earth_day_5400.jpg', THREE.SRGBColorSpace],
+      ['carteNuit', './textures/earth_night_3600.jpg', THREE.SRGBColorSpace],
+      ['carteNormales', './textures/earth_normal_2048.jpg', THREE.NoColorSpace],
+      ['carteNuages', './textures/clouds_2048.jpg', THREE.NoColorSpace],
+    ].map(([nom, url, espace]) => chargePromesse(url, espace).promesse.then(texture => {
+      const uniforme = nom === 'carteNuages'
+        ? meshNuages.material.uniforms.carteNuages : uniforms[nom];
+      uniforme.value = texture;
+    }));
+    realiste = Promise.all(textures).catch((erreur) => {
+      realiste = null; // a later click may retry
+      throw erreur;
+    });
+    return realiste;
+  }
+
   return {
     groupe,
     metAJourSoleil(dir) { uniforms.dirSoleil.value.copy(dir); },
+    pret: Promise.all([carnetCharge.promesse, specCharge.promesse]),
+    prepareRealiste,
     regleMode(mode) {
       const carnetActif = mode === 'carnet';
       terre.material = carnetActif ? matiereCarnet : matierePhoto;
