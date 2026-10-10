@@ -120,7 +120,8 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     serie.index = (index + n) % n;
     const photo = serie.photos[serie.index];
     lightboxImg.src = webp(photo.src);
-    lightboxImg.alt = photo.legende || `Photo de l’album ${serie.titre}`;
+    lightboxImg.alt = photo.legende || (serie.url
+      ? `Photo de l’album ${serie.titre}` : `Photo du billet « ${serie.titre} »`);
     lightboxLegende.textContent = photo.legende || '';
     compteurLightbox.textContent = `${serie.titre} · ${serie.index + 1} / ${n}`;
     // the next photo is usually wanted next
@@ -133,8 +134,12 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
     if (serie) {
       regleSerie(true);
       if (lienAlbumComplet) {
-        lienAlbumComplet.href = serie.url;
-        lienAlbumComplet.textContent = `Les ${serie.total} photos de l’album sur laruel.be`;
+        // a post's photos are all here: the link to a full album is for albums
+        lienAlbumComplet.hidden = !serie.url;
+        if (serie.url) {
+          lienAlbumComplet.href = serie.url;
+          lienAlbumComplet.textContent = `Les ${serie.total} photos de l’album sur laruel.be`;
+        }
       }
       afficheDansSerie(serie.index ?? 0);
     } else {
@@ -149,6 +154,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
   boutonPrecedente?.addEventListener('click', () => serie && afficheDansSerie(serie.index - 1));
   boutonSuivante?.addEventListener('click', () => serie && afficheDansSerie(serie.index + 1));
   let debutGlisse = null;
+  lightboxImg.draggable = false; // a mouse drag must not pick up the image
   lightboxImg.addEventListener('pointerdown', (e) => { debutGlisse = { x: e.clientX, y: e.clientY }; });
   lightboxImg.addEventListener('pointerup', (e) => {
     if (!serie || !debutGlisse) return;
@@ -503,7 +509,9 @@ function opaciteRaccordLod(t) {
     flux.append(figure);
   }
 
-  function figurePhoto(im, titreArticle, rangPhoto) {
+  // A post's photos open as a series: the arrows (or a swipe) turn through
+  // the photos of that post, like an album.
+  function figurePhoto(im, titreArticle, rangPhoto, billet = null) {
     const fig = document.createElement('figure');
     fig.style.setProperty('--rang', rangPhoto);
     const img = document.createElement('img');
@@ -522,7 +530,21 @@ function opaciteRaccordLod(t) {
     ouvrirImage.type = 'button';
     ouvrirImage.className = 'photo-ouvrir';
     ouvrirImage.setAttribute('aria-label', `Agrandir la photo${im.legende ? ` : ${im.legende}` : ''}`);
-    ouvrirImage.addEventListener('click', () => ouvreLightbox(img.src, im.legende, ouvrirImage));
+    ouvrirImage.addEventListener('click', () => {
+      if (billet && billet.photos.length > 1) {
+        ouvreLightbox(null, null, ouvrirImage, {
+          serie: {
+            photos: billet.photos,
+            index: billet.index,
+            titre: titreArticle || 'Billet',
+            url: null,
+            total: billet.photos.length,
+          },
+        });
+      } else {
+        ouvreLightbox(img.src, im.legende, ouvrirImage);
+      }
+    });
     ouvrirImage.append(img);
     fig.append(ouvrirImage);
     if (im.legende) {
@@ -774,7 +796,8 @@ function opaciteRaccordLod(t) {
           art.append(texte);
           ouverture = false;
         } else if (Number.isInteger(bloc) && images[bloc]) {
-          art.append(figurePhoto(images[bloc], a.titre, Math.min(rang++, 10)));
+          art.append(figurePhoto(images[bloc], a.titre, Math.min(rang++, 10),
+            { photos: images, index: bloc }));
         }
       }
       flux.append(art);
