@@ -640,6 +640,17 @@ Fixed (batch 26):
 - Checked fine: the quoted mention and its button at both sizes, the jump
   to « Channel Islands », the enlarged photo (706×411 upright, 942×549 on
   its side, caption in view), the address following each step.
+- Batch 27: **closer sky views for the smallest islands.** Every sky view
+  covers about 97 km, so an islet was a few pixels (Santa Barbara Island:
+  a speck, now ringed). Measuring the land in each of the 127 views, 11
+  showed almost none. They were fetched again 2 or 4 times closer, centred
+  on the same anchorage (`pipeline/vues_aeriennes_rapprochees.py`), and
+  looked at one by one beside the old ones: Santa Barbara Island, Los Aves,
+  Maupihaa and Aitutaki now show their island or atoll clearly. Seven were
+  put back: at the closer zoom Esri's imagery changes source in visible
+  straight-edged patches (Gambier, Fatu Hiva, Ua Huka, Rarotonga), and
+  Beveridge Reef, being under water, shows nothing at any zoom. The script
+  keeps that list, so a rerun does not redo them.
 
 ## Ideas for later
 

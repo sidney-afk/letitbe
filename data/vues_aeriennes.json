@@ -21,11 +21,12 @@
   "latMin": 11.523087506868508
  },
  "Los Aves|2009-06-04": {
-  "fichier": "media/aerien/3.webp",
-  "lonMin": -67.8515625,
-  "lonMax": -66.97265625,
-  "latMax": 12.3829283384874,
-  "latMin": 11.523087506868508
+  "fichier": "media/aerien/3-z13.webp",
+  "lonMin": -67.5439453125,
+  "lonMax": -67.32421875,
+  "latMax": 12.039320557540568,
+  "latMin": 11.824341483849047,
+  "zoom": 13
  },
  "Aruba|2009-06-07": {
   "fichier": "media/aerien/4.webp",
@@ -224,18 +225,20 @@
   "latMin": -16.972741019999017
  },
  "Maupihaa|2010-07-15": {
-  "fichier": "media/aerien/34.webp",
-  "lonMin": -154.3359375,
-  "lonMax": -153.45703125,
-  "latMax": -16.46769474828896,
-  "latMin": -17.308687886770024
+  "fichier": "media/aerien/34-z12.webp",
+  "lonMin": -154.16015625,
+  "lonMax": -153.720703125,
+  "latMax": -16.636191878397657,
+  "latMin": -17.05678460994255,
+  "zoom": 12
  },
  "Cook du sud - Aitutaki|2010-07-19": {
-  "fichier": "media/aerien/35.webp",
-  "lonMin": -160.3125,
-  "lonMax": -159.43359375,
-  "latMax": -18.47960905583197,
-  "latMin": -19.31114335506464
+  "fichier": "media/aerien/35-z12.webp",
+  "lonMin": -160.048828125,
+  "lonMax": -159.609375,
+  "latMax": -18.646245142670605,
+  "latMin": -19.062117883514652,
+  "zoom": 12
  },
  "Cook du sud - Rarotonga|2010-07-27": {
   "fichier": "media/aerien/36.webp",
@@ -884,11 +887,12 @@
   "latMin": 33.7243396617476
  },
  "Santa Barbara Island|2013-11-12": {
-  "fichier": "media/aerien/131.webp",
-  "lonMin": -119.53125,
-  "lonMax": -118.65234375,
-  "latMax": 33.87041555094183,
-  "latMin": 33.137551192346145
+  "fichier": "media/aerien/131-z13.webp",
+  "lonMin": -119.1357421875,
+  "lonMax": -118.916015625,
+  "latMax": 33.57801474614399,
+  "latMin": 33.394759218577974,
+  "zoom": 13
  },
  "Catalina Island|2013-11-13": {
   "fichier": "media/aerien/132.webp",
