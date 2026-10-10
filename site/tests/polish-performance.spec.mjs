@@ -1,6 +1,10 @@
 import { expect, test } from '@playwright/test';
 
 test('référence candidate de fluidité pendant la Traversée', async ({ page }, testInfo) => {
+  // 150 measured frames take well over a minute on software-rendered WebGL
+  // (SwiftShader in CI/cloud runners). The test only records a reference, so
+  // a longer budget changes no threshold.
+  test.setTimeout(240_000);
   await page.setViewportSize({ width: 1366, height: 768 });
   const debutNavigation = Date.now();
   await page.goto('/', { waitUntil: 'domcontentloaded' });

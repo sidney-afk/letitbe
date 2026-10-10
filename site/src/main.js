@@ -21,6 +21,7 @@ import { creerOrnements } from './ornements.js';
 import { construireVoyage } from './geo.js';
 import { soleilEtCiel } from './sun.js';
 import { chargeRelief, reliefPlat } from './relief.js';
+import { creerChargement } from './chargement.js';
 
 const canvas = document.getElementById('scene');
 const mouvementReduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -132,10 +133,24 @@ async function activeFallback2D() {
   };
 }
 
-if (!webglDisponible()) {
+// relief, étoiles, données du voyage, carte peinte, bateau
+const chargement = creerChargement(5);
+let renderer = null;
+if (webglDisponible()) {
+  try {
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+  } catch (erreur) {
+    // A driver can advertise WebGL and still refuse a context: that visitor
+    // gets the map fallback, never a blank page.
+    console.warn('WebGL refusé ; carte de secours.', erreur);
+    renderer = null;
+  }
+}
+if (!renderer) {
   await activeFallback2D();
+  chargement.termine();
 } else {
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+try {
 function ratioPixelsCible() {
   const compact = innerWidth < 700 || innerHeight < 520;
   return Math.min(devicePixelRatio, compact ? 1.5 : 2);
@@ -163,15 +178,26 @@ scene.add(hemisphere);
 const soleilLampe = new THREE.DirectionalLight(0xfff3df, 2.2);
 scene.add(soleilLampe);
 
+// Everything that does not depend on the relief starts downloading now, in
+// parallel, instead of one file after another.
+const etoilesPromesse = chargement.suivre(creerEtoiles());
+const bateauPromesse = chargement.suivre(creerBateau());
+const donneesPromesse = chargement.suivre(chargeDonneesVoyage());
+
 // le relief sculpté nourrit le globe, la route, les étiquettes, la plongée
-const relief = await chargeRelief('./textures/earth_elev_2048.jpg')
-  .catch(() => reliefPlat());
+const relief = await chargement.suivre(chargeRelief('./textures/earth_elev_2048.jpg')
+  .catch(() => reliefPlat()));
 
-const etoiles = await creerEtoiles();
-scene.add(etoiles.points);
-
-const globe = creerGlobe(relief);
+// Phones and small GPUs paint the 4096 px globe (a quarter of the memory).
+const carnetLeger = Math.min(screen.width, screen.height) < 700
+  || renderer.capabilities.maxTextureSize < 8192
+  || (navigator.deviceMemory !== undefined && navigator.deviceMemory < 4);
+const globe = creerGlobe(relief, { carnetLeger });
 scene.add(globe.groupe);
+const globePret = chargement.suivre(globe.pret);
+
+const etoiles = await etoilesPromesse;
+scene.add(etoiles.points);
 
 const ciel = creerCiel();
 scene.add(ciel.mesh);
@@ -208,12 +234,39 @@ function regleMode(nouveau) {
   modeBouton.setAttribute('aria-label', actionMode);
   modeBouton.title = actionMode;
 }
-modeBouton.addEventListener('click', () => {
+// The realistic textures load on demand: hovering or focusing the button
+// starts them early, and the first switch waits for them (with a visible
+// busy state) rather than showing a black globe.
+const prechargeRealiste = () => { globe.prepareRealiste().catch(() => {}); };
+modeBouton.addEventListener('pointerenter', prechargeRealiste, { once: true });
+modeBouton.addEventListener('focus', prechargeRealiste, { once: true });
+let modeEnAttente = false;
+modeBouton.addEventListener('click', async () => {
+  if (modeEnAttente) return;
+  if (mode === 'carnet') {
+    modeEnAttente = true;
+    modeBouton.setAttribute('aria-busy', 'true');
+    try {
+      await globe.prepareRealiste();
+    } catch (erreur) {
+      console.warn('Mode réaliste indisponible pour le moment.', erreur);
+      return;
+    } finally {
+      modeEnAttente = false;
+      modeBouton.removeAttribute('aria-busy');
+    }
+  }
   regleMode(mode === 'carnet' ? 'photo' : 'carnet');
 });
 
 function estCatalogueObjet(valeur) {
   return valeur !== null && typeof valeur === 'object' && !Array.isArray(valeur);
+}
+
+async function fetchJson(url) {
+  const reponse = await fetch(url);
+  if (!reponse.ok) throw new Error(`HTTP ${reponse.status} : ${url}`);
+  return reponse.json();
 }
 
 async function chargeJsonOptionnel(url) {
@@ -272,9 +325,10 @@ function selectionneHerosEscales(catalogue) {
     .filter(([, hero]) => estHeroEscaleCurate(hero)));
 }
 
-const [routeData, mouillagesData, vuesAeriennesBase, vuesAeriennesGenerees, herosEscalesBruts, meteo] = await Promise.all([
-  fetch('./data/route.json').then(r => r.json()),
-  fetch('./data/mouillages.json').then(r => r.json()),
+function chargeDonneesVoyage() {
+  return Promise.all([
+  fetchJson('./data/route.json'),
+  fetchJson('./data/mouillages.json'),
   // The close-up imagery is optional: a missing manifest must leave the
   // journal's clean selected-place fallback intact rather than block launch.
   chargeJsonOptionnel('./data/vues_aeriennes.json'),
@@ -288,6 +342,8 @@ const [routeData, mouillagesData, vuesAeriennesBase, vuesAeriennesGenerees, hero
   chargeJsonOptionnel('./data/heros_escales.json'),
   creerMeteo(),
 ]);
+}
+const [routeData, mouillagesData, vuesAeriennesBase, vuesAeriennesGenerees, herosEscalesBruts, meteo] = await donneesPromesse;
 const vuesAeriennes = fusionneVuesAeriennes(vuesAeriennesBase, vuesAeriennesGenerees);
 const herosEscales = selectionneHerosEscales(herosEscalesBruts);
 const voyage = construireVoyage(routeData);
@@ -297,7 +353,7 @@ const mouillagesParCle = new Map(
 const route = creerRoute(voyage, routeData, relief);
 scene.add(route.groupe);
 
-const bateau = await creerBateau();
+const bateau = await bateauPromesse;
 scene.add(bateau.conteneur, bateau.ecume);
 
 const timeline = creerTimeline(voyage);
@@ -415,6 +471,14 @@ if (selectEscales && boutonOuvrirEscale) {
     const escale = route.escales[Number(selectEscales.value)];
     if (!escale?.date_arrivee) return;
     if (recit.actif) recit.sort();
+    // The menu has done its job: fold it away so it does not linger over the
+    // globe after the journal closes. Focus moves to its summary first, so the
+    // dive returns the keyboard there rather than to a hidden button.
+    const menu = document.getElementById('navigation-escales');
+    if (menu?.open) {
+      menu.open = false;
+      menu.querySelector('summary')?.focus({ preventScroll: true });
+    }
     void plongee.vers(escale);
   });
 }
@@ -608,7 +672,10 @@ const horloge = new THREE.Clock();
 let accumulateurSurvol = 0;
 let lectureAvant = false;
 
+// The painted globe must be on screen before the curtain lifts.
+await globePret;
 document.body.classList.add('pret'); // l'interface peut entrer en scène
+chargement.termine();
 
 renderer.setAnimationLoop(() => {
   const dt = horloge.getDelta();
@@ -672,4 +739,7 @@ renderer.setAnimationLoop(() => {
   controls.update();
   renderer.render(scene, camera);
 });
+} catch (erreur) {
+  chargement.echec(erreur);
+}
 }

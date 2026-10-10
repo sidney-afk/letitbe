@@ -185,6 +185,13 @@ CHAPITRES = {
     "trajetusa.html": "La côte américaine",
 }
 
+# Une traversée appartient au chapitre qu'elle ouvre : le récit raconte la
+# transpacifique retour au chapitre V et Honolulu → Prince Rupert au VII.
+CHAPITRE_TRAVERSEE = {
+    "Transpacifique retour": "Le retour en Polynésie",
+    "Honolulu (Hawaii) - Prince Rupert (Canada)": "Le grand nord",
+}
+
 
 def haversine_nm(a: tuple[float, float], b: tuple[float, float]) -> float:
     lat1, lon1, lat2, lon2 = map(math.radians, (*a, *b))
@@ -264,7 +271,7 @@ def main() -> None:
             "date_arrivee": e["date_arrivee"],
             "date_depart": e["date_depart"],
             "type": "traversee" if nom in TRAVERSEES else "mouillage",
-            "chapitre": CHAPITRES.get(e["source"], ""),
+            "chapitre": CHAPITRE_TRAVERSEE.get(nom, CHAPITRES.get(e["source"], "")),
             "source": e["source"],
         })
     if manquants:
