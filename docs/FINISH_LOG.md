@@ -616,7 +616,7 @@ welcome card, « L’équipage et le bateau » and « À propos », the sound.
   the link is shown to copy by hand. The browser tab names the stop being
   read (« Tuamotu - Fakarava · Le Sillage »), also for a bookmark. Found on
   the way: a stop opened by an address typed by hand kept the general tab
-  title; fixed. The version without 3D has the links but not the button.
+  title; fixed. (The version without 3D got the button in batch 28.)
 
 ## Sixth first-time-visitor pass (2026-10-10, after batch 25, tablets)
 
@@ -651,6 +651,10 @@ Fixed (batch 26):
   straight-edged patches (Gambier, Fatu Hiva, Ua Huka, Rarotonga), and
   Beveridge Reef, being under water, shows nothing at any zoom. The script
   keeps that list, so a rerun does not redo them.
+- Batch 28: the version without 3D gets « Partager » on each post too (the
+  copied link leads to the normal site, not to the forced map version), and
+  an accessibility check of today's additions (quoted mentions, share
+  buttons, the crew page): no axe violations.
 
 ## Ideas for later
 

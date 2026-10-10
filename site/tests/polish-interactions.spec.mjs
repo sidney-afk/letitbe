@@ -801,3 +801,16 @@ test('un billet se partage : le lien copié rouvre ce billet', async ({ page, co
   const lien = await page.evaluate(() => navigator.clipboard.readText());
   expect(lien).toMatch(/#sidney-2013-08-20\/billet-531$/);
 });
+
+test('le repli 2D partage aussi un billet, avec un lien vers le site normal', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.setViewportSize({ width: 1366, height: 768 });
+  await page.goto('/?force-fallback=1#sidney-2013-08-20/billet-531', { waitUntil: 'domcontentloaded' });
+  const partage = page.locator('#fallback-billet-531 .article-partage');
+  await expect(partage).toBeVisible();
+  await partage.click();
+  await expect(partage).toHaveText('Lien copié');
+  const lien = await page.evaluate(() => navigator.clipboard.readText());
+  expect(lien).toMatch(/\/#sidney-2013-08-20\/billet-531$/);
+  expect(lien).not.toContain('force-fallback');
+});
