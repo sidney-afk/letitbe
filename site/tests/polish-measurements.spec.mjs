@@ -450,6 +450,10 @@ async function scanAccessibility(page) {
 
 for (const scenario of scenarios) {
   test(`${scenario.name} reste mesurable et contenu dans le viewport`, async ({ page }, testInfo) => {
+    // The realistic globe at 1920×1080 renders on the CPU here (software
+    // WebGL): with its 5400 px day map, the whole scenario has taken 55 to
+    // 66 s across runs, right at the 60 s default. It gets the slow budget.
+    test.slow(scenario.mode === 'photo', 'globe réaliste 1920 px en WebGL logiciel');
     const signals = collectRuntimeSignals(page);
     await setRepresentativeState(page, scenario);
 

@@ -628,6 +628,13 @@ welcome card, « L’équipage et le bateau » and « À propos », the sound.
 
 ## Decisions
 
+- 2026-10-10: the 1920×1080 realistic-globe measurement had taken 55 to 66 s
+  across the day's runs, right at the suite's 60 s default, and timed out
+  once (run of batch 25, nothing in that batch touching it). Cause: the
+  realistic globe and its 5400 px day map render on the CPU in this test
+  browser (software WebGL). That scenario now gets Playwright's slow budget
+  (`test.slow`, 3×); every check it makes is unchanged.
+
 - 2026-10-10: the owner's loop instructions authorize committing, pushing,
   opening and merging pull requests into the default branch
   (`claude/sweet-hopper-im4osx`) in small verified steps. This overrides the
