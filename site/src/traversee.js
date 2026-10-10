@@ -13,6 +13,10 @@ const LEGENDE_MAX = 90;
 const formatCourt = new Intl.DateTimeFormat('fr-FR', {
   month: 'long', year: 'numeric', timeZone: 'UTC',
 });
+const formatJour = new Intl.DateTimeFormat('fr-FR', {
+  day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',
+});
+const JOUR_MS = 86400e3;
 
 const legendeCourte = legende => typeof legende === 'string'
   && legende.trim().length >= 3 && legende.trim().length <= LEGENDE_MAX;
@@ -47,16 +51,45 @@ export function creerTraversee({ timeline, voyage, mouillagesParCle }) {
     return parmi[Math.floor(Math.random() * parmi.length)];
   }
 
+  // At sea, the photos come from the posts written on board that very day
+  // (« Traversée du Pacifique J3 », « En mer », « Equateur »).
+  let enMerParDate = null;
+  function billetsEnMer() {
+    if (enMerParDate || !mouillagesParCle.size) return enMerParDate;
+    enMerParDate = new Map();
+    for (const m of mouillagesParCle.values()) {
+      for (const a of m.articles ?? []) {
+        if (!a.en_mer || !(a.images ?? []).length) continue;
+        if (!enMerParDate.has(a.date)) enMerParDate.set(a.date, []);
+        enMerParDate.get(a.date).push(a);
+      }
+    }
+    return enMerParDate;
+  }
+
+  function affleureEnMer(article) {
+    const legendees = article.images.filter(im => legendeCourte(im.legende));
+    const parmi = legendees.length ? legendees : article.images;
+    const im = parmi[Math.floor(Math.random() * parmi.length)];
+    montreCarte({ src: im.src, legende: im.legende },
+      `En mer · ${formatJour.format(new Date(`${article.date}T12:00:00Z`))}`, article.titre);
+  }
+
   function affleure(escale) {
     const photo = photoDe(escale);
     if (!photo) return;
+    montreCarte(photo, `${escale.nom} · ${formatCourt.format(
+      new Date(escale.date_arrivee + 'T12:00:00Z'))}`, escale.nom);
+  }
+
+  function montreCarte(photo, texteLieu, texteAlt) {
     enCours++;
     const fig = document.createElement('figure');
     fig.className = 'affleure-carte';
     fig.style.setProperty('--derive', `${(Math.random() * 6 - 3).toFixed(1)}deg`);
     const img = document.createElement('img');
     img.src = `./media/${photo.src.replace(/\.[a-z]+$/i, '.webp')}`;
-    img.alt = photo.legende || escale.nom;
+    img.alt = photo.legende || texteAlt;
     img.addEventListener('error', () => fig.remove());
     const cap = document.createElement('figcaption');
     if (legendeCourte(photo.legende)) {
@@ -67,8 +100,7 @@ export function creerTraversee({ timeline, voyage, mouillagesParCle }) {
     }
     const lieu = document.createElement('span');
     lieu.className = 'affleure-lieu';
-    lieu.textContent = `${escale.nom} · ${formatCourt.format(
-      new Date(escale.date_arrivee + 'T12:00:00Z'))}`;
+    lieu.textContent = texteLieu;
     cap.append(lieu);
     fig.append(img, cap);
     couche.append(fig);
@@ -86,9 +118,24 @@ export function creerTraversee({ timeline, voyage, mouillagesParCle }) {
     }
     const s = voyage.segmentA(t);
     const e = s.escale;
-    if (!e || s.enMer || !e.date_arrivee) return;
-    const cle = `${e.nom}|${e.date_arrivee}`;
     const maintenant = performance.now();
+    if (s.enMer) {
+      if (enCours >= 2 || maintenant - dernierAffichage < ENTRE_CARTES_MS) return;
+      // the day being sailed, or the one just before (a day at sea lasts
+      // only a few frames of the replay)
+      for (const jour of [t, t - JOUR_MS]) {
+        const iso = new Date(jour).toISOString().slice(0, 10);
+        const billet = billetsEnMer()?.get(iso)?.find(a => !dejaVues.has(`billet-${a.id}`));
+        if (!billet) continue;
+        dejaVues.add(`billet-${billet.id}`);
+        dernierAffichage = maintenant;
+        affleureEnMer(billet);
+        return;
+      }
+      return;
+    }
+    if (!e || !e.date_arrivee) return;
+    const cle = `${e.nom}|${e.date_arrivee}`;
     if (dejaVues.has(cle) || enCours >= 2
       || maintenant - dernierAffichage < ENTRE_CARTES_MS) return;
     dejaVues.add(cle);

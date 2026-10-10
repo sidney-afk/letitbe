@@ -421,6 +421,21 @@ Built next (batch 10):
   ("noel hiva", "baleines", "fakarava"); choosing a post opens that
   stop's journal right at it. Reached from "Explorer les escales" and from
   the welcome card, for a visitor who comes to read rather than explore.
+- Batch 11: a "Sommaire" button in every journal's header opens the table
+  of contents on top of the journal, so a reader hops from post to post
+  without going back to the globe. While a native dialog is open, the
+  journal no longer pulls the keyboard focus back into itself.
+- Batch 12: **the crossings have their photos.** During the three-minute
+  replay, photos rose only at stops, so the long ocean crossings (the
+  heart of the voyage) passed with nothing on screen. At sea the replay now
+  shows the photos of the posts written on board that very day: the dorado
+  on the stern ("Une dorade coryphène sur la jupe bâbord"), "Message in a
+  bottle", the broken topping lift, "Vitesse du bateau: 14.3 noeuds, ça
+  décoiffe !!", the equator crossing, each captioned "En mer · <date>".
+  And the "écrit en mer" label is now only given when it is true (during
+  a logged crossing, or when the title says so): "Los Roques" and the two
+  Nuku Hiva posts lose it, and the two San Blas posts move from Panama's
+  journal to San Blas, the stop their titles name.
 - Test decision: "aerial imagery stays hidden during the dive" stepped the
   flight by hand while the page's own loop kept moving it, so one slow run
   finished the flight before the mid-flight check. It now pauses the live

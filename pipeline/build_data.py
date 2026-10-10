@@ -38,6 +38,9 @@ def extrait(texte: str, longueur: int = 320) -> str:
     return coupe + "…"
 
 
+# un titre qui dit la mer : « Traversée … », « En mer », « J12 »
+MER = re.compile(r"\btravers|\ben mer\b|\bj\d+\b")
+
 # mots trop communs pour désigner une escale à eux seuls
 MOTS_GENERIQUES = {
     "fidji", "tonga", "marquises", "tuamotu", "iles", "island", "islands",
@@ -95,6 +98,12 @@ def main() -> None:
                 d = max(d, narr - timedelta(days=1))
         return a, d
 
+    def en_traversee(d: date) -> bool:
+        return any(m["type"] == "traversee" and m["date_arrivee"] and m["date_depart"]
+                   and date.fromisoformat(m["date_arrivee"]) < d
+                   < date.fromisoformat(m["date_depart"])
+                   for m in mouillages)
+
     pour_mouillage: dict[int, list[dict]] = {i: [] for i in range(len(mouillages))}
     non_rattaches = 0
     for art in articles:
@@ -125,14 +134,25 @@ def main() -> None:
             i = min(nommees or candidats, key=lambda c: c[1])[0]
             pour_mouillage[i].append(art)
         elif d >= date(2009, 5, 27):
-            # article écrit en mer (« Traversée vers les Galapagos J3 ») ou
-            # dans un trou entre escales : rattaché à la destination
+            # article écrit dans un trou entre escales ou en mer (« Traversée
+            # vers les Galapagos J3 ») : à l'escale que son titre nomme si
+            # elle est toute proche (« San Blas - Repli stratégique »), sinon
+            # à la destination
+            proches = [(abs((date.fromisoformat(m["date_arrivee"]) - d).days), i)
+                       for i, m in enumerate(mouillages)
+                       if m["type"] != "traversee" and m["date_arrivee"]
+                       and abs((date.fromisoformat(m["date_arrivee"]) - d).days) <= 10
+                       and nomme_escale(art["titre"], m["nom"])]
             suivants = [i for i, m in enumerate(mouillages)
                         if m["date_arrivee"] and m["type"] != "traversee" and
                         date.fromisoformat(m["date_arrivee"]) >= d]
-            if suivants:
-                art["en_mer"] = True
-                pour_mouillage[suivants[0]].append(art)
+            cible = min(proches)[1] if proches else (suivants[0] if suivants else None)
+            if cible is not None:
+                # « écrit en mer » seulement quand c'est vrai : pendant une
+                # traversée du log, ou quand le titre le dit
+                if en_traversee(d) or MER.search(" ".join(mots(art["titre"]))):
+                    art["en_mer"] = True
+                pour_mouillage[cible].append(art)
             else:
                 non_rattaches += 1
 

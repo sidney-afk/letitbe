@@ -622,6 +622,16 @@ test('le sommaire retrouve un billet et ouvre son carnet à cet endroit', async 
     const article = titre?.closest('article');
     return article && Math.abs(flux.scrollTop - (article.offsetTop - 14)) < 4;
   });
+  // from inside the journal: the table of contents opens on top, Escape
+  // closes only it and gives the focus back to its button
+  await page.locator('#plongee-sommaire').click();
+  await expect(page.locator('#sommaire')).toBeVisible();
+  await page.keyboard.press('Tab');
+  expect(await page.evaluate(() => Boolean(document.activeElement.closest('#sommaire')))).toBe(true);
+  await page.keyboard.press('Escape');
+  await expect(page.locator('#sommaire')).toBeHidden();
+  expect(await page.evaluate(() => window.__sillage.plongee.ouverte)).toBe(true);
+  await expect(page.locator('#plongee-sommaire')).toBeFocused();
   // Escape closes the journal, and the menu that led there has folded away
   await page.keyboard.press('Escape');
   await page.waitForFunction(() => !window.__sillage.plongee.ouverte && !window.__sillage.plongee.enVol);
