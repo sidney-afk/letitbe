@@ -169,8 +169,8 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
 
 ### 12. Smaller polish (P3)
 
-- Story mode help line ("…la molette zoome") overlaps the subtitle on phones
-  and mentions a mouse wheel on touch screens.
+- ~~Story mode help line ("…la molette zoome") overlaps the subtitle on
+  phones~~ Fixed in batches 3 and 6.
 - The journal text is one wall of text: the blog's paragraphs (and photo
   captions) were flattened, so sentences run into each other
   ("…Syr Daria Croft On s'est empiffré…"). Rebuild paragraphs from the
@@ -180,7 +180,7 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
 
 - Label collision "Panamá/Aruba/Martinique" at the start of playback (desktop).
 - Phone: weather line wraps ("ciel / couvert"), top buttons are bare icons.
-- Phone: the story card covers the boat.
+- ~~Phone: the story card covers the boat.~~ Fixed in batch 6.
 - 24 of 134 stops have no blog article; their journal is a single line.
 
 ### Promised in PLAN.md and not built
@@ -285,6 +285,37 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
     container; the containment check now lets its content continue below
     the fold (never past the sides). Nested scroll areas on a phone were
     worse than a page that scrolls.
+
+## Second first-time-visitor pass (2026-10-10, after batch 5)
+
+Laptop 1366×768 (welcome → explore → hover → click a stop → journal →
+album → back → story → realistic → keyboard → 1024×768) and phone 390×844
+(welcome → crossing → pause → tap a stop → journal → album → back → story
+→ realistic → rotate to landscape). No errors, no failed requests.
+
+Found and fixed (batch 6):
+- Rotating a phone made the timeline vanish and fade back in over ~3 s:
+  phone and desktop used different entrance animations, and switching
+  layout restarted it. One animation now, the timeline centred by margins.
+- After the welcome card the controls took ~3 s to appear (staggered
+  delays designed for the old load); now 0.1–0.55 s.
+- Leaving a journal on a phone left the camera zoomed on one region (orbit
+  3.0 instead of the phone's whole-globe 7.9): it now returns to the
+  visitor's own zoom.
+
+- Keyboard: after closing the welcome card (Escape or a button), focus
+  stayed on its fading, invisible buttons and Tab cycled through them. The
+  card is now inert as it fades, and focus moves to "Explorer les escales"
+  (or the play button after "Larguer les amarres").
+
+- Phone, story mode: the chapter card covered the boat. On upright phones
+  the card now sits low above the timeline (long text scrolls inside) and
+  the globe view shifts up (`camera.setViewOffset`) so the boat shows
+  above it; the stop menu steps aside while the story is open.
+
+Seen and left as is:
+- In headless runs the journal and porthole appear late; traced to the
+  headless frame rate, not the product (image loaded, animation pending).
 
 ## Ideas for later
 

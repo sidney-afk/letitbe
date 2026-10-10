@@ -31,6 +31,8 @@ export function creerChargement(etapesTotal) {
     termine() {
       regle(1);
       if (!ecran || ecran.classList.contains('fini')) return;
+      // fading out: out of the tab order and of assistive technology at once
+      ecran.inert = true;
       ecran.classList.remove('accueil');
       ecran.classList.add('fini');
       ecran.setAttribute('aria-busy', 'false');
@@ -64,11 +66,31 @@ export function creerChargement(etapesTotal) {
 
       return new Promise((resolve) => {
         let fait = false;
-        const choisit = (choix) => {
+        const choisit = (choix, viaClavier = false) => {
           if (fait) return;
           fait = true;
           removeEventListener('keydown', clavier, true);
+          const focusDansCarte = ecran.contains(document.activeElement);
           this.termine();
+          if (!viaClavier) {
+            // mouse or touch: no focus ring appearing elsewhere on the page
+            if (focusDansCarte) document.activeElement?.blur();
+            resolve(choix);
+            return;
+          }
+          // the keyboard continues where the chosen path does
+          const suite = choix === 'traversee'
+            ? document.getElementById('lecture')
+            : document.querySelector('#navigation-escales summary');
+          // (the controls are becoming visible in this same frame: retry on
+          // the next frames until the focus actually lands)
+          const donneFocus = (essais) => {
+            suite?.focus({ preventScroll: true });
+            if (suite && document.activeElement !== suite && essais > 0) {
+              requestAnimationFrame(() => donneFocus(essais - 1));
+            }
+          };
+          donneFocus(60);
           resolve(choix);
         };
         const clavier = (e) => {
@@ -76,7 +98,7 @@ export function creerChargement(etapesTotal) {
           if (document.querySelector('dialog[open]')) return;
           if (e.key === 'Escape') {
             e.preventDefault();
-            choisit('explorer');
+            choisit('explorer', true);
           } else if (e.key === 'Tab') {
             // keep the focus inside the card
             const boutons = [...ecran.querySelectorAll('button:not([hidden])')]
@@ -89,8 +111,9 @@ export function creerChargement(etapesTotal) {
           }
         };
         addEventListener('keydown', clavier, true);
-        traversee.addEventListener('click', () => choisit('traversee'), { once: true });
-        explorer.addEventListener('click', () => choisit('explorer'), { once: true });
+        // a click produced by Enter or Space has detail 0
+        traversee.addEventListener('click', (e) => choisit('traversee', e.detail === 0), { once: true });
+        explorer.addEventListener('click', (e) => choisit('explorer', e.detail === 0), { once: true });
         this.ferme = () => choisit('explorer');
       });
     },

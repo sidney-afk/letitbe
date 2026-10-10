@@ -800,6 +800,7 @@ window.__sillage = {
 };
 
 const horloge = new THREE.Clock();
+let decalageVue = 0;
 let accumulateurSurvol = 0;
 let lectureAvant = false;
 
@@ -865,6 +866,19 @@ renderer.setAnimationLoop(() => {
   if (accumulateurSurvol > 0.08 && !plongee.enVol) { // raycast décimé
     accumulateurSurvol = 0;
     chercheSurvol();
+  }
+
+  // Story mode on an upright phone: the card sits low, so the view shifts
+  // up and the boat (always at the centre of the camera) shows above it.
+  const portraitCompact = innerWidth < 700 && innerHeight > innerWidth;
+  const cibleDecalage = recit.actif && portraitCompact && !plongee.ouverte ? 0.22 : 0;
+  decalageVue += (cibleDecalage - decalageVue) * Math.min(1, dt * 3);
+  if (Math.abs(decalageVue) > 1e-3) {
+    camera.setViewOffset(innerWidth, innerHeight, 0, decalageVue * innerHeight,
+      innerWidth, innerHeight);
+  } else if (camera.view?.enabled) {
+    decalageVue = 0;
+    camera.clearViewOffset();
   }
 
   controls.update();

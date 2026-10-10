@@ -60,6 +60,10 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
   let focusAvantPlongee = null;
   let focusAvantLightbox = null;
   let focaleAvantPlongee = camera.fov;
+  // Leaving a journal returns to the visitor's own zoom (never closer than
+  // the usual orbit): on a phone that is the whole globe, not a close-up of
+  // one region that leaves them unsure where they are.
+  let distanceRetour = DISTANCE_ORBITE;
   // Loading a local image is asynchronous. A later selection (or a return to
   // the map) must win over an older request so a delayed image can never
   // start the wrong flight.
@@ -777,6 +781,9 @@ function opaciteRaccordLod(t) {
     cacheLegendeScene();
     focusAvantPlongee = document.activeElement;
     focaleAvantPlongee = camera.fov;
+    if (!ouverte && !vol && !raccordLod) {
+      distanceRetour = Math.max(DISTANCE_ORBITE, Math.min(controls.maxDistance, camera.position.length()));
+    }
     panneau.hidden = true;
     await carnetsPrets; // usually long done: the journals load during the intro
     if (demande !== demandePlongee) return;
@@ -905,7 +912,7 @@ function opaciteRaccordLod(t) {
         alArrivee: termineRetour,
       });
     } else {
-      lanceVol(camera.position.clone().normalize(), DISTANCE_ORBITE,
+      lanceVol(camera.position.clone().normalize(), distanceRetour,
         termineRetour, focaleAvantPlongee);
     }
   }
