@@ -5,6 +5,7 @@
 import * as THREE from 'three';
 import { latLonVers3D } from './geo.js';
 import { chargeAlbums, albumsDeLEscale, chargeVideos, videosDeLEscale } from './albums.js';
+import { CLE_ESCALE_ROADTRIP, sectionRoadtrip, annonceRoadtrip } from './roadtrip.js';
 
 // A stop without an explicitly reviewed close-up is still a real arrival,
 // rather than a barely perceptible change of the overview.  This regional
@@ -36,7 +37,8 @@ const lisse = t => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 export function creerPlongee({ camera, controls, timeline, regleSuivi,
   regleVisibiliteBateau = () => {}, regleVisibiliteRoute = () => {},
   regleDetailIle = () => false, cacheDetailIle = () => {}, vuesAeriennes = {},
-  herosEscales = {}, mouillagesParCle, carnetsPrets = Promise.resolve(), scene, relief }) {
+  herosEscales = {}, mouillagesParCle, carnetsPrets = Promise.resolve(), scene, relief,
+  roadtrip = Promise.resolve([]) }) {
   const panneau = document.getElementById('plongee');
   const titre = document.getElementById('plongee-nom');
   const sousTitre = document.getElementById('plongee-dates');
@@ -82,6 +84,7 @@ export function creerPlongee({ camera, controls, timeline, regleSuivi,
   // reuse the already decoded source without showing its outer rectangle while
   // the camera is far away.
   let detailSelectionnee = null;
+  let etapesRoadtrip = [];
 
   const elementsFocusables = conteneur => [...conteneur.querySelectorAll(
     'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), '
@@ -507,6 +510,12 @@ function opaciteRaccordLod(t) {
     img.loading = 'lazy';
     img.decoding = 'async';
     img.src = `./media/${im.src.replace(/\.[a-z]+$/i, '.webp')}`;
+    // the photo's own size reserves its place before it loads: the journal
+    // never jumps while one reads, and a jump to a given post lands on it
+    if (im.l && im.h) {
+      img.width = im.l;
+      img.height = im.h;
+    }
     img.alt = im.legende || titreArticle || '';
     img.addEventListener('error', () => fig.remove());
     const ouvrirImage = document.createElement('button');
@@ -621,6 +630,7 @@ function opaciteRaccordLod(t) {
       grille.append(...liste.map(carteAlbum));
       section.append(titre, grille);
       section.hidden = false;
+      maintientEpingle();
     });
   }
 
@@ -688,6 +698,7 @@ function opaciteRaccordLod(t) {
       titre.textContent = liste.length > 1 ? 'Les films du bord' : 'Le film du bord';
       section.append(titre, ...liste.map(carteVideo));
       section.hidden = false;
+      maintientEpingle();
     });
   }
 
@@ -700,15 +711,22 @@ function opaciteRaccordLod(t) {
       `${d2 ? `du ${d1} au ${d2}` : d1} · ${escale.log_nm.toLocaleString('fr-FR')} milles au log`;
 
     flux.replaceChildren();
+    epingle = null;
     ajouteVueDuCiel(vueDuCiel, escale);
     // A curated journal photograph makes the two deliberately selected atlas
     // arrivals tangible, while remaining visibly distinct from map imagery.
     // It is passed only for the calm fallback state, never for a reviewed
     // aerial detail such as Makogai.
     ajouteHeroCarnet(heroCarnet);
+    const cle = `${escale.nom}|${escale.date_arrivee}`;
+    const route = cle === CLE_ESCALE_ROADTRIP && etapesRoadtrip.length ? etapesRoadtrip : null;
+    if (route) {
+      flux.append(annonceRoadtrip(route, { surClic: () => defileVers(flux.querySelector('#roadtrip')) }));
+    }
     ajouteAlbums(escale, demandePlongee);
     ajouteVideos(escale, demandePlongee);
     const articles = escale.articles ?? [];
+    const billetsRoute = new Set(route?.map(e => e.article_id).filter(Boolean));
     if (!articles.length) {
       const p = document.createElement('p');
       p.className = 'plongee-vide';
@@ -718,7 +736,12 @@ function opaciteRaccordLod(t) {
     }
     let rang = 0;
     for (const a of articles) {
+      // the camper-van trip opens with its map, just before its first post
+      if (route && billetsRoute.has(a.id) && !flux.querySelector('#roadtrip')) {
+        flux.append(sectionRoadtrip(route, { surBillet: id => allerAuBillet(id) }));
+      }
       const art = document.createElement('article');
+      art.id = `billet-${a.id}`;
       art.style.setProperty('--rang', Math.min(rang++, 10));
 
       const date = document.createElement('p');
@@ -757,7 +780,46 @@ function opaciteRaccordLod(t) {
     }
   }
 
-  async function vers(escale) {
+  // Scroll the open journal to one place in it (a post, the road-trip map)
+  // and mark it briefly, like a finger on the page.
+  // A jump stays on its post while the albums and films arrive above it
+  // (they load on their own), until the reader scrolls by themselves.
+  let epingle = null;
+  function maintientEpingle() {
+    if (epingle?.isConnected) flux.scrollTop = Math.max(0, epingle.offsetTop - 14);
+  }
+  for (const geste of ['wheel', 'touchstart', 'pointerdown', 'keydown']) {
+    flux.addEventListener(geste, () => { epingle = null; }, { passive: true });
+  }
+  // the journal settles for a moment after it opens (its width, the late
+  // sections): the post being read stays where it was put
+  new ResizeObserver(maintientEpingle).observe(flux);
+
+  function defileVers(element, doux = true) {
+    if (!element) return;
+    epingle = element;
+    const reduit = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const haut = Math.max(0, element.offsetTop - 14);
+    // a long jump is instant: gliding past dozens of posts would only start
+    // loading every photo on the way
+    const proche = Math.abs(haut - flux.scrollTop) < flux.clientHeight * 1.5;
+    const glisse = doux && proche && !reduit;
+    flux.scrollTo({ top: haut, behavior: glisse ? 'smooth' : 'auto' });
+    if (!glisse) {
+      for (const delai of [120, 400, 900, 1800]) {
+        setTimeout(() => { if (epingle === element) maintientEpingle(); }, delai);
+      }
+    }
+    element.classList.remove('signale');
+    void element.offsetWidth;
+    element.classList.add('signale');
+  }
+
+  function allerAuBillet(id, doux = true) {
+    defileVers(flux.querySelector(`#billet-${id}`), doux);
+  }
+
+  async function vers(escale, { billet = null } = {}) {
     const demande = ++demandePlongee;
     if (distanceMaxAvantPlongee !== null) {
       controls.maxDistance = distanceMaxAvantPlongee;
@@ -786,6 +848,7 @@ function opaciteRaccordLod(t) {
     }
     panneau.hidden = true;
     await carnetsPrets; // usually long done: the journals load during the intro
+    etapesRoadtrip = await roadtrip;
     if (demande !== demandePlongee) return;
     const complet = mouillagesParCle.get(`${escale.nom}|${escale.date_arrivee}`) ?? escale;
     const vue = vuesAeriennes[`${complet.nom}|${complet.date_arrivee}`];
@@ -840,6 +903,8 @@ function opaciteRaccordLod(t) {
       flux.scrollTop = 0;
       ouverte = true;
       boutonRemonter.focus({ preventScroll: true });
+      if (billet === 'roadtrip') defileVers(flux.querySelector('#roadtrip'), false);
+      else if (billet) allerAuBillet(billet, false);
     };
     if (detailDisponible) {
       // Rotate over the readable globe first. The close-up then begins only
@@ -942,6 +1007,7 @@ function opaciteRaccordLod(t) {
   return {
     vers,
     remonte,
+    allerAuBillet,
     metAJour,
     get enVol() { return vol !== null || raccordLod !== null; },
     get ouverte() { return ouverte; },

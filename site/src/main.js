@@ -12,6 +12,9 @@ import { creerTimeline } from './timeline.js';
 import { creerPlongee } from './plongee.js';
 import { creerRecit } from './recit.js';
 import { creerTraversee } from './traversee.js';
+import {
+  chargeRoadtrip, creerTraceRoadtrip, infobulleLieu, sectionRoadtrip, CLE_ESCALE_ROADTRIP,
+} from './roadtrip.js';
 import { creerOcean } from './ocean.js';
 import { creerMeteo } from './meteo.js';
 import { creerCiel } from './ciel.js';
@@ -118,8 +121,11 @@ async function activeFallback2D() {
   };
   const remplitCarnetFallback = async (escale, conteneur) => {
     const carnets = await chargeCarnetsFallback();
-    const complet = carnets.get(`${escale.nom}|${escale.date_arrivee}`);
+    const cle = `${escale.nom}|${escale.date_arrivee}`;
+    const complet = carnets.get(cle);
     const articles = complet?.articles ?? [];
+    const route = cle === CLE_ESCALE_ROADTRIP ? await chargeRoadtrip() : [];
+    const billetsRoute = new Set(route.map(e => e.article_id).filter(Boolean));
     conteneur.replaceChildren();
     if (!articles.length) {
       const vide = document.createElement('p');
@@ -128,8 +134,15 @@ async function activeFallback2D() {
       return;
     }
     for (const article of articles) {
+      if (billetsRoute.has(article.id) && !conteneur.querySelector('.roadtrip')) {
+        conteneur.append(sectionRoadtrip(route, {
+          surBillet: id => conteneur.querySelector(`#fallback-billet-${id}`)
+            ?.scrollIntoView({ block: 'start', behavior: mouvementReduit ? 'auto' : 'smooth' }),
+        }));
+      }
       const date = document.createElement('p');
       date.className = 'article-date';
+      date.id = `fallback-billet-${article.id}`;
       date.textContent = formatDateFallback.format(new Date(`${article.date}T12:00:00Z`));
       const titre = document.createElement('h4');
       titre.textContent = article.titre || '';
@@ -146,6 +159,10 @@ async function activeFallback2D() {
           const img = document.createElement('img');
           img.loading = 'lazy';
           img.src = `./media/${images[bloc].src.replace(/\.[a-z]+$/i, '.webp')}`;
+          if (images[bloc].l && images[bloc].h) {
+            img.width = images[bloc].l;
+            img.height = images[bloc].h;
+          }
           img.alt = images[bloc].legende || article.titre || '';
           img.addEventListener('error', () => figure.remove());
           figure.append(img);
@@ -308,6 +325,7 @@ function regleMode(nouveau) {
   document.body.dataset.mode = mode;
   globe.regleMode(mode);
   route.regleMode(mode);
+  roadtrip?.regleMode(mode);
   ciel.mesh.visible = carnetActif;
   coton.groupe.visible = carnetActif;
   etiquettes.groupe.visible = carnetActif;
@@ -447,6 +465,17 @@ const carnetsPrets = carnetsPromesse.then((mouillagesData) => {
 const route = creerRoute(voyage, routeData, relief);
 scene.add(route.groupe);
 
+// The autumn-2013 camper-van trip through the western parks, drawn once the
+// journals are in (it happened during the San Francisco stop).
+let roadtrip = null;
+const roadtripPromesse = carnetsPromesse.then(() => chargeRoadtrip(), () => []);
+roadtripPromesse.then((etapes) => {
+  if (!etapes.length) return;
+  roadtrip = creerTraceRoadtrip(etapes, relief);
+  roadtrip.regleMode(mode);
+  scene.add(roadtrip.groupe);
+});
+
 const bateau = await bateauPromesse;
 scene.add(bateau.conteneur, bateau.ecume);
 
@@ -531,6 +560,7 @@ applique(timeline.t);
 
 const plongee = creerPlongee({
   camera, controls, timeline, regleSuivi, mouillagesParCle, carnetsPrets, scene,
+  roadtrip: roadtripPromesse,
   relief, regleVisibiliteBateau: bateau.regleVisibilite,
   regleVisibiliteRoute: affiche => {
     route.groupe.visible = Boolean(affiche);
@@ -596,6 +626,7 @@ const infobulle = document.getElementById('infobulle');
 const raycaster = new THREE.Raycaster();
 const pointeur = new THREE.Vector2(-2, -2);
 let escaleSurvolee = null;
+let roadtripSurvole = null;
 let positionPointeur = { x: 0, y: 0 };
 let debutGeste = null;
 let clicDeplace = false;
@@ -658,6 +689,7 @@ canvas.addEventListener('pointerleave', () => {
   debutGeste = null;
   pointeur.set(-2, -2);
   escaleSurvolee = null;
+  roadtripSurvole = null;
   route.regleSurvol(-1);
   infobulle.hidden = true;
   canvas.style.cursor = '';
@@ -670,14 +702,25 @@ canvas.addEventListener('click', (e) => {
     return;
   }
   pointeur.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  // a tap has no hover before it: the click's own position is the truth
+  positionPointeur = { x: e.clientX, y: e.clientY };
   chercheSurvol(); // le survol throttlé peut être périmé au moment du clic
   const touche = dernierTypePointeur === 'touch' || dernierTypePointeur === 'pen';
+  const libre = route.groupe.visible && !plongee.ouverte && !plongee.enVol && !plongee.enChargement;
   const visee = escaleSurvolee?.date_arrivee ? escaleSurvolee
-    : (touche && route.groupe.visible && !plongee.ouverte && !plongee.enVol && !plongee.enChargement
-      ? escaleProche(e.clientX, e.clientY, RAYON_DOIGT_PX) : null);
+    : (touche && libre ? escaleProche(e.clientX, e.clientY, RAYON_DOIGT_PX) : null);
+  const surRoadtrip = !visee && libre && (roadtripSurvole
+    ?? (touche ? roadtripSous(e.clientX, e.clientY, RAYON_DOIGT_PX, 14) : null));
   if (visee) {
     if (recit.actif) recit.sort(); // on quitte le récit pour plonger
     void plongee.vers(visee);
+  } else if (surRoadtrip) {
+    // the trip lives in the San Francisco journal: open it at that post
+    const sf = route.escales.find(x => `${x.nom}|${x.date_arrivee}` === CLE_ESCALE_ROADTRIP);
+    if (sf) {
+      if (recit.actif) recit.sort();
+      void plongee.vers(sf, { billet: surRoadtrip.billet });
+    }
   } else if (plongee.ouverte || plongee.enVol || plongee.enChargement) {
     plongee.remonte(); // cliquer ailleurs referme le carnet
   }
@@ -692,6 +735,7 @@ function chercheSurvol() {
   // an old tooltip/click target during the async image transition.
   if (!route.groupe.visible || plongee.enVol || plongee.ouverte || plongee.enChargement) {
     escaleSurvolee = null;
+    roadtripSurvole = null;
     route.regleSurvol(-1);
     infobulle.hidden = true;
     canvas.style.cursor = '';
@@ -702,19 +746,50 @@ function chercheSurvol() {
   const hit = hits.find(h => h.instanceId !== undefined && route.estVisible(h.instanceId));
   escaleSurvolee = hit ? route.escales[hit.instanceId] : null;
   route.regleSurvol(hit ? hit.instanceId : -1);
+  roadtripSurvole = escaleSurvolee ? null : roadtripSous(positionPointeur.x, positionPointeur.y, 10, 6);
+  roadtrip?.regleSurvol(roadtripSurvole?.index ?? -1);
   if (escaleSurvolee) {
     const e = escaleSurvolee;
     const dates = e.date_depart && e.date_depart !== e.date_arrivee
       ? `${formatCourt.format(new Date(e.date_arrivee))} → ${formatCourt.format(new Date(e.date_depart))}`
       : formatCourt.format(new Date(e.date_arrivee));
-    infobulle.innerHTML = `${e.nom}<span class="dates">${dates} · ${e.log_nm} nm au log</span>`;
-    infobulle.hidden = false;
-    positionneInfobulle(positionPointeur.x, positionPointeur.y);
-    canvas.style.cursor = 'pointer';
+    remplitInfobulle(e.nom, `${dates} · ${e.log_nm.toLocaleString('fr-FR')} milles au log`);
+  } else if (roadtripSurvole) {
+    remplitInfobulle(roadtripSurvole.nom, roadtripSurvole.detail, true);
   } else {
     infobulle.hidden = true;
     canvas.style.cursor = '';
   }
+}
+
+function remplitInfobulle(nom, detail, surRoute = false) {
+  infobulle.classList.toggle('infobulle-route', surRoute);
+  const dates = document.createElement('span');
+  dates.className = 'dates';
+  dates.textContent = detail;
+  infobulle.replaceChildren(nom, dates);
+  infobulle.hidden = false;
+  positionneInfobulle(positionPointeur.x, positionPointeur.y);
+  canvas.style.cursor = 'pointer';
+}
+
+// Under the pointer on the camper-van trail: one of its places (when close
+// enough to show them) or the dotted line itself, which leads to the map.
+function roadtripSous(x, y, rayonPoint, rayonTrace) {
+  if (!roadtrip?.groupe.visible) return null;
+  const lieu = roadtrip.lieuProche(x, y, rayonPoint);
+  if (lieu) {
+    return { ...infobulleLieu(lieu), index: lieu.index, billet: lieu.etapes[0].article_id };
+  }
+  if (roadtrip.surTrace(x, y, rayonTrace)) {
+    return {
+      nom: 'En camping-car',
+      detail: `sept. – oct. 2013 · ${roadtrip.total.toLocaleString('fr-FR')} miles dans les parcs de l’Ouest`,
+      index: -1,
+      billet: 'roadtrip',
+    };
+  }
+  return null;
 }
 
 // — la molette zoome PARTOUT (demande de Sidney) : même au-dessus de la
@@ -776,6 +851,7 @@ function rectangleEcranBateau() {
 window.__sillage = {
   camera, controls, timeline, voyage, bateau, plongee, route, recit, etoiles, globe,
   etiquettes, coton, renderer,
+  get roadtrip() { return roadtrip; },
   sauteIntro() {
     chargement.ferme();
     intro = 1;
@@ -793,6 +869,7 @@ window.__sillage = {
       bateau: { rectangle: rectangleEcranBateau(), ...bateau.etat() },
       etiquettes: etiquettes.etat(),
       route: route.etat(),
+      roadtrip: roadtrip?.etat() ?? null,
       nuages: coton.etat(),
       rendu: { ...renderer.info.render },
     };
@@ -861,6 +938,12 @@ renderer.setAnimationLoop(() => {
     voyage.segmentA(timeline.t).libelle, rectangleEcranBateau(), dt);
   route.orientePerles(camera, mouvementReduit ? 0 : horloge.elapsedTime,
     etiquettes.etat().etiquettes);
+  roadtrip?.oriente(camera, {
+    visible: route.groupe.visible && !plongee.ouverte && !plongee.enVol && !plongee.enChargement,
+    anneaux: route.etat().marqueurs?.filter(m => m.visible) ?? [],
+    etiquettes: etiquettes.etat().etiquettes
+      .filter(e => e.affichee && e.rectangle).map(e => e.rectangle),
+  });
 
   accumulateurSurvol += dt;
   if (accumulateurSurvol > 0.08 && !plongee.enVol) { // raycast décimé

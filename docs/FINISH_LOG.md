@@ -171,10 +171,10 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
 
 - ~~Story mode help line ("…la molette zoome") overlaps the subtitle on
   phones~~ Fixed in batches 3 and 6.
-- The journal text is one wall of text: the blog's paragraphs (and photo
+- ~~The journal text is one wall of text: the blog's paragraphs (and photo
   captions) were flattened, so sentences run into each other
-  ("…Syr Daria Croft On s'est empiffré…"). Rebuild paragraphs from the
-  archived HTML. (P2, high value for the parents.)
+  ("…Syr Daria Croft On s'est empiffré…").~~ Fixed in batch 2 (posts are
+  rebuilt from the archived HTML as paragraphs and photos in their order).
 - ~~The timeline starts on 27 May 2009 "En mer — Martinique → Ste Lucie"
   although the boat left on the 28th~~ — fixed in batch 4.
 
@@ -189,7 +189,8 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
   variant (feature 1).
 - Wind particles (feature 2; judged heavy).
 - Real time of day for sunrise/sunset during the crossing (feature 4).
-- Camping-car route of autumn 2013 (`data/roadtrip.json`) not drawn.
+- ~~Camping-car route of autumn 2013 (`data/roadtrip.json`) not drawn.~~
+  Built in batch 7.
 
 ## Done
 
@@ -285,6 +286,42 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
     container; the containment check now lets its content continue below
     the fold (never past the sides). Nested scroll areas on a phone were
     worse than a page that scrolls.
+
+- **Batch 7 (2026-10-10): the 2013 road trip, and journals that hold still.**
+  - The five-week camper-van trip through the western parks (23 posts,
+    4,972 miles on the counter the family wrote at the top of each post)
+    happened during the San Francisco stop and was invisible: its posts sat
+    deep inside the San Francisco journal and the globe never showed it.
+  - On the globe: a dark dashed line on a pale ribbon across the land, so it
+    reads as a road and not as the golden sea route. Zoomed in, each stop
+    gets a small ink dot; hovering shows the place, the date and the
+    mileage ("Bryce Canyon · 18 oct. 2013 · en camping-car, 3 495 miles");
+    clicking (or a fingertip nearby) opens the San Francisco journal right
+    at that post. From afar, hovering the line says what it is and opens
+    the trip.
+  - In the San Francisco journal: a card at the top announces the trip;
+    before its first post, a short introduction in the family's words
+    ("bien sage dans la marina", five weeks, the mile counter), a small map
+    painted like the globe (`pipeline/carte_roadtrip.py`, 53 KB) with the
+    trail and the big names, and the list of the 23 posts. Every dot and
+    every row jumps to its post, which is underlined for a moment like a
+    highlighter. Same section in the no-WebGL fallback.
+  - Facts checked against the 23 posts: M740 says "à Rupert, Idaho", not
+    Twin Falls (fixed); the departure day is never written ("après 3 jours
+    de route"), so the start has no date; the line passes through the
+    places the posts name between stops (Davis, Idaho Falls, Salt Lake City,
+    Valley of the Gods, Goosenecks, Canyon de Chelly, Sedona, Mono Lake,
+    Sequoia). The map says the exact roads were not recorded.
+  - Every journal photo now carries its size in the data
+    (`pipeline/dimensions_photos.py`, 1,698 post photos and 1,042 album
+    photos), so its place is reserved before it loads: the page no longer
+    jumps while reading, and a jump to a post lands on it. A jump also holds
+    its post while the albums and films arrive above it.
+  - The stop tooltip said "nm au log": now "milles au log", like the
+    journal.
+  - Tests: the road trip on the globe (hover, click, the journal opening at
+    that post, the map and list jumps, the line back after closing) and in
+    the fallback.
 
 ## Second first-time-visitor pass (2026-10-10, after batch 5)
 

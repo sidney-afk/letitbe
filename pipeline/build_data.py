@@ -153,6 +153,10 @@ def main() -> None:
           f"{total_arts} articles rattachés, {non_rattaches} articles bateau non rattachés")
     print(f"albums.json     : {len(albums)} albums")
 
+    # la place de chaque photo, réservée dans le carnet avant son chargement
+    from dimensions_photos import annote
+    annote()
+
 
 if __name__ == "__main__":
     main()

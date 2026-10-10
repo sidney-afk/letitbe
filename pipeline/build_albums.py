@@ -188,6 +188,9 @@ def main() -> None:
     print(f"\n{len(sortie)} albums, {sum(len(a['photos']) for a in sortie)} photos choisies ; "
           f"{copies} photos et {vignettes} vignettes ajoutées → {DEST.relative_to(ROOT)}")
 
+    from dimensions_photos import annote
+    annote()
+
 
 if __name__ == "__main__":
     main()

@@ -1,21 +1,28 @@
 [
  {
-  "date": "2013-09-25",
+  "date": null,
   "miles": 0,
-  "lieu": "Départ Emeryville (San Francisco)",
+  "lieu": "San Francisco",
   "lat": 37.84,
   "lon": -122.292,
   "article_id": null,
-  "titre": "Départ du roadtrip"
+  "titre": null
  },
  {
   "date": "2013-09-26",
   "miles": 740,
-  "lieu": "Vers Yellowstone (Idaho, via Davis)",
-  "lat": 42.56,
-  "lon": -114.47,
+  "lieu": "Rupert, Idaho",
+  "lat": 42.619,
+  "lon": -113.677,
   "article_id": 540,
-  "titre": "M740 - Et c'est reparti !!!"
+  "titre": "M740 - Et c'est reparti !!!",
+  "via": [
+   {
+    "lieu": "Davis",
+    "lat": 38.545,
+    "lon": -121.74
+   }
+  ]
  },
  {
   "date": "2013-09-27",
@@ -24,7 +31,14 @@
   "lat": 44.662,
   "lon": -111.104,
   "article_id": 541,
-  "titre": "M983 - YellowStone, nous voici !!!"
+  "titre": "M983 - YellowStone, nous voici !!!",
+  "via": [
+   {
+    "lieu": "Idaho Falls",
+    "lat": 43.492,
+    "lon": -112.034
+   }
+  ]
  },
  {
   "date": "2013-09-28",
@@ -38,7 +52,7 @@
  {
   "date": "2013-09-29",
   "miles": 1089,
-  "lieu": "Yellowstone — safari",
+  "lieu": "Yellowstone",
   "lat": 44.916,
   "lon": -110.42,
   "article_id": 543,
@@ -47,7 +61,7 @@
  {
   "date": "2013-09-30",
   "miles": 1172,
-  "lieu": "Yellowstone — pluie",
+  "lieu": "Yellowstone",
   "lat": 44.46,
   "lon": -110.828,
   "article_id": 544,
@@ -56,7 +70,7 @@
  {
   "date": "2013-10-01",
   "miles": 1359,
-  "lieu": "Yellowstone — shutdown fédéral",
+  "lieu": "Yellowstone",
   "lat": 44.133,
   "lon": -110.666,
   "article_id": 545,
@@ -65,7 +79,7 @@
  {
   "date": "2013-10-02",
   "miles": 1524,
-  "lieu": "À travers le Wyoming",
+  "lieu": "Wyoming",
   "lat": 42.834,
   "lon": -108.73,
   "article_id": 546,
@@ -78,7 +92,14 @@
   "lat": 38.483,
   "lon": -109.741,
   "article_id": 547,
-  "titre": "M1954 - Dead Horse Point"
+  "titre": "M1954 - Dead Horse Point",
+  "via": [
+   {
+    "lieu": "Salt Lake City",
+    "lat": 40.761,
+    "lon": -111.891
+   }
+  ]
  },
  {
   "date": "2013-10-05",
@@ -101,29 +122,55 @@
  {
   "date": "2013-10-08",
   "miles": 2483,
-  "lieu": "Monument Valley (Goosenecks, Vallée des Dieux)",
+  "lieu": "Monument Valley",
   "lat": 36.983,
   "lon": -110.099,
   "article_id": 550,
-  "titre": "M2483 - En territoire Navajo"
+  "titre": "M2483 - En territoire Navajo",
+  "via": [
+   {
+    "lieu": "Vallée des Dieux",
+    "lat": 37.26,
+    "lon": -109.85
+   },
+   {
+    "lieu": "Goosenecks",
+    "lat": 37.17,
+    "lon": -109.927
+   }
+  ]
  },
  {
   "date": "2013-10-10",
   "miles": 2673,
-  "lieu": "Meteor Crater (après Canyon de Chelly)",
+  "lieu": "Meteor Crater",
   "lat": 35.027,
   "lon": -111.022,
   "article_id": 551,
-  "titre": "M2673 - Petite pause"
+  "titre": "M2673 - Petite pause",
+  "via": [
+   {
+    "lieu": "Canyon de Chelly",
+    "lat": 36.15,
+    "lon": -109.48
+   }
+  ]
  },
  {
   "date": "2013-10-12",
   "miles": 2916,
-  "lieu": "Route 66, Kingman-Oatman",
+  "lieu": "Route 66",
   "lat": 35.189,
   "lon": -114.053,
   "article_id": 552,
-  "titre": "M2916 - On route 66"
+  "titre": "M2916 - On route 66",
+  "via": [
+   {
+    "lieu": "Sedona",
+    "lat": 34.87,
+    "lon": -111.761
+   }
+  ]
  },
  {
   "date": "2013-10-15",
@@ -137,7 +184,7 @@
  {
   "date": "2013-10-16",
   "miles": 3326,
-  "lieu": "Grand Canyon (suite)",
+  "lieu": "Grand Canyon",
   "lat": 36.054,
   "lon": -112.14,
   "article_id": 554,
@@ -146,7 +193,7 @@
  {
   "date": "2013-10-17",
   "miles": 3487,
-  "lieu": "Antelope Canyon (Page)",
+  "lieu": "Antelope Canyon",
   "lat": 36.862,
   "lon": -111.374,
   "article_id": 555,
@@ -204,15 +251,29 @@
   "lat": 37.746,
   "lon": -119.593,
   "article_id": 561,
-  "titre": "M4491 - Yosemite"
+  "titre": "M4491 - Yosemite",
+  "via": [
+   {
+    "lieu": "lac Mono",
+    "lat": 38.01,
+    "lon": -119.03
+   }
+  ]
  },
  {
   "date": "2013-10-29",
   "miles": 4972,
-  "lieu": "Retour San Francisco (via Sequoia NP)",
+  "lieu": "San Francisco",
   "lat": 37.84,
   "lon": -122.292,
   "article_id": 562,
-  "titre": "M4972 - Fin du roadtrip"
+  "titre": "M4972 - Fin du roadtrip",
+  "via": [
+   {
+    "lieu": "Sequoia",
+    "lat": 36.486,
+    "lon": -118.566
+   }
+  ]
  }
 ]
