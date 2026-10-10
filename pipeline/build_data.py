@@ -106,6 +106,20 @@ def main() -> None:
             else:
                 non_rattaches += 1
 
+    # Photos dont l'original manque dans le miroir (404 sur laruel.be,
+    # recensées au manifeste) : on les retire, et les blocs avec elles, pour
+    # qu'aucun billet n'affiche un cadre vide ni ne déclenche de 404.
+    def photos_presentes(a: dict) -> tuple[list, list]:
+        garde: dict[int, int] = {}
+        images = []
+        for i, im in enumerate(a["images"]):
+            if (ROOT / "content" / "site" / im["src"]).exists():
+                garde[i] = len(images)
+                images.append(im)
+        blocs = [b if isinstance(b, str) else garde[b]
+                 for b in a.get("blocs", []) if isinstance(b, str) or b in garde]
+        return images, blocs
+
     # --- data/mouillages.json ----------------------------------------------
     enrichis = []
     total_arts = 0
@@ -119,9 +133,10 @@ def main() -> None:
                 "id": a["id"],
                 "date": a["date"],
                 "titre": a["titre"],
-                "extrait": extrait(a["texte"]),
-                "texte": a["texte"],
-                "images": a["images"],
+                # le billet dans son ordre : paragraphes (chaînes) et photos
+                # (indices dans `images`), là où les parents les avaient mises
+                "blocs": photos_presentes(a)[1],
+                "images": photos_presentes(a)[0],
                 **({"en_mer": True} if a.get("en_mer") else {}),
             } for a in arts],
         })

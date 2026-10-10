@@ -8,7 +8,12 @@ suivi du texte et d'images légendées (<img …><br><i>légende</i>).
 
 Sortie : content/articles.json — liste chronologique d'articles :
     { id, etape, etape_label, date, date_fin, titre, texte, html,
-      images: [{src, legende}] }
+      images: [{src, legende}],
+      blocs: ["paragraphe", 0, "paragraphe", …] }
+
+`blocs` garde l'ordre du billet : les chaînes sont les paragraphes (un « \n »
+marque un simple retour à la ligne), les entiers renvoient à `images`, à
+l'endroit exact où la photo était placée.
 """
 
 import json
@@ -36,8 +41,27 @@ MOIS_RE = "|".join(sorted(MOIS, key=len, reverse=True))
 # « 24 et 25/12/2013 », « du 5 au 12 mars 2010 »…
 RE_TITRE = re.compile(
     r'<p\s+class="titre"><B>(.*?)</B></p>', re.I | re.S)
+# `src` n'est pas toujours le premier attribut (<img class="photo" src=…>) :
+# l'ancienne expression en perdait près de la moitié des photos du blog.
 RE_IMG = re.compile(
-    r'<img\s+src="([^"]+)"\s*/?>(?:\s*<br\s*/?>\s*<i>(.*?)</i>)?', re.I | re.S)
+    r'<img\b[^>]*?\bsrc\s*=\s*"([^"]+)"[^>]*>(?:\s*<br\s*/?>\s*<i>(.*?)</i>)?',
+    re.I | re.S)
+RE_COUPE_PARAGRAPHE = re.compile(
+    r'<p\b[^>]*>|</p\s*>|<br\s*/?>\s*<br\s*/?>|<div\b[^>]*>|</div\s*>', re.I)
+SAUT = "\u2028"
+
+
+def paragraphes(fragment: str) -> list[str]:
+    """Paragraphes lisibles d'un fragment HTML sans image."""
+    sortie = []
+    for morceau in RE_COUPE_PARAGRAPHE.split(fragment):
+        morceau = re.sub(r"<br\s*/?>", SAUT, morceau, flags=re.I)
+        texte = BeautifulSoup(f"<div>{morceau}</div>", "lxml").get_text(" ")
+        texte = re.sub(r"[ \t\r\n\f\v\xa0]+", " ", texte)
+        texte = re.sub(rf"\s*{SAUT}\s*", "\n", texte).strip()
+        if texte:
+            sortie.append(texte)
+    return sortie
 
 
 def sans_accents(s: str) -> str:
@@ -140,10 +164,17 @@ def extraire_page(path: Path) -> list[dict]:
             date_part, titre = brut_titre, ""
 
         images = []
-        for src, legende in RE_IMG.findall(bloc):
-            leg = re.sub(r"<[^>]+>", " ", legende or "")
+        blocs: list = []
+        curseur = 0
+        for m_img in RE_IMG.finditer(bloc):
+            blocs.extend(paragraphes(bloc[curseur:m_img.start()]))
+            src, legende = m_img.groups()
+            leg = BeautifulSoup(f"<div>{legende or ''}</div>", "lxml").get_text(" ")
             leg = re.sub(r"\s+", " ", leg).strip()
+            blocs.append(len(images))
             images.append({"src": normalise_src(src, path.name), "legende": leg})
+            curseur = m_img.end()
+        blocs.extend(paragraphes(bloc[curseur:]))
 
         soup = BeautifulSoup(f"<div>{bloc}</div>", "lxml")
         texte = re.sub(r"\s+", " ", soup.get_text(" ")).strip()
@@ -156,6 +187,7 @@ def extraire_page(path: Path) -> list[dict]:
             "texte": texte,
             "html": bloc.strip(),
             "images": images,
+            "blocs": blocs,
         })
     return articles
 

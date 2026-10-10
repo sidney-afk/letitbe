@@ -31,6 +31,8 @@ def main() -> None:
             absents += 1  # 404 sur le site d'origine, recensés au manifeste
             continue
         cible = DEST / rel
+        if cible.exists():
+            continue  # déjà publié : ne pas réécrire des octets identiques
         cible.parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(origine, cible)
         octets += origine.stat().st_size
