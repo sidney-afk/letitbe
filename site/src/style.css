@@ -1843,6 +1843,25 @@ body[data-mode="photo"] #titre-trait { filter: none; }
 }
 #a-propos-fermer:focus-visible { outline: 3px solid rgba(91, 61, 30, .9); border-radius: 8px; }
 #recit-carte .lien-a-propos { margin-top: 10px; display: block; }
+#recit-carte .lien-sommaire {
+  display: block;
+  min-height: 44px;
+  margin-top: 6px;
+  padding: 4px 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: .9rem;
+  font-style: italic;
+  color: var(--encre-claire);
+  text-decoration: underline;
+  text-decoration-color: rgba(154, 108, 28, .45);
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+#recit-carte .lien-sommaire:hover { color: var(--encre); }
+#recit-carte .lien-sommaire:focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
+body[data-mode="photo"] #recit-carte .lien-sommaire { color: #e8c87a; }
 
 /* ——— la vue du ciel : un hublot sur l'image satellite de l'escale ——— */
 #plongee-flux figure.vue-du-ciel {
@@ -2215,9 +2234,11 @@ body[data-mode="photo"] .film-lien { color: #e8c87a; }
     transform: translateY(12px) rotate(-.3deg);
   }
   #recit-carte.visible { transform: rotate(-.3deg); }
-  body.recit-actif #navigation-escales { visibility: hidden; pointer-events: none; }
   #recit-aide { top: max(122px, calc(env(safe-area-inset-top) + 112px)); }
 }
+/* While the story is told, the stop menu steps aside on every screen: a
+   long chapter card reaches the bottom-left corner of a laptop too. */
+body.recit-actif #navigation-escales { visibility: hidden; pointer-events: none; }
 
 /* — Le roadtrip de l'automne 2013 (carnet de San Francisco) — */
 .roadtrip-annonce { margin: 4px 0 18px; }

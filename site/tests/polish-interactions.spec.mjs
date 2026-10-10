@@ -637,3 +637,25 @@ test('le sommaire retrouve un billet et ouvre son carnet à cet endroit', async 
   await page.waitForFunction(() => !window.__sillage.plongee.ouverte && !window.__sillage.plongee.enVol);
   expect(await page.evaluate(() => document.getElementById('navigation-escales').open)).toBe(false);
 });
+
+test('un chapitre du récit mène à ses billets dans le sommaire', async ({ page }) => {
+  await ouvreExperience(page, { width: 1366, height: 768 });
+  await page.evaluate(() => window.__sillage.timeline.vaA(new Date('2010-03-01T12:00:00Z').getTime(), true));
+  await page.locator('#recit-bouton').click();
+  const lien = page.locator('#recit-carte .lien-sommaire');
+  await expect(lien).toHaveAttribute('data-chapitre', 'Le Grand Pacifique');
+  // the stop menu steps aside while the story is told, on a laptop too
+  await expect.poll(() => page.evaluate(() =>
+    getComputedStyle(document.getElementById('navigation-escales')).pointerEvents)).toBe('none');
+  await lien.click();
+  await expect(page.locator('#sommaire')).toBeVisible();
+  // opened at the chapter, not at the top of the list
+  await expect.poll(() => page.evaluate(() => {
+    const dialogue = document.getElementById('sommaire');
+    const section = dialogue.querySelector('.sommaire-chapitre[data-chapitre="Le Grand Pacifique"]');
+    return section ? Math.round(section.getBoundingClientRect().top - dialogue.getBoundingClientRect().top) : null;
+  })).toBeLessThan(40);
+  await page.locator('.sommaire-chapitre[data-chapitre="Le Grand Pacifique"] li button').first().click();
+  await page.waitForFunction(() => window.__sillage.plongee.ouverte, null, { timeout: 30_000 });
+  expect(await page.evaluate(() => window.__sillage.recit.actif)).toBe(false);
+});

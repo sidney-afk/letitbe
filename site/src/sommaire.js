@@ -38,6 +38,7 @@ export function creerSommaire({ escales, mouillagesParCle, carnetsPrets, chapitr
         chapitreCourant = nomChapitre;
         blocChapitre = document.createElement('section');
         blocChapitre.className = 'sommaire-chapitre';
+        blocChapitre.dataset.chapitre = nomChapitre ?? '';
         const h = document.createElement('h3');
         const infos = chapitres[nomChapitre];
         const numero = document.createElement('span');
@@ -145,7 +146,7 @@ export function creerSommaire({ escales, mouillagesParCle, carnetsPrets, chapitr
     ouvre(escale, billet);
   }
 
-  async function montre(depuis) {
+  async function montre(depuis, chapitre = null) {
     declencheur = depuis ?? document.activeElement;
     if (typeof dialogue.showModal === 'function') dialogue.showModal();
     else dialogue.setAttribute('open', '');
@@ -155,12 +156,22 @@ export function creerSommaire({ escales, mouillagesParCle, carnetsPrets, chapitr
       construit();
       filtre();
     }
+    // opened from a story chapter: the whole list, at that chapter
+    const section = chapitre
+      && [...liste.querySelectorAll('.sommaire-chapitre')].find(x => x.dataset.chapitre === chapitre);
+    if (section) {
+      recherche.value = '';
+      filtre();
+      dialogue.scrollTop = Math.max(0, section.offsetTop - 12);
+    } else {
+      dialogue.scrollTop = 0;
+    }
     recherche.focus({ preventScroll: true });
   }
 
   document.addEventListener('click', (e) => {
     const lien = e.target.closest?.('.lien-sommaire');
-    if (lien) void montre(lien);
+    if (lien) void montre(lien, lien.dataset.chapitre || null);
   });
   recherche.addEventListener('input', filtre);
   document.getElementById('sommaire-fermer')?.addEventListener('click', () => dialogue.close());

@@ -168,6 +168,16 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
       citation.append(bloc, signe);
       carte.append(citation);
     }
+    if (nom !== '__epilogue__') {
+      // the chapter's own posts, in the table of contents
+      const lire = document.createElement('button');
+      lire.type = 'button';
+      lire.className = 'lien-sommaire';
+      lire.dataset.chapitre = nom;
+      lire.setAttribute('aria-haspopup', 'dialog');
+      lire.textContent = 'Lire les billets de ce chapitre';
+      carte.append(lire);
+    }
     if (nom === '__epilogue__') {
       const lien = document.createElement('button');
       lien.type = 'button';
