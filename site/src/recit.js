@@ -128,6 +128,7 @@ export function creerRecit({ timeline, regleSuivi, voyage }) {
   function nommeBouton() {
     const action = actif ? 'Quitter le récit' : 'Embarquer dans le récit';
     bouton.querySelector('span').textContent = action;
+    bouton.querySelector('.bouton-court').textContent = actif ? 'Quitter' : 'Récit';
     bouton.setAttribute('aria-label', action);
     bouton.setAttribute('aria-expanded', String(actif));
     bouton.title = action;

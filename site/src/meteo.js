@@ -29,12 +29,28 @@ export async function creerMeteo() {
       morceaux.push('grand beau');
     }
     if (j.rafales_max_kmh >= 65) morceaux.push('⚠ coup de vent');
-    return morceaux.join(' · ');
+    return morceaux;
+  }
+
+  // Each part of the bulletin is its own unbreakable piece: a narrow
+  // timeline (a phone) keeps the pieces that fit on one line, never half of
+  // "grand beau" on a second one.
+  let dernier = '';
+  function affiche(morceaux) {
+    const texte = morceaux.join(' · ');
+    if (texte === dernier) return;
+    dernier = texte;
+    ligne.replaceChildren(...morceaux.map((m, i) => {
+      const piece = document.createElement('span');
+      piece.className = 'meteo-piece';
+      piece.textContent = i ? `· ${m}` : m;
+      return piece;
+    }));
   }
 
   function applique(t) {
     const j = pour(t);
-    ligne.textContent = bulletin(j);
+    affiche(bulletin(j));
     if (!j || j.vent_max_kmh == null) {
       return { nuages: 1, lumiere: 1 };
     }

@@ -339,6 +339,7 @@ function regleMode(nouveau) {
   bateau?.regleMode?.(mode);
   modeBouton.querySelector('span').textContent =
     carnetActif ? 'Mode réaliste' : 'Mode carnet';
+  modeBouton.querySelector('.bouton-court').textContent = carnetActif ? 'Réaliste' : 'Carnet';
   const actionMode = carnetActif ? 'Passer au mode réaliste' : 'Passer au mode carnet';
   modeBouton.setAttribute('aria-label', actionMode);
   modeBouton.title = actionMode;

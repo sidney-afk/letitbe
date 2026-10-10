@@ -783,6 +783,7 @@ body.plongee-ouverte #titre { opacity: .35; transition: opacity .4s; }
   color: var(--or);
   white-space: nowrap;
 }
+.meteo-piece + .meteo-piece::before { content: " "; }
 #meteo-jour {
   flex: 1 1 auto;
   min-width: 0;
@@ -895,6 +896,9 @@ body.plongee-ouverte #boutons-haut { display: none; }
 .affleure-carte.disparait {
   animation: dissout .9s ease both;
 }
+/* paused, the photos sink away at once: the stop menu comes back exactly
+   where they rise */
+body:not(.lecture) .affleure-carte { animation: dissout .5s ease both; }
 @keyframes dissout {
   to { transform: translateY(-26px) rotate(var(--derive, 0deg)); opacity: 0; filter: blur(5px); }
 }
@@ -1511,9 +1515,24 @@ body[data-mode="photo"] #titre-trait { filter: none; }
   }
 }
 
+.bouton-court { display: none; }
 @media (max-width: 760px) {
   #boutons-haut button span { display: none; }
   #boutons-haut button { padding: 10px; }
+  /* a phone shows the icons with one short word under them, so a first
+     visit knows what the globe and the book do */
+  #boutons-haut button:not(.sceau) {
+    flex-direction: column;
+    gap: 1px;
+    padding: 6px 7px 4px;
+    min-width: 50px;
+  }
+  #boutons-haut button .bouton-court {
+    display: block;
+    font-size: .64rem;
+    line-height: 1;
+    letter-spacing: .02em;
+  }
   body.plongee-escale-illustree #plongee-scene-caption { display: none; }
   body.plongee-escale-illustree #plongee-scene-caption-mobile { display: block; }
 }
@@ -1586,14 +1605,19 @@ body[data-mode="photo"] #titre-trait { filter: none; }
     text-align: left;
     font-size: .78rem;
   }
+  /* one line only: the pieces that do not fit wrap onto a hidden line */
   #meteo-jour {
     grid-area: meteo;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    column-gap: .32em;
+    height: 1.25em;
     padding: 0;
-    text-align: right;
     font-size: .72rem;
-    overflow: visible;
+    line-height: 1.25;
+    overflow: hidden;
     text-overflow: clip;
-    white-space: normal;
   }
 
   #infobulle {
