@@ -18,7 +18,7 @@ import { creerCiel } from './ciel.js';
 import { creerNuagesCotonneux } from './nuages.js';
 import { creerEtiquettes } from './etiquettes.js';
 import { creerOrnements } from './ornements.js';
-import { construireVoyage } from './geo.js';
+import { construireVoyage, latLonVers3D } from './geo.js';
 import { soleilEtCiel } from './sun.js';
 import { chargeRelief, reliefPlat } from './relief.js';
 import { creerChargement } from './chargement.js';
@@ -62,28 +62,41 @@ async function activeFallback2D() {
   }
 
   const escales = routeData.filter(e => e.type !== 'traversee' && e.date_arrivee);
+  // The painted world of the globe, flattened over the half of the planet
+  // the voyage crossed (same bounds as pipeline/carte_fallback.py).
+  const CARTE = { lonOuest: 140, largeurLon: 170, latNord: 65, latSud: -50, l: 1600, h: 1083 };
+  const projette = (lat, lon) => {
+    const lonEst = lon < 0 ? lon + 360 : lon;
+    return {
+      x: (lonEst - CARTE.lonOuest) / CARTE.largeurLon * CARTE.l,
+      y: (CARTE.latNord - lat) / (CARTE.latNord - CARTE.latSud) * CARTE.h,
+    };
+  };
   if (trace && routeData.length) {
-    trace.setAttribute('viewBox', '0 0 1000 500');
-    const segments = [];
-    let segment = [];
-    let dernierX = null;
-    for (const point of routeData) {
-      if (!Number.isFinite(point.lat) || !Number.isFinite(point.lon)) continue;
-      const x = (point.lon + 180) / 360 * 1000;
-      const y = (90 - point.lat) / 180 * 500;
-      if (dernierX !== null && Math.abs(x - dernierX) > 450) {
-        if (segment.length > 1) segments.push(segment);
-        segment = [];
-      }
-      segment.push(`${x.toFixed(1)},${y.toFixed(1)}`);
-      dernierX = x;
-    }
-    if (segment.length > 1) segments.push(segment);
-    for (const points of segments) {
-      const ligne = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-      ligne.setAttribute('points', points.join(' '));
-      ligne.setAttribute('class', 'fallback-route-ligne');
-      trace.append(ligne);
+    const ns = 'http://www.w3.org/2000/svg';
+    trace.setAttribute('viewBox', `0 0 ${CARTE.l} ${CARTE.h}`);
+    const fond = document.createElementNS(ns, 'image');
+    fond.setAttribute('href', './textures/carte_pacifique.jpg');
+    fond.setAttribute('width', String(CARTE.l));
+    fond.setAttribute('height', String(CARTE.h));
+    fond.setAttribute('preserveAspectRatio', 'none');
+    trace.append(fond);
+    const points = routeData
+      .filter(point => Number.isFinite(point.lat) && Number.isFinite(point.lon))
+      .map(point => projette(point.lat, point.lon))
+      .map(({ x, y }) => `${x.toFixed(1)},${y.toFixed(1)}`);
+    const ligne = document.createElementNS(ns, 'polyline');
+    ligne.setAttribute('points', points.join(' '));
+    ligne.setAttribute('class', 'fallback-route-ligne');
+    trace.append(ligne);
+    for (const escale of escales) {
+      const { x, y } = projette(escale.lat, escale.lon);
+      const point = document.createElementNS(ns, 'circle');
+      point.setAttribute('cx', x.toFixed(1));
+      point.setAttribute('cy', y.toFixed(1));
+      point.setAttribute('r', '4');
+      point.setAttribute('class', 'fallback-escale-point');
+      trace.append(point);
     }
   }
 
@@ -93,6 +106,59 @@ async function activeFallback2D() {
   const formatDateFallback = new Intl.DateTimeFormat('fr-FR', {
     day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC',
   });
+  // Each stop opens its journal in place: the blog posts in their order,
+  // with their photographs (the same archive as the 3D journal).
+  let carnetsFallback = null;
+  const chargeCarnetsFallback = () => {
+    carnetsFallback ??= fetch('./data/mouillages.json')
+      .then(r => (r.ok ? r.json() : []))
+      .then(liste => new Map(liste.map(m => [`${m.nom}|${m.date_arrivee}`, m])))
+      .catch(() => new Map());
+    return carnetsFallback;
+  };
+  const remplitCarnetFallback = async (escale, conteneur) => {
+    const carnets = await chargeCarnetsFallback();
+    const complet = carnets.get(`${escale.nom}|${escale.date_arrivee}`);
+    const articles = complet?.articles ?? [];
+    conteneur.replaceChildren();
+    if (!articles.length) {
+      const vide = document.createElement('p');
+      vide.textContent = 'Aucun billet du blog n’a été écrit depuis ce mouillage.';
+      conteneur.append(vide);
+      return;
+    }
+    for (const article of articles) {
+      const date = document.createElement('p');
+      date.className = 'article-date';
+      date.textContent = formatDateFallback.format(new Date(`${article.date}T12:00:00Z`));
+      const titre = document.createElement('h4');
+      titre.textContent = article.titre || '';
+      conteneur.append(date, titre);
+      const images = article.images ?? [];
+      for (const bloc of article.blocs ?? []) {
+        if (typeof bloc === 'string') {
+          const p = document.createElement('p');
+          p.className = 'article-texte';
+          p.textContent = bloc;
+          conteneur.append(p);
+        } else if (images[bloc]) {
+          const figure = document.createElement('figure');
+          const img = document.createElement('img');
+          img.loading = 'lazy';
+          img.src = `./media/${images[bloc].src.replace(/\.[a-z]+$/i, '.webp')}`;
+          img.alt = images[bloc].legende || article.titre || '';
+          img.addEventListener('error', () => figure.remove());
+          figure.append(img);
+          if (images[bloc].legende) {
+            const legende = document.createElement('figcaption');
+            legende.textContent = images[bloc].legende;
+            figure.append(legende);
+          }
+          conteneur.append(figure);
+        }
+      }
+    }
+  };
   escales.forEach((escale, index) => {
     const date = formatDateFallback.format(new Date(`${escale.date_arrivee}T12:00:00Z`));
     const option = document.createElement('option');
@@ -102,22 +168,37 @@ async function activeFallback2D() {
     const item = document.createElement('li');
     item.id = `fallback-escale-${index}`;
     item.tabIndex = -1;
+    const details = document.createElement('details');
+    const resume = document.createElement('summary');
     const nom = document.createElement('strong');
     nom.textContent = escale.nom;
     const temps = document.createElement('time');
     temps.dateTime = escale.date_arrivee;
     temps.textContent = date;
-    item.append(nom, temps);
+    resume.append(nom, temps);
+    const carnet = document.createElement('div');
+    carnet.className = 'fallback-carnet';
+    carnet.textContent = 'Le carnet s’ouvre…';
+    details.append(resume, carnet);
+    details.addEventListener('toggle', () => {
+      if (details.open && !carnet.dataset.rempli) {
+        carnet.dataset.rempli = '1';
+        void remplitCarnetFallback(escale, carnet);
+      }
+    });
+    item.append(details);
     items.append(item);
   });
   select?.replaceChildren(options);
   liste?.replaceChildren(items);
   if (ouvrir && select) {
-    ouvrir.textContent = 'Afficher sur le carnet';
+    ouvrir.textContent = 'Ouvrir le carnet';
     ouvrir.addEventListener('click', () => {
       const item = document.getElementById(`fallback-escale-${select.value}`);
-      item?.scrollIntoView({ block: 'center', behavior: mouvementReduit ? 'auto' : 'smooth' });
-      item?.focus({ preventScroll: true });
+      const details = item?.querySelector('details');
+      if (details) details.open = true;
+      item?.scrollIntoView({ block: 'start', behavior: mouvementReduit ? 'auto' : 'smooth' });
+      item?.querySelector('summary')?.focus({ preventScroll: true });
     });
   }
 
@@ -186,6 +267,13 @@ scene.add(soleilLampe);
 const etoilesPromesse = chargement.suivre(creerEtoiles());
 const bateauPromesse = chargement.suivre(creerBateau());
 const donneesPromesse = chargement.suivre(chargeDonneesVoyage());
+// The journals (every blog post, 1.3 MB) are not needed to show the globe:
+// they download right after it appears (see below), and a stop's journal
+// waits for them if a visitor is quicker than the network.
+let lanceCarnets;
+const carnetsPromesse = new Promise((resolve, reject) => {
+  lanceCarnets = () => fetchJson('./data/mouillages.json').then(resolve, reject);
+});
 
 // le relief sculpté nourrit le globe, la route, les étiquettes, la plongée
 const relief = await chargement.suivre(chargeRelief('./textures/earth_elev_2048.jpg')
@@ -331,7 +419,6 @@ function selectionneHerosEscales(catalogue) {
 function chargeDonneesVoyage() {
   return Promise.all([
   fetchJson('./data/route.json'),
-  fetchJson('./data/mouillages.json'),
   // The close-up imagery is optional: a missing manifest must leave the
   // journal's clean selected-place fallback intact rather than block launch.
   chargeJsonOptionnel('./data/vues_aeriennes.json'),
@@ -346,12 +433,16 @@ function chargeDonneesVoyage() {
   creerMeteo(),
 ]);
 }
-const [routeData, mouillagesData, vuesAeriennesBase, vuesAeriennesGenerees, herosEscalesBruts, meteo] = await donneesPromesse;
+const [routeData, vuesAeriennesBase, vuesAeriennesGenerees, herosEscalesBruts, meteo] = await donneesPromesse;
 const vuesAeriennes = fusionneVuesAeriennes(vuesAeriennesBase, vuesAeriennesGenerees);
 const herosEscales = selectionneHerosEscales(herosEscalesBruts);
 const voyage = construireVoyage(routeData);
-const mouillagesParCle = new Map(
-  mouillagesData.map(m => [`${m.nom}|${m.date_arrivee}`, m]));
+const mouillagesParCle = new Map();
+const carnetsPrets = carnetsPromesse.then((mouillagesData) => {
+  for (const m of mouillagesData) mouillagesParCle.set(`${m.nom}|${m.date_arrivee}`, m);
+}).catch((erreur) => {
+  console.warn('Carnets de bord indisponibles pour le moment.', erreur);
+});
 
 const route = creerRoute(voyage, routeData, relief);
 scene.add(route.groupe);
@@ -439,7 +530,7 @@ regleMode('carnet');
 applique(timeline.t);
 
 const plongee = creerPlongee({
-  camera, controls, timeline, regleSuivi, mouillagesParCle, scene,
+  camera, controls, timeline, regleSuivi, mouillagesParCle, carnetsPrets, scene,
   relief, regleVisibiliteBateau: bateau.regleVisibilite,
   regleVisibiliteRoute: affiche => {
     route.groupe.visible = Boolean(affiche);
@@ -520,7 +611,34 @@ function positionneInfobulle(x, y) {
   infobulle.style.top = `${Math.max(marge, haut)}px`;
 }
 
+// A fingertip is far less precise than a mouse: on touch, a tap that misses
+// the small ring still opens the nearest visible stop within finger reach.
+const RAYON_DOIGT_PX = 30;
+const pointEscale = new THREE.Vector3();
+const versCamera = new THREE.Vector3();
+function escaleProche(x, y, rayonPx) {
+  versCamera.copy(camera.position).normalize();
+  let meilleure = null;
+  let meilleureDistance = rayonPx;
+  route.escales.forEach((escale, i) => {
+    if (!route.estVisible(i) || !escale.date_arrivee) return;
+    pointEscale.copy(latLonVers3D(escale.lat, escale.lon, 1));
+    if (pointEscale.dot(versCamera) < 0.25) return; // behind or on the limb
+    pointEscale.project(camera);
+    const px = (pointEscale.x * 0.5 + 0.5) * innerWidth;
+    const py = (-pointEscale.y * 0.5 + 0.5) * innerHeight;
+    const d = Math.hypot(px - x, py - y);
+    if (d < meilleureDistance) {
+      meilleureDistance = d;
+      meilleure = escale;
+    }
+  });
+  return meilleure;
+}
+let dernierTypePointeur = 'mouse';
+
 canvas.addEventListener('pointerdown', (e) => {
+  dernierTypePointeur = e.pointerType || 'mouse';
   debutGeste = { id: e.pointerId, x: e.clientX, y: e.clientY };
   clicDeplace = false;
 });
@@ -553,9 +671,13 @@ canvas.addEventListener('click', (e) => {
   }
   pointeur.set((e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
   chercheSurvol(); // le survol throttlé peut être périmé au moment du clic
-  if (escaleSurvolee?.date_arrivee) {
+  const touche = dernierTypePointeur === 'touch' || dernierTypePointeur === 'pen';
+  const visee = escaleSurvolee?.date_arrivee ? escaleSurvolee
+    : (touche && route.groupe.visible && !plongee.ouverte && !plongee.enVol && !plongee.enChargement
+      ? escaleProche(e.clientX, e.clientY, RAYON_DOIGT_PX) : null);
+  if (visee) {
     if (recit.actif) recit.sort(); // on quitte le récit pour plonger
-    void plongee.vers(escaleSurvolee);
+    void plongee.vers(visee);
   } else if (plongee.ouverte || plongee.enVol || plongee.enChargement) {
     plongee.remonte(); // cliquer ailleurs referme le carnet
   }
@@ -684,6 +806,7 @@ let lectureAvant = false;
 // The painted globe must be on screen before the curtain lifts.
 await globePret;
 document.body.classList.add('pret'); // l'interface peut entrer en scène
+lanceCarnets();
 
 renderer.setAnimationLoop(() => {
   const dt = horloge.getDelta();

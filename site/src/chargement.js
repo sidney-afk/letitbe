@@ -72,13 +72,20 @@ export function creerChargement(etapesTotal) {
           resolve(choix);
         };
         const clavier = (e) => {
+          // the "À propos" dialog, opened from this card, owns the keyboard
+          if (document.querySelector('dialog[open]')) return;
           if (e.key === 'Escape') {
             e.preventDefault();
             choisit('explorer');
           } else if (e.key === 'Tab') {
-            // two buttons: keep the focus inside the card
+            // keep the focus inside the card
+            const boutons = [...ecran.querySelectorAll('button:not([hidden])')]
+              .filter(b => b.offsetParent !== null);
+            if (!boutons.length) return;
             e.preventDefault();
-            (document.activeElement === traversee ? explorer : traversee).focus();
+            const i = boutons.indexOf(document.activeElement);
+            const pas = e.shiftKey ? -1 : 1;
+            boutons[(i + pas + boutons.length) % boutons.length].focus();
           }
         };
         addEventListener('keydown', clavier, true);

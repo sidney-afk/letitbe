@@ -6,6 +6,13 @@ each section. Ranked by how much each item matters to a first-time visitor
 
 ## Needs Sidney
 
+- **The boat's look (taste call, not blocking).** Seen from straight above
+  while following, the 3D catamaran reads as a white deck with an ink
+  outline, not as a sailboat. Earlier sessions chose this realistic model
+  locked flat on the sea, after rejecting a profile "game piece" with sails.
+  If you would rather have a treasure-map style little sailboat standing in
+  profile (sails up, always readable), say so and I will build it.
+
 - **Who signed the two books?** PLAN.md says Éric Laruel and Cécile Van
   Winnendael published them; the archive only shows Éric writing "mon livre"
   and the Costa Rica page saying "les livres de nos aventures". The epilogue
@@ -138,13 +145,22 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
 - After choosing a stop and coming back, the menu is still open and covers
   part of the globe (large on a phone).
 
-### 10. The boat reads as a white paper rectangle (P2)
+### 10. The boat reads as a white paper rectangle (P2) — IMPROVED
+
+- Batch 5: an ink silhouette (constant 1.6 px, drawn under the model so
+  only the outer rim shows) and a soft shadow on the water. It now reads as
+  a drawn figurine. Still seen from straight above during follow, so it
+  remains a white catamaran deck rather than a sailboat profile.
+- Decision: the earlier sessions deliberately locked the model flat on the
+  sea and never turned toward the camera (tests codify it). Turning it into
+  a profile "game piece" or adding sails was tried before and rejected as
+  a "drone" silhouette. Kept that decision; revisit only with Sidney.
 
 - The follow camera looks straight down on the catamaran, so it reads as a
   white strip, not a boat. A slightly oblique follow view (boat in the lower
   part of the frame, globe curving ahead) would read as a boat under way.
 
-### 11. The 2D fallback shows invented continents (P2)
+### 11. The 2D fallback shows invented continents (P2) — DONE (batch 5)
 
 - With no WebGL, the "map" is green ellipses (not real land) and the route
   sits in a corner; the list cannot open any journal.
@@ -243,6 +259,32 @@ Legend: P0 unusable, P1 broken, P2 degraded, P3 refinement.
   - Departure date: the boat left Le Marin on 28 May 2009 at dawn (blog,
     "D Day"); the log table said 27. The timeline now starts at anchor in
     Martinique, and the "D Day" post sits in the Sainte-Lucie journal.
+
+- **Batch 5 (2026-10-10): boat and first load.**
+  - Ink outline and water shadow on the catamaran (see 10).
+  - The journals (1.3 MB of blog posts) download right after the globe
+    appears instead of before: phone first load 3.4 → 3.0 MB before the
+    globe (18.6 MB at the start of the day).
+  - Phones: a tap had to land within about 12 px of a stop's small ring
+    to open it (measured). A tap that misses now opens the nearest visible
+    stop within 30 px, a fingertip's reach.
+  - Fallback without WebGL: the real painted map of the voyage's half of
+    the world (`pipeline/carte_fallback.py`, 126 KB) with the route and
+    every stop, and each stop of the list opens its journal in place.
+    Fixed a grid bug that slid the list under the map on phones.
+  - "À propos" gains **L'équipage** (the five sepia portraits and roles
+    from laruel.be's crew page — "La capitaine", "Le fidèle lieutenant",
+    "Le moussaillon n°1/2/3" — each with one line in the family's words) and
+    **Le bateau** (Let It Be under sail, the Maori treble clef on the hull,
+    and the specifications from the boat page). The welcome card links to it
+    ("L'équipage et le bateau").
+  - The journal panel now fades in rather than sliding: the slide (an
+    offset) waited for a first frame in headless runs and left the panel
+    40 px off-screen; the header still glides.
+  - Decision (test): the fallback page is one intentional vertical scroll
+    container; the containment check now lets its content continue below
+    the fold (never past the sides). Nested scroll areas on a phone were
+    worse than a page that scrolls.
 
 ## Ideas for later
 

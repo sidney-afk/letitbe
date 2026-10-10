@@ -666,6 +666,71 @@ function creerBateauProcedural() {
   return { conteneur, ecume, positionne, anime, regleVisibilite, etat };
 }
 
+// Un contour d'encre à épaisseur constante à l'écran (coque inversée,
+// extrudée dans l'espace de projection) : la maquette garde une silhouette
+// nette, dans l'esprit cel-shading du Carnet, au lieu d'une tache blanche
+// sur la mer claire. Il ne change ni sa forme ni sa pose.
+const resolutionContour = { value: new THREE.Vector2(1, 1) };
+function regleResolutionContour() {
+  resolutionContour.value.set(Math.max(1, innerWidth), Math.max(1, innerHeight));
+}
+if (typeof addEventListener === 'function') {
+  regleResolutionContour();
+  addEventListener('resize', regleResolutionContour);
+}
+function matiereContourEcran(couleur = 0x4a3b2c, epaisseurPx = 1.6) {
+  // Drawn before the boat (renderOrder) without writing depth: the opaque
+  // model then covers the inside of this enlarged silhouette, so only its
+  // outer rim of ink remains — no stray lines from the model's open panels.
+  return new THREE.ShaderMaterial({
+    side: THREE.DoubleSide,
+    depthWrite: false,
+    uniforms: {
+      couleur: { value: new THREE.Color(couleur) },
+      epaisseur: { value: epaisseurPx },
+      resolution: resolutionContour,
+    },
+    vertexShader: /* glsl */`
+      uniform float epaisseur;
+      uniform vec2 resolution;
+      void main() {
+        vec4 clip = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+        vec3 normaleVue = normalize(normalMatrix * normal);
+        vec2 sens = normaleVue.xy;
+        float l = length(sens);
+        sens = l > 1e-4 ? sens / l : vec2(0.0);
+        clip.xy += sens * epaisseur * 2.0 / resolution * clip.w;
+        gl_Position = clip;
+      }`,
+    fragmentShader: /* glsl */`
+      uniform vec3 couleur;
+      void main() { gl_FragColor = vec4(couleur, 1.0); }`,
+  });
+}
+
+// Une ombre douce sur l'eau sous la maquette : la figurine se pose sur la
+// carte au lieu de flotter dessus.
+function creerOmbreBateau(longueur, largeur, hauteurLocale) {
+  const toile = document.createElement('canvas');
+  toile.width = toile.height = 64;
+  const ctx = toile.getContext('2d');
+  const degrade = ctx.createRadialGradient(32, 32, 2, 32, 32, 32);
+  degrade.addColorStop(0, 'rgba(18, 52, 78, 0.42)');
+  degrade.addColorStop(0.55, 'rgba(18, 52, 78, 0.22)');
+  degrade.addColorStop(1, 'rgba(18, 52, 78, 0)');
+  ctx.fillStyle = degrade;
+  ctx.fillRect(0, 0, 64, 64);
+  const texture = new THREE.CanvasTexture(toile);
+  const ombre = new THREE.Mesh(
+    new THREE.PlaneGeometry(largeur * 1.7, longueur * 1.3),
+    new THREE.MeshBasicMaterial({ map: texture, transparent: true, depthWrite: false }));
+  ombre.name = 'ombre-let-it-be';
+  ombre.rotation.x = -Math.PI / 2; // dans le plan de la mer (y = verticale)
+  ombre.position.y = hauteurLocale;
+  ombre.renderOrder = 2;
+  return ombre;
+}
+
 // The supplied GLB is a coherent, textured catamaran rather than a collection
 // of placeholder primitives. Keep it inside the calibrated route root above:
 // only that root changes heading, never the asset itself or its scale.
@@ -713,8 +778,25 @@ async function chargeMaquetteCatamaran() {
   maquette.position.z -= centre.z;
   maquette.position.y -= boite.min.y + DECALAGE_EAU_ASSET;
 
+  const contours = [];
   maquette.traverse(enfant => {
-    if (!enfant.isMesh) return;
+    if (!enfant.isMesh || enfant.userData.contour) return;
+    contours.push(enfant);
+  });
+  for (const mesh of contours) {
+    const contour = new THREE.Mesh(mesh.geometry, matiereContourEcran());
+    contour.userData.contour = true;
+    contour.name = `${mesh.name || 'coque'}-contour`;
+    contour.position.copy(mesh.position);
+    contour.quaternion.copy(mesh.quaternion);
+    contour.scale.copy(mesh.scale);
+    contour.renderOrder = 1; // after the globe, before the boat itself
+    mesh.renderOrder = 2;
+    mesh.parent.add(contour);
+  }
+
+  maquette.traverse(enfant => {
+    if (!enfant.isMesh || enfant.userData.contour) return;
     enfant.castShadow = false;
     enfant.receiveShadow = false;
     enfant.frustumCulled = true;
@@ -765,6 +847,10 @@ export async function creerBateau() {
 
     const coqueBasLocale = pointBasRelatif(modele);
     const rayonAncrage = RAYON + GARDE_EAU - coqueBasLocale * ECHELLE_MODELE;
+    // just under the hulls, on the water
+    bateau.conteneur.add(creerOmbreBateau(
+      LONGUEUR_ASSET * ECHELLE_ASSET, LARGEUR_ASSET * ECHELLE_ASSET,
+      coqueBasLocale * ECHELLE_MODELE - GARDE_EAU * 0.5));
     const positionneProcedural = bateau.positionne;
     const etatProcedural = bateau.etat;
 
