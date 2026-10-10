@@ -955,11 +955,14 @@ body:not(.lecture) .affleure-carte { animation: dissout .5s ease both; }
   transform: translateY(-50%) rotate(-.3deg);
   pointer-events: auto;
 }
+/* the closing flourish follows the text: pinned to the corner, it sat on
+   the last words of a card that scrolls */
 #recit-carte::after {
   content: "❧";
-  position: absolute;
-  bottom: 9px;
-  right: 16px;
+  display: block;
+  margin: 2px -14px -14px 0;
+  text-align: right;
+  line-height: 1;
   color: rgba(138, 100, 34, .6);
   font-size: 1.25rem;
 }
@@ -1541,11 +1544,12 @@ body[data-mode="photo"] #titre-trait { filter: none; }
 }
 
 .bouton-court { display: none; }
-@media (max-width: 760px) {
+/* Phones and upright tablets: the icons with one short word under them, so
+   a first visit knows what the globe and the book do. Up to 900 px, since
+   the full labels ran into the title on a 768 px tablet. */
+@media (max-width: 900px) {
   #boutons-haut button span { display: none; }
   #boutons-haut button { padding: 10px; }
-  /* a phone shows the icons with one short word under them, so a first
-     visit knows what the globe and the book do */
   #boutons-haut button:not(.sceau) {
     flex-direction: column;
     gap: 1px;
@@ -1558,6 +1562,9 @@ body[data-mode="photo"] #titre-trait { filter: none; }
     line-height: 1;
     letter-spacing: .02em;
   }
+}
+
+@media (max-width: 760px) {
   body.plongee-escale-illustree #plongee-scene-caption { display: none; }
   body.plongee-escale-illustree #plongee-scene-caption-mobile { display: block; }
 }
@@ -1748,7 +1755,8 @@ body[data-mode="photo"] #titre-trait { filter: none; }
   }
   #recit-carte {
     top: max(68px, calc(env(safe-area-inset-top) + 62px));
-    bottom: max(86px, calc(env(safe-area-inset-bottom) + 82px));
+    /* clear of the timeline and its anchor tab */
+    bottom: max(110px, calc(env(safe-area-inset-bottom) + 104px));
     width: min(360px, 48vw);
     max-height: none;
     padding: 16px 20px 20px;
@@ -1760,6 +1768,23 @@ body[data-mode="photo"] #titre-trait { filter: none; }
   #affleure { bottom: max(104px, calc(env(safe-area-inset-bottom) + 98px)); }
   .affleure-carte { width: min(150px, 22vw); }
   .affleure-carte img { max-height: 30vh; }
+  /* the open stop menu must keep its own header on screen: its body
+     scrolls, and the label (the list says it already) is kept for screen
+     readers only */
+  .navigation-escales-corps {
+    max-height: calc(100dvh - 244px);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+  .navigation-escales-corps label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
 }
 
 @media (forced-colors: active) {

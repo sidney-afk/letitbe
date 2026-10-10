@@ -459,6 +459,26 @@ Built next (batch 10):
   motion can show panels mid-fade; the suite runs with reduced motion and
   my visual checks now do too.
 
+## Fourth first-time-visitor pass (2026-10-10, after batch 13)
+
+Tablet 1024×768 and 768×1024, phone on its side 844×390, then 1366×768:
+welcome → globe → menu → table of contents → a journal → story → crossing.
+Overlaps measured from the page itself (element boxes), with animations
+forced to their end, since the headless clock freezes. No errors.
+
+Found and fixed (batch 14):
+- Phone on its side: the open "Explorer les escales" menu started 57 px
+  above the screen, its own header out of reach (the new table-of-contents
+  button made it taller). On short screens its body now scrolls and its
+  header stays below the title.
+- Phone on its side: the story card ran 8 px under the timeline. It now
+  stops above the timeline and its anchor tab.
+- Upright tablet (768 px): the sound seal sat 44 px over the end of the
+  title, the full button labels being too wide. Up to 900 px the top
+  buttons now use their icon and one word, as on phones.
+- The ❧ closing a chapter card was pinned to the card's corner and sat on
+  the last words of a card that scrolls; it now follows the text.
+
 ## Ideas for later
 
 - Chapter quotes could also appear during the crossing (kept to titles for
