@@ -618,6 +618,29 @@ welcome card, « L’équipage et le bateau » and « À propos », the sound.
   the way: a stop opened by an address typed by hand kept the general tab
   title; fixed. The version without 3D has the links but not the button.
 
+## Sixth first-time-visitor pass (2026-10-10, after batch 25, tablets)
+
+768×1024 and 1024×768, through today's additions: a link to an empty
+stop, its quoted mention, the post it leads to, a photo.
+
+Fixed (batch 26):
+- Upright tablet: with a journal open, the journal cut the site title in
+  half (« LE SILLAG… », the subtitle too: the title reaches 349 px, the
+  journal starts 288 px from the left). Between 641 and 860 px wide the
+  title now steps aside while a journal is open.
+- Found behind it: the title was meant to dim while a journal is open, and
+  never did. Its entrance animation keeps its opacity at 1 (filled
+  « both »), which overrides any later opacity rule. It now dims with a
+  filter, which the animation does not touch (seen at 1024×768).
+- The satellite porthole's ⚓ marker was a filled disc over the anchorage
+  itself: at Santa Barbara Island, a speck in its porthole, it hid the whole
+  island and the porthole read as empty sea. The anchorage is now circled by
+  a ring, the island visible inside, with the ⚓ as a small tag on its edge
+  (at Fakarava the ring frames the pass instead of covering it).
+- Checked fine: the quoted mention and its button at both sizes, the jump
+  to « Channel Islands », the enlarged photo (706×411 upright, 942×549 on
+  its side, caption in view), the address following each step.
+
 ## Ideas for later
 
 - Chapter quotes could also appear during the crossing (kept to titles for
